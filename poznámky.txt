@@ -1,0 +1,19 @@
+do pøíštíhe meetingu pøipravit kapitoly, text odrážky v
+
+základní pøehled (vìtší)
+rozbor zadání (co bychom chtìli)
+detailní rozbor cílù
+
+analýza naplnìní zadání
+volba enginu
+co bylo problematický + jeho øešení
+
+vývojová dokumentace
+návrh architektury
+
+závìr
+budoucí smìr
+uživatelská dokumentace
+(dotazník)
+
+
