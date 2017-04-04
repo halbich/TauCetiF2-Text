@@ -1,6 +1,49 @@
 %!TEX root = ../prace.tex
 
-\section{Detailní rozbor}
+\chapter{Detailní analýza}
+
+\section{použitý herní engine}
+- máme několik možností:
+- napsat si vlastní (ne, moc práce)
+- použít low level (XNA) - opět ne, moc práce
+- Unity nebo Unreal Engine\\
+- Unity mělo alespoň v době analýzy této práce problémy s dynamickým navmeshem, oproti tomu mělo editovatelný terén. Další nevýhoda je absance editorů materiálu tk jak je tomu v UE
+- Unreal je prostě nej
+
+\section{Herní svět}
+
+- Herní svět je složen z bloků\\
+- velikost bloků je omezena, minimální velikost bloku je 20 na 3 cm\\
+- maximální velikost bloku je 20ti násobek
+
+- mám různé tvary - krychle, stranově seříznutá krychle, tělně říznutá krychle (obrázky)
+- pak jsou zde i speciální tvary - ty bylo nutné vymodelovat v Cinemě4D
+- speciální tvary definují svoji pevnou velikost, od této definice se pak odvíjí další vlastnosti (výpočet zdraví, energie bloku)
+
+\section{Vlastnosti bloků}
+- bloky mohou mít několik vlastností:\\
+- mít možnost elektriky a zapojení do elektrické sítě\\
+- mít možnost uchování kyslíku, v případě použitíí elektirky pak i generování
+- bloky mohou být použitelné, tj. hráč s nimi může nějakým zůsobem interagovat
+- bloky mohou být sebratelné, tedy hráč si je může dát do svého inventáře. vlastnosti jako třeba uchovaná hodnota kyslíku, pak zůstávají zachované
+- bloy mohou být zákadem pro rozpoznávání tvarů
+
+\section{Uchování informace o blocích ve světě}
+- je více mmožností. Uchování pole 50000 x 50000 x 25000 // todo ověřit
+je nesmysl. \\
+- nepotřebujeme otevřený svět bez mřížky (pozdější aktualizace ME, jinak SE), takže budeme hledat nějakou variantu stromové struktury
+- nabízí se možnost clustorování budov a shlukování do skupin, s následnou optimalizací počtu hladin
+- my jsme zvolili K-D strom kombinovatný s AABB.
+- náš strom  má optimalizaci jedinného potomka, v případě potřeby se dogeneruje do úrovně níže, případně rozpadne na podčásti a rekurzivně se přidá.
+- díky této variantě se můžeme snadno dotazovat na sousedy, což je hlavní cíl
+
+\section{Počasí}
+- počasí chceme proměnlivé ale s tím, že gamedesignéři mohou snadno ovlňovat výsledné počasí, případně aby šlo snadno rozšířit varianty pro různé herní módy\\
+budeme mít ve světě umístenou entitu (Pawn) ovládaný AI Controllerem  - to z toho důvodu, že pro AI Controller můžeme použít BehaviorTree
+\\
+- popsat BT\\
+další možnosti by byly, že bychom prostě použili update smyčku nějakého Actora - není potřeba, tohle se vyřeší updatem na komponentě
+
 
 Zde bych měl realisticky vybrané cíle rozebrat do podrobna.
 
