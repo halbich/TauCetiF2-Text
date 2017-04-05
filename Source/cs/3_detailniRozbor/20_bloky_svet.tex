@@ -1,0 +1,18 @@
+%!TEX root = ../prace.tex
+
+\section{Bloky v herním světě}
+
+
+- je více mmožností. Uchování pole 50000 x 50000 x 25000 // todo ověřit
+je nesmysl. 
+
+- nepotřebujeme otevřený svět bez mřížky (pozdější aktualizace ME, jinak SE), takže budeme hledat nějakou variantu stromové struktury
+
+- nabízí se možnost clustorování budov a shlukování do skupin, s následnou optimalizací počtu hladin
+
+- my jsme zvolili K-D strom kombinovatný s AABB. (proč? )
+
+- náš strom  má optimalizaci jedinného potomka, v případě potřeby se dogeneruje do úrovně níže, případně rozpadne na podčásti a rekurzivně se přidá.
+
+- díky této variantě se můžeme snadno dotazovat na sousedy, což je hlavní cíl (proto)
+

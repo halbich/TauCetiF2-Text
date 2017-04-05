@@ -12,5 +12,6 @@ prace.pdf: prace.tex $(wildcard *.tex) literatura.bib prace.xmpdata
 	cp -T prace.pdf ../output/Bakalarka.pdf
 
 clean:
-	rm -f *.log *.dvi *.aux *.toc *.lof *.lot *.out *.bbl *.blg *.xmpi
+	rm -rf *.log *.dvi *.aux *.toc *.lof *.lot *.out *.bbl *.blg *.xmpi
+	find -name '*.aux' | xargs rm
 	rm -f prace.pdf
