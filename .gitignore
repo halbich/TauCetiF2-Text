@@ -1,1 +1,9 @@
 Source/cs/prace.synctex.gz
+*.aux
+*.log
+*.xmpi
+*.bbl
+*.blg
+*.lof
+*.out
+*.toc
