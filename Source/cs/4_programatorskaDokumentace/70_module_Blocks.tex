@@ -1,0 +1,36 @@
+%!TEX root = ../prace.tex
+
+Modul bloků obsahuje podstatné informace o tom, jak hra pracuje s bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty atd. 
+
+- základní definice bloku je v (Block.h)
+
+- block.h definuje hromadu společných věcí tak, aby nějaké základní bloky bylo možné implementovat třeba komplet v BP a neřešit vůbec kód. (To neplatí pokud blok má třeba Electricity component - díky odložené inicializaci by se správně nepropisovaly infa apod)
+
+\subsubsection{Komponenty bloků}
+- pak máme komponenty bloků a nějaké interfaces
+
+\subsubsection{Definice bloků}
+- popsat způsob definice bloků
+
+\subsubsection{Nalezení bloků}
+- popsat block holder a co všechno pro nás znamená
+
+
+\subsubsection{Ukládání}
+
+- ukládání - máme něco jako block saving helpers
+
+\subsubsection{(Jednotlivé implementace)}
+
+-popsat vstrvení )to se použíá i v BP
+ - strom základní tvary / speci. impl (elektr, kyslík) apod
+
+\subsubsection{Základní tvary}
+- 3 varianty krychle
+
+\subsubsection{Speciální}
+- popsat speciální bloky + nějaké speciality co umějí (showableWidget)
+
+
+\subsubsection{Hurá na stromy}
+popsat stromové struktury, které tam mám

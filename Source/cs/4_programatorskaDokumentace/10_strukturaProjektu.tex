@@ -1,20 +1,48 @@
 %!TEX root = ../prace.tex
 
-\section{Struktura}
+\section{Struktura kódu}
 
-- nakreslit diagram vazeb
+Program se dělí do několika modulů. Jejich struktura je zachycena na obrázku \ref{fig:obrStruktura_DependencyDiag}.
 
-\subsection{Commons}
+\begin{figure}[h!]\centering
+\includegraphics[ height=70mm]{../img/dependencyDiag.png}
+
+\caption{Diagram závislostí modulů projektu.}
+\label{fig:obrStruktura_DependencyDiag}
+
+\end{figure}
+
+Když si otevřeme zdrojovou sln projektu, tak uvidíme, že každý modul má několik podřízených věcí: 
+
+- složku Private
+
+- složku Public
+
+- soubory .Build.cs, .h, .cpp
+
+Každý modul pak má hlavičkové soubory ve složce Public, implementaci tříd pak ve složce Private. Poslední tři soubory jsou kvůli UBT a // TODO použitá zkratka 
+použitím herních modulů v rámci UE
 
 
-\subsection {Blocks}
 
-\subsection{Inventory}
+\subsection{Modul Commons}
+\input{./4_programatorskaDokumentace/50_module_Commons.tex}
 
-\subsection{Gamesave}
 
-\subsection{TauCetiF2}
+\subsection{Modul Game Save}
+\input{./4_programatorskaDokumentace/60_module_GameSave.tex}
 
-- primární modul
+
+\subsection{Modul Blocks}
+\input{./4_programatorskaDokumentace/70_module_Blocks.tex}
+
+
+\subsection{Modul Inventory}
+\input{./4_programatorskaDokumentace/80_module_Inventory.tex}
+
+
+\subsection{Modul TauCetiF2}
+\input{./4_programatorskaDokumentace/90_module_Main.tex}
+
 
 
