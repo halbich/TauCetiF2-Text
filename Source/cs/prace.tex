@@ -59,6 +59,15 @@
 \usepackage{paralist}       % lepší enumerate a itemize
 \usepackage[usenames]{xcolor}  % barevná sazba
 
+
+% Load the package with the acronym option
+\usepackage[acronym, nonumberlist, nopostdot, toc]{glossaries}
+
+% Generate the glossary
+\makeglossaries
+%\makenoidxglossaries
+\include{zkratky_def}
+
 %%% Údaje o práci
 
 % Název práce v jazyce práce (přesně podle zadání)
@@ -130,6 +139,7 @@ Abstract.
 
 %% Vlastní makra
 \include{customCommands}
+
 
 %%% Strana s automaticky generovaným obsahem bakalářské práce
 

@@ -7,3 +7,11 @@ Source/cs/prace.synctex.gz
 *.lof
 *.out
 *.toc
+*.acn
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.acr
+*.xdy
