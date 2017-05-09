@@ -4,7 +4,7 @@
 
 V době vzniku této práce jsou velice populární budovatelské hry s otevřeným světem. Autor této práce si je taktéž rád zahraje a rád by touto prací představil svoji vizi dalšího možného rozvoje tohoto žánru.
 
-Tyto hry se vyznačují tím, že hráč využívá stavebních bloků k tomu, aby rozšiřoval své herní možnosti v těchto světech. Dalším společným prvkem je přítomnost zdraví hráčova avataru (postavy, za kterou hráč hraje) a dalších survival atributů. Dokonce můžeme tvrdit, že je hráč nucen využívat alespoň určité minimum bloků, protože jinak by v herním světem nepřežil a tím hra obvykle končí. \\
+Tyto hry se vyznačují tím, že hráč využívá stavebních bloků k tomu, aby rozšiřoval své herní možnosti v těchto světech. Dalším společným prvkem je přítomnost zdraví hráčova avataru (postavy, za kterou hráč hraje) a dalších survival atributů. Dokonce můžeme tvrdit, že je hráč nucen využívat alespoň určité minimum bloků, protože jinak by v herním světem nepřežil a tím hra obvykle končí.
 
 \section{Herní bloky}
 
@@ -20,6 +20,15 @@ Obvykle je ve hře definován jeden základní rozměr bloku, který je neměnn�
 Autoři těchto výtvorů museli volit takové měřítko, aby byly výtvory dostatečně detailní, ale zároveň aby bylo možné výtvor postavit v nějakém rozumném čase. Obecně ale můžeme říct, že čím větších detailů chtěli autoři dosáhnout, tím větší musel celý výtvor být, ale za ceny toho, že velké plochy trvaly o to déle.
 
 V této práci se chceme zaměřit na to, aby hráč mohl ovlivnit velikost stavěných bloků. Tedy aby mohl snadno stavět rozsáhlé struktury, ale zároveň aby se mohl piplat s detaily, pokud je to hráčovým cílem.
+
+\section{Inventář}
+Dalším společným prvkem tohoto druhu her je inventář bloků, které může hráč umístit do herního světa. Hráč přes celé herní okno vidí \gls{hud}, ve kterém má zobrazenou kromě jiného nabídku bloků, které má na rychlé volbě, může je snadno zvolit a daný blok umístit do herního světa. Navíc hry mohou definovat skupiny bloků (\SE{}, \ME{}), mezi kterými hráč může přepínat a tím rychle kompletně změnit sadu rychlé nabídky. Vidíme však limitaci v tom, že hráč musí ručně spravovat tyto seznamy a jednotlivé bloky (či nástroje) umisťovat do příslušných pozic.
+
+Rádi bychom navrhli jiný způsob správy těchto sad, aby hráč jednou definoval, jaké prvky chce mít v příslušných sadách. Při vytvoření nového bloku by pak nemusel ručně editovat sadu, ale automaticky by měl tento nový blok k dispozici.  // TODO aplikovat do hry - typy bloků jako tagy
+
+\section{Herní nepřítel}
+Protože samotné stavění bez nějakého cíle či překážky není úplně zábavné, musíme hráči připravit nějakou překážku, komplikaci, kterou musí překonávat. Zde neexistuje jednoznačné řešení --- to je závislé na celkovém prostředí hry, zamýšlené cílově skupině a mnoha dalších faktorech. Cílem našeho hráče bude přežít kyselé deště. Ty budou přicházet v náhodných intervalech a budou sloužit jako překážka v rozvoji hry. Zároveň to ale bude pro hráče nástroj, jak získávat prostředky pro ochranu před dalšími dešti a rozvoj svých staveb. 
+
 
 \section{Cíle práce}
 Tato práce by měla naplnit následující cíle:

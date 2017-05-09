@@ -2,13 +2,51 @@
 
 \chapter{Analýza zadání}
 
-V této části provedeme rozbor toho, jak různé hry v současné době přistupují k řešení jednotlivých součástí hry. 
+V této části provedeme rozbor toho, jak různé hry v současné době přistupují k řešení jednotlivých součástí hry. Tím si připravíme prostor pro specifikaci toho, jak by naše hra mohla vypadat a co všechno by měla umět.
+
+// TODO remove me:
+Úkol zněl jasně: Cílem bakalářské práce je implementace budovatelské hry se strategickými prvky, hranou z pohledu třetí osoby. Hra se odehrává na nehostinné planetě, kde je hráčův úhlavní nepřítel nedostatek zdrojů a superkyselé deště. Hráč začíná v menší budově – zbytek přistávacího modulu kosmické lodi. Dochází mu elektrická energie i kyslík a je na hráči, aby takticky využíval dostupné zdroje, hledal nové možnosti výroby energie a přežil kyselé bouře. Cílem práce není vytvořit dohratelnou hru, spíše proof-of-concept, zda je tento typ hry s uvedenými mechanikami zábavný a má smysl v jejím vývoji pokračovat i nadále.
 
 \section{Stávající implementace mechanismů}
-- v dalším textu budeme vycházet z her: \\
 
-Minecraft \\
-Space Engineers / Medieval Engineers \\
+V následujících podkapitolách si rozebereme jednotlivé části her a jak je implementují ostatní.
+
+\subsection{Bloky}
+
+různé druhy, velikosti, jejich vizuální reprezentace, rozšiřovatelnost
+
+\subsubsection{Základní vlastnosti}
+rozměry
+
+\subsubsection{Součásti bloků}
+komponenty elektřiny, inventáře
+
+
+\subsection{Herní svět}
+
+\subsubsection{Reprezentace}
+
+MC - bloky, chuncks
+
+\subsubsection{Denní / noční cyklus}
+
+obvykle tam je
+
+\subsubsection{(Ne)fyzikální chování}
+
+MC - bloky stojí ve vzduchu, ale třeba písek při updatu začne padat
+
+\subsection{Inventář}
+
+mc pevné sloty
+
+
+\subsection{Backlog}
+
+- v dalším textu budeme vycházet z her:
+
+Minecraft 
+Space Engineers / Medieval Engineers 
 
 \begin{itemize}
 	\item popsat, jak je to v jednotlivých zmíněných hrách (musel jsem je nutně hrát všechny?)
@@ -19,9 +57,9 @@ Space Engineers / Medieval Engineers \\
 \section{Rozbor zadání}
 
 Zde bychom měli popsat, co by se nám ve hře líbilo a stanovit reálnost implementace
-\\
 
-Nejspíše se text bude prolínat s kapitolou - dalším vývojem?\\
+
+Nejspíše se text bude prolínat s kapitolou - dalším vývojem?
 Měl bych si tu vysnit celou hru, nebo to spíše seškrtat?
 
 
