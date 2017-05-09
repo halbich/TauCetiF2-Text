@@ -2,9 +2,20 @@
 
 \section{Struktura kódu}
 
-Protože jsme zvolili implementaci práce v Unreal Enginu, můžeme využít toho, že engine umožňuje rozdělit celý herní projekt do jednotlivých herních modulů\citep{epicGameplayModules}. Tím docílíme jisté modularity, nebudeme mít celý projekt v jednom kuse a zároveň tím urychlíme překlad projektu při kompilaci.
+Protože jsme zvolili implementaci práce v Unreal Enginu, můžeme využít toho, že engine umožňuje rozdělit celý herní projekt do jednotlivých herních modulů\citep{epicGameplayModules}. Tím docílíme modularity, nebudeme mít celý projekt v jednom kuse a zároveň tím urychlíme překlad projektu při kompilaci.\\
+Každý UE projekt musí definovat právě jeden primární herní modul. Pokud využijeme možnosti vytvoření nového projektu založeného na C++, editor tento modul automaticky vytvoří za nás. My jsme pojmenovali náš projekt {\tt TauCetiF2} a tak se jmenuje i náš primární modul.
 
-Program se dělí do několika modulů. Jejich struktura je zachycena na obrázku \ref{fig:obrStruktura_DependencyDiag}.
+Jednotlivé části projektu jsme rozdělili do několika herních modulů:
+
+\begin{enumerate}
+	\item TauCetiF2 (primární modul)
+	\item Inventory
+	\item Blocks
+	\item Game Save
+	\item Commons
+\end{enumerate}
+
+Herní moduly jsme seřadili dle jejich závislosti tak, že každý modul závisí na všech modulech s vyšším očíslováním. Tedy primární modul využívá všech ostatních modulů a poslední modul (Commons) není závislý na žádném dalším modulu. Pro lepší představu můžeme tyto souvislosti vyjádřit obrázkem \ref{fig:obrStruktura_DependencyDiag}: 
 
 \begin{figure}[h!]\centering
 \includegraphics[ width=140mm]{../img/dependencyDiagram}
@@ -14,13 +25,16 @@ Program se dělí do několika modulů. Jejich struktura je zachycena na obrázk
 
 \end{figure}
 
-Když si otevřeme zdrojovou sln projektu, tak uvidíme, že každý modul má několik podřízených věcí: 
 
-- složku Private
 
-- složku Public
+\subsection{Struktura modulu}
+Všechny moduly dodržují společnou strukturu. Obsahují:
+\begin{itemize}
+	\item složku \verb!Public!
+	\item složku \verb!Private!
+	\item soubory \verb![název_modulu].Build.cs!,\verb![název_modulu].h!, \verb![název_modulu].cpp!
+\end{itemize}
 
-- soubory .Build.cs, .h, .cpp
 
 Každý modul pak má hlavičkové soubory ve složce Public, implementaci tříd pak ve složce Private. Poslední tři soubory jsou kvůli UBT a // TODO použitá zkratka 
 použitím herních modulů v rámci UE
