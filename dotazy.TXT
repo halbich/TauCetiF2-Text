@@ -1,1 +1,4 @@
-kde seženu šablonu na obal Bc práce?
+kde seženu šablonu na obal Bc práce? - jenom text
+
+
+Když si otevøu výstup v Readeru, tak vidím v title baru "Název práce" - nevadí to?

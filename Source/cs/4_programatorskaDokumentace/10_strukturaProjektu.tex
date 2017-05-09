@@ -2,10 +2,12 @@
 
 \section{Struktura kódu}
 
+Protože jsme zvolili implementaci práce v Unreal Enginu, můžeme využít toho, že engine umožňuje rozdělit celý herní projekt do jednotlivých herních modulů\citep{epicGameplayModules}. Tím docílíme jisté modularity, nebudeme mít celý projekt v jednom kuse a zároveň tím urychlíme překlad projektu při kompilaci.
+
 Program se dělí do několika modulů. Jejich struktura je zachycena na obrázku \ref{fig:obrStruktura_DependencyDiag}.
 
 \begin{figure}[h!]\centering
-\includegraphics[ height=70mm]{../img/dependencyDiag.png}
+\includegraphics[ width=140mm]{../img/dependencyDiagram}
 
 \caption{Diagram závislostí modulů projektu.}
 \label{fig:obrStruktura_DependencyDiag}

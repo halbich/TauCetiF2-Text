@@ -7,10 +7,17 @@
   howpublished = {Web},
 }
 
-@Online{,
+@Online{se_blocks_wiki,
   author = {{Space Engineers WIKI}},
   title  = {Blocks},
   url    = {http://spaceengineers.wikia.com/wiki/Category:Blocks},
+}
+
+@Online{epic_gameplayModules,
+  author   = {Epic Games, Inc},
+  title    = {Gameplay Modules},
+  url      = {https://docs.unrealengine.com/latest/INT/Programming/Modules/Gameplay/},
+  language = {En},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}
