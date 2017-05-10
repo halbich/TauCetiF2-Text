@@ -17,11 +17,3 @@ uživatelská dokumentace
 (dotazník)
 
 
--- 
-
-texnics editor pro tex
-
-spellchecking
-
--- 
-TODO : struèný návod zprovoznìní sln z fresh klonu z githubu / DVD
