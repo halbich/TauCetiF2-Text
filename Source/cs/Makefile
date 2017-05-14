@@ -2,6 +2,10 @@ export TEXINPUTS=../tex//:
 
 all: prace.pdf
 
+opt: 
+	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/ebook -dNOPAUSE -dQUIET -dBATCH -sOutputFile=../output/Bakalarka_s.pdf ../output/Bakalarka.pdf
+	rm -f ../output/Bakalarka.pdf
+
 # LaTeX je potreba spustit nekolikrat, aby spravne spocital odkazy
 prace.pdf: prace.tex $(wildcard *.tex) literatura.bib prace.xmpdata
 	/usr/local/texlive/2016/bin/x86_64-linux/pdflatex $<
