@@ -4,42 +4,7 @@
 \appendix
 \chapwithtoc{Přílohy}
 
-\renewcommand{\thesection}{\Alph{section}}
+%\renewcommand{\thesection}{\Alph{section}}
 
 
 
-
-\section{Minimální HW konfigurace}
-
-Doporučená minimální sestava (na ní byla hra vyvíjena): 
-
-\begin{center}
-	\begin{tabular} { | l | l |}
-		\hline
-		Procesor: 	&	Intel i7-2630QM @ 2.00GHz \\	\hline
-		RAM:		&	12 GB	(8 GB by mělo také stačit) \\	\hline
-		Grafika:	&	ATI Radeon HD 6700M \\	\hline
-		OS:		&	Win 10 x64  (7 a vyšší by měly být v pohodě) \\
-		\hline
-	\end{tabular}
-\end{center}
-
-\newpage
-
-\section{Požadavky na zprovoznění hry}
-
-
-Pro spuštění zkompilované hry není potřeba nic speciálního. Je zapotřebí mít stroj s minimální uvedenou konfigurací. Dále je dobré mít nainstalované poslední verze ovladačů HW komponent (hlavně grafiky). 
-
-Pokud je cílem spustit projekt hry ze zdrojových kódů, je potřeba si stáhnout Unreal Engine ve verzi 4.15 (TODO link!). Použití novější verze je možné, ale běžnému uživateli to nedoporučujeme. Mezi verzemi se mohou projevit nekompatibility v kódu, které je případně nutné řešit zásahy přímo do zdrojových kódů hry.
-Dále je potřeba mít k dispozici zdrojové kódy ať už z DVD, nebo z tohoto release na GitHubu (TODO link na public repo, release commit).
-
-Dále je zapotřebí vygenerovat solution pravým klikem na uproject file (TODO img!) Pokud tato možnost v kontextové nabídce není, je potřeba provést FIX . Ze zkušenosti autora - toto se mnohdy nemusí podařit. Pokud se nepodaří vygenerovat solution, může stačit otevřít projekt a dát zkompilovat chybějící binárky (TODO img!). Je zapotřebí mít VS 2015 alespoň ve verzi Community.
-
-Pokud i toto selže, ověřte si, prosím, že je možné založit nějaký projekt založený na C++ (todo font), zkompilovat jej a taktéž vygenerovat solution. Pokud se to povede s template, mělo by to fungovat i s tímto projektem.
-
-
-Dalším krokem je v případě úspěšného otevření ve VS (todo abrreviation) nastavení TCF2 jako výchozího projektu a následné spuštění. Dále by měl následovat krok spuštění Play in Editor v UE.
-
-
-Pokud vše selže, je možné nalézt příčinu chyby v logu (TODO) v Saved/Logs

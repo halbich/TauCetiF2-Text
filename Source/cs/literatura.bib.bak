@@ -13,11 +13,48 @@
   url    = {http://spaceengineers.wikia.com/wiki/Category:Blocks},
 }
 
-@Online{epic_gameplayModules,
+@Online{epicGameplayModules,
   author   = {Epic Games, Inc},
   title    = {Gameplay Modules},
   url      = {https://docs.unrealengine.com/latest/INT/Programming/Modules/Gameplay/},
   language = {En},
+}
+
+@Online{mc_block,
+  author   = {Minecraft Wiki},
+  title    = {Block},
+  url      = {http://minecraft.gamepedia.com/Block},
+  language = {English},
+  urldate  = {15. 5. 2017},
+}
+
+@Online{mc_units,
+  author = {Minecraft Wiki},
+  title  = {Tutorials/Units of measure},
+  url    = {http://minecraft.gamepedia.com/Tutorials/Units_of_measure},
+}
+
+@Online{mc_te_comparsion,
+  author  = {dillonsup},
+  title   = {Minecraft Vs Terraria (Facts)},
+  url     = {http://www.minecraftforum.net/forums/minecraft-discussion/discussion/178129-minecraft-vs-terraria-facts},
+  note    = {internetové fórum},
+  urldate = {2017-05-15},
+  comment = {Internetové fórum},
+}
+
+@Online{se_intro_img,
+  author = {GameSpot},
+  title  = {Space Engineers},
+  url    = {https://static.gamespot.com/uploads/original/1365/13658182/2626082-space-engineers1.jpg},
+}
+
+@MastersThesis{hud_terminology,
+  author      = {Erik Fagerholt; Magnus Lorentzon},
+  title       = {Beyond the HUD - User Interfaces for Increased Player Immersion in FPS Games},
+  institution = {Chalmers University of Technology, Göteborg, Švédsko},
+  year        = {2009},
+  url         = {http://www.gamasutra.com/view/feature/4286/game_ui_discoveries_what_players_.php},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}
