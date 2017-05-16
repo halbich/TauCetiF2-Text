@@ -70,7 +70,19 @@
   author = {Devmaster.net},
   title  = {Game Engines (filtered)},
   date   = {2017-05-16},
-  url    = {http://devmaster.net/devdb/engines?utf8=%E2%9C%93&query=&name=&developer_name=&status=active&languages_supported_ids%5B%5D=1&languages_supported_ids%5B%5D=3&features_ids%5B%5D=1&features_ids%5B%5D=2&features_ids%5B%5D=3&features_ids%5B%5D=4&features_ids%5B%5D=5&features_ids%5B%5D=6&features_ids%5B%5D=7&features_ids%5B%5D=8&features_ids%5B%5D=12&features_ids%5B%5D=13&features_ids%5B%5D=16&features_ids%5B%5D=18},
+  url    = {http://devmaster.net/devdb/engines?query=&name=&developer_name=&status=active&languages_supported_ids%5B%5D=1&languages_supported_ids%5B%5D=3&features_ids%5B%5D=1&features_ids%5B%5D=2&features_ids%5B%5D=3&features_ids%5B%5D=4&features_ids%5B%5D=5&features_ids%5B%5D=6&features_ids%5B%5D=7&features_ids%5B%5D=8&features_ids%5B%5D=12&features_ids%5B%5D=13&features_ids%5B%5D=16&features_ids%5B%5D=18},
+}
+
+@Online{unity_loc,
+  author = {Unity},
+  title  = {Localization Manager tutorial},
+  url    = {https://unity3d.com/learn/tutorials/topics/scripting/localization-manager},
+}
+
+@Online{ue_loc,
+  author = {Epic Games,},
+  title  = {Localization},
+  url    = {https://docs.unrealengine.com/latest/INT/Gameplay/Localization/},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}

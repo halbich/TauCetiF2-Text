@@ -31,44 +31,46 @@ Možných použitých enginů a frameworků je opravdu mnoho. Podívat do datab�
 
 Mezi čím tedy můžeme volit?
 \begin{itemize}
-	\item Implementace proprietárního enginu
-	\item Použití existující grafické knihovny
-	\item Použití existující herní engine
+	\item Implementace kompletního vlastního enginu
+	\item Použit existující grafické knihovny a nad tím implementovat vlastní engine
+	\item Použit existující herní engine
 \end{itemize}
 
 Je zřejmé, že možností na výběr máme opravdu hodně. V následujících podkapitolách si jednotlivé možnosti podrobně rozebereme.
 
 \subsection{Vlastní engine}
-Hlavní výhodou, ale zároveň nevýhodou této volby je to, že bychom si všechny potřebné součásti enginu (třeba renderování) museli napsat sami. Tím bychom měli naprostou kontrolu nad celým produktem, ale zabralo by nám to netriviální množství času.
-Vzhledem k rozsahu plánované funkcionality by tato volba byla nepraktická a tedy touto cestou se nevydáme.
+Tuto možnost rovnou zavrhneme. Vzhledem k tomu, kolik funkcionality budeme implementovat, nevidíme přínos v další práci s implementací vlastního enginu. Naším cílem je prototyp hry a tudíž nechceme ztrácet drahocenný čas vývojem nutných nástrojů a systému pro naši hru.
 
-\subsection{Nízkoúrovňový framework}
-Máme na výběr z více druhů frameworků postavených na různých platformách. Mezi známějšími bychom mohli uvést například XNA (\texttt{C\#}) nebo Ogre (\texttt{C++}). Oba frameworky jsou k dispozici zdarma, nicméně jejich podpora stagnuje. Implementace hry s použitím některého z těchto frameworků by byla rychlejší než v předchozím případě, ale stále bychom museli spoustu funkcionality implementovat sami. 
+
+\subsection{Vlastní engine s použitím již existujících grafických knihoven}
+Máme na výběr z více druhů grafických frameworků postavených na různých platformách. Mezi známějšími bychom mohli uvést například \XNA{} (\CS{}) či jeho klon \MG{} (\CS{}). Oba frameworky jsou k dispozici zdarma, podpora \XNA{} je v současné době už ukončena, vývoj \MG{} je stále aktivní. Implementace hry s použitím některého z těchto frameworků by byla rychlejší než v předchozím případě, ale stále bychom museli spoustu funkcionality implementovat sami. 
 
 \subsection{Existující herní engine}
-V této kategorii máme nejvíce možností jak rychle implementovat celou práci. Zástupců je opět mnoho, nicméně mezi nejoblíbenější se řadí Unity (\texttt{C\#}) a \UE{}(\texttt{C++}), které jsou oba zdarma. Díky práci komunity pro oba enginy existuje i kvalitní dokumentace. Navíc jsou enginy obvykle multiplatformní a tedy existuje zde snadný postup distribuce na různé typy herních zařízení. Při rešerši jsme zjistili následující klady a zápory:
+Jak jsme již předeslali výše, v této kategorii máme nejvíce možností. Buď můžeme využít enginy jako třeba\OG{} (\CPP{}), nebo použít více robustnější řešení v podobě enginů typu \UN{} (\texttt{C\#}) či \UE{} (\texttt{C++}). Zde opět použijeme předchozí argument --- budeme hledat engine, který nám nabídne pokud možno co nejvíce uživatelské a vývojářské přívětivosti a bude poskytovat dostatek nástrojů pro vývoj naší hry v uvažovaném rozsahu. Tudíž enginy jako třeba \OG{} nebudou naší volbou.
+
+Výhodou zmíněných robustních enginů je to, že jsou k dispozici zdarma (oproti třeba \CRY{}). Taktéž zde, díky práci komunity, existuje pro oba enginy  kvalitní vývojová dokumentace. Dalším kladem je fakt, že jsou oba multiplatformní a tedy zde existuje relativně snadný postup v případě distribuce na různé typy herních zařízení. Pojďme si je tedy rozebrat podrobněji.
 
 \subsubsection{Unity}
-Výhoda (ale i nevýhoda) Unity je celkově v jednoduchosti. Engine nabízí dostatečné možnosti i pro tvorbu AAA herních titulů, ale za cenu toho, že si toho autoři musejí dost napsat sami (oproti \UE{}). 
-\begin{itemize}
-	\item Klady
-		\subitem -- Pokud bychom chtěli modifikovatelný či nějakým způsobem dynamický terén, Unity implementuje podporu modifikace terénu.
-	\item Zápory
-		\subitem -- Při rešerši jsme řešili podporu dynamického navigačního meshe, která v Unity nebyla příliš dobrá. Při změně prostředí docházelo k lagům během přepočtu navmeshe. To by byl při umisťování bloků zásadní problém.
-		\subitem -- Další nevýhodou je podpora materiálů, kdy bychom snadným způsobem nedosáhli vizuálně přitažlivého prostředí.
+Výhodu \UN{} vidíme v tom, že i programátor bez rozsáhlých zkušeností s herním vývojem může začít velmi brzy prototypovat a vyvíjet hry v tomto enginu. Dalším pozitivem je programování v \CS{} a možnost editovatelného terénu.
 
-\end{itemize}
+Použití \UN{} s sebou přináší i několik problémů, které bychom museli během vývoje řešit. Během rešerše jsme zaznamenali problémy s aktualizací dynamického navigačního meshe, kdy aktualizace tohoto meshe způsobovala krátkodobé zaseknutí hry (tzv. lagy). Můžeme očekávat, že tato funkcionalita bude v budoucnu vylepšena a zrychlena, nicméně na konkrétní datum se nemůžeme spoléhat. Vzhledem k povaze naší hry ale můžeme očekávat časté modifikace herního světa a tudíž toto chování pro nás představuje významný problém. Další nevýhodu vidíme v materiálovém editoru, který nabízí oproti \UE{} limitované možnosti a pro implementaci náročnějších materiálových funkcí bychom museli přistoupit k implementaci vlastních shaderů.
+
+Co se lokalizace hry týče, museli bychom si napsat vlastní správu lokalizace\citep{unity_loc}. \UE{} má tuto funkcionalitu implementovanou ve svém editoru\citep{ue_loc}.
+
 
 \subsubsection{Unreal Engine}
-Oproti Unity je \UE{} podstatně komplexnější a pochopení všech vztahů a závislostí může být pro začínajícího herního programátora obtížné. Dalším zdrojem problémů může být i programování v \texttt{C++}, které je navíc díky technologii \UBT{} trochu jiné než klasické \texttt{C++} a je potřeba dodržovat standardy definované \UE{}.
-\begin{itemize}
-	\item Klady
-		\subitem -- Komplexnější engine (\UE{} je primárně určen pro vývoj AAA titulů)
-		\subitem -- Oproti Unity lepší podpora materiálů --- i negrafik může snadno vytvořit vizuálně přitažlivé povrchy objektů a nemusí se přitom zabývat psaním vlastních shaderů 
-		\subitem -- Rychlý dynamický navmesh
-	\item Zápory
-		\subitem -- Komplexnější engine
+Oproti \UN{} je \UE{} podstatně komplexnější a pochopení všech vztahů a závislostí může být pro začínajícího herního programátora obtížné. Přes tuto zjevnou nevýhodu jsme však běhe, rešerš zjistili, že \UE{} nám poskytuje podstatně příjemnější prostředí pro vývoj s komplexnějšími nástroji. Grafické možnosti máme díky materiálovému editoru k dispozici od začátku a nemusíme k tomu umět psát shadery třeba v jazyce HLSL. Je nám jasné, že výsledný grafický výkon nemusí být nutně optimální, nicméně vzhledem k povaze této práce stejně nebudeme cílit na grafickou a výkonovou optimalizaci.
 
-\end{itemize}
+Testy s navigačním meshem a jeho dynamickou aktualizací byly uspokojivé - nenarazili jsme na žádný zádrhel nebo pokles výkonu během aktualizace meshe. 
 
-Nakonec jsme zvolili poslední možnost - Unreal Engine. Autorovy znalosti především z oblasti \texttt{C\#} sice hovořily pro použití Unity, nicméně výhody použití \UE{} převážily nad nevýhodami i všemi výhodami Unity.	// TODO tohle chce vyladit
+Co musíme zmínit jako nevýhodu je absence editovatelného terénu. (TODO link). V editoru je možné vytvořit krásný terén se rozličnými možnostmi detailů, nicméně tento terén není možné jednoduchým způsobem editovat. Chápeme to spíše jako nepříjemnost, než zásadní nevýhodu. 
+
+Další komplikaci vidíme v použití \CPP{}, se kterým jsme v době rešerše měli malé zkušenosti.
+
+
+
+
+\subsection{Volba engine -verdikt}
+
+
+Nakonec jsme zvolili poslední možnost - \UE{}. Autorovy znalosti především z oblasti \texttt{C\#} sice hovořily pro použití \UN{}, nicméně výhody použití \UE{} převážily nad nevýhodami i všemi výhodami \UN{}.	// TODO tohle chce vyladit
