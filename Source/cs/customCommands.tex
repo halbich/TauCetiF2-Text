@@ -8,8 +8,16 @@
 \newcommand{\ARK}{\textit{ARK Survival Evolved}}
 \newcommand{\NMS}{\textit{No man's sky}}
 
+\newcommand{\UE}{\textit{Unreal Engine}}
+
+\newcommand{\NPC}{\textit{NPC}}
+\newcommand{\HUD}{\textit{HUD}}
+\newcommand{\UBT}{\textit{UBT}}
 
 
+\DeclareUnicodeCharacter{2713}{\tick}
+\DeclareRobustCommand\tick{%
+  \unskip\nobreak\thinspace\textemtick\allowbreak\thinspace\ignorespaces}
 
 
 
@@ -22,8 +30,8 @@
   & \stepcounter{subcategorycounter}%%'
     \Alph{mycategorycounter}\arabic{subcategorycounter}.}
 
-\newcommand{\tableColumnTitles}[3]{%%'
-  &\multicolumn{2}{l}{#1}&#2&#3 \\}
+\newcommand{\tableColumnTitles}[2]{%%'
+  &\multicolumn{2}{l}{#1}#2 \\}
 %% create the category names; rules are here to add open space
 %% above and below entry.  I use `\rlap` to alow the category
 %% name to apparently span multiply columns
@@ -32,4 +40,4 @@
    \rule[-1ex]{0pt}{1pt}%%'
    \setcounter{subcategorycounter}{0}%%'
    \stepcounter{mycategorycounter}%'
-   \Alph{mycategorycounter} & \rlap{#1} & & & \\      }
+   \Alph{mycategorycounter} & \rlap{#1} & & & & & & }

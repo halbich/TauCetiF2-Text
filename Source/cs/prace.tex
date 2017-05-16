@@ -62,13 +62,17 @@
 \usepackage[section]{placeins}	%sectioning
 
 
+
+%% Vlastní makra
+\include{customCommands}
+
 % Load the package with the acronym option
-\usepackage[acronym, nonumberlist, nopostdot, toc]{glossaries}
+%\usepackage[acronym, nonumberlist, nopostdot, toc]{glossaries}
 
 % Generate the glossary
-\makeglossaries
+%\makeglossaries
 %\makenoidxglossaries
-\include{zkratky_def}
+%\include{zkratky_def}
 
 %%% Údaje o práci
 
@@ -139,8 +143,6 @@ Abstract.
 \begin{document}
 \include{titulka}
 
-%% Vlastní makra
-\include{customCommands}
 
 
 %%% Strana s automaticky generovaným obsahem bakalářské práce

@@ -4,128 +4,119 @@
 
 různé druhy, velikosti, jejich vizuální reprezentace, rozšiřovatelnost, obecně co všechno by měly umět\\
 
+Název - Min - Max - Pitch - Roll - Type (kostka, zkosený, roh, vlastní)
 
-\begin{tabular}{|rll*{2}{c}|}
+Tam kde Min == Max -> Vlastní škálování
+
+Typ ovlivňuje další chování
+
+Třeba u Světla by typ mohl být i K a hra by se chovala stejně, K = 1, Z = 0.5, R = 1/6, V = 1 (není v potaz objem)
+
+komponenty bloků a nějaké další ptákoviny
+
+\begin{tabular}{|rll*{5}{c}|}
 	\hline
-	\tableColumnTitles{Název}{Min}{Max}				\hline
-	\currentCategory{\textbf{Základní bloky}} 					\hline
-		\mytablerow 				& Blok základny				& xyz  & zyx  \\    					\hline
-		\mytablerow 				& Blok stavby				& xyz  & zyx  \\    					\hline
-		\mytablerow 				& Blok polykarbonátu		& xyz  & zyx  \\    					\hline
-		\mytablerow 				& Zkosený blok základny		& xyz  & zyx  \\    					\hline
-		\mytablerow 				& Zkosený blok stavby		& xyz  & zyx  \\    					\hline
-		\mytablerow 				& Roh bloku stavby			& xyz  & zyx  \\    					\hline
-	\currentCategory{\textbf{Speciální bloky}} 						\hline
-		\mytablerow 				& Terminál			 		& aaa  & bb   \\    			\hline
-		\mytablerow 				& Napájené okno				& ccc  & ddd  \\   					\hline
-		\mytablerow 				& Dveře 					& aaa  & bb   \\    			\hline
-		\mytablerow 				& Světlo					& ccc  & ddd  \\   					\hline
-		\mytablerow 				& Přepínač 					& aaa  & bb   \\    			\hline
-		\mytablerow 				& Generátor energie			& ccc  & ddd  \\   					\hline
-		\mytablerow 				& Generátor objektů 		& aaa  & bb   \\    			\hline
-		\mytablerow 				& Akumulátor				& ccc  & ddd  \\   					\hline
-		\mytablerow 				& Plnička kyslíkových bomb 	& aaa  & bb   \\    			\hline
-		\mytablerow 				& Kyslíková bomba			& ccc  & ddd  \\   					\hline
+	\tableColumnTitles{Název}								{	&	Min		&	Max			&	P			&	R			&T	}		\hline
+	\currentCategory{\textbf{Základní bloky}} 																					\\		\hline
+		\mytablerow 				& Blok základny				& 1--1--4	& 20--20--4		& 				& 				&K	\\		\hline
+		\mytablerow 				& Blok stavby				& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&K	\\		\hline
+		\mytablerow 				& Blok polykarbonátu		& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&K	\\		\hline
+		\mytablerow 				& Zkosený blok základny		& 1--1--4	& 20--20--4		& 				& 				&Z	\\		\hline
+		\mytablerow 				& Zkosený blok stavby		& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&Z	\\		\hline
+		\mytablerow 				& Roh bloku stavby			& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&R	\\		\hline
+	\currentCategory{\textbf{Speciální bloky}} 									 												\\		\hline
+		\mytablerow 				& Terminál			 		& 1--8--5 	& 1--8--5		& 				& 				&V	\\		\hline
+		\mytablerow 				& Napájené okno				& 2--1--2	& 20--1--20		& \checkmark	& \checkmark	&K	\\		\hline
+		\mytablerow 				& Dveře 					& 7--7--11	& 7--7--11		& 				& 				&V	\\		\hline
+		\mytablerow 				& Světlo					& 1--1--1	& 1--1--1		& \checkmark	& \checkmark	&V	\\		\hline
+		\mytablerow 				& Přepínač 					& 1--1--1	& 1--1--1		& \checkmark	& \checkmark	&V	\\		\hline
+		\mytablerow 				& Generátor energie			& 3--3--2	& 20--20--2		& 				& 				&K	\\		\hline
+		\mytablerow 				& Generátor objektů 		& 3--3--2	& 20--20--2		& 				& 				&K	\\		\hline
+		\mytablerow 				& Akumulátor				& 3--3--3	& 3--3--3		& 				& 				&V	\\		\hline
+		\mytablerow 				& Plnička kyslíkových bomb 	& 4--3--4	& 4--3--4		& 				& 				&V	\\		\hline
+		\mytablerow 				& Kyslíková bomba			& 2--2--2	& 2--2--2		& 				& 				&V	\\		\hline
 		
 \end{tabular}
 
 
+\subsection{Podrobný popis bloků}
+
+Popis některých vlastností - má energetickou komponentu - > implikuje definici bindovacích bodů
+má kyslíkovou komponentu - implikuje TotalObjectOxygen
+
+Producer nebo Consumer implikuje Total object energy
+
+Controllable implikuje IsController nebo IsControllable
 
 
 
+\subsubsection{A1 - Blok základny}
+- velikost v ose Z omezena na 4 základní bloky
 
+- má elektriku
 
-
-\subsubsection{Standardní bloky}
-- ty různé krychle
-
-\subsubsection{Kvádr}
+\subsubsection{A1 - Blok stavby}
 - všechny velikosti
 
 - má elektriku
 
-\subsubsection{Kvádr seříznutý stranou}
+\subsubsection{A1 - Blok polykarbonátu}
+- všechny velikosti
+- nejlevnější
+
+\subsubsection{A1 - Zkosený blok základny}
+- velikost v ose Z omezena na 4 základní bloky
+
+- má elektriku
+\subsubsection{A1 - Zkosený blok stavby}
 - všechny velikosti
 
 - má elektriku
-
-\subsubsection{Kvádr říznutý tělem}
+\subsubsection{A1 - Roh bloku stavby}
 -všechny velikosti
 
 - má elektriku
 
-\subsubsection{Kvádr -- základový}
-- velikost v ose Z omezena na 4 základní bloky
-
-- má elektriku
-
-\subsubsection{Kvádr seříznutý stranou -- základový}
-- velikost v ose Z omezena na 4 základní bloky
-
-- má elektriku
-
-\subsubsection{Kvádr -- polykarbonát}
-- všechny velikosti
-
-- má elektriku
-
-
-\subsubsection{Speciální bloky}
-- popsat speciality
-
-\subsubsection{Napájené okno}
-- minimální velikost 2 x 1 x 2, maximální velikost 20 x 1 x 20 základních bloků
-
-- má elektriku
-
-
-\subsubsection{Terminál}
+\subsubsection{B1 - Terminál}
 - speciální, pevná velikost 1 x 8 x 5 bloků
 
-- má elektriku
+- má elektriku, konzument, rychlé doplnění energie
+\subsubsection{B1 - Napájené okno}
+- minimální velikost 2 x 1 x 2, maximální velikost 20 x 1 x 20 základních bloků
 
-\subsubsection{Dveře}
+- má elektriku, konzument
+\subsubsection{B1 - Dveře}
 - speciální, pevná velikost 7 x 7 x 11 bloků
 
-- má elektriku
+- má elektriku, otevírání
+\subsubsection{B1 - Světlo}
+-velikost omezena na 1 x 1 x 1 blok
 
-\subsubsection{Kyslíková nádoba}
-- speciální, pevná velikost 2 x 2 x 2 bloků
+- má elektriku, konzument, ovládání bez přepínače
+\subsubsection{B1 - Přepínač}
+-velikost omezena na 1 x 1 x 1 blok
 
-- má kyslíkovou komponentu
+- má elektriku, náhled stavu
+\subsubsection{B1 - Generátor energie}
+- omezená velikost v ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v ostatních osách
 
-\subsubsection{Plnička kyslíkové nádoby}
-- speciální, pevná velikost 4 x 3 x 4 bloků
+- má elektriku, producent
+\subsubsection{B1 - Generátor objektů}
+- omezená velikost v ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v ostatních osách
 
-- má elektriku, kyslíkovou komponentu
-
-
-\subsubsection{Baterie}
+- má elektriku, konzument
+\subsubsection{B1 - Akumulátor}
 - speciální, pevná velikost 3 x 3 x 3 bloků
 
-- má elektriku
+- má elektriku, producent, konzument, rychlý náhled naplnění
+\subsubsection{B1 - Plnička kyslíkových bomb}
+- speciální, pevná velikost 4 x 3 x 4 bloků
 
-\subsubsection{Generátor bloků}
+- má elektriku, kyslíkovou komponentu, konzument, UI, rychlé doplnění kyslíku
 
-- omezená velikost v ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v ostatních osách
+\subsubsection{B1 - Kyslíková bomba}
+- speciální, pevná velikost 2 x 2 x 2 bloků
 
-- má elektriku
+- má kyslíkovou komponentu, možnost sebrat, rychlý náhled naplnění, rychlé doplnění kyslíku
+                                                  
 
-\subsubsection{Generátor energie}
-
-- omezená velikost v ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v ostatních osách
-
-- má elektriku
-
-\subsubsection{Světlo}
-
--velikost omezena na 1 x 1 x 1 blok
-
-- má elektriku
-
-\subsubsection{Spínač}
-
-
--velikost omezena na 1 x 1 x 1 blok
-
-- má elektriku

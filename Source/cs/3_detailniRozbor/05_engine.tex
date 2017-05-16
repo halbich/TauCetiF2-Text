@@ -19,10 +19,10 @@ Vzhledem k rozsahu plánované funkcionality by tato volba byla nepraktická a t
 Máme na výběr z více druhů frameworků postavených na různých platformách. Mezi známějšími bychom mohli uvést například XNA (\texttt{C\#}) nebo Ogre (\texttt{C++}). Oba frameworky jsou k dispozici zdarma, nicméně jejich podpora stagnuje. Implementace hry s použitím některého z těchto frameworků by byla rychlejší než v předchozím případě, ale stále bychom museli spoustu funkcionality implementovat sami. 
 
 \subsection{Existující herní engine}
-V této kategorii máme nejvíce možností jak rychle implementovat celou práci. Zástupců je opět mnoho, nicméně mezi nejoblíbenější se řadí Unity (\texttt{C\#}) a \gls{ue}(\texttt{C++}), které jsou oba zdarma. Díky práci komunity pro oba enginy existuje i kvalitní dokumentace. Navíc jsou enginy obvykle multiplatformní a tedy existuje zde snadný postup distribuce na různé typy herních zařízení. Při rešerši jsme zjistili následující klady a zápory:
+V této kategorii máme nejvíce možností jak rychle implementovat celou práci. Zástupců je opět mnoho, nicméně mezi nejoblíbenější se řadí Unity (\texttt{C\#}) a \UE{}(\texttt{C++}), které jsou oba zdarma. Díky práci komunity pro oba enginy existuje i kvalitní dokumentace. Navíc jsou enginy obvykle multiplatformní a tedy existuje zde snadný postup distribuce na různé typy herních zařízení. Při rešerši jsme zjistili následující klady a zápory:
 
 \subsubsection{Unity}
-Výhoda (ale i nevýhoda) Unity je celkově v jednoduchosti. Engine nabízí dostatečné možnosti i pro tvorbu AAA herních titulů, ale za cenu toho, že si toho autoři musejí dost napsat sami (oproti \gls{ue}). 
+Výhoda (ale i nevýhoda) Unity je celkově v jednoduchosti. Engine nabízí dostatečné možnosti i pro tvorbu AAA herních titulů, ale za cenu toho, že si toho autoři musejí dost napsat sami (oproti \UE{}). 
 \begin{itemize}
 	\item Klady
 		\subitem -- Pokud bychom chtěli modifikovatelný či nějakým způsobem dynamický terén, Unity implementuje podporu modifikace terénu.
@@ -33,10 +33,10 @@ Výhoda (ale i nevýhoda) Unity je celkově v jednoduchosti. Engine nabízí dos
 \end{itemize}
 
 \subsubsection{Unreal Engine}
-Oproti Unity je \gls{ue} podstatně komplexnější a pochopení všech vztahů a závislostí může být pro začínajícího herního programátora obtížné. Dalším zdrojem problémů může být i programování v \texttt{C++}, které je navíc díky technologii \gls{ubt} trochu jiné než klasické \texttt{C++} a je potřeba dodržovat standardy definované \gls{ue}.
+Oproti Unity je \UE{} podstatně komplexnější a pochopení všech vztahů a závislostí může být pro začínajícího herního programátora obtížné. Dalším zdrojem problémů může být i programování v \texttt{C++}, které je navíc díky technologii \UBT{} trochu jiné než klasické \texttt{C++} a je potřeba dodržovat standardy definované \UE{}.
 \begin{itemize}
 	\item Klady
-		\subitem -- Komplexnější engine (\gls{ue} je primárně určen pro vývoj AAA titulů)
+		\subitem -- Komplexnější engine (\UE{} je primárně určen pro vývoj AAA titulů)
 		\subitem -- Oproti Unity lepší podpora materiálů --- i negrafik může snadno vytvořit vizuálně přitažlivé povrchy objektů a nemusí se přitom zabývat psaním vlastních shaderů 
 		\subitem -- Rychlý dynamický navmesh
 	\item Zápory
@@ -44,4 +44,4 @@ Oproti Unity je \gls{ue} podstatně komplexnější a pochopení všech vztahů 
 
 \end{itemize}
 
-Nakonec jsme zvolili poslední možnost - Unreal Engine. Autorovy znalosti především z oblasti \texttt{C\#} sice hovořily pro použití Unity, nicméně výhody použití \gls{ue} převážily nad nevýhodami i všemi výhodami Unity.	// TODO tohle chce vyladit
+Nakonec jsme zvolili poslední možnost - Unreal Engine. Autorovy znalosti především z oblasti \texttt{C\#} sice hovořily pro použití Unity, nicméně výhody použití \UE{} převážily nad nevýhodami i všemi výhodami Unity.	// TODO tohle chce vyladit

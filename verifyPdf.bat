@@ -1,0 +1,1 @@
+C:\Users\Halbich\verapdf\verapdf -p UK-7987-version1-custom5.xml  -v ./Source/output/Bakalarka.pdf
