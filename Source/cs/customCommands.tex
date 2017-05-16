@@ -7,3 +7,29 @@
 \newcommand{\PN}{\textit{Planet Nomads}}
 \newcommand{\ARK}{\textit{ARK Survival Evolved}}
 \newcommand{\NMS}{\textit{No man's sky}}
+
+
+
+
+
+
+%% Two counters to keep track of categories and 
+%% subcategories
+\newcounter{mycategorycounter}
+\newcounter{subcategorycounter}
+
+\newcommand{\mytablerow}{%%'
+  & \stepcounter{subcategorycounter}%%'
+    \Alph{mycategorycounter}\arabic{subcategorycounter}.}
+
+\newcommand{\tableColumnTitles}[3]{%%'
+  &\multicolumn{2}{l}{#1}&#2&#3 \\}
+%% create the category names; rules are here to add open space
+%% above and below entry.  I use `\rlap` to alow the category
+%% name to apparently span multiply columns
+\newcommand{\currentCategory}[1]
+  {\rule{0pt}{3ex}%%'
+   \rule[-1ex]{0pt}{1pt}%%'
+   \setcounter{subcategorycounter}{0}%%'
+   \stepcounter{mycategorycounter}%'
+   \Alph{mycategorycounter} & \rlap{#1} & & & \\      }

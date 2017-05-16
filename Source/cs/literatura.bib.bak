@@ -54,7 +54,8 @@
   title       = {Beyond the HUD - User Interfaces for Increased Player Immersion in FPS Games},
   institution = {Chalmers University of Technology, Göteborg, Švédsko},
   year        = {2009},
-  url         = {http://www.gamasutra.com/view/feature/4286/game_ui_discoveries_what_players_.php},
+  pages       = {7},
+  url         = {http://publications.lib.chalmers.se/records/fulltext/111921.pdf},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}

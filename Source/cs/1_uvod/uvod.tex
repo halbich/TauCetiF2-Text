@@ -68,15 +68,18 @@ Autoři těchto výtvorů museli volit takové měřítko, aby byly výtvory dos
 
 
 \subsection{Náš návrh úpravy}
-Chtěli bychom dát hráči k dispozici možnost ovlivňovat velikost bloku. Tím by mohl rychleji stavět rozsáhlejší struktury a přitom se věnovat i drobným či estetickým detailům.
+Chtěli bychom se v této práci zabývat myšlenkou proměnlivé velikosti stavitelných bloků. Tím by mohl rychleji stavět rozsáhlejší struktury a přitom se věnovat i drobným či estetickým detailům. Tento návrh však s sebou nese několik problémů, které se v této práci budeme snažit vyřešit.
+
+
 
 \section{Inventář}
 Dalším společným prvkem tohoto druhu her je inventář bloků, které může hráč umístit do herního světa. Hráč přes celé herní okno vidí \gls{hud}\citep{hud_terminology}, ve kterém má zobrazenou kromě jiného nabídku bloků, které má na rychlé volbě, může je snadno zvolit a daný blok umístit do herního světa. Navíc hry mohou definovat skupiny bloků (\SE{}, \ME{}), mezi kterými hráč může přepínat a tím rychle kompletně změnit sadu rychlé nabídky. Vidíme však limitaci v tom, že hráč musí ručně spravovat tyto seznamy a jednotlivé bloky (či nástroje) umisťovat do příslušných pozic.
 
-Rádi bychom navrhli jiný způsob správy těchto sad, aby hráč jednou definoval, jaké prvky chce mít v příslušných sadách. Při vytvoření nového bloku by pak nemusel ručně editovat sadu, ale automaticky by měl tento nový blok k dispozici.  // TODO aplikovat do hry - typy bloků jako tagy
 
-\section{Herní nepřítel}
-Protože samotné stavění bez nějakého cíle či překážky není úplně zábavné, musíme hráči připravit nějakou překážku, komplikaci, kterou musí překonávat. Zde neexistuje jednoznačné řešení --- to je závislé na celkovém prostředí hry, zamýšlené cílově skupině a mnoha dalších faktorech. Cílem našeho hráče bude přežít kyselé deště. Ty budou přicházet v náhodných intervalech a budou sloužit jako překážka v rozvoji hry. Zároveň to ale bude pro hráče nástroj, jak získávat prostředky pro ochranu před dalšími dešti a rozvoj svých staveb. 
+\subsection{Náš návrh úpravy}
+Rádi bychom navrhli jiný způsob správy těchto sad, aby hráč jednou definoval, jaké prvky chce mít v příslušných sadách. Při vytvoření nového bloku by pak nemusel ručně editovat sadu, ale automaticky by měl tento nový blok k dispozici.  
+
+
 
 
 \section{Cíle práce}
@@ -96,12 +99,10 @@ Tato práce by měla naplnit následující cíle:
 {\tt tt text} a pokračuji díl.
 
 
-Když se podíváme na hry jako například Minecraft, Space Engineers (nebo její odnož Medieval Engineers) tak zjistíme, že hra od hráče vyžaduje nejen stavitelské a konstruktérské schopnosti, ale také taktické dovednosti, které hráči umožňují v daném světě přežít. Mnohdy hráč může využít nevšedních technik daných mechanikami dané hry. Příkladem budiž farma na golemy ve hře Minecraft, která využívá bloky lávy, které jsou drženy cedulemi\citep{minecraft_tut_farm}.
 
 V současné době jsou velikosti bloků omezeny na konstantné velikost. Ve hře Minecraft je blok hranově omezen na 1m, hra Space Engineers bloky omezuje dle kategorií od 0.5\,\rm m do 2.5\,\rm m \citep{se_blocks_wiki}.
-My bychom se v této práci chtěli zabývat myšlenkou proměnlivé velikosti stavitelných bloků. Hráči by tak mohli ovlivňovat detailnost svých výtvorů, aniž by to muselo mít nutně negativní vliv na dobu nutnou k postavení komplexního, ale zároveň detailního výtvoru. Tato myšlenka však přináší spoustu problémů k řešení, které se však v této práci snažíme vyřešit.
 
-Aby hra byla nebyla pro hráče nudná, měla by také obsahovat nějakého nepřítele - tedy něco, co bude hráče nutit se zlepšovat, překonávat nástrahy a posouvat se dále. I tomuto elementu hry se v této práci budeme věnovat. Zároveň nám to nabízí nové možnosti, jak do hry dodat prvky strategických her. Aby to hráč neměl tak jednoduché, bude muset taktizovat, aby svého nepřítele porazil, nebo alespoň v dané chvíli neprohrál, byť za cenu nějakých ztrát. xxd
+
 
 
 \fi
