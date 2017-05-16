@@ -10,7 +10,7 @@ opt:
 prace.pdf: prace.tex $(wildcard *.tex) literatura.bib prace.xmpdata
 	/usr/local/texlive/2016/bin/x86_64-linux/pdflatex $<
 	/usr/local/texlive/2016/bin/x86_64-linux/bibtex prace
-	makeglossaries prace
+	#makeglossaries prace
 	/usr/local/texlive/2016/bin/x86_64-linux/pdflatex $<
 	/usr/local/texlive/2016/bin/x86_64-linux/pdflatex $<
 	mv prace.pdf ../output/Bakalarka.pdf
