@@ -1,7 +1,35 @@
 %!TEX root = ../prace.tex
 
-Tento modul je základním modulem, který na jednom místě definuje všechny potřebné informace, které využívají ostatní moduly. Jedná se zejména o definici herních konstant (GameDefinitions.h), či definice všch sdílených enumerátorů (Enums.h). Najdeme zde také prapředka použité herní instance 
+\section{Modul Commons (C++)}
 
-// TODO link na ue docs
+Tento modul je základním modulem, který na jednom místě definuje všechny potřebné informace, které využívají ostatní moduly. Jedná se zejména o definici herních konstant, či definice všech sdílených enumerátorů. Najdeme zde také prapředka použité herní instance. Tuto vlastní implementaci herní instanci využijeme pro ukládání nalezených bloků.
 
-Tuto vlastní implementaci herní instanci využijeme pro ukládání nalezených bloků.
+\subsection{Herní definice a konstanty}
+
+\TT{GameDefinitions.h}
+
+Tady jsou všechny konstanty.
+
+\subsection{Herní instance}
+\TT{TCF2GameInstance.h}
+
+Singleton // TODO link
+
+Holder pro nalezené bloky (TODO popsat proč)
+
+\subsection{Enumerátory}
+
+\TT{Enums.h}
+
+co tam je (vypsat všechny, nebo jenom řáct, že je to definované zde, protože je to pro celý projekt?)
+
+\subsection{FFileVisitor}
+
+Kvůli nalezení savů
+TODO link na systém ukládání.
+
+\subsection{Helpery}
+
+helpery pro načítání / ukládání konfigurace (vlastních polí)
+
+popsat že UE má mechanismus automatického ukládání vlastností do konfiguračníh souborů, ale to nám nevyhovovalo

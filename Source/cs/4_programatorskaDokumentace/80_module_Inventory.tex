@@ -1,5 +1,30 @@
 %!TEX root = ../prace.tex
 
+
+
+\section{Modul Inventory (C++)}
+
 Modul inventáře byl vyčleněn do samostatné části. Je to hlavně jako ukázka možného členění do modulů.  Navíc časem by se mohl tento modul rozšířovat jak by rostla kompelxicita správy inventáře.
 
 Nejdůležitější inventory component
+
+
+\subsection{Tag group}
+nejnižší úroveň, odpovídá 'nebo'
+
+\subsection{Inventory tag group}
+
+celá skupina, odpovídá 'A zároveň'
+
+\subsection{Inventory tags}
+
+sdružuje všechny banky
+
+\subsection{Inventory component}
+
+celá komponenta, která je pak navázaná na hráčův charakter
+
+definuje delegáty notifikující o změnách v akivní skupině, po filtrování apod.
+
+na této úrovni se řeší aktualizace cache buildable i inventorybuildable při změnách, zároveň poskytuje možnost clear cache pro volání shora (BP)
+

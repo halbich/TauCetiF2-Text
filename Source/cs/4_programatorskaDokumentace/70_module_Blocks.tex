@@ -1,36 +1,80 @@
 %!TEX root = ../prace.tex
 
+\section{Modul Blocks (C++)}
+
 Modul bloků obsahuje podstatné informace o tom, jak hra pracuje s bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty atd. 
 
 - základní definice bloku je v (Block.h)
 
 - block.h definuje hromadu společných věcí tak, aby nějaké základní bloky bylo možné implementovat třeba komplet v BP a neřešit vůbec kód. (To neplatí pokud blok má třeba Electricity component - díky odložené inicializaci by se správně nepropisovaly infa apod)
 
-\subsubsection{Komponenty bloků}
-- pak máme komponenty bloků a nějaké interfaces
-
-\subsubsection{Definice bloků}
-- popsat způsob definice bloků
-
-\subsubsection{Nalezení bloků}
-- popsat block holder a co všechno pro nás znamená
 
 
-\subsubsection{Ukládání}
+\subsection{Definice bloků}
+- popsat způsob definice bloků, co tam všechno je a proč (podklad pro deifnici v UE editoru
+
+\subsection{Informace o bloku}
+popisují stav bloku, jeho serializací a následnou deserializací ze savu lze blok obnovit a korektně umístit do světa
+
+
+\subsection{Ukládání}
 
 - ukládání - máme něco jako block saving helpers
 
-\subsubsection{(Jednotlivé implementace)}
 
--popsat vstrvení )to se použíá i v BP
- - strom základní tvary / speci. impl (elektr, kyslík) apod
+\subsection{Nalezení bloků}
+- popsat block holder a co všechno pro nás znamená, opětovně zmínit herní instanci
 
-\subsubsection{Základní tvary}
-- 3 varianty krychle
 
-\subsubsection{Speciální}
+\subsection{Komponenty bloků}
+- pak máme komponenty bloků a nějaké interfaces
+
+\subsubsection{Elektrická komponenta}
+
+
+\subsubsection{Elektrická síť}
+
+
+\subsubsection{Kyslíková komponenta}
+
+
+\subsubsection{Select target}
+
+
+\subsubsection{World object}
+
+
+
+\subsection{Interfaces}
+poskytují nástroje pro volání metod na instaních interfacu
+
+popsat ideu za Implementation, Execute (BlueprintNativeEvent, BlueprintImplementableEvent)
+
+
+
+\subsection{Implementace bloků}
+ - základ Block.h, zbytek v jendotlivých podkategoriích (BaseShapes / Special
+ 
+ TODO jak moc podrobné? vypsat všechny bloky a co všechno implementují, nebo to stačí stručně zmínit? - co implementují by si čtenář mohl uvědomit z předchozího textu a navíc je to jen nudný popis, jehož výžpovědní hodnota je ve zdrojácích a není asi nutné to tu duplikovat
+
 - popsat speciální bloky + nějaké speciality co umějí (showableWidget)
 
 
-\subsubsection{Hurá na stromy}
+\subsection{Stromové struktury}
 popsat stromové struktury, které tam mám
+
+
+\subsubsection{MinMaxBox}
+
+prapředek všeho
+
+
+
+\subsubsection{KDTree}
+
+dědí z MMB, základ ve světě
+
+
+\subsubsection{WeatherTargetsKDTree}
+
+dědí z MMB, slouží pro potřeby počasí
