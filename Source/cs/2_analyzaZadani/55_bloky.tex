@@ -55,24 +55,31 @@ Controllable implikuje IsController nebo IsControllable
 
 - má elektriku
 
-\subsubsection{A1 - Blok stavby}
+Pokud bychom měli nerovný terén, tento blok by mohl zahrnovat podstavce pro vyrovnání terénu.
+
+\subsubsection{A2 - Blok stavby}
 - všechny velikosti
 
 - má elektriku
 
-\subsubsection{A1 - Blok polykarbonátu}
-- všechny velikosti
-- nejlevnější
+Tento blok je základním stavebním blokem ve hře.
 
-\subsubsection{A1 - Zkosený blok základny}
+\subsubsection{A3 - Blok polykarbonátu}
+- všechny velikosti
+Tento blok je nejlevnější, není připojen do elektrické sítě. Ideou bloku je podpora průhledných stěn a také možné pomocné stavební konstrukce pro výstavbu do výšky. Inspiraci můžeme vidět v používání třeba bloku hlíny ve hře \MC{}, kdy hráč vyskočí a pod sebe umístí nový blok a tím se ve světě posune o 1 metr výš.
+
+\subsubsection{A4 - Zkosený blok základny}
 - velikost v ose Z omezena na 4 základní bloky
 
 - má elektriku
-\subsubsection{A1 - Zkosený blok stavby}
+
+Stejné jako blok \textit{A1}, jen je zkosený. Může sloužit jako přístupová rampa.
+
+\subsubsection{A5 - Zkosený blok stavby}
 - všechny velikosti
 
 - má elektriku
-\subsubsection{A1 - Roh bloku stavby}
+\subsubsection{A6 - Roh bloku stavby}
 -všechny velikosti
 
 - má elektriku
@@ -80,41 +87,43 @@ Controllable implikuje IsController nebo IsControllable
 \subsubsection{B1 - Terminál}
 - speciální, pevná velikost 1 x 8 x 5 bloků
 
-- má elektriku, konzument, rychlé doplnění energie
-\subsubsection{B1 - Napájené okno}
+- má elektriku, konzument, rychlé doplnění energie, ovládání rozhraní, komplexní přehled připojené elektrické sítě.
+\subsubsection{B2 - Napájené okno}
 - minimální velikost 2 x 1 x 2, maximální velikost 20 x 1 x 20 základních bloků
 
 - má elektriku, konzument
-\subsubsection{B1 - Dveře}
+\subsubsection{B3 - Dveře}
 - speciální, pevná velikost 7 x 7 x 11 bloků
 
 - má elektriku, otevírání
-\subsubsection{B1 - Světlo}
+\subsubsection{B4 - Světlo}
 -velikost omezena na 1 x 1 x 1 blok
 
 - má elektriku, konzument, ovládání bez přepínače
-\subsubsection{B1 - Přepínač}
+\subsubsection{B5 - Přepínač}
 -velikost omezena na 1 x 1 x 1 blok
 
 - má elektriku, náhled stavu
-\subsubsection{B1 - Generátor energie}
+\subsubsection{B6 - Generátor energie}
 - omezená velikost v ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v ostatních osách
 
 - má elektriku, producent
-\subsubsection{B1 - Generátor objektů}
+\subsubsection{B7 - Generátor objektů}
 - omezená velikost v ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v ostatních osách
 
 - má elektriku, konzument
-\subsubsection{B1 - Akumulátor}
+\subsubsection{B8 - Akumulátor}
 - speciální, pevná velikost 3 x 3 x 3 bloků
 
 - má elektriku, producent, konzument, rychlý náhled naplnění
-\subsubsection{B1 - Plnička kyslíkových bomb}
+\subsubsection{B9 - Plnička kyslíkových bomb}
 - speciální, pevná velikost 4 x 3 x 4 bloků
 
 - má elektriku, kyslíkovou komponentu, konzument, UI, rychlé doplnění kyslíku
 
-\subsubsection{B1 - Kyslíková bomba}
+- využijeme ideu náhledu inventáře a plnička bude zobrazovat blok B10, pokud bude nějaký takový blok plnit.
+
+\subsubsection{B10 - Kyslíková bomba}
 - speciální, pevná velikost 2 x 2 x 2 bloků
 
 - má kyslíkovou komponentu, možnost sebrat, rychlý náhled naplnění, rychlé doplnění kyslíku
