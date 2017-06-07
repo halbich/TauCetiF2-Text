@@ -11,7 +11,9 @@ V práci se budeme zabývat několika různými hrami, které však mají někol
 
 
 \subsection{Hry kompletně blokové}
-Začněme hrami, které využívají bloků jako základního elementu celé hry. Bloky zde tvoří doslova celý svět. Mezi nejpopulárnější a širokou veřejností nejznámější bychom měli zařadit hru \MC{}. Jak je zřejmé z obrázku \ref{fig:intro_mc}, celá hra včetně herní postavy, nehratelných postav - \NPC{}, nebo třeba mraků, je stylizovaná do bloků ve tvaru kostky. Většina bloků je stejně velká a má hranu o délce 1 metru \citep{mc_block}, \citep{mc_units}. 
+Začněme hrami, které využívají bloků jako základního elementu celé hry. Bloky zde tvoří doslova celý svět. Mezi nejpopulárnější a širokou veřejností nejznámější bychom měli zařadit hru \MC{}. Na obrázku \ref{fig:intro_mc} si můžeme všimnout několika zásadních faktů. Vidíme zde kostičkované listí stromů (1) či hrad na skále (2), který byl postaven z kostiček. Taktéž slunce, měsíc a mraky (3) jsou stylizovány do kostiček. Výrazně je kostičkovaný styl vidět na nehratelných postavách (\NPC{}) -- na obrázku ovce (4), krávy a prasata. Stejným způsobem je pak zpracován i hráčův charakter (5), tedy postava, kterou hráč přímo ovládá.
+
+ Většina bloků je stejně velká a má hranu o délce 1 metru \citep{mc_block}, \citep{mc_units}. (TODO přesunout do detailní analýzy. TODO popisek odkazu)
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/mc}
@@ -23,20 +25,30 @@ Začněme hrami, které využívají bloků jako základního elementu celé hry
 
 \FloatBarrier
 
-Mezi dalšími hrami bychom mohli zmínit například \TE{}. Ta je o něco mladší než \MC{}, ale je častým zdrojem diskusí, zda je lepší new \MC{}, nebo ne. Pravdou je, že obě hry mají svůj svět kompletně složený z kostek (\TE{} je však 2D hra), ale každá si klade trochu jiné cíle. \TE{} je více orientovaná na příběh, obsahuje více NPC i bossů, \MC{} je orientován spíše na stavění. (Porovnání \citep{mc_te_comparsion})
+Mezi dalšími hrami bychom mohli zmínit například \TE{}. Ta je o něco mladší než \MC{}, ale je častým zdrojem diskusí, zda je lepší new \MC{}, nebo ne. Pravdou je, že obě hry mají svůj svět kompletně složený z kostek (\TE{} je však 2D hra), ale každá si klade trochu jiné cíle. \TE{} je více orientovaná na příběh, obsahuje více NPC i bossů, \MC{} je orientován spíše na stavění. (Porovnání Minecraft vs Terraria (facts) \citep{mc_te_comparsion} na Minecraftovém fóru)
 
 
 \subsection{Hry s prvky realismu}
 
-Mezi tyto hry bychom mohli zařadit třeba hry \SE{} či \ME{}, využívají kombinaci herních bloků s voxelovou reprezentací světa. a tím dosahují vyššího stupně realismu ve hře. Skvělým příkladem je obrázek \ref{fig:intro_se} převzatý ze serveru Gamespot \citep{se_intro_img}. 
+Mezi tyto hry bychom mohli zařadit třeba hry \SE{} či \ME{}, využívají kombinaci herních bloků s \textit{voxelovou} reprezentací světa. Voxel je jednotka grafické informace, která definuje bod v třídimenzionálním prostoru. (TODO zdroj?) Hra pak algoritmicky renderuje polygonální reprezentaci tohoto objemu, přičemž může a nemusí přesně dodržovat hranice voxelu. Tímto způsobem je možné dosáhnout vyššího stupně realismu ve hře. 
 
-Je vidět, že asteroid ani zdaleka není kostičkovaný. Přesto je povrch ve hře editovatelný voxelovými nástroji. Samotná základna i vesmírná plavidla jsou na první pohled tvořeny bloky. \SE{} umožňuje stavět pohyblivé stroje, které si hráč postaví z herních bloků, ale po ukončení editace se nadále chovají jako jedna entita. Stále je na ně však aplikována fyzika, takže je možné plavidlo poškodit, nebo dokonce zničit. Tento stupeň realismu od naší hry vyžadovat nebudeme.
+Podívejme se na obrázek \ref{fig:intro_se} převzatý ze serveru Gamespot \citep{se_intro_img}. Na něm můžeme vidět asteroid (správněji spíše planetku). Na planetce se nachází zkonstruovaná vesmírná základna (obarvená zelenou barvou). K základně je přistavena větší vesmírná loď (modrobílá), hráč pak k základně letí v další, malé lodi (modrobílá uprostřed). Bližší pohled na planetku ukazuje, že její povrch ani zdaleka není kostičkovaný. To je způsobeno právě algoritmickou aproximací voxelové reprezentace planetky. 
+
+Samotná základna i vesmírná plavidla (detailní pohled na jiné plavidlo je na obrázku \ref{fig:se_intro_ship}) jsou však tvořeny bloky. Ve hře však vizuální reprezentace nemusí být vždy tvaru krychle. \SE{} umožňuje stavět pohyblivé stroje, které si hráč postaví z herních bloků a ty se pak chovají jako jedna entita. Stále je na ně však aplikována fyzika, takže je možné plavidlo poškodit, nebo dokonce zničit. Tento stupeň realismu od naší hry vyžadovat nebudeme.
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/se}
 
 \caption{Hra Space Engineers - základna na asteroidu }
 \label{fig:intro_se}
+
+\end{figure}
+
+\begin{figure}[!ht]\centering
+\includegraphics[ width=140mm]{../img/intro/se_ship}
+
+\caption{Hra Space Engineers - vesmírná loď }
+\label{fig:intro_se_ship}
 
 \end{figure}
 
@@ -54,30 +66,32 @@ bloky na stavění, ale třeba vozidla kompletní
 Můžeme však nalézt i další příklady her (// TODO \TM{}, \NI{}, \PN{}, \ARK{}, \NMS{}).
 
 
+
+\section{Čemu se budeme věnovat}
+
+Rádi bychom zachovali koncept použití herních bloků, který shledáváme jednoduchý na pochopení i použití. Zaměříme se na rozšíření možnosti práce s bloky tak, abychom uživateli nabídli, pokud možno, ještě lepší herní zážitek ze stavění vlastních výtvorů. V této práci se nebudeme nijak důkladně věnovat vizuální reprezentaci prostředí, protože ta pro nás v tuto chvíli není podstatná. 
+
+Změna v přístupu k herním blokům bude vyžadovat i úpravy herního mechanismu s tím souvisejícího -- hráčova inventáře. Všechny výše zmíněné hry nějakým způsobem nabízí hráči výběr bloků, které může do herního světa umístit. Naše změna by bohužel znamenala, že by se takový inventář postavitelných bloků velmi rychle stal nepřehledným a proto musíme systém nabídky postavitelných bloků upravit pro naše potřeby.
+
 \section{Herní bloky}
 
 
 
-Obvykle je ve hře definován jeden základní rozměr bloku, který je neměnný. (\SE{} definuje více velikostí -- ty však nelze vzájemně kombinovat). To však může být problémem, pokud se hráč rozhodne postavit v herním světě nějakou větší a komplexnější strukturu podle reálné či fiktivní předlohy. Pro příklad uveďme některé výtvory ze hry \MC{}:
-\begin{itemize}
-	\item King's landing z knih Píseň ledu a ohně
-	\item Minas Tirith - hlavní město Gondoru z univerza J.R.R. Tolkiena
-\end{itemize}
+Obvykle je ve hře definován jeden základní rozměr bloku, který je neměnný. (\SE{} definuje více velikostí -- ty však nelze vzájemně kombinovat). To však může být problémem, pokud se hráč rozhodne postavit v herním světě nějakou větší a komplexnější strukturu podle reálné či fiktivní předlohy. Pro příklad uveďme některé výtvory ze hry \MC{} -- město Královo přístaviště z knih Píseň ledu a ohně od Geoge R. R. Martina, nebo hlavní město Gondoru Minas Tirith z knih Pána prstenů od J. R. R. Tolkiena.
 
-Autoři těchto výtvorů museli volit takové měřítko, aby byly výtvory dostatečně detailní, ale zároveň aby bylo možné výtvor postavit v nějakém rozumném čase. Obecně ale můžeme říct, že čím větších detailů chtěli autoři dosáhnout, tím větší musel celý výtvor být, ale za ceny toho, že velké plochy trvaly o to déle.
+Autoři těchto výtvorů museli volit takové měřítko, aby byly výtvory dostatečně detailní, ale zároveň aby bylo možné výtvor postavit v nějakém rozumném čase. Obecně můžeme říct, že čím větších detailů chtějí autoři ve hře \MC{} dosáhnout, tím větší musí celý výtvor být. To pak ale znamená, že celá stavba trvá déle, nebo je zapotřebí více spolupracujících hráčů. Hra \SE{} díky svému přístupu a více bloků, které nejsou tvaru krychle, nabízí lepší možnosti staveb rozsáhlých objektů (představme si třeba Hvězdu smrti z Hvězných válek), ale stále je potřeba volit nějakou rozumnou výslednou velikost.
 
 
 \subsection{Náš návrh úpravy}
-Chtěli bychom se v této práci zabývat myšlenkou proměnlivé velikosti stavitelných bloků. Tím by mohl rychleji stavět rozsáhlejší struktury a přitom se věnovat i drobným či estetickým detailům. Tento návrh však s sebou nese několik problémů, které se v této práci budeme snažit vyřešit.
-
+Chtěli bychom se v této práci zabývat myšlenkou proměnlivé velikosti stavitelných bloků. Tím by hráči mohli rychleji stavět rozsáhlejší struktury a přitom se věnovat i drobným či estetickým detailům. Tento návrh však s sebou nese několik problémů, které se v této práci budeme snažit vyřešit.
 
 
 \section{Inventář}
-Dalším společným prvkem tohoto druhu her je inventář bloků, které může hráč umístit do herního světa. Hráč přes celé herní okno vidí \HUD{}(Head-Up Display)\citep{hud_terminology}, ve kterém má zobrazenou kromě jiného nabídku bloků, které má na rychlé volbě, může je snadno zvolit a daný blok umístit do herního světa. Navíc hry mohou definovat skupiny bloků (\SE{}, \ME{}), mezi kterými hráč může přepínat a tím rychle kompletně změnit sadu rychlé nabídky. Vidíme však limitaci v tom, že hráč musí ručně spravovat tyto seznamy a jednotlivé bloky (či nástroje) umisťovat do příslušných pozic.
+Dalším společným prvkem tohoto druhu her je inventář bloků, které může hráč umístit do herního světa. Hráč přes celé herní okno vidí \HUD{} (Head-Up Display \citep{hud_terminology}), ve kterém má zobrazenou kromě jiného nabídku bloků, které má na rychlé volbě, může je snadno zvolit a daný blok umístit do herního světa. Navíc hry mohou definovat i inventární skupiny bloků (\SE{}, \ME{}), mezi kterými hráč může přepínat a tím rychle kompletně změnit sadu rychlé nabídky. Vidíme však limitaci v tom, že hráč musí ručně spravovat tyto seznamy a jednotlivé bloky (či nástroje) umisťovat do příslušných pozic.
 
 
 \subsection{Náš návrh úpravy}
-Rádi bychom navrhli jiný způsob správy těchto sad, aby hráč jednou definoval, jaké prvky chce mít v příslušných sadách. Při vytvoření nového bloku by pak nemusel ručně editovat sadu, ale automaticky by měl tento nový blok k dispozici.  
+Rádi bychom navrhli jiný způsob správy těchto inventárních skupin, aby hráč jednou definoval, jaké prvky chce mít v příslušných skupinách. Při vytvoření nového bloku či vytvoření jiné velikosti bloku by pak nemusel ručně přiřazovat nový blok do skupiny, ale tento blok by měl být automaticky zařazen a nabídnut hráči.  
 
 
 
@@ -85,9 +99,10 @@ Rádi bychom navrhli jiný způsob správy těchto sad, aby hráč jednou defino
 \section{Cíle práce}
 Tato práce by měla naplnit následující cíle:
 \begin{itemize}
-	\item Bloky
-	\item Inventář
-	\item TODO
+	\item Navrhnout a implementovat způsob řešení proměnlivé velikosti bloků
+	\item Navrhnout a implementovat automatizovanou správu inventáře
+	\item Kvůli očekávaným nárokům na pochopení nových konceptů do hry implementovat výukový tutoriál (TODO má to být tady?)
+	\item Získat a zhodnotit zpětnou vazbu na výslednou hru
 \end{itemize}
 
 \iffalse
