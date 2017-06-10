@@ -8,12 +8,24 @@ Tento modul je základním modulem, který na jednom místě definuje všechny p
 
 \TT{GameDefinitions.h}
 
-Tady jsou všechny konstanty.
+Tady jsou definovány všechny herní konstanty. Například je zde definována velikost jednotkové krychle, velikost použitého světa, vztah mezi délkou dne herního světa a počtem uplynulých reálných sekund, převody mezi energií, kyslíkem, zdraví a jednotkou zásahu kyselého deště. Taktéž jsou zde definovány konstanty, které využívá technika obrysů objektu (todo link na outline). Dále jsou zde definovány konstanty ID implementovaných bloků, abychom s nimi mohli pracovat i v kódu.
 
 \subsection{Herní instance}
 \TT{TCF2GameInstance.h}
 
-Singleton // TODO link
+Tato třída je Singleton ( TODO link UE docs) a jako jediná zůstává vždy stejná po celou dobu běhu hry. Proto se využívá například pro uchovávání dat při přechodu mezi jednotlivými Levely a my toho také využijeme. Zároveň se tato třída dá využít pro implementaci delegátů, kterými je možné vyvolat nějakou událost a libovolný prvek z herního světa může tuto událost obsloužit. My toho využijeme u reakce na denní cyklus u bloku \textit{Přepínače}.
+
+Dalším důležitým bodem pro nás bude, že tato třída si bude držet referenci na všechny nalezené bloky. Z předchozího textu již víme, že bloky je potenciálně možné rozšířit o DLC (TODO budem to tu řešit?), takže je nutné, abychom si nalezené bloky a jejich definice udrželi v paměti i při přechodu mezi levely. K tomu slouží proměnná \TT{BlockHolder} , která sice  drží referenci na objekt definovaný v modulu \textit{Blocks}, ale kvůli zpětným referencím mezi moduly (které nejsou povolené) musíme zde použít dostupného předka.
+
+Kód tedy bude vypadat následovně:
+\begin{code}
+	UPROPERTY(Transient)
+		UObject* BlockHolder;
+
+	UFUNCTION(BlueprintCallable, Category = "TCF2 | GameInstance")
+		void SetHolderInstance(UObject* holder);
+\end{code}
+ Parametr \TT{Transient} u makra \TT{UPROPERTY} znamená, že daná proměnná bude vždy nastavena na svoji výchozí hodnotu. V tomto případě je to použito spíše z důvodu zachování konzistence napříč projektu, ale zjednodušeně bychom důsledky mohli popsat následovně -- pokud bude nějaký Blueprint dědit z nějaké \CPP{} třídy, tak vývojář může nastavit výchozí hodnoty properties. Tyto hodnoty jsou pak serializovány do CDO (TODO link?). Během procesu vytváření nové instance objektu, který vychází z daného Blueprintu pak budou tyto hodnoty naplněny během fáze inicializace properties (TODO link na Actor life time?). V konečném důsledku by pak byla tato hodnota nějakým způsobem naplněna. Pokud chceme vynutit, aby tato property nebyla serializována do CDO, tak ji označíme jako \TT{Transient}.
 
 Holder pro nalezené bloky (TODO popsat proč)
 
