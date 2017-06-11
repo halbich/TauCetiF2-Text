@@ -1,9 +1,4 @@
 kde seženu šablonu na obal Bc práce? - jenom text
 
 
-
-
-Když si otevøu výstup v Readeru, tak vidím v title baru "Název práce" - nevadí to?
-
-Jak je to s tìma pøílohama? pokud bych mìl podávat žádost, tak jich mám hromadu - cpp, h, uproject, uasset, tga, png, waw, mp3, ...
-nestaèí to zipnout (rarnout)?
+Jak naložit s daty u referencí? u webovek obvykle nevidím, kdy byla stránka naposledy zaktualizována. Mùže být datum návštìvy?

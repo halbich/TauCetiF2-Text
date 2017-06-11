@@ -122,4 +122,25 @@
   url    = {https://wiki.unrealengine.com/Save_System,_Read_%26_Write_Any_Data_to_Compressed_Binary_Files},
 }
 
+@Online{intro_boss,
+  author = {Brian Johnson},
+  title  = {Urbandictionary.com: Boss fight},
+  date   = {2014-04-10},
+  url    = {http://www.urbandictionary.com/define.php?term=boss%20fight},
+}
+
+@Online{vrage,
+  author = {Keen Software House},
+  title  = {VRAGE},
+  date   = {2017-06-11},
+  url    = {http://www.keenswh.com/vrage.html},
+}
+
+@Online{rosa_blog,
+  author = {Marek Rosa},
+  title  = {Space Engineers: Super-large worlds, Procedural asteroids and Exploration},
+  date   = {2014-12-17},
+  url    = {http://blog.marekrosa.org/2014/12/space-engineers-super-large-worlds_17.html},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}

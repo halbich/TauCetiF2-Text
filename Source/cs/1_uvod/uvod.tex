@@ -2,18 +2,18 @@
 
 \chapter{Úvod}
 
-V době vzniku této práce jsou velice populární hry s otevřeným světem. Lákají hráče na obsáhlost světa a možnost nelineárního řešení problémů a herních úkolů. Her s otevřeným světem najdeme nepřeberné množství v různých herních žánrech. My se zaměříme na podmnožinu her, které kromě otevřeného světa nabízí také možnosti budování struktur a vyžadují od hráče netriviální styl hraní, který mu umožňuje ve hře přežít. Průmyslově se tyto hry často označují jako \textit{Sanboxové}, \textit{S budováním}, \textit{S průzkumem prostředí}, \textit{Survival}. Autor této práce má tento typ her v oblibě a rád by touto prací představil svoji vizi dalšího možného rozvoje her tohoto žánru. Cílem práce by měla být implementace nového herního principu stavění, které současné herní tituly nenabízí.
+V době vzniku této práce jsou velice populární hry s otevřeným světem. Lákají hráče na obsáhlost světa a možnost nelineárního řešení problémů a herních úkolů. Her s otevřeným světem najdeme nepřeberné množství v různých herních žánrech. My se zaměříme na podmnožinu her, které kromě otevřeného světa nabízí také možnosti budování struktur a vyžadují od hráče netriviální styl hraní, který mu umožňuje ve hře přežít. V herním průmyslu se tyto hry často označují jako \textit{sanboxové}, \textit{s budováním}, \textit{s průzkumem prostředí}, \textit{o přežití}. Autor této práce má tento typ her v oblibě a rád by touto prací představil svoji vizi dalšího možného rozvoje her tohoto žánru. Cílem práce by měla být implementace nového herního principu stavění, které současné herní tituly nenabízí.
 
 \section{Charakteristika her}
-V práci se budeme zabývat několika různými hrami, které však mají několik společných vlastností. Jedním ze základních konceptů je využívání herních bloků. Dalším význačným prvkem je způsob integrace herních bloků do herního prostření. Některé hry jsou celé tvořeny bloky, jiné se snaží dosáhnout vyššího stupně realismu ve hře a bloky využívají pouze pro konstrukci různých herních objektů. Ústředním tématem této práce tedy bude rozbor systému bloků a práce s nimi a popis hráčských problémů způsobených danými koncepty. V další části práce pak navrhneme a implementujeme vlastní řešení.
+V práci se budeme zabývat několika různými hrami, které však mají několik společných vlastností. Jedním ze základních konceptů je využívání herních bloků. Dalším význačným prvkem je způsob integrace herních bloků do herního prostření. Některé hry jsou celé tvořeny bloky, jiné se snaží dosáhnout vyššího stupně realismu ve hře a bloky využívají pouze pro konstrukci různých herních objektů. Důležitým tématem této práce tedy bude rozbor systému bloků a práce s nimi a popis hráčských problémů způsobených danými koncepty. V další části práce pak navrhneme a implementujeme vlastní řešení.
 
 
 
 
 \subsection{Hry kompletně blokové}
-Začněme hrami, které využívají bloků jako základního elementu celé hry. Bloky zde tvoří doslova celý svět. Mezi nejpopulárnější a širokou veřejností nejznámější bychom měli zařadit hru \MC{}. Na obrázku \ref{fig:intro_mc} si můžeme všimnout několika zásadních faktů. Vidíme zde kostičkované listí stromů (1) či hrad na skále (2), který byl postaven z kostiček. Taktéž slunce, měsíc a mraky (3) jsou stylizovány do kostiček. Výrazně je kostičkovaný styl vidět na nehratelných postavách (\NPC{}) -- na obrázku ovce (4), krávy a prasata. Stejným způsobem je pak zpracován i hráčův charakter (5), tedy postava, kterou hráč přímo ovládá.
+Začněme hrami, které využívají bloků jako základního elementu celé hry. Bloky zde tvoří doslova celý svět. Mezi nejpopulárnější a širokou veřejností nejznámější bychom měli zařadit hru \MC{}. Na obrázku \ref{fig:intro_mc} si můžeme všimnout několika zásadních faktů. Vidíme zde kostičkované listí stromů (1) či hrad na skále (2), který byl postaven z kostiček. Taktéž slunce, měsíc a mraky (3) jsou stylizovány do kostiček. Výrazně je kostičkovaný styl vidět na nehratelných postavách (\textit{non-playable character} -- \NPC{}) -- na obrázku ovce (4), krávy a prasata. Stejným způsobem je pak zpracován i hráčův charakter (5), tedy postava, kterou hráč přímo ovládá.
 
- Většina bloků je stejně velká a má hranu o délce 1 metru \citep{mc_block}, \citep{mc_units}. (TODO přesunout do detailní analýzy. TODO popisek odkazu)
+
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/mc}
@@ -25,14 +25,14 @@ Začněme hrami, které využívají bloků jako základního elementu celé hry
 
 \FloatBarrier
 
-Mezi dalšími hrami bychom mohli zmínit například \TE{}. Ta je o něco mladší než \MC{}, ale je častým zdrojem diskusí, zda je lepší new \MC{}, nebo ne. Pravdou je, že obě hry mají svůj svět kompletně složený z kostek (\TE{} je však 2D hra), ale každá si klade trochu jiné cíle. \TE{} je více orientovaná na příběh, obsahuje více NPC i bossů, \MC{} je orientován spíše na stavění. (Porovnání Minecraft vs Terraria (facts) \citep{mc_te_comparsion} na Minecraftovém fóru)
+Mezi dalšími hrami bychom mohli zmínit například \TE{}. Ta je o něco mladší než \MC{}, ale je častým zdrojem diskusí, zda je lepší new \MC{}, nebo ne. Pravdou je, že obě hry mají svůj svět kompletně složený z kostek (\TE{} je však 2D hra), ale každá si klade trochu jiné cíle. \TE{} je více orientovaná na příběh, obsahuje více \NPC{} i bossů. Boss je v herní terminologii významný nepřítel, obvykle je silnější než ostatní protivníci a velmi často bývá v závěrečných částech hry. Duel s bossem pak obvykle od hráče vyžaduje zjištění jeho silných a slabých stránek a schémat jeho útoků \citep{intro_boss}. \MC{} je pak orientován spíše na stavění. (Porovnání Minecraft vs Terraria (facts) \citep{mc_te_comparsion} na Minecraftovém fóru.)
 
 
 \subsection{Hry s prvky realismu}
 
-Mezi tyto hry bychom mohli zařadit třeba hry \SE{} či \ME{}, využívají kombinaci herních bloků s \textit{voxelovou} reprezentací světa. Voxel je jednotka grafické informace, která definuje bod v třídimenzionálním prostoru. (TODO zdroj?) Hra pak algoritmicky renderuje polygonální reprezentaci tohoto objemu, přičemž může a nemusí přesně dodržovat hranice voxelu. Tímto způsobem je možné dosáhnout vyššího stupně realismu ve hře. 
+Mezi hry s prvky realismu bychom mohli zařadit třeba hry \SE{} či \ME{}, využívají kombinaci herních bloků s \textit{voxelovou} reprezentací světa. Obě hry jsou implementovány v proprietárním enginu společnosti Keen Software House nazvaném \textit{VRAGE}\texttrademark{}. Voxelový terén je pak v enginu za běhu hry procedurálně generován do polygonální reprezentace, kterou pak grafická karta standardním způsobem vykreslí na obrazovce (Oficiální popis vlastností enginu \citep{vrage}). Během tohoto procedurálního vytváření je na třídimenzionální strukturu voxelů (které si pak můžeme představit jako bloky stejné velikosti) aplikován nějaký šum a tím je možné ve hře vygenerovat prakticky neomezené množství různých objektů vycházejících z jedné voxelové struktury. \uv{\textit{The “procedural asteroids” feature adds a practically infinite number of asteroids to the game world}} \citep{rosa_blog}. Tímto způsobem pak hry dosáhují vyššího stupně realismu -- nespoléhají se pouze na předpřipravené 3D modely. 
 
-Podívejme se na obrázek \ref{fig:intro_se} převzatý ze serveru Gamespot \citep{se_intro_img}. Na něm můžeme vidět asteroid (správněji spíše planetku). Na planetce se nachází zkonstruovaná vesmírná základna (obarvená zelenou barvou). K základně je přistavena větší vesmírná loď (modrobílá), hráč pak k základně letí v další, malé lodi (modrobílá uprostřed). Bližší pohled na planetku ukazuje, že její povrch ani zdaleka není kostičkovaný. To je způsobeno právě algoritmickou aproximací voxelové reprezentace planetky. 
+Podívejme se na obrázek \ref{fig:intro_se} ze hry \SE{} (Zdroj: server Gamespot.com \citep{se_intro_img}). Na něm můžeme vidět asteroid (správněji spíše planetku). Na planetce se nachází zkonstruovaná vesmírná základna (obarvená zelenou barvou). K základně je přistavena větší vesmírná loď (modrobílá), hráč pak k základně letí v další, malé lodi (modrobílá uprostřed). Bližší pohled na planetku ukazuje, že její povrch ani zdaleka není kostičkovaný. To je způsobeno právě algoritmickou aproximací voxelové reprezentace planetky. 
 
 Samotná základna i vesmírná plavidla (detailní pohled na jiné plavidlo je na obrázku \ref{fig:intro_se_ship}) jsou však tvořeny bloky. Ve hře však vizuální reprezentace nemusí být vždy tvaru krychle. \SE{} umožňuje stavět pohyblivé stroje, které si hráč postaví z herních bloků a ty se pak chovají jako jedna entita. Stále je na ně však aplikována fyzika, takže je možné plavidlo poškodit, nebo dokonce zničit. Tento stupeň realismu od naší hry vyžadovat nebudeme.
 
@@ -105,19 +105,3 @@ Tato práce by měla naplnit následující cíle:
 	\item Získat a zhodnotit zpětnou vazbu na výslednou hru
 \end{itemize}
 
-\iffalse
-
-\begin{code}
-  foo->bar( ).
-\end{code}
-
-{\tt tt text} a pokračuji díl.
-
-
-
-V současné době jsou velikosti bloků omezeny na konstantné velikost. Ve hře Minecraft je blok hranově omezen na 1m, hra Space Engineers bloky omezuje dle kategorií od 0.5\,\rm m do 2.5\,\rm m \citep{se_blocks_wiki}.
-
-
-
-
-\fi
