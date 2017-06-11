@@ -2,29 +2,53 @@
 
 \section{Modul Blocks (C++)}
 
-Modul bloků obsahuje podstatné informace o tom, jak hra pracuje s bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty atd. 
+Modul bloků obsahuje podstatné informace o tom, jak hra pracuje s bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty apod. Také je v tomto modulu možné nalézt specifické implementace jednotlivých bloků.
 
-- základní definice bloku je v (Block.h)
+V dalším textu se budeme odkazovat na složky. Odkazujeme se tím do složek \TT{/Source/Blocks/Public} a jejich  \TT{Private} implementací. Strukturu bychom mohli shrnout následovně:
 
-- block.h definuje hromadu společných věcí tak, aby nějaké základní bloky bylo možné implementovat třeba komplet v BP a neřešit vůbec kód. (To neplatí pokud blok má třeba Electricity component - díky odložené inicializaci by se správně nepropisovaly infa apod)
-
-
+\begin{enumerate}
+	\item Definice bloků (složka \TT{Definitions})
+	\item Třídy s popisem bloků (složka \TT{Info})
+	\item Systém ukládání a načítání bloků (složka  \TT{Helpers})
+	\item Rozhraní, které mohou bloky implementovat (složka \TT{Interfaces})
+	\item Komponenty, kterými bloky rozšiřují svoji základní funkcionalitu (složka \TT{Components})
+	\item Implementace jednotlivých bloků (složky \TT{BaseShapes}, \TT{Special})
+	\item Stromové struktury herního světa (složka \TT{Tree})
+\end{enumerate}
+ 
 
 \subsection{Definice bloků}
-- popsat způsob definice bloků, co tam všechno je a proč (podklad pro deifnici v UE editoru
+V této složce se nachází všechny definiční soubory bloků. Definiční soubor obsahuje pouze popis datové struktury a nějakou minimální funkcionalitu (kupříkladu získání korektního vektoru velikosti v závislosti na tom, zda má definice daného bloku nastavenou vlastní velikost). Jednotlivé konkrétní instance s daty jsou pak definovány na straně editoru. Konstanty (například minimální a maximální škálování) je pak možné měnit v editoru a není vyžadována rekompilace projektu hry. 
 
-\subsection{Informace o bloku}
-popisují stav bloku, jeho serializací a následnou deserializací ze savu lze blok obnovit a korektně umístit do světa
+Definiční soubor se skládá následujícím způsobem:
 
+\begin{itemize}
+	\item UBlockDefinition (\TT{BlockDefinition.h})
+		\subitem -- FUsableBlockDefinition (\TT{UsableBlockDefinition.h})
+		\subitem -- FBlockMeshStructureDefinition (\TT{BlockMeshStructureDefinition.h})
+			\subsubitem -- FBlockMaterialDefinition (\TT{BlockMaterialDefinition.h})
+		\subitem -- FBlockAdditionalFlags (\TT{BlockAdditionalFlags.h})
+			\subsubitem -- FBlockFlagValue (\TT{BlockFlagValue.h})	
+		\subitem -- FOxygenComponentDefinition (\TT{OxygenComponentDefinition.h})
+		\subitem -- FElectricityComponentDefinition (\TT{ElectricityComponentDefinition.h})
+			\subsubitem -- FElectricityBindableAreas (\TT{ElectricityBindableAreas.h})	
+				
+		
 
-\subsection{Ukládání}
+\end{itemize}
+
+\subsection{Třídy s popisem bloků}
+Tyto třídy popisují už konkrétní instance bloků v rámci hry. Jejich hodnoty jsou pak v mezích definovaných v definičních třídách. Tyto třídy jsou pak předmětem ukládání a načítání. Dalším důležitým prvkem je BlockHolder, který slouží pro nalezení bloků. 
+
+\subsection{Ukládání a načítání bloků}
 
 - ukládání - máme něco jako block saving helpers
 
 
-\subsection{Nalezení bloků}
-- popsat block holder a co všechno pro nás znamená, opětovně zmínit herní instanci
+\subsection{Interfaces}
+poskytují nástroje pro volání metod na instaních interfacu
 
+popsat ideu za Implementation, Execute (BlueprintNativeEvent, BlueprintImplementableEvent)
 
 \subsection{Komponenty bloků}
 - pak máme komponenty bloků a nějaké interfaces
@@ -45,10 +69,6 @@ popisují stav bloku, jeho serializací a následnou deserializací ze savu lze 
 
 
 
-\subsection{Interfaces}
-poskytují nástroje pro volání metod na instaních interfacu
-
-popsat ideu za Implementation, Execute (BlueprintNativeEvent, BlueprintImplementableEvent)
 
 
 
