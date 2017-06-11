@@ -2,20 +2,20 @@
 
 \section{Modul Commons (C++)}
 
-Tento modul je základním modulem, který na jednom místě definuje všechny potřebné informace, které využívají ostatní moduly. Jedná se zejména o definici herních konstant, či definice všech sdílených enumerátorů. Najdeme zde také prapředka použité herní instance. Tuto vlastní implementaci herní instanci využijeme pro ukládání nalezených bloků.
+Tento modul je základním modulem, který na jednom místě definuje všechny potřebné informace, které využívají ostatní moduly. Jedná se zejména o~definici herních konstant, či definice všech sdílených enumerátorů. Najdeme zde také prapředka použité herní instance. Tuto vlastní implementaci herní instanci využijeme pro ukládání nalezených bloků.
 
-\subsection{Herní definice a konstanty}
+\subsection{Herní definice a~konstanty}
 
 \TT{GameDefinitions.h}
 
-Tady jsou definovány všechny herní konstanty. Například je zde definována velikost jednotkové krychle, velikost použitého světa, vztah mezi délkou dne herního světa a počtem uplynulých reálných sekund, převody mezi energií, kyslíkem, zdraví a jednotkou zásahu kyselého deště. Taktéž jsou zde definovány konstanty, které využívá technika obrysů objektu (todo link na outline). Dále jsou zde definovány konstanty ID implementovaných bloků, abychom s nimi mohli pracovat i v kódu.
+Tady jsou definovány všechny herní konstanty. Například je zde definována velikost jednotkové krychle, velikost použitého světa, vztah mezi délkou dne herního světa a~počtem uplynulých reálných sekund, převody mezi energií, kyslíkem, zdraví a~jednotkou zásahu kyselého deště. Taktéž jsou zde definovány konstanty, které využívá technika obrysů objektu (todo link na outline). Dále jsou zde definovány konstanty ID implementovaných bloků, abychom s~nimi mohli pracovat i~v~kódu.
 
 \subsection{Herní instance}
 \TT{TCF2GameInstance.h}
 
-Tato třída je Singleton ( TODO link UE docs) a jako jediná zůstává vždy stejná po celou dobu běhu hry. Proto se využívá například pro uchovávání dat při přechodu mezi jednotlivými Levely a my toho také využijeme. Zároveň se tato třída dá využít pro implementaci delegátů, kterými je možné vyvolat nějakou událost a libovolný prvek z herního světa může tuto událost obsloužit. My toho využijeme u reakce na denní cyklus u bloku \textit{Přepínače}.
+Tato třída je Singleton ( TODO link UE docs) a~jako jediná zůstává vždy stejná po celou dobu běhu hry. Proto se využívá například pro uchovávání dat při přechodu mezi jednotlivými Levely a~my toho také využijeme. Zároveň se tato třída dá využít pro implementaci delegátů, kterými je možné vyvolat nějakou událost a~libovolný prvek z~herního světa může tuto událost obsloužit. My toho využijeme u~reakce na denní cyklus u~bloku \textit{Přepínače}.
 
-Dalším důležitým bodem pro nás bude, že tato třída si bude držet referenci na všechny nalezené bloky. Z předchozího textu již víme, že bloky je potenciálně možné rozšířit o DLC (TODO budem to tu řešit?), takže je nutné, abychom si nalezené bloky a jejich definice udrželi v paměti i při přechodu mezi levely. K tomu slouží proměnná \TT{BlockHolder} , která sice  drží referenci na objekt definovaný v modulu \textit{Blocks}, ale kvůli zpětným referencím mezi moduly (které nejsou povolené) musíme zde použít dostupného předka.
+Dalším důležitým bodem pro nás bude, že tato třída si bude držet referenci na všechny nalezené bloky. Z předchozího textu již víme, že bloky je potenciálně možné rozšířit o~DLC (TODO budem to tu řešit?), takže je nutné, abychom si nalezené bloky a~jejich definice udrželi v~paměti i~při přechodu mezi levely. K tomu slouží proměnná \TT{BlockHolder} , která sice  drží referenci na objekt definovaný v~modulu \textit{Blocks}, ale kvůli zpětným referencím mezi moduly (které nejsou povolené) musíme zde použít dostupného předka.
 
 Kód tedy bude vypadat následovně:
 \begin{code}
@@ -25,17 +25,17 @@ Kód tedy bude vypadat následovně:
 	UFUNCTION(BlueprintCallable, Category = "TCF2 | GameInstance")
 		void SetHolderInstance(UObject* holder);
 \end{code}
- Parametr \TT{Transient} u makra \TT{UPROPERTY} znamená, že daná proměnná bude vždy nastavena na svoji výchozí hodnotu. V tomto případě je to použito spíše z důvodu zachování konzistence napříč projektu, ale zjednodušeně bychom důsledky mohli popsat následovně -- pokud bude nějaký Blueprint dědit z nějaké \CPP{} třídy, tak vývojář může nastavit výchozí hodnoty properties. Tyto hodnoty jsou pak serializovány do \CDO{}, cože je \textit{Class Default Object} (otázka na Answers Unreal Engine \citep{ue_cdo}). Během procesu vytváření nové instance objektu, který vychází z daného Blueprintu pak budou tyto hodnoty naplněny během fáze inicializace properties (popis životního cyklu actorů \citep{ue_actor_life}). V konečném důsledku by pak byla tato hodnota nějakým způsobem naplněna. Pokud chceme vynutit, aby tato property nebyla serializována do CDO, tak ji označíme jako \TT{Transient}.
+ Parametr \TT{Transient} u~makra \TT{UPROPERTY} znamená, že daná proměnná bude vždy nastavena na svoji výchozí hodnotu. V tomto případě je to použito spíše z~důvodu zachování konzistence napříč projektu, ale zjednodušeně bychom důsledky mohli popsat následovně -- pokud bude nějaký Blueprint dědit z~nějaké \CPP{} třídy, tak vývojář může nastavit výchozí hodnoty properties. Tyto hodnoty jsou pak serializovány do \CDO{}, cože je \textit{Class Default Object} (otázka na Answers Unreal Engine \citep{ue_cdo}). Během procesu vytváření nové instance objektu, který vychází z~daného Blueprintu pak budou tyto hodnoty naplněny během fáze inicializace properties (popis životního cyklu actorů \citep{ue_actor_life}). V konečném důsledku by pak byla tato hodnota nějakým způsobem naplněna. Pokud chceme vynutit, aby tato property nebyla serializována do CDO, tak ji označíme jako \TT{Transient}.
 
-V průběhu hry pak jednou naplníme tuto property pomocí metody\\ \TT{SetHolderInstance}, do které předáme referenci na korektně inicializovanou instanci třídy \TT{BlockHolder} z modulu \textit{Blocks}. Pak si můžeme odkudkoliv získat aktuální herní instanci, přetypovat na \TT{TCF2GameInstance} a získat si (přetypovanou) referenci na \TT{BlockHolder}. Z něho pak již můžeme získávat informace o všech dostupných blocích.
+V průběhu hry pak jednou naplníme tuto property pomocí metody\\ \TT{SetHolderInstance}, do které předáme referenci na korektně inicializovanou instanci třídy \TT{BlockHolder} z~modulu \textit{Blocks}. Pak si můžeme odkudkoliv získat aktuální herní instanci, přetypovat na \TT{TCF2GameInstance} a~získat si (přetypovanou) referenci na \TT{BlockHolder}. Z něho pak již můžeme získávat informace o~všech dostupných blocích.
 
 \subsection{Enumerátory}
 
 \TT{Enums.h}
-Tento soubor slouží jako jednotné umístění pro všechny výčtové typy (enumerátory), které se používají napříč celým projektem. Neznamená to, že nutně obsahuje všechny -- některé třídy mohou využívat své specifické enumerátory, které ale nemusí být umístěny v tomto globálně dostupném modulu.
+Tento soubor slouží jako jednotné umístění pro všechny výčtové typy (enumerátory), které se používají napříč celým projektem. Neznamená to, že nutně obsahuje všechny -- některé třídy mohou využívat své specifické enumerátory, které ale nemusí být umístěny v~tomto globálně dostupném modulu.
 
 
 \subsection{Helpery}
 
-\TT{CommonHelpers.h} Tato třída poskytuje metody pro práci s konfigurací. Statické metody umožňují načítat a ukládat konfigurační položky typu \TT{float}, \TT{bool} a \TT{string}.
-Aby byla práce co nejjednodušší, metody přijímají enumerátor \TT{EGameUserSettingsVariable}. Třída pak sama na základě hodnoty tohoto enumerátoru použije správný klíč (který je textový) a tak může ukládat či vracet hodnotu daného typu z konfiguračního souboru.
+\TT{CommonHelpers.h} Tato třída poskytuje metody pro práci s~konfigurací. Statické metody umožňují načítat a~ukládat konfigurační položky typu \TT{float}, \TT{bool} a~\TT{string}.
+Aby byla práce co nejjednodušší, metody přijímají enumerátor \TT{EGameUserSettingsVariable}. Třída pak sama na základě hodnoty tohoto enumerátoru použije správný klíč (který je textový) a~tak může ukládat či vracet hodnotu daného typu z~konfiguračního souboru.

@@ -2,14 +2,14 @@
 
 \section{Modul Blocks (C++)}
 
-Modul bloků obsahuje podstatné informace o tom, jak hra pracuje s bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty apod. Také je v tomto modulu možné nalézt specifické implementace jednotlivých bloků.
+Modul bloků obsahuje podstatné informace o~tom, jak hra pracuje s~bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty apod. Také je v~tomto modulu možné nalézt specifické implementace jednotlivých bloků.
 
-V dalším textu se budeme odkazovat na složky. Odkazujeme se tím do složek \TT{/Source/Blocks/Public} a jejich  \TT{Private} implementací. Strukturu bychom mohli shrnout následovně:
+V dalším textu se budeme odkazovat na složky. Odkazujeme se tím do složek \TT{/Source/Blocks/Public} a~jejich  \TT{Private} implementací. Strukturu bychom mohli shrnout následovně:
 
 \begin{enumerate}
 	\item Definice bloků (složka \TT{Definitions})
-	\item Třídy s popisem bloků (složka \TT{Info})
-	\item Systém ukládání a načítání bloků (složka  \TT{Helpers})
+	\item Třídy s~popisem bloků (složka \TT{Info})
+	\item Systém ukládání a~načítání bloků (složka  \TT{Helpers})
 	\item Rozhraní, které mohou bloky implementovat (složka \TT{Interfaces})
 	\item Komponenty, kterými bloky rozšiřují svoji základní funkcionalitu (složka \TT{Components})
 	\item Implementace jednotlivých bloků (složky \TT{BaseShapes}, \TT{Special})
@@ -18,7 +18,7 @@ V dalším textu se budeme odkazovat na složky. Odkazujeme se tím do složek \
  
 
 \subsection{Definice bloků}
-V této složce se nachází všechny definiční soubory bloků. Definiční soubor obsahuje pouze popis datové struktury a nějakou minimální funkcionalitu (kupříkladu získání korektního vektoru velikosti v závislosti na tom, zda má definice daného bloku nastavenou vlastní velikost). Jednotlivé konkrétní instance s daty jsou pak definovány na straně editoru. Konstanty (například minimální a maximální škálování) je pak možné měnit v editoru a není vyžadována rekompilace projektu hry. 
+V této složce se nachází všechny definiční soubory bloků. Definiční soubor obsahuje pouze popis datové struktury a~nějakou minimální funkcionalitu (kupříkladu získání korektního vektoru velikosti v~závislosti na tom, zda má definice daného bloku nastavenou vlastní velikost). Jednotlivé konkrétní instance s~daty jsou pak definovány na straně editoru. Konstanty (například minimální a~maximální škálování) je pak možné měnit v~editoru a~není vyžadována rekompilace projektu hry. 
 
 Definiční soubor se skládá následujícím způsobem:
 
@@ -37,10 +37,10 @@ Definiční soubor se skládá následujícím způsobem:
 
 \end{itemize}
 
-\subsection{Třídy s popisem bloků}
-Tyto třídy popisují už konkrétní instance bloků v rámci hry. Jejich hodnoty jsou pak v mezích definovaných v definičních třídách. Tyto třídy jsou pak předmětem ukládání a načítání. Dalším důležitým prvkem je BlockHolder, který slouží pro nalezení bloků. 
+\subsection{Třídy s~popisem bloků}
+Tyto třídy popisují už konkrétní instance bloků v~rámci hry. Jejich hodnoty jsou pak v~mezích definovaných v~definičních třídách. Tyto třídy jsou pak předmětem ukládání a~načítání. Dalším důležitým prvkem je BlockHolder, který slouží pro nalezení bloků. 
 
-\subsection{Ukládání a načítání bloků}
+\subsection{Ukládání a~načítání bloků}
 
 - ukládání - máme něco jako block saving helpers
 
@@ -51,7 +51,7 @@ poskytují nástroje pro volání metod na instaních interfacu
 popsat ideu za Implementation, Execute (BlueprintNativeEvent, BlueprintImplementableEvent)
 
 \subsection{Komponenty bloků}
-- pak máme komponenty bloků a nějaké interfaces
+- pak máme komponenty bloků a~nějaké interfaces
 
 \subsubsection{Elektrická komponenta}
 
@@ -73,9 +73,9 @@ popsat ideu za Implementation, Execute (BlueprintNativeEvent, BlueprintImplement
 
 
 \subsection{Implementace bloků}
- - základ Block.h, zbytek v jendotlivých podkategoriích (BaseShapes / Special
+ - základ Block.h, zbytek v~jendotlivých podkategoriích (BaseShapes / Special
  
- TODO jak moc podrobné? vypsat všechny bloky a co všechno implementují, nebo to stačí stručně zmínit? - co implementují by si čtenář mohl uvědomit z předchozího textu a navíc je to jen nudný popis, jehož výžpovědní hodnota je ve zdrojácích a není asi nutné to tu duplikovat
+ TODO jak moc podrobné? vypsat všechny bloky a~co všechno implementují, nebo to stačí stručně zmínit? - co implementují by si čtenář mohl uvědomit z~předchozího textu a~navíc je to jen nudný popis, jehož výžpovědní hodnota je ve zdrojácích a~není asi nutné to tu duplikovat
 
 - popsat speciální bloky + nějaké speciality co umějí (showableWidget)
 
@@ -92,9 +92,9 @@ prapředek všeho
 
 \subsubsection{KDTree}
 
-dědí z MMB, základ ve světě
+dědí z~MMB, základ ve světě
 
 
 \subsubsection{WeatherTargetsKDTree}
 
-dědí z MMB, slouží pro potřeby počasí
+dědí z~MMB, slouží pro potřeby počasí

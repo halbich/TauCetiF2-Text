@@ -2,11 +2,11 @@
 
 \section{Modul Game Save (C++)}
 
-Modul GameSave slouží k ukládání a načítání informací o probíhající hře do binárního formátu. K tomu používáme streamové operátory $<<$, které jsou v tomto případě implementovány tak, že je možné je použít jak pro ukládání, tak pro načítání. // TODO link na tutorial
+Modul GameSave slouží k~ukládání a~načítání informací o~probíhající hře do binárního formátu. K tomu používáme streamové operátory $<<$, které jsou v~tomto případě implementovány tak, že je možné je použít jak pro ukládání, tak pro načítání. // TODO link na tutorial
 
-Díky tomuto přístupu tak můžeme definovat celou strukturu výsledného binárního souboru na jednom místě a tedy rozšiřování uložené hry je triviální. Co si ovšem musíme pohlídat je to, abychom si drželi informaci o verzi uloženého souboru. V našem případě, pokud se bude lišit verze načteného souboru a uložená konstanta v programu, save prostě odmítneme (a dokonce smažeme). V produkčním prostředí bychom si mazání nemohli dovolit, ale museli bychom save ignorovat a uživateli zobrazit nějakou hlášku o tom, že verze souboru není podporovaná. My jsme se však v tomto případě rozhodli save mazat, protože jsme očekávali, že během vývoje hry se bude binární struktura savu často rozšiřovat. Po každé iteraci jsme si savy prostě vytvořili nové.
+Díky tomuto přístupu tak můžeme definovat celou strukturu výsledného binárního souboru na jednom místě a~tedy rozšiřování uložené hry je triviální. Co si ovšem musíme pohlídat je to, abychom si drželi informaci o~verzi uloženého souboru. V našem případě, pokud se bude lišit verze načteného souboru a~uložená konstanta v~programu, save prostě odmítneme (a dokonce smažeme). V produkčním prostředí bychom si mazání nemohli dovolit, ale museli bychom save ignorovat a~uživateli zobrazit nějakou hlášku o~tom, že verze souboru není podporovaná. My jsme se však v~tomto případě rozhodli save mazat, protože jsme očekávali, že během vývoje hry se bude binární struktura savu často rozšiřovat. Po každé iteraci jsme si savy prostě vytvořili nové.
 
-Co by se stalo, kdybychom se snažili načíst save jiné verze? Celá hra by nejspíše byla ukončena s chybou, protože by se pokoušela číst neplatná data a/nebo by očekávala nějaká data tam, kde žádná nejsou. Tím bychom četli z neplatné lokace.
+Co by se stalo, kdybychom se snažili načíst save jiné verze? Celá hra by nejspíše byla ukončena s~chybou, protože by se pokoušela číst neplatná data a/nebo by očekávala nějaká data tam, kde žádná nejsou. Tím bychom četli z~neplatné lokace.
 
 
 
@@ -14,7 +14,7 @@ Co by se stalo, kdybychom se snažili načíst save jiné verze? Celá hra by ne
 \subsection{GameSaveInterface}
 
 \TT{UGameSaveInterface.h} 
-Tento soubor definuje rozhraní, které je možné implementovat a používat v Blueprintech (struktura vychází z tutoriálu na Unreal Engine Wiki\citep{ue_interfaces_tut}). Rozhraní definuje dvě veřejné metody, které musí actoři v UE při implementaci tohoto rozhraní implementovat:
+Tento soubor definuje rozhraní, které je možné implementovat a~používat v~Blueprintech (struktura vychází z~tutoriálu na Unreal Engine Wiki\citep{ue_interfaces_tut}). Rozhraní definuje dvě veřejné metody, které musí actoři v~UE při implementaci tohoto rozhraní implementovat:
 
 \begin{code}
 UFUNCTION(BlueprintNativeEvent, BlueprintCallable, ... )
@@ -24,23 +24,23 @@ UFUNCTION(BlueprintNativeEvent, BlueprintCallable, ... )
 	bool LoadGame();
 \end{code}
 
-Hlavní Blueprint levelu pak během svého běhu určité actory přetypuje na tento interface a bude s nimi dále pracovat. Podrobněji tato funkcionalita bude popsána v Blueprintové části.
+Hlavní Blueprint levelu pak během svého běhu určité actory přetypuje na tento interface a~bude s~nimi dále pracovat. Podrobněji tato funkcionalita bude popsána v~Blueprintové části.
 
 \subsection{FFileVisitor}
 
 \TT{FFileVisitor.h}
 
-Tento soubor obsahuje implementaci návrhového vzoru Visitor pro získání všech herních savů z nějaké zadané složky. Implementace vychází z internetové diskuse na téma procházení adresářů \citep{ue_iterate_dir}.
+Tento soubor obsahuje implementaci návrhového vzoru Visitor pro získání všech herních savů z~nějaké zadané složky. Implementace vychází z~internetové diskuse na téma procházení adresářů \citep{ue_iterate_dir}.
 
 \subsection{Helpers}
 
 \TT{SaveHelpers.h}
-Tento soubor řeší získání seznamu všech uložených her a využívá k tomu implementaci FileVisitoru z předchozí části.
+Tento soubor řeší získání seznamu všech uložených her a~využívá k~tomu implementaci FileVisitoru z~předchozí části.
 
-\subsection{Kontejner s uloženou hrou}
-\TT{SaveGameCarrier.h} Tato třída je v zásadě přepravkou pro data s možností ukládání a načítání dat do binárního formátu. Navíc umožňuje během ukládání v době vývoje vypsat vlastnosti právě ukládané hry do konzole tak, abychom mohli během vývoje snadno tento výstup zkopírovat a vytvořit pevně implementované hry. Tyto pevně implementované hry pak nebudou data vracet po přečtení nějakého binárního souboru, ale budou vracet pevně nastavená data. Vytváření těchto pevně vytvořených her pak bylo o dost jednodušší.
+\subsection{Kontejner s~uloženou hrou}
+\TT{SaveGameCarrier.h} Tato třída je v~zásadě přepravkou pro data s~možností ukládání a~načítání dat do binárního formátu. Navíc umožňuje během ukládání v~době vývoje vypsat vlastnosti právě ukládané hry do konzole tak, abychom mohli během vývoje snadno tento výstup zkopírovat a~vytvořit pevně implementované hry. Tyto pevně implementované hry pak nebudou data vracet po přečtení nějakého binárního souboru, ale budou vracet pevně nastavená data. Vytváření těchto pevně vytvořených her pak bylo o~dost jednodušší.
 
-Přepravka obsahuje pouze holá data, tedy nevytvářejí se žádné nové instance herních objektů. To je z toho důvodu, že nemůžeme použít následující kód:
+Přepravka obsahuje pouze holá data, tedy nevytvářejí se žádné nové instance herních objektů. To je z~toho důvodu, že nemůžeme použít následující kód:
 
 \begin{code}
 
@@ -57,7 +57,7 @@ void USaveGameCarrier::SaveLoadData(
 	Ar << carrier.UsedBlocks;
 }
 \end{code}
-Museli bychom mít referenci na datový typ \TT{UBlockInfo}, který je ale definovaný v modulu Blocks, který musí nutně modul GameSave referencovat. Tudíž zde použijeme následující konstrukci:
+Museli bychom mít referenci na datový typ \TT{UBlockInfo}, který je ale definovaný v~modulu Blocks, který musí nutně modul GameSave referencovat. Tudíž zde použijeme následující konstrukci:
 
 \begin{code}
 // vlastnost kontejneru
@@ -74,11 +74,11 @@ void USaveGameCarrier::SaveLoadData(
 }
 \end{code}
 
-Třídu dědící z UObjektu jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul Blocks si těmito daty naplní své vlastní objekty, které se pak dále využívají ve hře. A naopak, před samotným uložením se postará o to, aby bylo toto pole korektně naplněno všemi daty určenými k uložení. O samotnou serializaci a deserializaci dat do a z přepravky se stará pouze modul GameSave.
+Třídu dědící z~UObjektu jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul Blocks si těmito daty naplní své vlastní objekty, které se pak dále využívají ve hře. A naopak, před samotným uložením se postará o~to, aby bylo toto pole korektně naplněno všemi daty určenými k~uložení. O samotnou serializaci a~deserializaci dat do a~z~přepravky se stará pouze modul GameSave.
 
-Celý systém vychází z tutoriálu \citep{ue_save_system} je postaven na tom, že v C++ je možné přetěžovat operátory, mimo jiné i \TT{<<}. Této vlastnosti je využito tak šikovně, že v závislosti na volání funkce buď zapisuje do archivu, nebo z něj čte, ale pořád se jedná o jediný zápis jedné funkce. To je výhodné, protože to předchází chybám, které by mohly vzniknout při použití 2 metod -- jedné čtecí, jedné zapisovací. Chybám typu přehození dvou datových typů (což by v případě typů různých velikostí znamenalo následné špatné pochopení binárních dat), nebo kupříkladu prohození dvou vlastností stejného typu, což by vytvářelo těžko odhalitelné situace změn hodnot ve hře.
+Celý systém vychází z~tutoriálu \citep{ue_save_system} je postaven na tom, že v~C++ je možné přetěžovat operátory, mimo jiné i~\TT{<<}. Této vlastnosti je využito tak šikovně, že v~závislosti na volání funkce buď zapisuje do archivu, nebo z~něj čte, ale pořád se jedná o~jediný zápis jedné funkce. To je výhodné, protože to předchází chybám, které by mohly vzniknout při použití 2 metod -- jedné čtecí, jedné zapisovací. Chybám typu přehození dvou datových typů (což by v~případě typů různých velikostí znamenalo následné špatné pochopení binárních dat), nebo kupříkladu prohození dvou vlastností stejného typu, což by vytvářelo těžko odhalitelné situace změn hodnot ve hře.
 
-Tento systém je použit pro všechny rozšířené části herního savu -- Bloky, Inventář, Počasí -- a všechny používají podobný způsob práce. Jedná se o definici struktur, tedy samotných kontejnerů a dále pak jeden soubor pojmenovaný \TT{*ArchiveHelpers.h}, kde je popsána vlastní struktura daných kontejnerů v Archivu. Hvězdičku v tomto případě bereme opravdu jako zástupný symbol. Navíc, některé objekty mohou řídit archivaci dle nějakých podmínek nastavených shora. Příkladem budiž definice serializace elektrické komponenty:
+Tento systém je použit pro všechny rozšířené části herního savu -- Bloky, Inventář, Počasí -- a~všechny používají podobný způsob práce. Jedná se o~definici struktur, tedy samotných kontejnerů a~dále pak jeden soubor pojmenovaný \TT{*ArchiveHelpers.h}, kde je popsána vlastní struktura daných kontejnerů v~Archivu. Hvězdičku v~tomto případě bereme opravdu jako zástupný symbol. Navíc, některé objekty mohou řídit archivaci dle nějakých podmínek nastavených shora. Příkladem budiž definice serializace elektrické komponenty:
 
 \begin{code}
 // přetížení, které se nevolá vždy
@@ -108,11 +108,11 @@ FORCEINLINE FArchive& operator<<(
 }
 \end{code}
 
-Jak vidíme z kódu, celý kód se chová korektně jak při serializaci, tak i při deserializaci. Je pouze potřeba vzít v úvahu, že vyšší struktury, které pak budou tyto data používat pro vlastní inicializaci, musí také brát v potaz podmínku. Pokud není splněna, tak svázaná proměnná (v tomto případě \TT{PoweredBlockInfo}) nebude obsahovat platná data.
+Jak vidíme z~kódu, celý kód se chová korektně jak při serializaci, tak i~při deserializaci. Je pouze potřeba vzít v~úvahu, že vyšší struktury, které pak budou tyto data používat pro vlastní inicializaci, musí také brát v~potaz podmínku. Pokud není splněna, tak svázaná proměnná (v tomto případě \TT{PoweredBlockInfo}) nebude obsahovat platná data.
 
 \subsection{NewGameSaveHolder}
 
-\TT{NewGameSaveHolder.h} Tato třída je hlavní třídou, se kterou hra před načítáním pracuje. Definuje seznam napevno zabudovaných levelů a obsahuje jejich implementaci.
+\TT{NewGameSaveHolder.h} Tato třída je hlavní třídou, se kterou hra před načítáním pracuje. Definuje seznam napevno zabudovaných levelů a~obsahuje jejich implementaci.
 
 
 
