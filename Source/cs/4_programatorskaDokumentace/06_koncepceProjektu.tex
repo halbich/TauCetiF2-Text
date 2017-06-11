@@ -8,6 +8,6 @@ Celý projekt je rozdělen do dvou částí - \CPP{} část a Blueprintová čá
 
 Některé části programu jsou implementovány na úrovni \CPP{}, jiné bylo nutné implementovat v Blueprintech. Už víme, že komunikace z Blueprintu do \CPP{} je možná prostým voláním metod, ale určitě budeme potřebovat i možnost opačného směru. Toho je možné dosáhnout více způsoby -- kupříkladu použitím delegátů a událostí (Blueprint se pak na tuto událost naváže a v případě vyvolání dané události vyvolá v Blueprintu definovanou obsluhu), nebo BlueprintImplementable či BlueprintNative metod. (TODO formátování!, link na Specifikaci?) Poslední dvě nám nabízí možnost, jak volat virtuální metody, které je možné přepisovat jak na straně \CPP{}, tak na straně Blueprintu, což se nám bude hodit.
 
-V dalším textu tedy postupně probereme prvně kódovou část napsanou v \CPP{} a poté strukturu projektu s samotném \UE{}.
+V dalším textu tedy postupně probereme prvně kódovou část napsanou v \CPP{} a poté strukturu projektu s samotném \UE{}. Ještě bychom zde měli zmínit, že ačkoliv se v textu budeme odkazovat převážně na hlavičkové soubory, stále budeme brát v potaz i implementační, tedy \TT{.cpp} soubory a obsah textu se může na tuto implementaci odkazovat.
 
 

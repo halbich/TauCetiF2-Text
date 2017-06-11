@@ -16,7 +16,10 @@ prace.pdf: prace.tex $(wildcard *.tex) literatura.bib prace.xmpdata
 	mv prace.pdf ../output/Bakalarka.pdf
 
 clean:
-	rm -rf *.log *.dvi *.aux *.toc *.lof *.lot *.out *.bbl *.blg *.xmpi *.acn *.alg *.glg *.glo *.gls *.ist *.acr *.xdy
-	find -name '*.aux' | xargs rm
 	rm -f prace.pdf
+	rm -rf *.log *.dvi *.toc *.lof *.lot *.out *.bbl *.blg *.xmpi *.acn *.alg *.glg *.glo *.gls *.ist *.acr *.xdy
+	find -name '*.aux' | xargs rm
+		
+bib:
+	/usr/local/texlive/2016/bin/x86_64-linux/bibtex prace	
 	

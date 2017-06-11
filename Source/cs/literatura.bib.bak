@@ -16,7 +16,7 @@
 }
 
 @Online{epicGameplayModules,
-  author   = {Epic Games, Inc},
+  author   = {Epic Games},
   title    = {Gameplay Modules},
   date     = {2017-05-16},
   url      = {https://docs.unrealengine.com/latest/INT/Programming/Modules/Gameplay/},
@@ -76,13 +76,50 @@
 @Online{unity_loc,
   author = {Unity},
   title  = {Localization Manager tutorial},
+  year   = {2017},
   url    = {https://unity3d.com/learn/tutorials/topics/scripting/localization-manager},
 }
 
 @Online{ue_loc,
-  author = {Epic Games,},
+  author = {Epic Games},
   title  = {Localization},
+  year   = {2017},
   url    = {https://docs.unrealengine.com/latest/INT/Gameplay/Localization/},
+}
+
+@Online{ue_interfaces_tut,
+  author = {Epic Games},
+  title  = {How to make C++ interfaces implementable by Blueprints (Tutorial)},
+  year   = {2017},
+  url    = {https://wiki.unrealengine.com/How_To_Make_C%2B%2B_Interfaces_Implementable_By_Blueprints(Tutorial)},
+}
+
+@Online{ue_cdo,
+  author = {Epic Games},
+  title  = {What is CDO?},
+  date   = {2017-06-10},
+  url    = {https://answers.unrealengine.com/questions/191353/what-is-cdo.html},
+}
+
+@Online{ue_actor_life,
+  author = {Epic Games},
+  title  = {Actor Lifecycle},
+  date   = {2017-06-10},
+  url    = {https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/Actors/ActorLifecycle/},
+}
+
+@Online{ue_iterate_dir,
+  author = {Lions Den},
+  title  = {IterateDirectory Questions},
+  date   = {2014-03-01},
+  url    = {https://forums.unrealengine.com/showthread.php?48881-InterateDirectory-Questions},
+}
+
+@Online{ue_save_system,
+  author = {Rama},
+  title  = {Save System, Read \& Write Any Data to Compressed Binary Files},
+  date   = {2016-06-26},
+  url    = {https://wiki.unrealengine.com/Save_System,_Read_%26_Write_Any_Data_to_Compressed_Binary_Files},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}

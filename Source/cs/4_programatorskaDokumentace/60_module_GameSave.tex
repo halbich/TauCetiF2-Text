@@ -8,28 +8,111 @@ Díky tomuto přístupu tak můžeme definovat celou strukturu výsledného bin�
 
 Co by se stalo, kdybychom se snažili načíst save jiné verze? Celá hra by nejspíše byla ukončena s chybou, protože by se pokoušela číst neplatná data a/nebo by očekávala nějaká data tam, kde žádná nejsou. Tím bychom četli z neplatné lokace.
 
+
+
+
 \subsection{GameSaveInterface}
-definuje rozhraní, které implementují důležití actoři v hlavním levelu
+
+\TT{UGameSaveInterface.h} 
+Tento soubor definuje rozhraní, které je možné implementovat a používat v Blueprintech (struktura vychází z tutoriálu na Unreal Engine Wiki\citep{ue_interfaces_tut}). Rozhraní definuje dvě veřejné metody, které musí actoři v UE při implementaci tohoto rozhraní implementovat:
+
+\begin{code}
+UFUNCTION(BlueprintNativeEvent, BlueprintCallable, ... )
+	bool SaveGame();
+
+UFUNCTION(BlueprintNativeEvent, BlueprintCallable, ... )
+	bool LoadGame();
+\end{code}
+
+Hlavní Blueprint levelu pak během svého běhu určité actory přetypuje na tento interface a bude s nimi dále pracovat. Podrobněji tato funkcionalita bude popsána v Blueprintové části.
+
+\subsection{FFileVisitor}
+
+\TT{FFileVisitor.h}
+
+Tento soubor obsahuje implementaci návrhového vzoru Visitor pro získání všech herních savů z nějaké zadané složky. Implementace vychází z internetové diskuse na téma procházení adresářů \citep{ue_iterate_dir}.
 
 \subsection{Helpers}
-záskání všech uložených her
+
+\TT{SaveHelpers.h}
+Tento soubor řeší získání seznamu všech uložených her a využívá k tomu implementaci FileVisitoru z předchozí části.
 
 \subsection{Kontejner s uloženou hrou}
+\TT{SaveGameCarrier.h} Tato třída je v zásadě přepravkou pro data s možností ukládání a načítání dat do binárního formátu. Navíc umožňuje během ukládání v době vývoje vypsat vlastnosti právě ukládané hry do konzole tak, abychom mohli během vývoje snadno tento výstup zkopírovat a vytvořit pevně implementované hry. Tyto pevně implementované hry pak nebudou data vracet po přečtení nějakého binárního souboru, ale budou vracet pevně nastavená data. Vytváření těchto pevně vytvořených her pak bylo o dost jednodušší.
 
+Přepravka obsahuje pouze holá data, tedy nevytvářejí se žádné nové instance herních objektů. To je z toho důvodu, že nemůžeme použít následující kód:
 
-- popsat save game carrier ( + výsledný formát)
+\begin{code}
 
-zmínit helper pro generování hardcoded savu
+// vlastnost kontejneru
+TArray<UBlockInfo> UsedBlocks;
 
-- zdůraznit, že se jedná o holá data, UObjekty si pak vytváří každý modul sám
+// během ukládání
+void USaveGameCarrier::SaveLoadData(
+	FArchive& Ar,
+	USaveGameCarrier& carrier,
+	TArray<FText>& errorList,
+	bool bFullObject)
+{
+	Ar << carrier.UsedBlocks;
+}
+\end{code}
+Museli bychom mít referenci na datový typ \TT{UBlockInfo}, který je ale definovaný v modulu Blocks, který musí nutně modul GameSave referencovat. Tudíž zde použijeme následující konstrukci:
 
-- popsat *Archive helpers 
+\begin{code}
+// vlastnost kontejneru
+TArray<FBlockInfo> usedBlocks;
+
+// během ukládání
+void USaveGameCarrier::SaveLoadData(
+	FArchive& Ar,
+	USaveGameCarrier& carrier,
+	TArray<FText>& errorList,
+	bool bFullObject)
+{
+	Ar << carrier.usedBlocks;
+}
+\end{code}
+
+Třídu dědící z UObjektu jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul Blocks si těmito daty naplní své vlastní objekty, které se pak dále využívají ve hře. A naopak, před samotným uložením se postará o to, aby bylo toto pole korektně naplněno všemi daty určenými k uložení. O samotnou serializaci a deserializaci dat do a z přepravky se stará pouze modul GameSave.
+
+Celý systém vychází z tutoriálu \citep{ue_save_system} je postaven na tom, že v C++ je možné přetěžovat operátory, mimo jiné i \TT{<<}. Této vlastnosti je využito tak šikovně, že v závislosti na volání funkce buď zapisuje do archivu, nebo z něj čte, ale pořád se jedná o jediný zápis jedné funkce. To je výhodné, protože to předchází chybám, které by mohly vzniknout při použití 2 metod -- jedné čtecí, jedné zapisovací. Chybám typu přehození dvou datových typů (což by v případě typů různých velikostí znamenalo následné špatné pochopení binárních dat), nebo kupříkladu prohození dvou vlastností stejného typu, což by vytvářelo těžko odhalitelné situace změn hodnot ve hře.
+
+Tento systém je použit pro všechny rozšířené části herního savu -- Bloky, Inventář, Počasí -- a všechny používají podobný způsob práce. Jedná se o definici struktur, tedy samotných kontejnerů a dále pak jeden soubor pojmenovaný \TT{*ArchiveHelpers.h}, kde je popsána vlastní struktura daných kontejnerů v Archivu. Hvězdičku v tomto případě bereme opravdu jako zástupný symbol. Navíc, některé objekty mohou řídit archivaci dle nějakých podmínek nastavených shora. Příkladem budiž definice serializace elektrické komponenty:
+
+\begin{code}
+// přetížení, které se nevolá vždy
+FORCEINLINE FArchive& operator<<(
+	FArchive &Ar,
+	FPoweredBlockInfo& componentInfo)
+{
+	Ar << componentInfo.IsOn;
+	Ar << componentInfo.AutoregulatePower;
+	Ar << componentInfo.PowerConsumptionPercent;
+	return Ar;
+}
+
+FORCEINLINE FArchive& operator<<(
+	FArchive &Ar, 
+	FElectricityComponentInfo& componentInfo)
+{
+	Ar << componentInfo.CurrentObjectEnergy;
+	Ar << componentInfo.HasPoweredBlockInfo;
+
+	// pokud máme navíc rozšiřující data, přidáme další data
+	// tím efektivně zavoláme metodu uvedenou výše
+	if (componentInfo.HasPoweredBlockInfo)
+		Ar << componentInfo.PoweredBlockInfo;
+
+	return Ar;
+}
+\end{code}
+
+Jak vidíme z kódu, celý kód se chová korektně jak při serializaci, tak i při deserializaci. Je pouze potřeba vzít v úvahu, že vyšší struktury, které pak budou tyto data používat pro vlastní inicializaci, musí také brát v potaz podmínku. Pokud není splněna, tak svázaná proměnná (v tomto případě \TT{PoweredBlockInfo}) nebude obsahovat platná data.
 
 \subsection{NewGameSaveHolder}
 
-poskytuje seznam savů pro BP, umožňuje nahrávání dat
-
-- popsat NewSaveGameHolder, rozšiřování pevných savů 
+\TT{NewGameSaveHolder.h} Tato třída je hlavní třídou, se kterou hra před načítáním pracuje. Definuje seznam napevno zabudovaných levelů a obsahuje jejich implementaci.
 
 
 
