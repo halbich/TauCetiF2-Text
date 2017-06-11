@@ -1,0 +1,136 @@
+%!TEX root = ../../prace.tex
+
+\subsection{Bloky}
+
+TODO  Většina bloků je stejně velká a má hranu o délce 1 metru \citep{mc_block}, \citep{mc_units}. (TODO přesunout do detailní analýzy. TODO popisek odkazu)
+
+V současné době jsou velikosti bloků omezeny na konstantné velikost. Ve hře Minecraft je blok hranově omezen na 1m, hra Space Engineers bloky omezuje dle kategorií od 0.5\,\rm m do 2.5\,\rm m \citep{se_blocks_wiki}.
+
+
+různé druhy, velikosti, jejich vizuální reprezentace, rozšiřovatelnost, obecně co všechno by měly umět.
+
+Název - Min - Max - Pitch - Roll - Type (kostka, zkosený, roh, vlastní)
+
+Tam kde Min == Max -> Vlastní škálování
+
+Typ ovlivňuje další chování
+
+Třeba u Světla by typ mohl být i K a hra by se chovala stejně, K = 1, Z = 0.5, R = 1/6, V = 1 (není v potaz objem)
+
+komponenty bloků a nějaké další ptákoviny
+
+\begin{tabular}{|rll*{5}{c}|}
+	\hline
+	\tableColumnTitles{Název}								{	&	Min		&	Max			&	P			&	R			&T	}		\hline
+	\currentCategory{\textbf{Základní bloky}} 																					\\		\hline
+		\mytablerow 				& Blok základny				& 1--1--4	& 20--20--4		& 				& 				&K	\\		\hline
+		\mytablerow 				& Blok stavby				& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&K	\\		\hline
+		\mytablerow 				& Blok polykarbonátu		& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&K	\\		\hline
+		\mytablerow 				& Zkosený blok základny		& 1--1--4	& 20--20--4		& 				& 				&Z	\\		\hline
+		\mytablerow 				& Zkosený blok stavby		& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&Z	\\		\hline
+		\mytablerow 				& Roh bloku stavby			& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&R	\\		\hline
+	\currentCategory{\textbf{Speciální bloky}} 									 												\\		\hline
+		\mytablerow 				& Terminál			 		& 1--8--5 	& 1--8--5		& 				& 				&V	\\		\hline
+		\mytablerow 				& Napájené okno				& 2--1--2	& 20--1--20		& \checkmark	& \checkmark	&K	\\		\hline
+		\mytablerow 				& Dveře 					& 7--7--11	& 7--7--11		& 				& 				&V	\\		\hline
+		\mytablerow 				& Světlo					& 1--1--1	& 1--1--1		& \checkmark	& \checkmark	&V	\\		\hline
+		\mytablerow 				& Přepínač 					& 1--1--1	& 1--1--1		& \checkmark	& \checkmark	&V	\\		\hline
+		\mytablerow 				& Generátor energie			& 3--3--2	& 20--20--2		& 				& 				&K	\\		\hline
+		\mytablerow 				& Generátor objektů 		& 3--3--2	& 20--20--2		& 				& 				&K	\\		\hline
+		\mytablerow 				& Akumulátor				& 3--3--3	& 3--3--3		& 				& 				&V	\\		\hline
+		\mytablerow 				& Plnička kyslíkových bomb 	& 4--3--4	& 4--3--4		& 				& 				&V	\\		\hline
+		\mytablerow 				& Kyslíková bomba			& 2--2--2	& 2--2--2		& 				& 				&V	\\		\hline
+		
+\end{tabular}
+
+
+\subsection{Podrobný popis bloků}
+
+Popis některých vlastností - má energetickou komponentu - > implikuje definici bindovacích bodů
+má kyslíkovou komponentu - implikuje TotalObjectOxygen
+
+Producer nebo Consumer implikuje Total object energy
+
+Controllable implikuje IsController nebo IsControllable
+
+
+
+\subsubsection{A1 - Blok základny}
+- velikost v ose Z omezena na 4 základní bloky
+
+- má elektriku
+
+Pokud bychom měli nerovný terén, tento blok by mohl zahrnovat podstavce pro vyrovnání terénu.
+
+\subsubsection{A2 - Blok stavby}
+- všechny velikosti
+
+- má elektriku
+
+Tento blok je základním stavebním blokem ve hře.
+
+\subsubsection{A3 - Blok polykarbonátu}
+- všechny velikosti
+Tento blok je nejlevnější, není připojen do elektrické sítě. Ideou bloku je podpora průhledných stěn a také možné pomocné stavební konstrukce pro výstavbu do výšky. Inspiraci můžeme vidět v používání třeba bloku hlíny ve hře \MC{}, kdy hráč vyskočí a pod sebe umístí nový blok a tím se ve světě posune o 1 metr výš.
+
+\subsubsection{A4 - Zkosený blok základny}
+- velikost v ose Z omezena na 4 základní bloky
+
+- má elektriku
+
+Stejné jako blok \textit{A1}, jen je zkosený. Může sloužit jako přístupová rampa.
+
+\subsubsection{A5 - Zkosený blok stavby}
+- všechny velikosti
+
+- má elektriku
+\subsubsection{A6 - Roh bloku stavby}
+-všechny velikosti
+
+- má elektriku
+
+\subsubsection{B1 - Terminál}
+- speciální, pevná velikost 1 x 8 x 5 bloků
+
+- má elektriku, konzument, rychlé doplnění energie, ovládání rozhraní, komplexní přehled připojené elektrické sítě.
+\subsubsection{B2 - Napájené okno}
+- minimální velikost 2 x 1 x 2, maximální velikost 20 x 1 x 20 základních bloků
+
+- má elektriku, konzument
+\subsubsection{B3 - Dveře}
+- speciální, pevná velikost 7 x 7 x 11 bloků
+
+- má elektriku, otevírání
+\subsubsection{B4 - Světlo}
+-velikost omezena na 1 x 1 x 1 blok
+
+- má elektriku, konzument, ovládání bez přepínače
+\subsubsection{B5 - Přepínač}
+-velikost omezena na 1 x 1 x 1 blok
+
+- má elektriku, náhled stavu
+\subsubsection{B6 - Generátor energie}
+- omezená velikost v ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v ostatních osách
+
+- má elektriku, producent
+\subsubsection{B7 - Generátor objektů}
+- omezená velikost v ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v ostatních osách
+
+- má elektriku, konzument
+\subsubsection{B8 - Akumulátor}
+- speciální, pevná velikost 3 x 3 x 3 bloků
+
+- má elektriku, producent, konzument, rychlý náhled naplnění
+\subsubsection{B9 - Plnička kyslíkových bomb}
+- speciální, pevná velikost 4 x 3 x 4 bloků
+
+- má elektriku, kyslíkovou komponentu, konzument, UI, rychlé doplnění kyslíku
+
+- využijeme ideu náhledu inventáře a plnička bude zobrazovat blok B10, pokud bude nějaký takový blok plnit.
+
+\subsubsection{B10 - Kyslíková bomba}
+- speciální, pevná velikost 2 x 2 x 2 bloků
+
+- má kyslíkovou komponentu, možnost sebrat, rychlý náhled naplnění, rychlé doplnění kyslíku
+
+

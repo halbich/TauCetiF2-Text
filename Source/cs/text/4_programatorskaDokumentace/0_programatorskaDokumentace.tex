@@ -1,0 +1,42 @@
+%!TEX root = ../prace.tex
+
+\chapter{Programátorská dokumentace}
+
+\input{./text/4_programatorskaDokumentace/05_spusteni_projektu.tex}
+\input{./text/4_programatorskaDokumentace/06_koncepceProjektu.tex}
+\input{./text/4_programatorskaDokumentace/10_strukturaProjektu.tex}
+\input{./text/4_programatorskaDokumentace/20_strukturaProjektuBP.tex}
+
+\section{Backlog}
+
+Zde popsat jak jsem to celé implementoval a proč
+
+
+Popsat jednotlivé C++ třídy a jejich odvozené Blueprintové deriváty + přidat případné obrázky z BL kódu (např. BlueprintImplementable event, který se zavolá jak na C++ tak i na BP) 
+
+Udělat rozbor BT počasí + mechaniku počasí + denního cyklu
+popsat řízení osvětlení dle počasí
+
+Udělat rozbor bloků, škálování, konfigurace, datovou strukturu, implementaci dynamických textur, zvýraznění
+
+Popsat mechaniku Selector - SelectTarget + napojení na Builder
+
+Popsat mechaniku používání objektů + zvýraznění
+
+-> Mám svět, ten má v sobě bloky, ty jsou v nějaké stromové struktuře, bloky mají komponenty, které přes tuto strukturu mohou na sebe vázat
+Svět má také počasí se svojí vlastní strukturou, vuyžívající podobnosti s bloky (2D KD strom s Heapem na listech)
+
+-> hráč může to a tamto, díky inventáři se dostane na bloky, a díky selectoru je pak můževložit do světa skrz World controller (zmíněno v předchozím)
+->zároveň jsou všechny entity savovatelné 
+
+
+-> Popsat struktury Widgetů, zmínit použití Synchronize Widgetu, implementaci mechaniky stackovatelných widgetů
+
+-> popsat implementaci hudby
+
+
+
+
+// TODO obrázky s konfiguračními ukázkami do příloh (např. jak se definuje Blok z UE
+
+

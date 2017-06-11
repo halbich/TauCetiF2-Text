@@ -1,0 +1,52 @@
+%!TEX root = ../../prace.tex
+
+\section{Struktura kódu}
+
+Protože jsme zvolili implementaci práce v \UE{}, můžeme využít toho, že engine umožňuje rozdělit celý herní projekt do jednotlivých herních modulů\citep{epicGameplayModules}. Tím docílíme modularity, nebudeme mít celý projekt v jednom kuse a zároveň tím urychlíme překlad projektu při kompilaci.\\
+Každý \UE{} projekt musí definovat právě jeden primární herní modul. Pokud využijeme možnosti vytvoření nového projektu založeného na \CPP{}, editor tento modul automaticky vytvoří za nás. My jsme pojmenovali náš projekt {\tt TauCetiF2} a tak se jmenuje i náš primární modul.
+
+Jednotlivé části projektu jsme rozdělili do několika herních modulů:
+
+\begin{enumerate}
+	\item TauCetiF2 (primární modul)
+	\item Inventory
+	\item Blocks
+	\item Game Save
+	\item Commons
+\end{enumerate}
+
+Herní moduly jsme seřadili dle jejich závislosti tak, že každý modul závisí na všech modulech s vyšším očíslováním. Tedy primární modul využívá všech ostatních modulů a poslední modul (Commons) není závislý na žádném dalším modulu. Pro lepší představu můžeme tyto souvislosti vyjádřit obrázkem \ref{fig:obrStruktura_DependencyDiag}: 
+
+\begin{figure}[!ht]\centering
+\includegraphics[ width=140mm]{../img/dependencyDiagram}
+
+\caption{Diagram závislostí modulů projektu.}
+\label{fig:obrStruktura_DependencyDiag}
+
+\end{figure}
+
+
+
+\subsection{Struktura modulu}
+Všechny moduly dodržují společnou strukturu. Obsahují:
+\begin{itemize}
+	\item složku \verb!Public!
+	\item složku \verb!Private!
+	\item soubor \verb![název_modulu].Build.cs!
+	\item soubory \verb![název_modulu].h!, \verb![název_modulu].cpp!
+\end{itemize}
+
+
+Každý modul pak má hlavičkové soubory ve složce Public, implementaci tříd pak ve složce Private. Poslední tři soubory jsou kvůli \UBT{} a použitím herních modulů v rámci \UE{}
+
+
+
+
+\input{./text/4_programatorskaDokumentace/50_module_Commons.tex}
+\input{./text/4_programatorskaDokumentace/60_module_GameSave.tex}
+\input{./text/4_programatorskaDokumentace/70_module_Blocks.tex}
+\input{./text/4_programatorskaDokumentace/80_module_Inventory.tex}
+\input{./text/4_programatorskaDokumentace/90_module_Main.tex}
+
+
+

@@ -1,17 +1,10 @@
 % Encoding: UTF-8
 
-@Online{minecraft_tut_farm,
-  author       = {{Minecraft Wiki}},
-  title        = {Iron Golem farming},
-  date         = {2017-05-16},
-  url          = {http://minecraft.gamepedia.com/Tutorials/Iron_golem_farming},
-  howpublished = {Web},
-}
-
 @Online{se_blocks_wiki,
   author = {{Space Engineers WIKI}},
   title  = {Blocks},
-  date   = {2017-05-16},
+  year   = {2015},
+  date   = {2015-02-18},
   url    = {http://spaceengineers.wikia.com/wiki/Category:Blocks},
 }
 
@@ -26,7 +19,8 @@
 @Online{mc_block,
   author   = {Minecraft Wiki},
   title    = {Block},
-  date     = {2017-05-16},
+  year     = {2017},
+  date     = {2017-06-08},
   url      = {http://minecraft.gamepedia.com/Block},
   language = {English},
   urldate  = {15. 5. 2017},
@@ -35,14 +29,16 @@
 @Online{mc_units,
   author = {Minecraft Wiki},
   title  = {Tutorials/Units of measure},
-  date   = {2017-05-10},
+  year   = {2017},
+  date   = {2017-01-01},
   url    = {http://minecraft.gamepedia.com/Tutorials/Units_of_measure},
 }
 
 @Online{mc_te_comparsion,
   author  = {dillonsup},
   title   = {Minecraft Vs Terraria (Facts)},
-  date    = {2017-05-16},
+  year    = {2013},
+  date    = {2013-04-06},
   url     = {http://www.minecraftforum.net/forums/minecraft-discussion/discussion/178129-minecraft-vs-terraria-facts},
   note    = {internetové fórum},
   urldate = {2017-05-15},
@@ -52,7 +48,8 @@
 @Online{se_intro_img,
   author = {GameSpot},
   title  = {Space Engineers},
-  date   = {2017-05-16},
+  year   = {2014},
+  date   = {2014-08-14},
   url    = {https://static.gamespot.com/uploads/original/1365/13658182/2626082-space-engineers1.jpg},
 }
 
@@ -69,6 +66,7 @@
 @Online{engines_list,
   author = {Devmaster.net},
   title  = {Game Engines (filtered)},
+  year   = {2017},
   date   = {2017-05-16},
   url    = {http://devmaster.net/devdb/engines?query=&name=&developer_name=&status=active&languages_supported_ids%5B%5D=1&languages_supported_ids%5B%5D=3&features_ids%5B%5D=1&features_ids%5B%5D=2&features_ids%5B%5D=3&features_ids%5B%5D=4&features_ids%5B%5D=5&features_ids%5B%5D=6&features_ids%5B%5D=7&features_ids%5B%5D=8&features_ids%5B%5D=12&features_ids%5B%5D=13&features_ids%5B%5D=16&features_ids%5B%5D=18},
 }
@@ -90,14 +88,16 @@
 @Online{ue_interfaces_tut,
   author = {Epic Games},
   title  = {How to make C++ interfaces implementable by Blueprints (Tutorial)},
-  year   = {2017},
+  year   = {2016},
+  date   = {2015-06-03},
   url    = {https://wiki.unrealengine.com/How_To_Make_C%2B%2B_Interfaces_Implementable_By_Blueprints(Tutorial)},
 }
 
 @Online{ue_cdo,
   author = {Epic Games},
   title  = {What is CDO?},
-  date   = {2017-06-10},
+  year   = {2015},
+  date   = {2015-03-13},
   url    = {https://answers.unrealengine.com/questions/191353/what-is-cdo.html},
 }
 
@@ -111,6 +111,7 @@
 @Online{ue_iterate_dir,
   author = {Lions Den},
   title  = {IterateDirectory Questions},
+  year   = {2014},
   date   = {2014-03-01},
   url    = {https://forums.unrealengine.com/showthread.php?48881-InterateDirectory-Questions},
 }
@@ -118,6 +119,7 @@
 @Online{ue_save_system,
   author = {Rama},
   title  = {Save System, Read \& Write Any Data to Compressed Binary Files},
+  year   = {2016},
   date   = {2016-06-26},
   url    = {https://wiki.unrealengine.com/Save_System,_Read_%26_Write_Any_Data_to_Compressed_Binary_Files},
 }
@@ -125,6 +127,7 @@
 @Online{intro_boss,
   author = {Brian Johnson},
   title  = {Urbandictionary.com: Boss fight},
+  year   = {2014},
   date   = {2014-04-10},
   url    = {http://www.urbandictionary.com/define.php?term=boss%20fight},
 }
@@ -132,6 +135,7 @@
 @Online{vrage,
   author = {Keen Software House},
   title  = {VRAGE},
+  year   = {2017},
   date   = {2017-06-11},
   url    = {http://www.keenswh.com/vrage.html},
 }
@@ -139,6 +143,7 @@
 @Online{rosa_blog,
   author = {Marek Rosa},
   title  = {Space Engineers: Super-large worlds, Procedural asteroids and Exploration},
+  year   = {2014},
   date   = {2014-12-17},
   url    = {http://blog.marekrosa.org/2014/12/space-engineers-super-large-worlds_17.html},
 }
