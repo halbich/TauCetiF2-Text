@@ -13,7 +13,7 @@ V práci se budeme zabývat několika různými hrami, které však mají někol
 \subsection{Hry kompletně blokové}
 Začněme hrami, které využívají bloků jako základního elementu celé hry. Bloky zde tvoří doslova celý svět. Mezi nejpopulárnější a~širokou veřejností nejznámější bychom měli zařadit hru \MC{}. Na obrázku z této hry \ref{fig:intro_mc} si můžeme všimnout několika zásadních faktů. Vidíme zde kostičkované listí stromů (1) či hrad na skále (2), který byl postaven z~kostiček. Taktéž slunce, měsíc a~mraky (3) jsou stylizovány do kostiček. Výrazně je kostičkovaný styl vidět na nehratelných postavách (\textit{non-playable character} -- \NPC{}) -- na obrázku ovce (4), krávy a~prasata. Stejným způsobem je pak zpracován i~hráčův charakter (5), tedy postava, kterou hráč přímo ovládá.
 
-
+TODO zmínit crafting, stavěnbí
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/mc}
@@ -32,12 +32,12 @@ Mezi dalšími hrami bychom mohli zmínit například \TE{}. Ta je o~něco mlad�
 
 Mezi hry s~prvky realismu bychom mohli zařadit třeba hry \SE{} či \ME{}, využívají kombinaci herních bloků s~\textit{voxelovou} reprezentací světa. Obě hry jsou implementovány v~proprietárním enginu společnosti Keen Software House nazvaném \textit{VRAGE}\texttrademark{}. Voxelový terén je pak v~enginu za běhu hry procedurálně generován do polygonální reprezentace, kterou pak grafická karta standardním způsobem vykreslí na obrazovce (oficiální popis vlastností enginu \citep{vrage}). Během tohoto procedurálního vytváření je na třídimenzionální strukturu voxelů (které si můžeme představit jako bloky stejné velikosti) aplikován nějaký šum a~tím je možné ve hře vygenerovat prakticky neomezené množství různých objektů vycházejících z~jedné voxelové struktury. \uv{\textit{The “procedural asteroids” feature adds a~practically infinite number of asteroids to the game world}} \citep{rosa_blog}. Tímto způsobem pak hry dosáhují vyššího stupně realismu -- nespoléhají se pouze na předpřipravené 3D modely. 
 
-Podívejme se na obrázek \ref{fig:intro_se} ze hry \SE{} (Zdroj: server Gamespot.com \citep{se_intro_img}). Na něm můžeme vidět převážně kamenný asteroid, a na něm je postavená vesmírná základna (obarvená zelenou barvou). K základně je přistavena větší vesmírná loď (modrobílá, v~levém horním rohu), hráč pak k~základně letí v~další, malé lodi (modrobílá uprostřed). Bližší pohled na planetku ukazuje, že její povrch není pravidelný. To je způsobeno právě algoritmickou aproximací voxelové reprezentace planetky. 
+Podívejme se na obrázek \ref{fig:intro_se} ze hry \SE{}. Na něm můžeme vidět převážně kamenný asteroid, a na něm je postavená vesmírná základna (obarvená zelenou barvou). K základně je přistavena větší vesmírná loď (modrobílá, v~levém horním rohu), hráč pak k~základně letí v~další, malé lodi (modrobílá uprostřed). Bližší pohled na planetku ukazuje, že její povrch není pravidelný. To je způsobeno právě algoritmickou aproximací voxelové reprezentace planetky. 
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/se}
 
-\caption{Hra Space Engineers - základna na asteroidu }
+\caption{Hra Space Engineers -- základna. Zdroj: Gamespot.com \citep{se_intro_img} }
 \label{fig:intro_se}
 
 \end{figure}
@@ -49,11 +49,12 @@ Samotná základna i~vesmírná plavidla (detailní pohled na jiné plavidlo je 
 \SE{} umožňuje stavět pohyblivé stroje, které si hráč postaví z~herních bloků a~ty se pak chovají jako jedna entita. Stále je na ně však aplikována fyzika, takže je možné plavidlo poškodit, nebo dokonce zničit. Tento stupeň realismu od naší hry vyžadovat nebudeme. Budeme však chtít mít ve hře bloky, jejichž model není tvaru krychle. Stejně jako v \SE{} budeme chtít, aby bylo možné bloky rotovat v libovolném směru (u bloků, u kterých to bude dávat smysl).
 
 
+TODO zmínit crafting, stavěnbí, conveyor systém
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/se_ship}
 
-\caption{Hra Space Engineers - vesmírná loď }
+\caption{Hra Space Engineers -- dron. Zdroj: space-engineer.net \citep{se_drone_source}}
 \label{fig:intro_se_ship}
 
 \end{figure}
@@ -73,13 +74,39 @@ Samotná základna i~vesmírná plavidla (detailní pohled na jiné plavidlo je 
 
 Do této sekce bychom měli zařadit například vesmírný simulátor \TM{}. // TODO popis, obrázek
 
+Zmínit stavění
+
+\begin{figure}[!ht]\centering
+\includegraphics[ width=140mm]{../img/intro/tom}
+
+\caption{Hry Take On Mars -- vozítko před budovou. Zdroj: Hry.cz \citep{intro_tom_source}}
+\label{fig:intro_tom}
+
+\end{figure}
+
+\FloatBarrier
+
 bloky na stavění, ale třeba vozidla kompletní
 
 \subsection{Ostatní - zařadit TODO }
 
-Můžeme však nalézt i~další příklady her (// TODO \TM{}, \NI{}, \PN{}, \ARK{}, \NMS{}).
+Můžeme však nalézt i~další příklady her (// TODO , , , , ).
+
+\NI{}
+Novus incpetio je MMORPG, stavění https://www.youtube.com/watch?v=d2ySkvn6wyw probíhá tím stylem, že se hráč přepne do build módu, vše si naplánuje (va výdledek vidí rovnou tak, jak bude vypadat). Po ukončení toho módu pak hráč vidí obrysy naplánovaných bloků. (Ty se přichytávají do mřížky a k sobě) Pak je může začít konstruovat, přičemž v nabídce během konstrukce má možnost si chybějící součásti craftnout.
 
 
+\PN{}
+
+https://www.youtube.com/watch?v=Wpurqr3YaGQ funguje podobně jako Space engineers - získávání surovin, kraftění na komponenty a použřívání komponent na konstrukci objetků. POstavený objekt ukazuje základní konstrukci.
+
+
+\ARK{}
+Ark počáteční free point, pak se bloky přidávají k sobě https://www.youtube.com/watch?v=TOmjjo5QoP8 
+
+
+\NMS{}
+Stejně jako \TM{} používá snappointy
 
 \section{Čemu se budeme věnovat}
 

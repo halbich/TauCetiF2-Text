@@ -88,15 +88,16 @@
 @Online{ue_interfaces_tut,
   author = {Epic Games},
   title  = {How to make C++ interfaces implementable by Blueprints (Tutorial)},
-  year   = {2017},
+  year   = {2016},
+  date   = {2015-06-03},
   url    = {https://wiki.unrealengine.com/How_To_Make_C%2B%2B_Interfaces_Implementable_By_Blueprints(Tutorial)},
 }
 
 @Online{ue_cdo,
   author = {Epic Games},
   title  = {What is CDO?},
-  year   = {2017},
-  date   = {2017-06-10},
+  year   = {2015},
+  date   = {2015-03-13},
   url    = {https://answers.unrealengine.com/questions/191353/what-is-cdo.html},
 }
 
@@ -110,6 +111,7 @@
 @Online{ue_iterate_dir,
   author = {Lions Den},
   title  = {IterateDirectory Questions},
+  year   = {2014},
   date   = {2014-03-01},
   url    = {https://forums.unrealengine.com/showthread.php?48881-InterateDirectory-Questions},
 }
@@ -125,6 +127,7 @@
 @Online{intro_boss,
   author = {Brian Johnson},
   title  = {Urbandictionary.com: Boss fight},
+  year   = {2014},
   date   = {2014-04-10},
   url    = {http://www.urbandictionary.com/define.php?term=boss%20fight},
 }
@@ -132,6 +135,7 @@
 @Online{vrage,
   author = {Keen Software House},
   title  = {VRAGE},
+  year   = {2017},
   date   = {2017-06-11},
   url    = {http://www.keenswh.com/vrage.html},
 }
@@ -139,8 +143,17 @@
 @Online{rosa_blog,
   author = {Marek Rosa},
   title  = {Space Engineers: Super-large worlds, Procedural asteroids and Exploration},
+  year   = {2014},
   date   = {2014-12-17},
   url    = {http://blog.marekrosa.org/2014/12/space-engineers-super-large-worlds_17.html},
+}
+
+@Online{intro_tom_source,
+  author = {Hry.cz},
+  title  = {Recenze hry Take On Mars},
+  year   = {2017},
+  date   = {2017-06-12},
+  url    = {https://www.hry.cz/hra/take-on-mars},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}
