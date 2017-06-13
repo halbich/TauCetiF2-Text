@@ -46,7 +46,7 @@ Tuto možnost rovnou zavrhneme. Vzhledem k~tomu, kolik funkcionality budeme impl
 Máme na výběr z~více druhů grafických frameworků postavených na různých platformách. Mezi známějšími bychom mohli uvést například \XNA{} (\CS{}) či jeho klon \MG{} (\CS{}). Oba frameworky jsou k~dispozici zdarma, podpora \XNA{} je v~současné době už ukončena, vývoj \MG{} je stále aktivní. Implementace hry s~použitím některého z~těchto frameworků by byla rychlejší než v~předchozím případě, ale stále bychom museli spoustu funkcionality implementovat sami. 
 
 \subsection{Existující herní engine}
-Jak jsme již předeslali výše, v~této kategorii máme nejvíce možností. Buď můžeme využít enginy jako třeba\OG{} (\CPP{}), nebo použít více robustnější řešení v~podobě enginů typu \UN{} (\texttt{C\#}) či \UE{} (\texttt{C++}). Zde opět použijeme předchozí argument --- budeme hledat engine, který nám nabídne pokud možno co nejvíce uživatelské a~vývojářské přívětivosti a~bude poskytovat dostatek nástrojů pro vývoj naší hry v~uvažovaném rozsahu. Tudíž enginy jako třeba \OG{} nebudou naší volbou.
+Jak jsme již předeslali výše, v~této kategorii máme nejvíce možností. Buď můžeme využít enginy jako třeba\OG{} (\CPP{}), nebo použít více robustnější řešení v~podobě enginů typu \UN{} (\texttt{C\#}) či \UE{} (\texttt{C++}). Zde opět použijeme předchozí argument -- budeme hledat engine, který nám nabídne pokud možno co nejvíce uživatelské a~vývojářské přívětivosti a~bude poskytovat dostatek nástrojů pro vývoj naší hry v~uvažovaném rozsahu. Tudíž enginy jako třeba \OG{} nebudou naší volbou.
 
 Výhodou zmíněných robustních enginů je to, že jsou k~dispozici zdarma (oproti třeba \CRY{}). Taktéž zde, díky práci komunity, existuje pro oba enginy kvalitní vývojová dokumentace. Dalším kladem je fakt, že jsou oba multiplatformní a~tedy zde existuje relativně snadný postup v~případě distribuce na různé typy herních zařízení. Pojďme si je tedy rozebrat podrobněji.
 
@@ -61,7 +61,7 @@ Co se lokalizace hry týče, museli bychom si napsat vlastní správu lokalizace
 \subsubsection{Unreal Engine}
 Oproti \UN{} je \UE{} podstatně komplexnější a~pochopení všech vztahů a~závislostí může být pro začínajícího herního programátora obtížné. Přes tuto zjevnou nevýhodu jsme však běhe, rešerš zjistili, že \UE{} nám poskytuje podstatně příjemnější prostředí pro vývoj s~komplexnějšími nástroji. Grafické možnosti máme díky materiálovému editoru k~dispozici od začátku a~nemusíme k~tomu umět psát shadery třeba v~jazyce HLSL. Je nám jasné, že výsledný grafický výkon nemusí být nutně optimální, nicméně vzhledem k~povaze této práce stejně nebudeme cílit na grafickou a~výkonovou optimalizaci.
 
-Testy s~navigačním meshem a~jeho dynamickou aktualizací byly uspokojivé - nenarazili jsme na žádný zádrhel nebo pokles výkonu během aktualizace meshe. 
+Testy s~navigačním meshem a~jeho dynamickou aktualizací byly uspokojivé -- nenarazili jsme na žádný zádrhel nebo pokles výkonu během aktualizace meshe. 
 
 Co musíme zmínit jako nevýhodu je absence editovatelného terénu. (TODO link). V editoru je možné vytvořit krásný terén se rozličnými možnostmi detailů, nicméně tento terén není možné jednoduchým způsobem editovat. Chápeme to spíše jako nepříjemnost, než zásadní nevýhodu. 
 
@@ -73,4 +73,4 @@ Další komplikaci vidíme v~použití \CPP{}, se kterým jsme v~době rešerše
 \subsection{Volba engine -verdikt}
 
 
-Nakonec jsme zvolili poslední možnost - \UE{}. Autorovy znalosti především z~oblasti \texttt{C\#} sice hovořily pro použití \UN{}, nicméně výhody použití \UE{} převážily nad nevýhodami i~všemi výhodami \UN{}.	// TODO tohle chce vyladit
+Nakonec jsme zvolili poslední možnost -- \UE{}. Autorovy znalosti především z~oblasti \texttt{C\#} sice hovořily pro použití \UN{}, nicméně výhody použití \UE{} převážily nad nevýhodami i~všemi výhodami \UN{}.	// TODO tohle chce vyladit

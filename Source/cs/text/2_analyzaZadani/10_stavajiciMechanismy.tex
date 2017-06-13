@@ -6,16 +6,26 @@
 V následujících podkapitolách si rozebereme jednotlivé části her a~jak je implementují ostatní. Pokusíme se rozebrat to, z čeho bychom mohli čerpat a co rozvinout dále.
 
 \subsection{Bloky}
-Bloky, respektive jejich vizuální reprezentace, nemusí být vždy jen tvaru krychle lorem ipsum. Stále však budeme blok chápat jako objekt, který je umístěn v~ortogonální mřížce 3D prostoru a~beze zbytku tento prostor vyplňuje. Bloky nebudeme nijak kombinovat, tak jak je tomu třeba v \ME{} -- Multibloky. Jako multiblok si můžeme třeba představit čtvrtkruhovou část zdi, do které můžeme \uv{vložit} třeba okno, přičemž máme více variant, kam takové okno dát. Třeba do středu bloku, do středu jedné či druhé poloviny bloku, nebo třeba do obou polovin. Tato funkcionalita sice je zajímavá, nicméně to by znamenalo, že bychom museli přistoupit k procedurálně generovaným objektům. Navíc nejspíše budeme mít tak málo bloků, že využití této funkcionality by v porovnání se stráveným časem na implementaci bylo minimální. Rozhodli jsme se tedy, že tato vlastnost pro nás není tak důležitá, abychom se jí plně věnovali. 
 
-Co však budeme od hry chtít je to, aby bloky nebyly pouze statické objekty ve hře, ale aby měly ve světě nějaký význam a aby s nimi šlo případně interagovat. Navíc budeme chtít to, aby bloky byly vizuálně přitažlivé, což bude u některých bloků znamenat, že je budeme muset vymodelovat v nějakém 3D modelovacím programu. Autor však nějaké minimální znalosti v tomto oboru má, takže by to neměl být problém.
 
-Dále budeme chtít, aby bylo možné definovat jednotlivé vlastnosti bloků jednoduchým a přímočarým způsobem, nejlépe mimo samotný zdrojový kód hry a v nějakém editoru. Tento požadavek je zde z toho důvodu, že je zcela běžné, že herní designéři ladí různé konstanty a nastavení během vývoje tak, aby hra co nejvíce odpovídala jejich představám a byla pro hráče zábavná. Mít tedy tyto konstanty pevně zakompilované v kódu by znamenalo opětovnou kompilaci celého projektu, což v pozdějších fázích může znamenat výrazné zpomalení vývoje. Protože očekáváme další vývoj této hry, měli bychom se držet nějakých rozumných postupů na udržovatelnost kódu a celého vývoje hry.
+TODO  Většina bloků je stejně velká a~má hranu o~délce 1 metru \citep{mc_block}, \citep{mc_units}. (TODO přesunout do detailní analýzy. TODO popisek odkazu)
 
-různé druhy, velikosti, jejich vizuální reprezentace, rozšiřovatelnost, obecně co všechno by měly umět
+
+V současné době jsou velikosti bloků omezeny na konstantné velikost. Ve hře Minecraft je blok hranově omezen na 1m, hra Space Engineers bloky omezuje dle kategorií od 0.5\,\rm m do 2.5\,\rm m \citep{se_blocks_wiki}.
+
+
+Vizuální reprezentace bloků nemusí být vždy jen tvaru krychle. Stále však budeme pod pojmem blok chápat objekt, který je umístěn v~ortogonální mřížce 3D prostoru a~beze zbytku tento prostor vyplňuje.
+
+
+
+
+
 
 \subsubsection{Základní vlastnosti}
-Chceme navrhnout systém, ve kterém bude nejmenší blok o~hraně 20 cm, tedy objemu odpovídající 0,008 m$^3$. Tento blok nazveme jako jednotkový. Největší blok pak omezíme na 20-ti násobek jednotkové krychle ve všech 3 rozměrech. Největší blok tedy bude mít objem 64 m$^3$. Může se stát, že dolní limit bude příliš malý, ale v~tuto chvíli považujeme tuto konstantu za dostatečnou. Naopak horní limit bude nejspíše dostatečný - práce s~příliš velkými bloky by mohla být neefektivní a~stavba nepřehledná.
+Ve většině her jsou bloky omezeny na pevnou velikost. (TODO zmínít MC, SE 3 různé velikosti)
+
+
+Chceme navrhnout systém, ve kterém bude nejmenší blok o~hraně 20 cm, tedy objemu odpovídající 0,008 m$^3$. Tento blok nazveme jako jednotkový. Největší blok pak omezíme na 20-ti násobek jednotkové krychle ve všech 3 rozměrech. Největší blok tedy bude mít objem 64 m$^3$. Může se stát, že dolní limit bude příliš malý, ale v~tuto chvíli považujeme tuto konstantu za dostatečnou. Naopak horní limit bude nejspíše dostatečný -- práce s~příliš velkými bloky by mohla být neefektivní a~stavba nepřehledná.
 
 \subsubsection{Součásti bloků}
 TODO zmínit MC má readstone, popsat základy chování.
@@ -35,7 +45,7 @@ Chceme hráči umožnit postavení komplexní struktury bloků, která bude dohr
 Chceme, aby bloky měly zdraví a~aby bylo možné je zničit. Bloky v~elektrické síti ale necháme se uzdravovat, což bude spotřebovávat energii. Protože očekáváme, že pouze bloky exponované na vnější straně budov budou předmětem uzdravování, dává nám smysl požadovat nějaký způsob přednostního uzdravování bloků, které budou s~největší pravděpodobností nejdříve zničeny. Cílem je větší podpora exponovaných a~tedy kriticky důležitých bloků. Oproti tomu pokud bude blok z~větší části zastíněn nějakými jinými bloky, nebude jeho expozice vůči celkovému zdraví tak velká, že by hrozilo okamžité zničení.
 
 \subsubsection{Speciality}
-Multiblocks, náhled inventáře (\ME{} - stůl a~jídlo), conveyor system SE, MC složité, ale dá se vyřešit módy, propagace kyslíku ME
+Multiblocks, náhled inventáře (\ME{} -- stůl a~jídlo), conveyor system SE, MC složité, ale dá se vyřešit módy, propagace kyslíku ME
 
 \subsection{Herní svět}
 
@@ -43,7 +53,7 @@ jaký je herní svět
 
 \subsubsection{Reprezentace}
 
-MC - bloky, chuncks, SE + ME planety
+MC -- bloky, chuncks, SE + ME planety
 
 \subsubsection{Bloky v~herním světě}
 
@@ -52,7 +62,7 @@ do gridu, start-free grid
 
 \subsubsection{Denní / noční cyklus}
 
-obvykle tam je, MC 20minut. My zkusíme 30 minut (zkusili jsme 60 minut, ale ukázalo se to jako příliš dlouhá doba - brzy nebylo co dělat kvůli malé nabídce bloků).
+obvykle tam je, MC 20minut. My zkusíme 30 minut (zkusili jsme 60 minut, ale ukázalo se to jako příliš dlouhá doba -- brzy nebylo co dělat kvůli malé nabídce bloků).
 
 \subsubsection{Herní překážky}
 
@@ -60,7 +70,7 @@ počasí, \NPC{}, atributy avataru
 
 \subsubsection{(Ne)fyzikální chování}
 
-MC - bloky stojí ve vzduchu, ale třeba písek při updatu začne padat
+MC -- bloky stojí ve vzduchu, ale třeba písek při updatu začne padat
 
 \subsection{Inventář}
 
