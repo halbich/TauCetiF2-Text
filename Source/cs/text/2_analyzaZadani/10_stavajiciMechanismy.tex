@@ -3,11 +3,14 @@
 
 \section{Stávající implementace mechanismů}
 
-V následujících podkapitolách si rozebereme jednotlivé části her a~jak je implementují ostatní.
+V následujících podkapitolách si rozebereme jednotlivé části her a~jak je implementují ostatní. Pokusíme se rozebrat to, z čeho bychom mohli čerpat a co rozvinout dále.
 
 \subsection{Bloky}
+Bloky, respektive jejich vizuální reprezentace, nemusí být vždy jen tvaru krychle lorem ipsum. Stále však budeme blok chápat jako objekt, který je umístěn v~ortogonální mřížce 3D prostoru a~beze zbytku tento prostor vyplňuje. Bloky nebudeme nijak kombinovat, tak jak je tomu třeba v \ME{} -- Multibloky. Jako multiblok si můžeme třeba představit čtvrtkruhovou část zdi, do které můžeme \uv{vložit} třeba okno, přičemž máme více variant, kam takové okno dát. Třeba do středu bloku, do středu jedné či druhé poloviny bloku, nebo třeba do obou polovin. Tato funkcionalita sice je zajímavá, nicméně to by znamenalo, že bychom museli přistoupit k procedurálně generovaným objektům. Navíc nejspíše budeme mít tak málo bloků, že využití této funkcionality by v porovnání se stráveným časem na implementaci bylo minimální. Rozhodli jsme se tedy, že tato vlastnost pro nás není tak důležitá, abychom se jí plně věnovali. 
 
-Bloky, respektive jejich vizuální reprezentace, nemusí být vždy ve tvaru krychle. (TODO reference na MC, SE) Stále však budeme blok chápat jako objekt, který je umístěn v~ortogonální mřížce 3D prostoru a~beze zbytku tento prostor vyplňuje. Nebudeme se tedy zabývat multibloky (reference na ME)
+Co však budeme od hry chtít je to, aby bloky nebyly pouze statické objekty ve hře, ale aby měly ve světě nějaký význam a aby s nimi šlo případně interagovat. Navíc budeme chtít to, aby bloky byly vizuálně přitažlivé, což bude u některých bloků znamenat, že je budeme muset vymodelovat v nějakém 3D modelovacím programu. Autor však nějaké minimální znalosti v tomto oboru má, takže by to neměl být problém.
+
+Dále budeme chtít, aby bylo možné definovat jednotlivé vlastnosti bloků jednoduchým a přímočarým způsobem, nejlépe mimo samotný zdrojový kód hry a v nějakém editoru. Tento požadavek je zde z toho důvodu, že je zcela běžné, že herní designéři ladí různé konstanty a nastavení během vývoje tak, aby hra co nejvíce odpovídala jejich představám a byla pro hráče zábavná. Mít tedy tyto konstanty pevně zakompilované v kódu by znamenalo opětovnou kompilaci celého projektu, což v pozdějších fázích může znamenat výrazné zpomalení vývoje. Protože očekáváme další vývoj této hry, měli bychom se držet nějakých rozumných postupů na udržovatelnost kódu a celého vývoje hry.
 
 různé druhy, velikosti, jejich vizuální reprezentace, rozšiřovatelnost, obecně co všechno by měly umět
 
