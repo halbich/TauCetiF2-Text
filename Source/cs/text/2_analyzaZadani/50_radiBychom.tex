@@ -11,7 +11,16 @@ V následujících podkapitolách si rozebereme naše požadavky na hru
 \input{./text/2_analyzaZadani/55_bloky.tex}
 
 
+\subsection{Komunikace bloků}
 
+Chceme, aby bloky v~elektrické síti spolu uměly komunikovat a~bylo třeba možné vzdáleně tyto bloky ovládat. Obdobný systém je možné nalézt i~ve hře \SE{}, kde jsou tlačítka pro ovládání různých dveří, pístů a~dalších interaktivních bloků.
+
+\subsection{Skládání bloků do struktur}
+
+Chceme hráči umožnit postavení komplexní struktury bloků, která bude dohromady dávat nějaký speciální význam.V našem případě to bude konstruktor objektů, díky kterému za pomoci bloku \textit{B1} -- terminálu -- může hráč vytváře nové bloky, které pak bude moci umístit do světa. V našem pojetí to bude spíše objekt, který bude imaginárně vymýšlet optimální rozvržení bloku (de facto takový automatizovaný návrhář Blueprintů). Bloky jednou vymyšlené pak hráč bude moci stavět libovolně mnohokrát, jen musí mít dostatečnou zásobu energie pro jejich postavení.
+
+\subsection{Zdraví bloků}
+Chceme, aby bloky měly zdraví a~aby bylo možné je zničit. Bloky v~elektrické síti ale necháme se uzdravovat, což bude spotřebovávat energii. Protože očekáváme, že pouze bloky exponované na vnější straně budov budou předmětem uzdravování, dává nám smysl požadovat nějaký způsob přednostního uzdravování bloků, které budou s~největší pravděpodobností nejdříve zničeny. Cílem je větší podpora exponovaných a~tedy kriticky důležitých bloků. Oproti tomu pokud bude blok z~větší části zastíněn nějakými jinými bloky, nebude jeho expozice vůči celkovému zdraví tak velká, že by hrozilo okamžité zničení.
 
 \subsection{Herní svět}
 

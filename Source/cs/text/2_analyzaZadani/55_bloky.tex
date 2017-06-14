@@ -11,6 +11,8 @@ Co však budeme od hry chtít je to, aby bloky nebyly pouze statické objekty ve
 Dále budeme chtít, aby bylo možné definovat jednotlivé vlastnosti bloků jednoduchým a přímočarým způsobem, nejlépe mimo samotný zdrojový kód hry a v nějakém editoru. Tento požadavek je zde z toho důvodu, že je zcela běžné, že herní designéři ladí různé konstanty a nastavení během vývoje tak, aby hra co nejvíce odpovídala jejich představám a byla pro hráče zábavná. Mít tedy tyto konstanty pevně zakompilované v kódu by znamenalo opětovnou kompilaci celého projektu, což v pozdějších fázích může znamenat výrazné zpomalení vývoje. Protože očekáváme další vývoj této hry, měli bychom se držet nějakých rozumných postupů na udržovatelnost kódu a celého vývoje hry.
 
 
+Chceme navrhnout systém, ve kterém bude nejmenší blok o~hraně 20 cm, tedy objemu odpovídající 0,008 m$^3$. Tento blok nazveme jako jednotkový. Největší blok pak omezíme na 20-ti násobek jednotkové krychle ve všech 3 rozměrech. Největší blok tedy bude mít objem 64 m$^3$. Může se stát, že dolní limit bude příliš malý, ale v~tuto chvíli považujeme tuto konstantu za dostatečnou. Naopak horní limit bude nejspíše dostatečný -- práce s~příliš velkými bloky by mohla být neefektivní a~stavba nepřehledná.
+
 
 různé druhy, velikosti, jejich vizuální reprezentace, rozšiřovatelnost, obecně co všechno by měly umět.
 

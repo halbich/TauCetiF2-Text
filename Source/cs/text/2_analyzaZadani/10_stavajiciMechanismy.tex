@@ -7,42 +7,29 @@ V následujících podkapitolách si rozebereme jednotlivé části her a~jak je
 
 \subsection{Bloky}
 
+Hry mají obvykle velikost bloků stejně velkou. \MC{} má hranu bloku o~délce 1 metru (popis bloku na oficiální Wiki stránce Minecraftu \citep{mc_block}, oficiální popis jednotek použitých v Minecraftu \citep{mc_units}). \SE{} bloky hranově omezuje dle kategorií od 0.5\,\rm m do 2.5\,\rm m (oficiální popis bloků ve hře \citep{se_blocks_wiki}). U ostatních her je situace podobná, byť některé jsou v raných fázích vývoje a tudíž pro ně neexistuje žádný oficiální zdroj informací, takže velikosti bychom mohli pouze odhadovat.
 
-TODO  Většina bloků je stejně velká a~má hranu o~délce 1 metru \citep{mc_block}, \citep{mc_units}. (TODO přesunout do detailní analýzy. TODO popisek odkazu)
-
-
-V současné době jsou velikosti bloků omezeny na konstantné velikost. Ve hře Minecraft je blok hranově omezen na 1m, hra Space Engineers bloky omezuje dle kategorií od 0.5\,\rm m do 2.5\,\rm m \citep{se_blocks_wiki}.
-
-
-Vizuální reprezentace bloků nemusí být vždy jen tvaru krychle. Stále však budeme pod pojmem blok chápat objekt, který je umístěn v~ortogonální mřížce 3D prostoru a~beze zbytku tento prostor vyplňuje.
-
-
-
-
-
+Vizuální reprezentace bloků nemusí být vždy jen tvaru krychle. Stále však budeme pod pojmem blok chápat objekt, který je umístěn v~ortogonální mřížce 3D prostoru a~beze zbytku tento prostor vyplňuje. Některé z námi zmíněných her umožňují volnou počáteční rotaci (kolem vertikální osy) a také nabízí nějaký způsob \uv{ukotvení} bloku do terénu, tedy prvotní umístění bloku. Z tohoto pohledu je pak možné chápat tento první umístěný blok jako pivot, od jehož umístění a rotace se odvíjí následné vlastnosti přichycovací mřížky. Obvykle však platí, že bloky jsou umístěny vodorovně (tedy krychle bude na šikmém terénu umístěna tak, že její horní a dolní strana je ve vodorovné poloze).
 
 \subsubsection{Základní vlastnosti}
-Ve většině her jsou bloky omezeny na pevnou velikost. (TODO zmínít MC, SE 3 různé velikosti)
 
+Mezi základní vlastnosti bloku bychom měli zařadit vizuální reprezentaci, pozici ve světě, rotaci a velikost. Rotace u krychle u jiných her je de facto zbytečná, protože tvar bude vypadat vždy stejně. Ovšem v našem případě se budeme bavit obecně o kvádru a tam už rotace bloku dostávají hlubší význam. Naopak když si představíme blok dveří, kdy v jednom bloku jsou futra a samotné křídlo dveří, tak u takového bloku dává smysl pouze rotace kolem vertikální osy. 
 
-Chceme navrhnout systém, ve kterém bude nejmenší blok o~hraně 20 cm, tedy objemu odpovídající 0,008 m$^3$. Tento blok nazveme jako jednotkový. Největší blok pak omezíme na 20-ti násobek jednotkové krychle ve všech 3 rozměrech. Největší blok tedy bude mít objem 64 m$^3$. Může se stát, že dolní limit bude příliš malý, ale v~tuto chvíli považujeme tuto konstantu za dostatečnou. Naopak horní limit bude nejspíše dostatečný -- práce s~příliš velkými bloky by mohla být neefektivní a~stavba nepřehledná.
+Jako další základní vlastnosti bychom mohli brát třeba zdraví, cenu za postavení, čas doby stavby, délka trvání destrukce (pokud je od hráče), co hráč získá od zničení bloku apod.
 
 \subsubsection{Součásti bloků}
-TODO zmínit MC má readstone, popsat základy chování.
+Jako součásti bloků můžeme brát cokoliv, co rozšiřuje základní vlastnosti. Zde bychom mohli zmínit třeba Redstone v \MC{u}. Redstone je speciální typ bloku, chová se jako elektrický obvod a v kombinaci s bloky a redstonovou loučí je možné vytvářet logická hradla. Je zřejmé, že v kombinaci s dalšími hradly je možné v \MC{u} vytvořit třeba bitovou sčítačku. Ačkoliv vytvoření jednoho hradla je snadné, složitější logické obvody (například kódový zámek) jsou pak velmi náročné na prostor. Z toho důvodu pro \MC{} vnikly různé elektrické módy, rozšiřující základní funkcionalitu hry. Vytváření takového módu zde nebudeme řešit, ale můžeme čtenáři prozradit, že díky nim je možné Přidávat nové bloky do hry a zároveň jim implementovat i poměrně složitou funkcionalitu. Pro zajímavost, mód RedPower má jednotlivá hradla jako samostatné bloky (což šetří místo) a navíc má možnost skládat různě barevné vodiče do sebe (až 16 linek signálu). Bez tohoto módu by hráč potřeboval takový prostor, aby položil 16 vedení redstone tak, aby se nedotýkaly a neovlivňovaly.  
 
-
-
--- TODO komponenty elektřiny, inventáře
+Další možné součásti bloků, kromě vedení elektřiny, může být například práce s kyslíkem či práce s inventářem. Blok třeba může nabízet nějaký úložný prostor, kam může hráč přesunovat objekty ze svého inventáře. Dále můžeme zmínit interakci s uživatelem, ať už přímou, nebo nepřímou. Jako přímou interakci uveďme takové použití bloku, kdy rovnou vidíme nějakou změnu. To může být například stisknutí tlačítka, změna polohy nějaké páky. Výsledek této přímé interakce pak hráč vidí okamžitě a vizuálně se blok nějakým způsobem změní. Jako nepřímou interakci bychom mohli uvést například otevření nějakého ovládacího rozhraní bloku, což je obvykle nějaká UI obrazovka. Obě interakce se mohou prolínat, takže výsledkem nepřímé interakce může být třeba změna barvy bloku.
 
 \subsection{Komunikace bloků}
+Bloky spolu mnohdy umí komunikovat. Dříve zmíněný redstone z \MC{u} by se dal taktéž považovat za metodu interakce. Například stiskem tlačítka lze vyslat redstonový signál, který změní polohu nějakého pístu. Ovšem komunikace může být i méně viditelná -- například z terminálu v \SE{} je možné ovládat nějaké písty, je možné otevírat a zavírat dveře hangáru apod.
 
-Chceme, aby bloky v~elektrické síti spolu uměly komunikovat a~bylo třeba možné vzdáleně tyto bloky ovládat. Obdobný systém je možné nalézt i~ve hře \SE{}, kde jsou tlačítka pro ovládání různých dveří, pístů a~dalších interaktivních bloků.
 
 \subsection{Skládání bloků do struktur}
-Chceme hráči umožnit postavení komplexní struktury bloků, která bude dohromady dávat nějaký speciální význam.V našem případě to bude konstruktor objektů, díky kterému za pomoci bloku \textit{B1} -- terminálu -- může hráč vytváře nové bloky, které pak bude moci umístit do světa. V našem pojetí to bude spíše objekt, který bude imaginárně vymýšlet optimální rozvržení bloku (de facto takový automatizovaný návrhář Blueprintů). Bloky jednou vymyšlené pak hráč bude moci stavět libovolně mnohokrát, jen musí mít dostatečnou zásobu energie pro jejich postavení.
+Asi jediný příklad, který můžeme zmínit, je postavení portálu v \MC{u}, nebo postavení sněhuláka či golema. (TODO obrázek tvarů?) V momentě, kdy nějaká skupina bloků splňuje přesně definovaný tvar, tak se vykoná nějaká událost. Například je možné otevřít portál, nebo se bloky zničí a na místo nich se spawne NPCčko (takže jako by se to zrodilo z těch bloků) 
 
-\subsection{Zdraví bloků}
-Chceme, aby bloky měly zdraví a~aby bylo možné je zničit. Bloky v~elektrické síti ale necháme se uzdravovat, což bude spotřebovávat energii. Protože očekáváme, že pouze bloky exponované na vnější straně budov budou předmětem uzdravování, dává nám smysl požadovat nějaký způsob přednostního uzdravování bloků, které budou s~největší pravděpodobností nejdříve zničeny. Cílem je větší podpora exponovaných a~tedy kriticky důležitých bloků. Oproti tomu pokud bude blok z~větší části zastíněn nějakými jinými bloky, nebude jeho expozice vůči celkovému zdraví tak velká, že by hrozilo okamžité zničení.
+
 
 \subsubsection{Speciality}
 Multiblocks, náhled inventáře (\ME{} -- stůl a~jídlo), conveyor system SE, MC složité, ale dá se vyřešit módy, propagace kyslíku ME

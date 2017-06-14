@@ -5,7 +5,7 @@
 V době vzniku této práce jsou velice populární hry s~otevřeným světem. Lákají hráče na obsáhlost světa a~možnost nelineárního řešení problémů a~herních úkolů. Her s~otevřeným světem najdeme nepřeberné množství v~různých herních žánrech. My se zaměříme na podmnožinu her, které kromě otevřeného světa nabízí také možnosti budování struktur a~vyžadují od hráče netriviální styl hraní, který mu umožňuje ve hře přežít. V herním průmyslu se tyto hry často označují jako \textit{sanboxové}, \textit{s budováním}, \textit{s průzkumem prostředí}, \textit{o přežití}. Autor této práce má tento typ her v~oblibě a~rád by touto prací představil svoji vizi dalšího možného rozvoje her tohoto žánru. Cílem práce by měla být implementace nového herního principu stavění, které současné herní tituly nenabízí.
 
 \section{Charakteristika her}
-V práci se budeme zabývat několika různými hrami, které však mají několik společných vlastností. Jedním ze základních konceptů je využívání herních bloků. Dalším význačným prvkem je způsob integrace herních bloků do herního prostření. Některé hry jsou celé tvořeny bloky, jiné se snaží dosáhnout vyššího stupně realismu ve hře a~bloky využívají pouze pro konstrukci různých herních objektů. Důležitým tématem této práce tedy bude rozbor systému bloků a~práce s~nimi a~popis hráčských problémů způsobených danými koncepty. V další části práce pak navrhneme a~implementujeme vlastní řešení.
+V práci se budeme zabývat několika různými hrami, které však mají několik společných vlastností. Jedním ze základních konceptů je využívání herních bloků. Dalším význačným prvkem je způsob integrace herních bloků do herního prostředí. Některé hry jsou celé tvořeny bloky, jiné se snaží dosáhnout vyššího stupně realismu ve hře a~bloky využívají pouze pro konstrukci různých herních objektů. Důležitým tématem této práce tedy bude rozbor systému bloků a~práce s~nimi a~popis hráčských problémů způsobených danými koncepty. V další části práce pak navrhneme a~implementujeme vlastní řešení.
 
 
 
@@ -23,7 +23,9 @@ Začněme hrami, které využívají bloků jako základního elementu celé hry
 
 \FloatBarrier
 
-Hráč pak může bloky umisťovat do herního světa. Bloky získává těžbou (například kutáním krumpáčem do kamenného bloku), nebo je může vyrobit tzv.~\textit{Craftingem}. \textit{Crafting} probíhá skrze uživatelské rozhraní, kdy hráč z nějakých herních bloků či obecně elementů vytváří nové bloky či elementy. \MC{} používá takový systém \textit{Craftingu}, kdy hráč musí umístit bloky do konkrétního tvaru, aby získal nějaký nový objekt. Na obrázku \ref{fig:intro_crafting} můžeme vidět dvě varianty tvorby krumpáče. V jednom případě je hráčovým cílem vytvořit \textit{dřevěný krumpáč} (na obrázku vlevo), v druhém případě pak \textit{kamenný krumpáč} (vpravo). Z toho důvodu v prvním případě do vstupního tvaru umístí do horní části 3 bloky dřevěných prken, v druhém případě použije 3 bloky kamení. Tímto způsobem je možné vytvářet nejen bloky, ale i nástroje, zbraně a dokonce i jídlo, které pak hráč ve hře konzumuje.
+Hráč pak může bloky umisťovat do herního světa. Bloky získává těžbou (například kutáním krumpáčem do kamenného bloku), nebo je může vyrobit tzv.~\textit{craftingem}. \textit{Crafting} probíhá skrze uživatelské rozhraní, kdy hráč z nějaké kombinace herních bloků či obecně elementů vytváří nové bloky či elementy. \MC{} používá takový systém \textit{craftingu}, kdy hráč musí umístit bloky do konkrétního tvaru, aby získal nějaký nový objekt. 
+
+Na obrázku \ref{fig:intro_crafting} můžeme vidět dvě varianty tvorby krumpáče. V jednom případě je hráčovým cílem vytvořit \textit{dřevěný krumpáč} (na obrázku vlevo), v druhém případě pak \textit{kamenný krumpáč} (vpravo). Z toho důvodu v prvním případě do vstupního tvaru umístí do horní části 3 bloky dřevěných prken, v druhém případě použije 3 bloky kamení. Tímto způsobem je možné vytvářet nejen bloky, ale i nástroje, zbraně a dokonce i jídlo, které pak hráč ve hře konzumuje.
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/crafting}
@@ -38,12 +40,12 @@ Hráč pak může bloky umisťovat do herního světa. Bloky získává těžbou
 Stavění pak ve hře probíhá tak, že si hráč zvolí blok nebo objekt, který chce umístit do světa. Tento objekt musí mít ve svém inventáři. Namíří kurzor na už existující blok ve světě a klikne levým tlačítkem myši. Ke straně bloku, na který hráč mířil, se pak připojí vybraný blok. Postavený blok se odebere z inventáře a dále nevyžaduje žádnou další akci (na rozdíl od jiných her, což si ukážeme v následující sekci).
 
 
-Mezi dalšími hrami bychom mohli zmínit například \TE{}. Ta je o~něco mladší než \MC{}, ale je častým zdrojem diskusí, zda je lepší new \MC{}, nebo ne. Pravdou je, že obě hry mají svůj svět kompletně složený z~kostek (\TE{} je však 2D hra), ale každá si klade trochu jiné cíle. \TE{} je více orientovaná na příběh, obsahuje více \NPC{} i~bossů. Boss je v~herní terminologii významný nepřítel, obvykle je silnější než ostatní protivníci a~velmi často bývá v~závěrečných částech hry. Duel s~bossem pak obvykle od hráče vyžaduje zjištění jeho silných a~slabých stránek a~schémat jeho útoků \citep{intro_boss}. \MC{} je pak orientován spíše na stavění (porovnání Minecraft vs Terraria (facts) \citep{mc_te_comparsion} na Minecraftovém fóru), ačkoliv od \textit{Combat update}, tedy verze 1.9, jsou možnosti boje oproti dřívějším verzím větší.  
+Mezi dalšími hrami bychom mohli zmínit například \TE{}. Ta je o~něco mladší než \MC{}, ale je častým zdrojem diskusí, zda je lepší new \MC{}, nebo ne. Pravdou je, že obě hry mají svůj svět kompletně složený z~kostek (\TE{} je však 2D hra), ale každá si klade trochu jiné cíle. \TE{} je více orientovaná na příběh, obsahuje více \NPC{} i~bossů. (Boss je v~herní terminologii významný nepřítel, obvykle je silnější než ostatní protivníci a~velmi často bývá v~závěrečných částech hry. Duel s~bossem pak obvykle od hráče vyžaduje zjištění jeho silných a~slabých stránek a~schémat jeho útoků \citep{intro_boss}.) \MC{} je pak orientován spíše na stavění (porovnání Minecraft vs Terraria (facts) \citep{mc_te_comparsion} na Minecraftovém fóru), ačkoliv od \textit{Combat update}, tedy verze 1.9, jsou možnosti boje oproti dřívějším verzím větší.  
 
 
 \subsection{Hry s~prvky realismu}
 
-Mezi hry s~prvky realismu bychom mohli zařadit třeba hry \SE{} či \ME{}, využívají kombinaci herních bloků s~\textit{voxelovou} reprezentací světa. Obě hry jsou implementovány v~proprietárním enginu společnosti Keen Software House nazvaném \textit{VRAGE}\texttrademark{}. Voxelový terén je pak v~enginu za běhu hry procedurálně generován do polygonální reprezentace, kterou pak grafická karta standardním způsobem vykreslí na obrazovce (oficiální popis vlastností enginu \citep{vrage}). Během tohoto procedurálního vytváření je na třídimenzionální strukturu voxelů (voxely si můžeme představit jako bloky stejné velikosti) aplikován nějaký šum a~tím je možné ve hře vygenerovat prakticky neomezené množství různých objektů vycházejících z~jedné voxelové struktury. \uv{\textit{The “procedural asteroids” feature adds a~practically infinite number of asteroids to the game world}} \citep{rosa_blog}. Tímto způsobem pak hry dosáhují vyššího stupně realismu -- nespoléhají se pouze na předpřipravené 3D modely, ale generují vizuální reprezentaci některých objektů za běhu hry. Z toho vyplývá, že každý hráč může stejnou hru prožít jinak. 
+Mezi hry s~prvky realismu bychom mohli zařadit třeba hry \SE{} či \ME{}, využívají kombinaci herních bloků s~\textit{voxelovou} reprezentací světa (voxely si můžeme představit jako bloky stejné velikosti). Obě hry jsou implementovány v~proprietárním enginu společnosti Keen Software House nazvaném \textit{VRAGE}\texttrademark{}. Z voxelové reprezentace terénu je pak v~enginu za běhu hry procedurálně generovaná polygonální reprezentace terénu, kterou pak grafická karta standardním způsobem vykreslí na obrazovce (oficiální popis vlastností enginu \citep{vrage}). Obdobným způsobem jako terén se pak ve hře \SE{} chovají různá vesmírná tělesa či asteroidy. Během procedurálního vytváření asteroidu je na třídimenzionální strukturu voxelů  aplikován nějaký šum a~tím je možné ve hře vygenerovat prakticky neomezené množství různých asteroidů vycházejících z~jedné voxelové struktury. \uv{\textit{The “procedural asteroids” feature adds a~practically infinite number of asteroids to the game world}} \citep{rosa_blog}. Tímto způsobem pak hry dosáhují vyššího stupně realismu -- nespoléhají se pouze na předpřipravené 3D modely, ale generují vizuální reprezentaci herních objektů za běhu hry. Z toho vyplývá, že každý hráč může stejnou hru prožít jinak. 
 
 Podívejme se na obrázek \ref{fig:intro_se} ze hry \SE{}. Na něm můžeme vidět převážně kamenný asteroid a na něm je postavená vesmírná základna (obarvená zelenou barvou). K základně je přistavena větší vesmírná loď (modrobílá, v~levém horním rohu), hráč pak k~základně letí v~další, malé lodi (modrobílá uprostřed). Můžeme si všimnout, že povrch asteroidu není pravidelný a obsahuje spoustu nerovností (na rozdíl od tvarů základny a lodí). To je způsobeno právě algoritmickou aproximací voxelové reprezentace asteroidu. 
 
@@ -57,7 +59,7 @@ Podívejme se na obrázek \ref{fig:intro_se} ze hry \SE{}. Na něm můžeme vid�
 
 \FloatBarrier
 
-Samotná základna i~vesmírná plavidla (detailní pohled na jiné plavidlo je na obrázku \ref{fig:intro_se_ship}) jsou tvořeny bloky. Vizuální reprezentace bloku může být i~jiného tvaru než jen krychle -- to je možné vidět na obrázku \ref{fig:intro_se_blocks}. Také na tomto obrázku můžeme vidět barevně zvýrazněné hranice bloků. Jak základny, tak vesmírné lodě (které jsou navíc oproti základnám pohyblivé) využívají tento systém bloků. 
+Samotná základna i~vesmírná plavidla (detailní pohled na jiné plavidlo je na obrázku \ref{fig:intro_se_ship}) jsou tvořeny bloky. Vizuální reprezentace bloku může být i~jiného tvaru než jen krychle -- to je možné vidět na obrázku \ref{fig:intro_se_blocks}. Na tom samém obrázku můžeme vidět barevně zvýrazněné hranice bloků. Jak základny, tak vesmírné lodě (které jsou navíc oproti základnám pohyblivé) využívají tento systém bloků. 
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/se_ship}
@@ -103,7 +105,7 @@ Do této sekce bychom mohli zařadit například vesmírný simulátor \TM{}. Ta
 
 \FloatBarrier
 
-Stavění pak ve hře probíhá tak, že hráč přidává bloky k už postaveným blokům na konkrétní, vývojáři definované přípojné body. To má výhodu v tom, že hra snadno pozná, že je stavba někde \uv{děravá} a například pak neprobíhá okysličení a natlakování vnitřních prostor takovéto nedokončené stavby. Pokud bychom se rozhodli řešit vnitřní prostory stavěných budov a jejich plnění kyslíkem, tak bychom se z tohoto stylu mohli inspirovat. Hra dále nabízí možnost stavby konstruktoru objektů, kde je -- podle velikosti postaveného konstruktoru -- možné \uv{vytisknout} třeba celé vozidlo. Touto myšlenkou bychom se chtěli inspirovat. 
+Stavění pak ve hře probíhá tak, že hráč přidává bloky k už postaveným blokům na konkrétní, vývojáři definované přípojné body. To má výhodu v tom, že hra snadno pozná, že je stavba někde \uv{děravá}. Pokud je někde ve struktuře stavby netěsnost, pak například neprobíhá okysličení a natlakování vnitřních prostor takovéto nedokončené stavby. Pokud bychom se rozhodli řešit vnitřní prostory stavěných budov a jejich plnění kyslíkem, tak bychom se z tohoto stylu mohli inspirovat. Hra dále nabízí možnost stavby konstruktoru objektů, kde je -- podle velikosti postaveného konstruktoru -- možné \uv{vytisknout} třeba celé vozidlo. Touto myšlenkou bychom se chtěli inspirovat.  (TODO Pozn. opravdu? když jsem vymyslel konstruktor objektů, tak jsem TOM ani nehrál)
 
 
 \subsection{Možné další inspirace }
@@ -112,7 +114,7 @@ Hra \NI{} patří do žánru \textit{MMORPG} (\textit{massively multiplayer onli
 
 
 %https://www.youtube.com/watch?v=Wpurqr3YaGQ 
-Hra \PN{} funguje podobně jako \SE{} -- získávání surovin, jejich crafting na komponenty a používání komponent na konstrukci objektů. Nově postavený (nedokončený) objekt ukazuje základní konstrukci a komponenty nutné k dokončení. Stejně jako u \SE{} je zde možné vytvářet pohyblivá vozidla, měnit terén apod. Z pohledu stavění tedy nepřináší nic nového. (Ačkoliv hra kromě velice hezké grafiky řeší vlastnosti herní postavy -- pokud hráč nějakou činnost vykonává opakovaně, tak se v ní zlepšuje a naopak -- a tím se výrazně odlišuje od jiných her).
+Hra \PN{} funguje podobně jako \SE{} -- získávání surovin, jejich crafting na komponenty a používání komponent na konstrukci objektů. Nově postavený (nedokončený) objekt ukazuje základní konstrukci a komponenty nutné k dokončení. Stejně jako u \SE{} je zde možné vytvářet pohyblivá vozidla, měnit terén apod. Z pohledu stavění tedy nepřináší nic nového. (Ačkoliv hra kromě velice hezké grafiky řeší vlastnosti herní postavy -- pokud hráč nějakou činnost vykonává opakovaně, tak se v ní zlepšuje a naopak -- a tím se výrazně odlišuje od jiných her.)
 
 
 % https://www.youtube.com/watch?v=TOmjjo5QoP8 
@@ -120,7 +122,7 @@ Hra \ARK{} je pak opět podobnou kombinací předchozích her a liší se jiným
 
 Hra \NMS{} je opět podobná předchozím, stavění využívá systém přípojných bodů. Hra má hezky řešený systém multibloků, kdy je možné upravit některé části staveb. Takže například místo zdi je možné vytvořit okno. Tato funkcionalita je tedy podobná hře \SE{}.
 
-Abychom výše uvedeným hrám v této kapitole nekřivdili, hry nejsou stejné. Mnohé využívají třeba systém procedurálně generovaných planet a každá hra se snaží v něčem odlišit. Nicméně my se tímto aspektem zabývat nebudeme a tedy pro účely naší práce je budeme považovat za podobné.
+Abychom výše uvedeným hrám v této kapitole nekřivdili, musíme zmínit fakt, že hry nejsou úplně stejné. Mnohé využívají třeba systém procedurálně generovaných planet a každá hra se snaží v něčem odlišit. Nicméně my se tímto aspektem (procedurálním generováním) zabývat nebudeme a tedy pro účely naší práce můžeme výše zmíněné hry považovat za podobné.
 
 \section{Čemu se budeme věnovat}
 
@@ -134,17 +136,17 @@ Změna v~přístupu k~herním blokům bude vyžadovat i~úpravy herního mechani
 
 Obvykle je ve hře definován jeden základní rozměr bloku, který je neměnný. (\SE{} definuje více velikostí -- ty však nelze vzájemně kombinovat.) To však může být problémem, pokud se hráč rozhodne postavit v~herním světě nějakou větší a~komplexnější strukturu podle reálné či fiktivní předlohy. Pro příklad uveďme některé výtvory ze hry \MC{} -- město Královo přístaviště z~knih Píseň ledu a~ohně od Geoge R. R. Martina, nebo hlavní město Gondoru Minas Tirith z~knih Pána prstenů od J. R. R. Tolkiena. Autoři těchto výtvorů museli volit takové měřítko, aby byly výtvory dostatečně detailní, ale zároveň aby bylo možné výtvor postavit v~nějakém rozumném čase. Obecně můžeme říct, že čím větších detailů chtějí autoři ve hře \MC{} dosáhnout, tím větší musí celý výtvor být. To pak ale znamená, že celá stavba trvá déle, nebo je zapotřebí více spolupracujících hráčů. 
 
-Hra \SE{} díky svému přístupu a~více bloků, které nejsou tvaru krychle, nabízí lepší možnosti staveb rozsáhlých objektů (představme si třeba Hvězdu smrti z~Hvězných válek), ale stále je potřeba volit nějakou rozumnou výslednou velikost. Možnosti detailů se sice zvyšují s rostoucím počtem různých vizuálních variant bloků (což je třeba případ \SE{} nebo \NI{}), ale i tak bychom chtěli navrhnout nový systém, ve kterém lze používat bloky různých velikostí.
+Hra \SE{} a jí podobné díky svému přístupu a~více bloků, které nejsou tvaru krychle, nabízí lepší možnosti staveb rozsáhlých objektů (představme si třeba Hvězdu smrti z~Hvězných válek), ale stále je potřeba volit nějakou rozumnou výslednou velikost. Možnosti detailů se sice zvyšují s rostoucím počtem různých vizuálních variant bloků (což je třeba případ \SE{} nebo \NI{}), ale i tak bychom chtěli navrhnout nový systém, ve kterém lze používat bloky různých velikostí.
 
 
 \subsubsection{Náš návrh úpravy}
 Chtěli bychom se v~této práci zabývat myšlenkou proměnlivé velikosti stavitelných bloků. Tím by hráči mohli rychleji stavět rozsáhlejší struktury a~přitom se věnovat i~drobným či estetickým detailům. Tento návrh však s~sebou nese několik problémů, které se v~této práci budeme snažit vyřešit.
 
-Ačkoliv se nám idea postupné stavby bloku ze součástek velice líbí, od naší hry tuto funkcionalitu nebudeme požadovat. Znamenalo by to pro nás, že bychom museli řešit vizuální podobu rozpracovaných bloků, navíc v kombinaci s různými rozměry. Pak by bylo vhodné generovat tyto objekty procedurálně, přičemž realizace této vlastnosti by nám zabrala velké množství času. Implementaci této funkcionality tedy vidíme jako zbytečnou, protože nevíme, zda vůbec bude myšlenka proměnlivé velikosti bloků přijata hráči.
+Ačkoliv se nám idea postupné stavby bloku ze součástek velice líbí, od naší hry tuto funkcionalitu nebudeme požadovat. Znamenalo by to pro nás, že bychom museli řešit vizuální podobu rozpracovaných bloků, navíc v kombinaci s různými rozměry. Pak bychom nejspíše museli generovat tyto objekty procedurálně, přičemž realizace této vlastnosti by nám zabrala velké množství času. Implementaci této funkcionality tedy vidíme (v současné době) jako zbytečnou, protože nevíme, zda vůbec bude myšlenka proměnlivé velikosti bloků přijata hráči.
 
 
 \section{Inventář}
-Dalším společným prvkem tohoto druhu her je inventář bloků, které může hráč umístit do herního světa. Hráč přes celé herní okno vidí \HUD{} (Head-Up Display \citep{hud_terminology}), ve kterém má zobrazenou kromě jiného nabídku bloků, které má na rychlé volbě, může je snadno zvolit a~daný blok umístit do herního světa. Navíc hry mohou definovat i~inventární skupiny bloků (\SE{}, \ME{}), mezi kterými hráč může přepínat a~tím rychle kompletně změnit sadu rychlé nabídky. Vidíme však limitaci v~tom, že hráč musí ručně spravovat tyto seznamy a~jednotlivé bloky (či nástroje) ručně umisťovat do příslušných pozic, například pomocí Drag and Drop systému (tedy přetáhnutí bloku myší z nabídky inventáře do rychlé volby stavitelných bloků).
+Dalším společným prvkem tohoto druhu her je inventář bloků, které může hráč umístit do herního světa. Hráč přes celé herní okno vidí \HUD{} (Head-Up Display \citep{hud_terminology}), ve kterém má zobrazenou kromě jiného nabídku bloků, které má na rychlé volbě, může je snadno zvolit a~daný blok umístit do herního světa. Navíc hry mohou definovat i~inventární skupiny bloků (\SE{}, \ME{}), mezi kterými hráč může přepínat a~tím rychle kompletně změnit sadu rychlé nabídky. Vidíme však limitaci v~tom, že hráč musí ručně spravovat tyto seznamy a~jednotlivé bloky (či nástroje) ručně umisťovat do příslušných pozic, například pomocí systému Drag and Drop (tedy přetáhnutí bloku myší z nabídky inventáře do rychlé volby stavitelných bloků).
 
 
 \subsubsection{Náš návrh úpravy}
@@ -152,12 +154,26 @@ Rádi bychom navrhli jiný způsob správy těchto inventárních skupin tak, ab
 
 
 \section{Cíle práce}
-Tato práce by měla naplnit následující cíle:
+Tato práce bude mít dvě fáze. V první fázi provedeme analýzu současného stavu a možných řešení, ze které nám vzejdou podrobnější cíle práce. Druhá fáze práce pak bude implementace hry jako takové. Naše cíle tedy jsou:
+
+\begin{enumerate}
+
+ \item
 \begin{itemize}
-	\item Navrhnout a~implementovat způsob řešení proměnlivé velikosti bloků
-	\item Navrhnout a~implementovat automatizovanou správu inventáře
-	\item Kvůli očekávaným nárokům na pochopení nových konceptů do hry implementovat základní výukový tutoriál
-	\item Získat a~zhodnotit zpětnou vazbu na výslednou hru
+	\item Navrhnout způsob řešení proměnlivé velikosti bloků
+	\item Navrhnout automatizovanou správu inventáře
+	\item Navrhnout celkovou koncepci hry
 \end{itemize}
-Očekáváme však, že další cíle práce vzejdou z analýzy zadání v kapitole 2.
+
+ \item
+\begin{itemize}
+	\item Implementovat navržený způsob řešení proměnlivé velikosti bloků
+	\item Implementovat automatizovanou správu inventáře
+	\item Implementovat zbylé koncepty a cíle hry, vzešlé z 2. kapitoly
+	\item Kvůli očekávaným nárokům na pochopení nových konceptů do hry implementovat základní výukový tutoriál
+	\item Získat a~zhodnotit zpětnou vazbu (dotazník) na výslednou hru
+\end{itemize}
+
+\end{enumerate}
+
 
