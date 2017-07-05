@@ -156,4 +156,20 @@
   url    = {https://www.hry.cz/hra/take-on-mars},
 }
 
+@Online{se_drone_source,
+  author = {gFleka},
+  title  = {Automated Relay Drone Tutorial},
+  year   = {2014},
+  date   = {2014-08-05},
+  url    = {http://space-engineer.net/space-engineers/automated-relay-drone-tutorial/},
+}
+
+@Online{,
+  author = {Minecraft Wiki},
+  title  = {Combat Update},
+  year   = {2017},
+  date   = {2017-06-22},
+  url    = {http://minecraft.gamepedia.com/Combat_Update},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}
