@@ -19,12 +19,17 @@ Dalším důležitým bodem pro nás bude, že tato třída si bude držet refer
 
 Kód tedy bude vypadat následovně:
 \begin{code}
+
+          TODO obarvení 
 	UPROPERTY(Transient)
 		UObject* BlockHolder;
 
 	UFUNCTION(BlueprintCallable, Category = "TCF2 | GameInstance")
 		void SetHolderInstance(UObject* holder);
 \end{code}
+
+
+
  Parametr \TT{Transient} u~makra \TT{UPROPERTY} znamená, že daná proměnná bude vždy nastavena na svoji výchozí hodnotu. V tomto případě je to použito spíše z~důvodu zachování konzistence napříč projektu, ale zjednodušeně bychom důsledky mohli popsat následovně -- pokud bude nějaký Blueprint dědit z~nějaké \CPP{} třídy, tak vývojář může nastavit výchozí hodnoty properties. Tyto hodnoty jsou pak serializovány do \CDO{}, cože je \textit{Class Default Object} (otázka na Answers Unreal Engine \citep{ue_cdo}). Během procesu vytváření nové instance objektu, který vychází z~daného Blueprintu pak budou tyto hodnoty naplněny během fáze inicializace properties (popis životního cyklu actorů \citep{ue_actor_life}). V konečném důsledku by pak byla tato hodnota nějakým způsobem naplněna. Pokud chceme vynutit, aby tato property nebyla serializována do CDO, tak ji označíme jako \TT{Transient}.
 
 V průběhu hry pak jednou naplníme tuto property pomocí metody\\ \TT{SetHolderInstance}, do které předáme referenci na korektně inicializovanou instanci třídy \TT{BlockHolder} z~modulu \textit{Blocks}. Pak si můžeme odkudkoliv získat aktuální herní instanci, přetypovat na \TT{TCF2GameInstance} a~získat si (přetypovanou) referenci na \TT{BlockHolder}. Z něho pak již můžeme získávat informace o~všech dostupných blocích.

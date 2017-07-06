@@ -2,6 +2,12 @@
 
 \subsection{Bloky}
 
+. Pro naše potřeby bude stačit, když budeme mít bloky zarovnané do jednotné mřížky v rámci celého světa (tedy tak, jak to má \MC{}).
+
+
+Ostatně třeba \MC{} žádné rotace bloků nenabízí. Ovšem v našem případě se budeme bavit obecně o kvádru a tam už rotace bloku dostávají svůj význam. Ne vždy bychom měli podporovat rotace ve všech osách -- když si představíme blok dveří, kdy v jednom bloku je zárubeň a zároveň samotné křídlo dveří, tak u takového bloku dává smysl pouze rotace kolem vertikální osy. 
+
+
  Bloky nebudeme nijak kombinovat, tak jak je tomu třeba v \ME{} -- systém multibloků. Jako multiblok si můžeme třeba představit čtvrtkruhovou část zdi, do které můžeme \uv{vložit} třeba okno, přičemž máme více variant, kam takové okno dát. Třeba do středu bloku, do středu jedné či druhé poloviny bloku, nebo třeba do obou polovin. Tato funkcionalita sice je zajímavá, nicméně to by znamenalo, že bychom nejspíše museli přistoupit k procedurálně generovaným objektům. Navíc nejspíše budeme mít tak málo bloků, že využití této funkcionality by v porovnání se stráveným časem na implementaci bylo minimální. Rozhodli jsme se tedy, že tato vlastnost pro nás není tak důležitá, abychom se jí plně věnovali. 
 
 Dále nebudeme požadovat volnou počáteční rotaci bloku (ve smyslu rotace kolem vertikální osy). Opět zdůrazňujeme, že budeme implementovat prototyp stavění různě velkých bloků. V tuto chvíli nám tedy bude stačit svět, kde jsou všechny bloky zarovnány do mřížky (takže obdobně jako \MC{}). S tím souvisí další zjednodušení -- nechceme řešit terén ani jeho modifikace a s tím související řešení umisťování bloků. V této fázi si postačíme s pouhou rovinou.
