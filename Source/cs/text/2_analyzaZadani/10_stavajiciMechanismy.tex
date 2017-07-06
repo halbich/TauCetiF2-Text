@@ -6,6 +6,7 @@
 Rozebereme si, jakým způsobem je v současné době přistupováno k blokům a jak jsou tyto bloky umisťovány do herního světa. Dále nás budou zajímat ostatní herní mechaniky, jako například denní cyklus, nebo jakým způsobem je řešena herní postava, její inventář a možnosti hráče interakce se světem. Poté se rozhodneme, jakým způsobem budeme uvedené mechaniky řešit my.
 
 \subsection{Bloky}
+\label{subsec:blocks}
 
 Pod pojmem \uv{blok} budeme chápat objekt, který je umístěn v~nějaké ortogonální mřížce 3D prostoru a~beze zbytku tento prostor vyplňuje. Bloky spolu sdílí společnou množinu vlastností a dále pak samy definují své vlastní vlastnosti, které vychází z povahy bloku, tedy toho, co daný blok reprezentuje. V této kapitole rozebereme tyto vlastnosti a následně definujeme, jaké problémy budeme muset v této práci řešit.
 
@@ -32,52 +33,70 @@ Dále můžeme zmínit interakci s uživatelem, ať už přímou, nebo nepřímo
 
 
 \subsection{Komunikace bloků}
-Bloky spolu mnohdy umí komunikovat. Dříve zmíněný Redstone z \MC{u} by se dal taktéž považovat za jistou metodu interakce mezi bloky. Například stiskem tlačítka lze změnit výstupní Redstonový signál z tohoto tlačítka (třeba z neaktivního na aktivní), který způsobí změnu polohy nějakého pístu. Ovšem komunikace může být i méně viditelná -- například z terminálu v \SE{} je možné ovládat písty, otevírat a zavírat dveře hangáru apod. bez explicitních vodičů. Ve hrách \MC{} a \SE{} můžeme nalézt příklad dopravníkových systémů. Ty slouží k přemístění bloků či objektů mezi dvěma či více body. Svým způsobem je pak přeprava v rámci těchto systémů také druhem meziblokové komunikace - bloky si mezi sebou předávají konkrétní instance objektů.
+Bloky spolu mnohdy umí komunikovat. Dříve zmíněný Redstone z \MC{u} by se dal taktéž považovat za jistou metodu interakce mezi bloky. Například stiskem tlačítka lze změnit výstupní Redstonový signál z tohoto tlačítka (třeba z neaktivního na aktivní), který způsobí změnu polohy nějakého pístu. Ovšem komunikace může být i méně viditelná -- například z terminálu v \SE{} je možné ovládat písty, otevírat a zavírat dveře hangáru apod. bez explicitních vodičů.
+
+Ve hrách \MC{} a \SE{} můžeme nalézt příklad dopravníkových systémů. Ty umožňují \uv{poslat} bloky či objekty na jiné místo, kupříkladu z jednoho křídla budovy do druhého. V \MC{u} bez módů se této funkcionality dá vcelku snadno dosáhnout, nicméně je to zdlouhavé a rychlost přesunu bloků je poměrně pomalá. Ale opět se můžeme obrátit na módy, třeba na \textit{BuildCraft} (oficiální stránky projektu \citep{buildcraft}), který umožňuje rychle dopravovat bloky i na velké vzdálenosti. Hra \SE{} má kvalitní dopravníkový systém už ve svém základu a slouží například pro dopravu natěženého materiálu od bloku \textit{Vrtáku} do bloku \textit{Skladiště} (který má svůj inventář). Svým způsobem je pak přeprava v rámci těchto systémů také druhem meziblokové komunikace - bloky si mezi sebou předávají konkrétní instance objektů.
 
 \subsection{Skládání bloků do struktur}
-Asi jediné příklady, který můžeme zmínit, jsou ve hře \MC{} -- postavení portálu, sněhuláka či golema. (TODO obrázek tvarů?) V momentě, kdy nějaká skupina bloků splňuje přesně definovaný tvar, tak se vykoná nějaká pevně definovaná událost. Například je možné otevřít portál, nebo se bloky zničí a na místo nich se spawne NPCčko (takže jako by se to zrodilo z těch bloků) (TODO uhladit)
+Asi jediné příklady, který můžeme zmínit, jsou ve hře \MC{} -- postavení portálu do Netheru (obrázek \ref{fig:structs_nether_portal}), sněhuláka či golema. V momentě, kdy nějaká skupina bloků splňuje přesně definovaný tvar, tak se tyto bloky chápou jako jedna struktura a tak se s nimi i zachází. Portál je možné pomocí \textit{křesadla} aktivovat, ale pokud je portál aktivní a hráč odebere z portálu některý blok, který jej tvoří, portál se uzavře. Bloky ve tvaru sněhuláka a golema se po dokončení tvaru odeberou a namísto nich je do světa umístěno \NPC{} sněhuláka či golema.
 
-Skládání do nějakých komplexnějších tvarů vidíme jako potenciálně zajímavou herní vlastnost, obzvláště v kombinaci s různě velkými bloky. Budeme tedy toto téma chtít rozvinout a implementovat do naší práce. 
+\begin{figure}[!ht]\centering
+\includegraphics[ width=140mm]{../img/analysis/mc_portal}
+
+\caption{Portál do Netheru. Zdroj: minecraftpocketedition.wikia.com \citep{mc_nether_portal}}
+\label{fig:structs_nether_portal}
+
+\end{figure}
+
+\FloatBarrier
+
+
 
 \subsubsection{Speciality}
-Ve hrách \ME{} a  \NMS{} můžeme nalézt zajímavou funkcionalitu \textit{multibloků}. Tato funkcionalita nabízí například nahrazení nějaké stěny nějakého bloku oknem či nějakým dalším vizuálním či funkčním elementem. Tato funkcionalita se nám sice líbí, ale v tuto chvíli to bereme spíše jako druhořadou záležitost. Implementace této vlastnosti chápeme spíše jako \uv{\textit{Nice To Have}}, tedy pouze v případě, že na to budeme mít prostor a čas.
+Ve hrách \ME{} a  \NMS{} můžeme nalézt zajímavou funkcionalitu \textit{multibloků}. Tato funkcionalita nabízí například nahrazení nějaké stěny nějakého bloku oknem či nějakým dalším vizuálním či funkčním elementem.
 
-Další zajímavou specialitou je třeba náhled inventáře. Kupříkladu u hry \ME{} se jedná stůl a~jídlo na stole. Stůl má svůj inventář, do kterého je možné umisťovat jídlo. Stůl pak obsah tohoto inventáře zobrazuje tak, že jídlo má svůj náhled na talířích na stole, takže to vypadá, jako by bylo jídlo připraveno ke konzumaci. Opět to chápeme jako hezkou, ale spíše vizuální záležitost.
+Další zajímavou specialitou je třeba náhled inventáře. Kupříkladu u hry \ME{} se jedná stůl a~jídlo na stole. Stůl má svůj inventář, do kterého je možné umisťovat jídlo. Stůl pak obsah tohoto inventáře zobrazuje tak, že jídlo má svůj náhled na talířích na stole, takže to vypadá, jako by bylo jídlo připraveno ke konzumaci. 
 
-Určitě bychom také mohli zmínit přepravníkový systém. Tento systém umožňuje \uv{poslat} nějaké bloky na jiné místo, kupříkladu z jednoho křídla budovy do druhého. V \MC{u} bez módu se této funkcionality dá dosáhnout, nicméně je to velice nepraktické a pomalé. Ale opět se můžeme obrátit na módy, třeba na \textit{BuildCraft}, který umožňuje dopravovat bloky i na velké vzdálenosti. Hra \SE{} má tento systém už ve svém základu a slouží například pro dopravu natěženého materiálu od bloku Vrtáku do bloku Skladiště (který má nějaký svůj inventář). Tento dopravníkový systém v současné chvíli nevyužijeme a proto ho nebudeme řešit.
+Také bychom měli zmínit propagaci kyslíku v rámci postavených budov, kterou můžeme nalézt ve hrách \SE{} nebo \TM{}. Ačkoliv tento koncept je spíše vlastností herního prostředí, velice úzce souvisí s bloky. Pokud bloky tvoří uzavřenou strukturu, tak je možné vnitřní prostory natlakovat, zaplnit kyslíkem a sundat si helmu či dokonce celý skafandr. \SE{} využívá systém tzv.~\uv{místností} (oficiální dokumentace o kyslíku \citep{se_oxygen}). Místnosti lze zaplnit kyslíkem díky \textit{ventilaci}, což je blok, který umí do prostoru místnosti vhánět kyslík a také ho z něj odebírat. \TM{} dělá prakticky to samé, liší se pouze způsobem implementace rozpoznání místnosti, což souvisí se způsobem stavby bloků (jak jsme zmínili v kapitole \ref{chap:uvod}).
 
--- propagace kyslíku ME, TOM
 
 \subsection{Herní svět}
 
-Herní svět nám bude stačit jednoduchý, bez terénních nerovností. Stále se držíme premisy, že nás zajímá, zda je celkový koncept hry použitelný. (dle použitého přístupu můžeme ale nemusíme mít editovatelný terén za běhu hry)
+V této části se zaměříme na zpracování herního světa a s tím souvisejících mechanik.
 
 \subsubsection{Reprezentace}
 
-MC -- bloky, chuncks, SE + ME planety
+Pokud shrneme poznatky z kapitoly \ref{chap:uvod}, tak můžeme říct, že máme v zásadě dvě možnosti. Buď můžeme po vzoru \MC{} mít celý svět tvořen bloky. Pak bychom kvůli optimalizaci výkonu také museli tyto bloky shlukovat do skupin (v \MC{u} se jim říká \textit{chunks} a jsou velké $16*16*256$ bloků). Nebo můžeme mít po vzoru \SE{} svět více realistický -- a třeba po vzoru této hry hráči připravit třeba celé planety (oficiální představení přidání planet do hry \citep{se_planets}). Koncept planet se objevuje i v dalších hrách (\ME{}, \NMS{}, atd.).
 
 \subsubsection{Bloky v~herním světě}
 
-do gridu, start-free grid
+Jak jsme se zmínili v části \ref{subsec:blocks}, bloky jsou v herním světě umístěny vždy do nějaké mřížky. Různé hry však nabízí různé možnosti práce s těmito mřížkami a ta navíc vychází z možností reprezentace herního světa.
 
 
 \subsubsection{Denní / noční cyklus}
 
-obvykle tam je, MC 20minut. My zkusíme 30 minut (zkusili jsme 60 minut, ale ukázalo se to jako příliš dlouhá doba -- brzy nebylo co dělat kvůli malé nabídce bloků).
+Všimněme si, že všechny hry implementují denní cyklus. To dodává hře na dynamičnosti -- ne všechny hráče by bavilo desítky či stovky hodin trávit v identickém prostředí. Navíc, pro vývojáře je to možnost, jak hráči připravit nějaké nebezpečí spojené s příchodem noci. Jeden příklad za všechny -- v \MC{u} se mnozí nepřátelé začínají objevovat, až když je dostatečná tma. Což nemusí být nutně způsobeno začátkem noci, stačí třeba málo osvětlená jeskyně ve skále či podzemní prostory. Ovšem denním cyklem je hráč nucen se nepřátelům bránit a tím je pro něj zajištěn nějaký netriviální herní prvek, po jehož překonání má hráč obvykle radost a pocit úspěchu.
+Délka denního cyklu se různí podle hry. \MC{} má délku dne 20 minut, u dalších her to bude podobné.
+
 
 \subsubsection{Herní překážky}
 
-počasí, \NPC{}, atributy avataru
+Mezi další herní překážky bychom mohli zařadit třeba proměnlivé počasí, přítomnost nepřátelských \NPC{} nebo různá omezení herní postavy, za kterou hráč hraje. Mezi to se může počítat třeba zdraví, výdrž, hlad, zbývající zásoba kyslíku či energie a mnohé další. Všechny námi zmiňované hry tyto mechanismy implementují a výsledný dojem z nich není u žádné z her natolik zásadní a inovativní, abychom se tím hlouběji zabývali.
 
 \subsubsection{(Ne)fyzikální chování}
 
-MC -- bloky stojí ve vzduchu, ale třeba písek při updatu začne padat
+Za zmínku stojí také přítomnost fyziky ve hře. Hry s vyšším či úplným stupněm realismu ji implementují a u každé hry se více či méně přibližuje realitě. Vymyká se hra \MC{}, jejíž fyzikální model se může zdát na první pohled zvláštní, ale je zapotřebí si uvědomit, že musí zapadat do celkové koncepce hry. Proto je v této hře poměrně zajímavá mechanika kapalin, která je zcela nefyzikální a umožňuje vytvoření nekonečných zdrojů vody. Ostatně sám blok zdroje vody je možné umístit z boku k nějakému sloupu a voda bude neustále vytékat. Pokud navíc odebereme bloky ze sloupu, voda bude vytékat z ničeho a bude z daného místa vytékat dokud dané místo nenahradíme nějakým pevným blokem, třeba hlínou či pískem. Stejně jako voda se ve hře chová i láva, její chování se liší v drobných detailech (například se šíří pomaleji než voda).
+
+Další zajímavou vlastností je \uv{levitace} bloků. Trochu jsme na toto chování narazili v předcházejícím odstavci, tak to rozveďme. Každý blok obývá právě jednu pozici v herním světě. A u většiny bloků platí, že mohou zůstat viset volně ve vzduchu. Ale například u \textit{písku} se po přidání nebo odebrání některého z okolních bloků provede aktualizace bloku. A když takový blok zjistí, že by neměl být jen tak ve vzduchu (pod ním nic není), tak začne padat dolů. A jak nastane situace, že hráč potká ve vzduchu visící písek? To souvisí s algoritmem generování, který má více cyklů a ve výsledku mohou být v herním světě umístěny obdobné kuriozity. Nicméně stačí jeden přidaný či odebraný blok v těsné blízkosti a bloky se začnou kaskádovitě sypat dolů. Tak se opět úhledně seskládají do sloupců (i když jsou to třeba bloky písku).
+
 
 \subsection{Inventář}
 
-mc pevné sloty, SE skupiny slotů.
+Obdobně jako u fyziky ve hrách, chování inventáře je závislé na stupni realismu. \MC{} nabízí 27 slotů inventáře, 9 slotů rychlé nabídky a 4 sloty pro brnění. Sloty inventáře a rychlé nabídky jsou plněny \textit{kupitelnými předměty}. To znamená, že podle typu bloku či předmětu může být v daném slotu 1 až 64 prvků daného objektu. Takže například je možné mít v jednom slotu 64 kusů \textit{hlíny}, ale jen 16 kusů \textit{vajec} a pouze 1 \textit{meč}. Plnění rychlé nabídky je možné z UI nabídky inventáře pomocí systému Drag and Drop. Navíc za použití kláves Ctrl a Shift lze řídit počet přenášených kusů daného objektu. Při stavění se blok z daného rychlého slotu odebere, zbraň či nástroj se opotřebí.
 
-neomezíme váhově ani jinak 
+U \ME{} a \SE{} jsou také pevné sloty, ale existuje zde koncept \textit{skupin slotů}. Přepínáním těchto skupin se mění všechny sloty rychlé nabídky, takže je možné si do různých skupin nastavit různé stavební prvky. Můžeme říct, že \MC{} má pouze jednu skupinu slotů. V momentě, kdy hráč staví z více prvků než je velikost rychlé nabídky, se tato funkcionalita stává potřebnou, aby hráč nemusel neustále přehazovat stavěné bloky. Výhodou je, že u těchto her jsou bloky spíše konstrukčního charakteru a neodebírají se z inventáře.
+
+Co se týče stavění, zbývající hry nepřináší nic nového či převratného. Pozorný čtenář si mohl všimnout, že v \MC{u} je možné, aby hráč nesl $36*64$ kostek kamene, každou o objemu $1\,\rm m^3$. Je zřejmé, že nosnost opět nevychází z realistických předpokladů. Nicméně u her s vyšším stupněm realismu se u nosnosti setkáváme, takže kupříkladu je omezena váha, kterou může hráčova postava nést. Navíc se u některých her s rostoucí zátěží zpomaluje pohyb. I toto je součástí herního designu, který větší či menší měrou odráží fyzikální realitu.
 
 \subsection{Avatar hráče}
 avatar má nějaké vlastnosti, \HUD{}, 1St / 3rd person view, zdraví, stamina, hlad, O2
