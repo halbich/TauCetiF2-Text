@@ -2,7 +2,11 @@
 
 \section{Bloky}
 
-Zde by měl být popis možností jak definovat a~následně implementovat bloky. jaké jsou výhody a~nevýhody jednotlivých implementací
+V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací.
+
+Z předchozí části víme, že budeme chtít takovou strukturu, abychom mohli v \UE{} snadno modifikovat hodnoty jejích vlastností. Takže nepřipadá v úvahu, abychom měli konstanty uložené ve zdrojovém kódu. Pak ale tyto konstanty budeme muset buď načítat z nějakého souboru, nebo budou muset být uložené v nějakém objektu z \UE{}.
+
+Při načítání ze souboru máme více možností -- můžeme popisovat bloky a jejich chování v třeba XML souborech. Stejné řešení používá hra \ME{}. Tyto soubory jsou pak zpracovány herním enginem během načítání hry. Soubor obsahuje
 
 - externě editovatelné formáty (+ -- modding, -- těžší implementace, parsing, validace)
 - binární formát
