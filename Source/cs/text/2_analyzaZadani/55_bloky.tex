@@ -2,35 +2,23 @@
 
 \subsection{Bloky}
 
-. Pro naše potřeby bude stačit, když budeme mít bloky zarovnané do jednotné mřížky v rámci celého světa (tedy tak, jak to má \MC{}).
+Pro naše potřeby bude stačit, když budeme mít bloky zarovnané do jednotné mřížky v rámci celého světa (tedy tak, jak to má \MC{}).  Z toho vyplývá, že nebudeme požadovat implementaci volné počáteční rotace bloku (ve smyslu rotace kolem vertikální osy). Opět zdůrazňujeme, že budeme implementovat prototyp stavění různě velkých bloků a proto bude jednotná mřížka dostatečná. S tím souvisí další zjednodušení -- nechceme řešit terén ani jeho modifikace a s tím související řešení umisťování bloků. V této fázi si postačíme s pouhou rovinou.
 
 
-Ostatně třeba \MC{} žádné rotace bloků nenabízí. Ovšem v našem případě se budeme bavit obecně o kvádru a tam už rotace bloku dostávají svůj význam. Ne vždy bychom měli podporovat rotace ve všech osách -- když si představíme blok dveří, kdy v jednom bloku je zárubeň a zároveň samotné křídlo dveří, tak u takového bloku dává smysl pouze rotace kolem vertikální osy. 
+Budeme chtít mít bloky, které nebudou pouze statické objekty ve hře. Bloky by měly mít svůj význam ve světě a mělo by jít s nimi interagovat. Navíc budeme chtít to, aby bloky byly vizuálně přitažlivé, což bude u některých bloků znamenat, že je budeme muset vymodelovat v nějakém 3D modelovacím programu. Autor však nějaké minimální znalosti v tomto oboru má, takže by to neměl být problém. \textit{Multiblokový} systém není potřeba implementovat. Vzhledem k dynamickému škálování bloků bude potřeba vyřešit škálování vzhledem k případným 3D modelům. 
 
-
- Bloky nebudeme nijak kombinovat, tak jak je tomu třeba v \ME{} -- systém multibloků. Jako multiblok si můžeme třeba představit čtvrtkruhovou část zdi, do které můžeme \uv{vložit} třeba okno, přičemž máme více variant, kam takové okno dát. Třeba do středu bloku, do středu jedné či druhé poloviny bloku, nebo třeba do obou polovin. Tato funkcionalita sice je zajímavá, nicméně to by znamenalo, že bychom nejspíše museli přistoupit k procedurálně generovaným objektům. Navíc nejspíše budeme mít tak málo bloků, že využití této funkcionality by v porovnání se stráveným časem na implementaci bylo minimální. Rozhodli jsme se tedy, že tato vlastnost pro nás není tak důležitá, abychom se jí plně věnovali. 
-
-Dále nebudeme požadovat volnou počáteční rotaci bloku (ve smyslu rotace kolem vertikální osy). Opět zdůrazňujeme, že budeme implementovat prototyp stavění různě velkých bloků. V tuto chvíli nám tedy bude stačit svět, kde jsou všechny bloky zarovnány do mřížky (takže obdobně jako \MC{}). S tím souvisí další zjednodušení -- nechceme řešit terén ani jeho modifikace a s tím související řešení umisťování bloků. V této fázi si postačíme s pouhou rovinou.
-
-Co však budeme od hry chtít je to, aby bloky nebyly pouze statické objekty ve hře, ale aby měly ve světě nějaký význam a aby s nimi šlo případně interagovat. Navíc budeme chtít to, aby bloky byly vizuálně přitažlivé, což bude u některých bloků znamenat, že je budeme muset vymodelovat v nějakém 3D modelovacím programu. Autor však nějaké minimální znalosti v tomto oboru má, takže by to neměl být problém.
 
 Dále budeme chtít, aby bylo možné definovat jednotlivé vlastnosti bloků jednoduchým a přímočarým způsobem, nejlépe mimo samotný zdrojový kód hry a v nějakém editoru. Tento požadavek je zde z toho důvodu, že je zcela běžné, že herní designéři ladí různé konstanty a nastavení během vývoje tak, aby hra co nejvíce odpovídala jejich představám a byla pro hráče zábavná. Mít tedy tyto konstanty pevně zakompilované v kódu by znamenalo opětovnou kompilaci celého projektu, což v pozdějších fázích může znamenat výrazné zpomalení vývoje. Protože očekáváme další vývoj této hry, měli bychom se držet nějakých rozumných postupů na udržovatelnost kódu a celého vývoje hry.
 
+\subsubsection{Vlastnosti}
 
-Chceme navrhnout systém, ve kterém bude nejmenší blok o~hraně 20 cm, tedy objemu odpovídající 0,008 m$^3$. Tento blok nazveme jako jednotkový. Největší blok pak omezíme na 20-ti násobek jednotkové krychle ve všech 3 rozměrech. Největší blok tedy bude mít objem 64 m$^3$. Může se stát, že dolní limit bude příliš malý, ale v~tuto chvíli považujeme tuto konstantu za dostatečnou. Naopak horní limit bude nejspíše dostatečný -- práce s~příliš velkými bloky by mohla být neefektivní a~stavba nepřehledná.
+Chceme navrhnout systém, ve kterém bude nejmenší blok o~hraně 20 cm, tedy objemu odpovídající 0,008 m$^3$. Tento blok nazveme jako jednotkový, identisky s tímto budeme používat pojem \textit{jednotková krychle}. Největší blok pak omezíme na 20-ti násobek jednotkové krychle ve všech 3 rozměrech. Největší blok tedy bude mít objem 64 m$^3$. Může se stát, že dolní limit bude příliš malý, ale v~tuto chvíli považujeme tuto konstantu za dostatečnou. Naopak horní limit bude nejspíše dostatečný -- práce s~příliš velkými bloky by mohla být neefektivní a~stavba nepřehledná.
+
+V následující tabulce si popíšeme, jaké bloky budeme ve hře chtít mít, jak by měly vypadat a co by měly umět. Bloky jsme rozdělili do dvou kategorií -- první jsou \textit{konstrukční} prvky, druhá kategorie obsahuje \textit{funkční} prvky. \textit{Název} je zřejmý. Sloupce \textit{Min} a \textit{Max} popisují velikost bloku jako násobky jednotkové krychle. Dále jsou v tabulce sloupce \textit{P} a \textit{R}\footnote{Písmenka vychází z anglického \textit{Pitch} a \textit{Roll}. }. Ty popisují to, zda je blok možné rotovat podle daných os. Správně bychom tu měli mít i sloupec \textit{Y} (z anglického \textit{Yawn}, ale protože je pro všechny bloky povolen, tak jsme tento sloupec vynechali. 
 
 
-různé druhy, velikosti, jejich vizuální reprezentace, rozšiřovatelnost, obecně co všechno by měly umět.
+Jako poslední je sloupec \textit{T}, tedy typ bloku. Typ bloku může být: \textit{Kostka}, \textit{Zkosený}, \textit{Rohový}, \textit{Vlastní}. Typ pak ovlivňuje další vlastnosti bloku, jako například cenu za jeho postavení, ale i jeho zdraví. (TODO podrobný popis algoritmu; , K = 1, Z = 0.5, R = 1/6, V = 1 (není v~potaz objem) )
 
-Název -- Min -- Max -- Pitch -- Roll -- Type (kostka, zkosený, roh, vlastní)
-
-Tam kde Min == Max -> Vlastní škálování
-
-Typ ovlivňuje další chování
-
-Třeba u~Světla by typ mohl být i~K a~hra by se chovala stejně, K = 1, Z = 0.5, R = 1/6, V = 1 (není v~potaz objem)
-
-komponenty bloků a~nějaké další ptákoviny
 
 \begin{tabular}{|rll*{5}{c}|}
 	\hline
@@ -59,89 +47,105 @@ komponenty bloků a~nějaké další ptákoviny
 
 \subsection{Podrobný popis bloků}
 
-Popis některých vlastností -- má energetickou komponentu -- > implikuje definici bindovacích bodů
-má kyslíkovou komponentu -- implikuje TotalObjectOxygen
-
-Producer nebo Consumer implikuje Total object energy
-
-Controllable implikuje IsController nebo IsControllable
+V následujících odstavcích si podrobně popíšeme všechny bloky  a nastíníme jejich význam. Některé bloky mohou obsahovat energetické a kyslíkové \textit{komponenty}, jejichž význam bude zmíněn o pár odstavců dále (TODO link!).
 
 
 
 \subsubsection{A1 -- Blok základny}
-- velikost v~ose Z omezena na 4 základní bloky
+\label{blocks:A1}
+Tento blok je ve hře z toho důvodu, protože má sloužit jako základový blok staveb. Pokud bychom měli nerovný terén, tento blok by mohl zahrnovat podstavce pro vyrovnání terénu. Velikost v~ose Z omezena na 4 základní bloky. Obsahuje \textit{energetickou komponentu}.
 
-- má elektriku
-
-Pokud bychom měli nerovný terén, tento blok by mohl zahrnovat podstavce pro vyrovnání terénu.
 
 \subsubsection{A2 -- Blok stavby}
-- všechny velikosti
+\label{blocks:A2}
+Tento blok je základním stavebním blokem ve hře a proto může existovat ve všech možných velikostech. Obsahuje \textit{energetickou komponentu}.
 
-- má elektriku
-
-Tento blok je základním stavebním blokem ve hře.
 
 \subsubsection{A3 -- Blok polykarbonátu}
-- všechny velikosti
-Tento blok je nejlevnější, není připojen do elektrické sítě. Ideou bloku je podpora průhledných stěn a~také možné pomocné stavební konstrukce pro výstavbu do výšky. Inspiraci můžeme vidět v~používání třeba bloku hlíny ve hře \MC{}, kdy hráč vyskočí a~pod sebe umístí nový blok a~tím se ve světě posune o~1 metr výš.
+\label{blocks:A3}
+Tento blok je nejlevnější, neobsahuje žádné komponenty. Ideou bloku je podpora průhledných stěn a~také možné pomocné stavební konstrukce pro výstavbu do výšky. Inspiraci můžeme vidět v~používání třeba bloku hlíny ve hře \MC{}, kdy hráč vyskočí a~pod sebe umístí nový blok a~tím se ve světě posune o~1 metr výš.
+
 
 \subsubsection{A4 -- Zkosený blok základny}
-- velikost v~ose Z omezena na 4 základní bloky
+\label{blocks:A4}
+Tento blok je zde ze stejného důvodu jako blok \nameref{blocks:A1}. Má stejné vlastnosti, pouze má zkosený tvar. Může sloužit jako přístupová rampa.
 
-- má elektriku
-
-Stejné jako blok \textit{A1}, jen je zkosený. Může sloužit jako přístupová rampa.
 
 \subsubsection{A5 -- Zkosený blok stavby}
-- všechny velikosti
+\label{blocks:A5}
+Obdobně jako u základny, tento blok má stejné vlastnosti jako \nameref{blocks:A2}, pouze má jiná tvar.
 
-- má elektriku
+
 \subsubsection{A6 -- Roh bloku stavby}
--všechny velikosti
+\label{blocks:A6}
+Tento blok má stejné vlastnosti jako \nameref{blocks:A2} a opět definuje pouze jiný tvar.
 
-- má elektriku
 
 \subsubsection{B1 -- Terminál}
-- speciální, pevná velikost 1 x 8 x 5 bloků
+\label{blocks:B1}
+Terminál má pevnou velikost (1 x 8 x 5 bloků) a měl by vypadat jako nějaká obrazovka budoucnosti.  Obsahuje \textit{energetickou komponentu}. Terminál by pro hráče měl být použitelný přímo i nepřímo. Přímé použití by mělo dobít herní postavě energii, nepřímé by mělo otevřít uživatelské rozhraní. Co přesně by mělo být obsahem tohoto rozhraní bude řešeno v podrobné analýze (TODO link).
 
-- má elektriku, konzument, rychlé doplnění energie, ovládání rozhraní, komplexní přehled připojené elektrické sítě.
 \subsubsection{B2 -- Napájené okno}
+\label{blocks:B2}
+Napájené okno je omezeno pouze v jednom rozměru, jinak povolíme velikost od 2 do 20 násobku jednotkové krychle. Dolní omezení je zde z toho důvodu, že okno o velikosti 20 x 20 cm je zbytečnš malé
 - minimální velikost 2 x 1 x 2, maximální velikost 20 x 1 x 20 základních bloků
 
 - má elektriku, konzument
+
+
 \subsubsection{B3 -- Dveře}
+\label{blocks:B3}
 - speciální, pevná velikost 7 x 7 x 11 bloků
 
 - má elektriku, otevírání
+
+
 \subsubsection{B4 -- Světlo}
+\label{blocks:B4}
 -velikost omezena na 1 x 1 x 1 blok
 
 - má elektriku, konzument, ovládání bez přepínače
+
+
 \subsubsection{B5 -- Přepínač}
+\label{blocks:B5}
 -velikost omezena na 1 x 1 x 1 blok
 
 - má elektriku, náhled stavu
+
+
 \subsubsection{B6 -- Generátor energie}
+\label{blocks:B6}
 - omezená velikost v~ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v~ostatních osách
 
 - má elektriku, producent
+
+
 \subsubsection{B7 -- Generátor objektů}
+\label{blocks:B7}
 - omezená velikost v~ose Z na 2 bloky, jinak 3 x 3 až 20 x 20 v~ostatních osách
 
 - má elektriku, konzument
+
+
 \subsubsection{B8 -- Akumulátor}
+\label{blocks:B8}
 - speciální, pevná velikost 3 x 3 x 3 bloků
 
 - má elektriku, producent, konzument, rychlý náhled naplnění
+
+
 \subsubsection{B9 -- Plnička kyslíkových bomb}
+\label{blocks:B9}
 - speciální, pevná velikost 4 x 3 x 4 bloků
 
 - má elektriku, kyslíkovou komponentu, konzument, UI, rychlé doplnění kyslíku
 
 - využijeme ideu náhledu inventáře a~plnička bude zobrazovat blok B10, pokud bude nějaký takový blok plnit.
 
+
 \subsubsection{B10 -- Kyslíková bomba}
+\label{blocks:B10}
 - speciální, pevná velikost 2 x 2 x 2 bloků
 
 - má kyslíkovou komponentu, možnost sebrat, rychlý náhled naplnění, rychlé doplnění kyslíku
