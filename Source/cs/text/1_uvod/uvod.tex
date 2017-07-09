@@ -41,19 +41,19 @@ Na obrázku \ref{fig:intro_crafting} můžeme vidět dvě varianty tvorby krump�
 Stavění pak ve hře probíhá tak, že si hráč zvolí blok nebo objekt, který chce umístit do světa. Tento objekt musí mít ve svém inventáři. Namíří kurzor na už existující blok ve světě a klikne levým tlačítkem myši. Ke straně bloku, na který hráč mířil, se pak připojí vybraný blok. Postavený blok se odebere z inventáře a dále nevyžaduje žádnou další akci (na rozdíl od jiných her, což si ukážeme v následující sekci).
 
 
-Mezi dalšími hrami bychom mohli zmínit například hru \TE{}. Ta je o~něco mladší než \MC{}, ale je častým zdrojem diskusí, zda je lepší než \MC{}, nebo ne. Pravdou je, že obě hry mají svůj svět kompletně složený z~kostek (\TE{} je však 2D hra), ale každá si klade trochu jiné cíle. \TE{} je více orientovaná na příběh, obsahuje více \NPC{} i~\textit{bossů}\footnote{\textit{Boss} je v~herní terminologii významný nepřítel, obvykle je silnější než ostatní protivníci a~velmi často bývá v~závěrečných částech hry. Duel s~\textit{bossem} pak obvykle od hráče vyžaduje zjištění jeho silných a~slabých stránek a~schémat jeho útoků \citep{intro_boss}.}. \MC{} je pak orientován spíše na stavění (porovnání \textit{Minecraft vs Terraria (facts)} \citep{mc_te_comparsion} na Minecraftovém fóru), ačkoliv od \textit{Combat update}, tedy verze 1.9, jsou možnosti boje oproti dřívějším verzím větší (stránka s popisem aktualizace hry \citep{mc_combat}).  
+Mezi dalšími hrami bychom mohli zmínit například hru \TE{}. Ta je o~něco mladší než \MC{}, ale je častým zdrojem diskusí, zda je lepší než \MC{}, nebo ne. Pravdou je, že obě hry mají svůj svět kompletně složený z~kostek (\TE{} je však 2D hra), ale každá si klade trochu jiné cíle. \TE{} je více orientovaná na příběh, obsahuje více \NPC{} i~\textit{bossů}\footnote{\textit{Boss} je v~herní terminologii významný nepřítel, obvykle je silnější než ostatní protivníci a~velmi často bývá v~závěrečných částech hry. Duel s~\textit{bossem} pak obvykle od hráče vyžaduje zjištění jeho silných a~slabých stránek a~schémat jeho útoků~\citep{intro_boss}.}. \MC{} je pak orientován spíše na stavění (porovnání \textit{Minecraft vs Terraria (facts)}~\citep{mc_te_comparsion} na Minecraftovém fóru), ačkoliv od \textit{Combat update}, tedy verze 1.9, jsou možnosti boje oproti dřívějším verzím větší (stránka s popisem aktualizace hry~\citep{mc_combat}). 
 
 
 \subsection{Hry s~prvky realismu}
 
-Mezi hry s~prvky realismu bychom mohli zařadit třeba hry \SE{} či \ME{}, využívající kombinaci herních bloků s~\textit{voxelovou} reprezentací světa (voxely si můžeme představit jako bloky stejné velikosti). Obě hry jsou implementovány v~proprietárním enginu společnosti Keen Software House nazvaném \textit{VRAGE}\texttrademark{}. Z voxelové reprezentace terénu je pak v~enginu za běhu hry procedurálně generovaná polygonální reprezentace terénu, kterou pak grafická karta standardním způsobem vykreslí na obrazovce (oficiální popis vlastností enginu \citep{vrage}). Obdobným způsobem jako terén se pak ve hře \SE{} chovají různá vesmírná tělesa či asteroidy. Během procedurálního vytváření asteroidu je na třídimenzionální strukturu voxelů  aplikován šum a~tím je možné ve hře vygenerovat prakticky neomezené množství různých asteroidů vycházejících z~jedné voxelové struktury. \uv{\textit{The “procedural asteroids” feature adds a~practically infinite number of asteroids to the game world}} \citep{rosa_blog}. Tímto způsobem pak hry dosahují vyššího stupně realismu -- nespoléhají se pouze na předpřipravené 3D modely, ale generují vizuální reprezentaci herních objektů za běhu hry. Z toho vyplývá, že každý hráč může stejnou hru prožít jinak. 
+Mezi hry s~prvky realismu bychom mohli zařadit třeba hry \SE{} či \ME{}, využívající kombinaci herních bloků s~\textit{voxelovou} reprezentací světa (voxely si můžeme představit jako bloky stejné velikosti). Obě hry jsou implementovány v~proprietárním enginu společnosti Keen Software House nazvaném \textit{VRAGE}\texttrademark{}. Z voxelové reprezentace terénu je pak v~enginu za běhu hry procedurálně generovaná polygonální reprezentace terénu, kterou pak grafická karta standardním způsobem vykreslí na obrazovce (oficiální popis vlastností enginu~\citep{vrage}). Obdobným způsobem jako terén se pak ve hře \SE{} chovají různá vesmírná tělesa či asteroidy. Během procedurálního vytváření asteroidu je na třídimenzionální strukturu voxelů aplikován šum a~tím je možné ve hře vygenerovat prakticky neomezené množství různých asteroidů vycházejících z~jedné voxelové struktury. \uv{\textit{The “procedural asteroids” feature adds a~practically infinite number of asteroids to the game world}}~\citep{rosa_blog}. Tímto způsobem pak hry dosahují vyššího stupně realismu -- nespoléhají se pouze na předpřipravené 3D modely, ale generují vizuální reprezentaci herních objektů za běhu hry. Z toho vyplývá, že každý hráč může stejnou hru prožít jinak. 
 
 Podívejme se na obrázek \ref{fig:intro_se} ze hry \SE{}. Na něm můžeme vidět převážně kamenný asteroid a na něm je postavená vesmírná základna (obarvená zelenou barvou). K základně je přistavena větší vesmírná loď (modrobílá, v~levém horním rohu), hráč pak k~základně letí v~další, malé lodi (modrobílá uprostřed). Můžeme si všimnout, že povrch asteroidu není pravidelný a obsahuje spoustu nerovností (na rozdíl od tvarů základny a lodí). To je způsobeno právě algoritmickou aproximací voxelové reprezentace asteroidu. 
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/se}
 
-\caption{Hra Space Engineers -- základna. Zdroj: Gamespot.com \citep{se_intro_img} }
+\caption{Hra Space Engineers -- základna. Zdroj: Gamespot.com~\citep{se_intro_img} }
 \label{fig:intro_se}
 
 \end{figure}
@@ -65,7 +65,7 @@ Samotná základna i~vesmírná plavidla (detailní pohled na jiné plavidlo je 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/se_ship}
 
-\caption{Hra Space Engineers -- dron. Zdroj: space-engineer.net \citep{se_drone_source}}
+\caption{Hra Space Engineers -- dron. Zdroj: space-engineer.net~\citep{se_drone_source}}
 \label{fig:intro_se_ship}
 
 \end{figure}
@@ -99,7 +99,7 @@ Mezi hry s maximálním důrazem na simulaci reality bychom mohli zařadit např
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/intro/tom}
 
-\caption{Hry Take On Mars -- vozítko před budovou. Zdroj: Hry.cz \citep{intro_tom_source}}
+\caption{Hry Take On Mars -- vozítko před budovou. Zdroj: Hry.cz~\citep{intro_tom_source}}
 \label{fig:intro_tom}
 
 \end{figure}
@@ -151,11 +151,11 @@ Ačkoliv se nám idea postupné stavby bloku ze součástek velice líbí, od na
 
 
 \section{Inventář}
-Dalším společným prvkem stavitelských her je inventář bloků, které může hráč umístit do herního světa. Hráč vidí přes celé herní okno \HUD{} (Head-Up Display \citep{hud_terminology}), ve kterém má zobrazenou kromě jiného nabídku bloků, které má na rychlé volbě, může je snadno zvolit a~daný blok umístit do herního světa. Navíc hry mohou definovat i~inventární skupiny bloků (\SE{}, \ME{}), mezi kterými hráč může přepínat a~tím rychle kompletně změnit sadu rychlé nabídky. Vidíme však limitaci v~tom, že hráč musí ručně spravovat tyto seznamy a~jednotlivé bloky (či nástroje) ručně umisťovat do příslušných pozic, například pomocí systému Drag and Drop (tedy přetáhnutí bloku myší z nabídky inventáře do rychlé volby stavitelných bloků).
+Dalším společným prvkem stavitelských her je inventář bloků, které může hráč umístit do herního světa. Hráč vidí přes celé herní okno \HUD{} (Head-Up Display~\citep{hud_terminology}), ve kterém má zobrazenou kromě jiného nabídku bloků, které má na rychlé volbě, může je snadno zvolit a~daný blok umístit do herního světa. Navíc hry mohou definovat i~inventární skupiny bloků (\SE{}, \ME{}), mezi kterými hráč může přepínat a~tím rychle kompletně změnit sadu rychlé nabídky. Vidíme však limitaci v~tom, že hráč musí ručně spravovat tyto seznamy a~jednotlivé bloky (či nástroje) ručně umisťovat do příslušných pozic, například pomocí systému Drag and Drop (tedy přetáhnutí bloku myší z nabídky inventáře do rychlé volby stavitelných bloků).
 
 
 \subsubsection{Náš návrh úpravy}
-Rádi bychom navrhli jiný způsob správy těchto inventárních skupin tak, aby hráč jednou definoval, jaké prvky chce mít v~příslušných skupinách. Při vytvoření nového bloku či vytvoření jiné velikosti bloku by pak nemusel ručně přiřazovat nový blok do skupiny, ale tento blok by měl být automaticky zařazen a~nabídnut hráči.  
+Rádi bychom navrhli jiný způsob správy těchto inventárních skupin tak, aby hráč jednou definoval, jaké prvky chce mít v~příslušných skupinách. Při vytvoření nového bloku či vytvoření jiné velikosti bloku by pak nemusel ručně přiřazovat nový blok do skupiny, ale tento blok by měl být automaticky zařazen a~nabídnut hráči. 
 
 
 \section{Cíle práce}

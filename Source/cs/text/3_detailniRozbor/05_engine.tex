@@ -7,11 +7,15 @@ V první řadě bychom se měli zamyslet nad tím, jaký nástroj pro vývoj hry
 	\item Renderování 3D objektů, pokročilé možnosti texturování
 	\item Podpora I/O pro práci se savy
 	\item Podpora UI
-	\item Podpora zvuků
-	\item Snadná implementace lokalizace
 	\item Správa assetů
 	\item Správa scény
-	
+\end{itemize}
+
+Plusem pak bude:
+
+\begin{itemize}
+	\item Podpora zvuků
+	\item Snadná implementace lokalizace
 \end{itemize}
 
 Pro další případný rozvoj bychom potřebovali:
@@ -22,20 +26,19 @@ Pro další případný rozvoj bychom potřebovali:
 	\item Podpora AI
 \end{itemize}
 
-Cílové platformy pro nás bude PC s~OS Windows. Pokud se rozhodneme pro již existující herní engine, který bude navíc podporovat multiplatformní vývoj, bude to pro nás, i~s~ohledem na další vývoj, plus.
+Cílová platformy pro nás bude PC s~OS Windows. Pokud se rozhodneme pro již existující herní engine, který bude navíc podporovat multiplatformní vývoj, bude to pro nás, i~s~ohledem na další vývoj, plus. Dále bychom chtěli, abychom minimalizovali finanční náklady na vývoj. Z toho vyplývá, že placené řešení bychom byli ochotni použít pouze pokud by to pro nás znamenalo naprostou výhodu oproti jiným, neplaceným řešením.
 
 Dalším kritériem je volba programovacího jazyka. Ta vychází z~autorových znalostí. Budeme tedy preferovat primárně jazyk \CS{}, který známe nejlépe. Pokud to bude nezbytně nutné, nebudeme se bránit ani jazyku \CPP{}, který je v~herní branži dlouho zavedený a~je stále hojně využívaný. Ačkoliv zkušenost s~tímto programovacím jazykem máme minimální, můžeme se tímto způsobem naučit novým dovednostem.
 
-
-Možných použitých enginů a~frameworků je opravdu mnoho. Podívat do databáze herních enginů na stránce Devmaster. Jen zde je možné nalézt 236 možných řešení našeho problému volby herního enginu \citep{engines_list}. Všechny záznamy jsme omezili na \textit{vývojově aktivní}, v~jazycích \CS{}, \CPP{} a~vybrali jsme námi požadované vlastnosti.
-
-Mezi čím tedy můžeme volit?
+\pagebreak
+Jak můžeme naši hru implementovat?
 \begin{itemize}
 	\item Implementace kompletního vlastního enginu
 	\item Použit existující grafické knihovny a~nad tím implementovat vlastní engine
 	\item Použit existující herní engine
 \end{itemize}
 
+Možných použitých enginů a~frameworků je opravdu mnoho. Pro jejich seznam se můžeme podívat do databáze herních enginů na stránce Devmaster. Jen zde je možné nalézt 236 možných řešení našeho problému volby herního enginu~\citep{engines_list}. Všechny záznamy jsme omezili na \textit{vývojově aktivní}, v~jazycích \CS{}, \CPP{} a~vybrali jsme námi požadované vlastnosti.
 Je zřejmé, že možností na výběr máme opravdu hodně. V následujících podkapitolách si jednotlivé možnosti podrobně rozebereme.
 
 \subsection{Vlastní engine}
@@ -46,16 +49,16 @@ Tuto možnost rovnou zavrhneme. Vzhledem k~tomu, kolik funkcionality budeme impl
 Máme na výběr z~více druhů grafických frameworků postavených na různých platformách. Mezi známějšími bychom mohli uvést například \XNA{} (\CS{}) či jeho klon \MG{} (\CS{}). Oba frameworky jsou k~dispozici zdarma, podpora \XNA{} je v~současné době už ukončena, vývoj \MG{} je stále aktivní. Implementace hry s~použitím některého z~těchto frameworků by byla rychlejší než v~předchozím případě, ale stále bychom museli spoustu funkcionality implementovat sami. 
 
 \subsection{Existující herní engine}
-Jak jsme již předeslali výše, v~této kategorii máme nejvíce možností. Buď můžeme využít enginy jako třeba \OG{} (\CPP{}), nebo použít více robustnější řešení v~podobě enginů typu \UN{} (\texttt{C\#}) či \UE{} (\texttt{C++}). Zde opět použijeme předchozí argument -- budeme hledat engine, který nám nabídne pokud možno co nejvíce uživatelské a~vývojářské přívětivosti a~bude poskytovat dostatek nástrojů pro vývoj naší hry v~uvažovaném rozsahu. Tudíž enginy jako třeba \OG{} nebudou naší volbou.
+Jak jsme již předeslali výše, v~této kategorii máme nejvíce možností. Buď můžeme využít enginy jako třeba \OG{} (\CPP{}), nebo použít více robustnější řešení v~podobě enginů typu \UN{} (\texttt{C\#}) či \UE{} (\texttt{C++})\footnote{V době volby herního engine byl další známý zástupce \CRY{} placený a proto jsme tento herní engine nebrali v potaz.}. Zde opět použijeme předchozí argument -- budeme hledat engine, který nám nabídne pokud možno co nejvíce uživatelské a~vývojářské přívětivosti a~bude poskytovat dostatek nástrojů pro vývoj naší hry v~uvažovaném rozsahu.
 
-Výhodou zmíněných robustních enginů je to, že jsou k~dispozici zdarma (oproti třeba \CRY{}). Taktéž zde, díky práci komunity, existuje pro oba enginy kvalitní vývojová dokumentace. Dalším kladem je fakt, že jsou oba multiplatformní a~tedy zde existuje relativně snadný postup v~případě distribuce na různé typy herních zařízení. Pojďme si je tedy rozebrat podrobněji.
+Výhodou zmíněných robustních enginů je to, že jsou k~dispozici zdarma. Taktéž zde, díky práci komunity, existuje pro oba enginy kvalitní vývojová dokumentace. Dalším kladem je fakt, že jsou oba multiplatformní a~tedy zde existuje relativně snadný postup v~případě distribuce na různé typy herních zařízení. Pojďme si je tedy rozebrat podrobněji.
 
 \subsubsection{Unity}
 Výhodu \UN{} vidíme v~tom, že i~programátor bez rozsáhlých zkušeností s~herním vývojem může začít velmi brzy prototypovat a~vyvíjet hry v~tomto enginu. Dalším pozitivem je programování v~\CS{} a~možnost editovatelného terénu.
 
 Použití \UN{} s~sebou přináší i~několik problémů, které bychom museli během vývoje řešit. Během rešerše jsme zaznamenali problémy s~aktualizací dynamického navigačního meshe, kdy aktualizace tohoto meshe způsobovala krátkodobé zaseknutí hry (tzv. lagy). Můžeme očekávat, že tato funkcionalita bude v~budoucnu vylepšena a~zrychlena, nicméně na konkrétní datum se nemůžeme spoléhat. Vzhledem k~povaze naší hry ale můžeme očekávat časté modifikace herního světa a~tudíž toto chování pro nás představuje významný problém. Další nevýhodu vidíme v~materiálovém editoru, který nabízí oproti \UE{} limitované možnosti a~pro implementaci náročnějších materiálových funkcí bychom museli přistoupit k~implementaci vlastních shaderů.
 
-Co se lokalizace hry týče, museli bychom si napsat vlastní správu lokalizace\citep{unity_loc}. \UE{} má tuto funkcionalitu implementovanou ve svém editoru\citep{ue_loc}.
+Co se lokalizace hry týče, museli bychom si napsat vlastní správu lokalizace (oficiální tutorial na implementaci lokalizace~\citep{unity_loc}). \UE{} má tuto funkcionalitu implementovanou ve svém editoru (oficiální dokumentace k lokalizaci~\citep{ue_loc}).
 
 
 \subsubsection{Unreal Engine}

@@ -14,7 +14,7 @@ Co by se stalo, kdybychom se snažili načíst save jiné verze? Celá hra by ne
 \subsection{GameSaveInterface}
 
 \TT{UGameSaveInterface.h} 
-Tento soubor definuje rozhraní, které je možné implementovat a~používat v~Blueprintech (struktura vychází z~tutoriálu na Unreal Engine Wiki\citep{ue_interfaces_tut}). Rozhraní definuje dvě veřejné metody, které musí actoři v~UE při implementaci tohoto rozhraní implementovat:
+Tento soubor definuje rozhraní, které je možné implementovat a~používat v~Blueprintech (struktura vychází z~tutoriálu na Unreal Engine Wiki~\citep{ue_interfaces_tut}). Rozhraní definuje dvě veřejné metody, které musí actoři v~UE při implementaci tohoto rozhraní implementovat:
 
 \begin{code}
 UFUNCTION(BlueprintNativeEvent, BlueprintCallable, ... )
@@ -30,7 +30,7 @@ Hlavní Blueprint levelu pak během svého běhu určité actory přetypuje na t
 
 \TT{FFileVisitor.h}
 
-Tento soubor obsahuje implementaci návrhového vzoru Visitor pro získání všech herních savů z~nějaké zadané složky. Implementace vychází z~internetové diskuse na téma procházení adresářů \citep{ue_iterate_dir}.
+Tento soubor obsahuje implementaci návrhového vzoru Visitor pro získání všech herních savů z~nějaké zadané složky. Implementace vychází z~internetové diskuse na téma procházení adresářů~\citep{ue_iterate_dir}.
 
 \subsection{Helpers}
 
@@ -76,7 +76,7 @@ void USaveGameCarrier::SaveLoadData(
 
 Třídu dědící z~UObjektu jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul Blocks si těmito daty naplní své vlastní objekty, které se pak dále využívají ve hře. A naopak, před samotným uložením se postará o~to, aby bylo toto pole korektně naplněno všemi daty určenými k~uložení. O samotnou serializaci a~deserializaci dat do a~z~přepravky se stará pouze modul GameSave.
 
-Celý systém vychází z~tutoriálu \citep{ue_save_system} je postaven na tom, že v~C++ je možné přetěžovat operátory, mimo jiné i~$<<$. Této vlastnosti je využito tak šikovně, že v~závislosti na volání funkce buď zapisuje do archivu, nebo z~něj čte, ale pořád se jedná o~jediný zápis jedné funkce. To je výhodné, protože to předchází chybám, které by mohly vzniknout při použití 2 metod -- jedné čtecí, jedné zapisovací. Chybám typu přehození dvou datových typů (což by v~případě typů různých velikostí znamenalo následné špatné pochopení binárních dat), nebo kupříkladu prohození dvou vlastností stejného typu, což by vytvářelo těžko odhalitelné situace změn hodnot ve hře.
+Celý systém vychází z~tutoriálu~\citep{ue_save_system} je postaven na tom, že v~C++ je možné přetěžovat operátory, mimo jiné i~$<<$. Této vlastnosti je využito tak šikovně, že v~závislosti na volání funkce buď zapisuje do archivu, nebo z~něj čte, ale pořád se jedná o~jediný zápis jedné funkce. To je výhodné, protože to předchází chybám, které by mohly vzniknout při použití 2 metod -- jedné čtecí, jedné zapisovací. Chybám typu přehození dvou datových typů (což by v~případě typů různých velikostí znamenalo následné špatné pochopení binárních dat), nebo kupříkladu prohození dvou vlastností stejného typu, což by vytvářelo těžko odhalitelné situace změn hodnot ve hře.
 
 Tento systém je použit pro všechny rozšířené části herního savu -- Bloky, Inventář, Počasí -- a~všechny používají podobný způsob práce. Jedná se o~definici struktur, tedy samotných kontejnerů a~dále pak jeden soubor pojmenovaný \TT{*ArchiveHelpers.h}, kde je popsána vlastní struktura daných kontejnerů v~Archivu. Hvězdičku v~tomto případě bereme opravdu jako zástupný symbol. Navíc, některé objekty mohou řídit archivaci dle nějakých podmínek nastavených shora. Příkladem budiž definice serializace elektrické komponenty:
 
