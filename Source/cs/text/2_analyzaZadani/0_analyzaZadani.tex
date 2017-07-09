@@ -11,45 +11,54 @@ V této části provedeme rozbor toho, jak různé hry v~současné době přist
 
 \input{./text/2_analyzaZadani/50_radiBychom.tex}
 
-
-
-\section{Herní nepřítel}
-Protože samotné stavění bez nějakého cíle či překážky není úplně zábavné, musíme hráči připravit nějakou překážku, komplikaci, kterou musí překonávat. Zde neexistuje jednoznačné řešení --- to je závislé na celkovém prostředí hry, zamýšlené cílově skupině a~mnoha dalších faktorech. Cílem našeho hráče bude přežít kyselé deště. Ty budou přicházet v~náhodných intervalech a~budou sloužit jako překážka v~rozvoji hry. Zároveň to ale bude pro hráče nástroj, jak získávat prostředky pro ochranu před dalšími dešti a~rozvoj svých staveb. 
-
+\pagebreak
 \section{Shrnutí cílů}
 
+V dalším textu práce se budeme věnovat analýze a následné implementaci následujících cílů:
+
+\begin{enumerate}
+
+ \item Bloky a herní svět
 \begin{itemize}
-	\item Položka 1
+	\item Způsob řešení proměnlivé velikosti bloků
+	\item Umístění bloků v herním světě
+	\item Skládání bloků do struktur
+	\item Komunikace bloků
+	\item Interakce s bloky
+	\item Denní cyklus
+	\item Proměnlivé počasí
+	\item Použitelné datové struktury vzhledem k ostatním částem hry
+\end{itemize}
+
+ \item Inventář
+\begin{itemize}
+	\item Automatizovaná správa inventáře
+	\item Stavitelné a umístitelné bloky
+\end{itemize}
+
+ \item Herní postava
+\begin{itemize}
+	\item Inventář herní postavy
+	\item Zbylé vlastnosti postavy dle \ref{subsec:postava}
+\end{itemize}
+
+ \item Ostatní herní prvky
+\begin{itemize}
+	\item Systém ukládání a načítání hry
+	\item Kreativní herní mód
+	\item Herní tutorial
+\end{itemize}
+
+ \item Případné prvky navíc
+\begin{itemize}
+	\item Lokalizace hry do různých jazyků
+	\item Hudba ve hře
+\end{itemize}
+
+ \item Zhodnocení práce
+\begin{itemize}
+	\item Získat a~zhodnotit zpětnou vazbu (dotazník) na výslednou hru
 \end{itemize}
 
 
-\section{Backlog}
-
-???
-
-
-
-
-
-
-TODO Pokud bychom se rozhodli řešit vnitřní prostory stavěných budov a jejich plnění kyslíkem, tak bychom se z tohoto stylu mohli inspirovat.
-
-Touto myšlenkou bychom se chtěli inspirovat.  (TODO Pozn. opravdu? když jsem vymyslel konstruktor objektů, tak jsem TOM ani nehrál)
-
-
-
-creative mode -- Tuto vlastnost bychom chtěli také nějakým způsobem implementovat, protože nám samotným tento mód usnadní vývoj hry -- nebudeme muset řešit speciální vývojové nastavení a zároveň nebudeme muset řešit herní problémy (třeba nedostatek nějakých surovin). 
-
-
-
-V naší hře bychom byli rádi, aby měl uživatel dobrý pocit z toho, že se tam alespoň něco děje a není to pouze statický svět složený z různě velkých kostiček. Proto budeme chtít, abychom mohli s bloky maximálně interagovat ať už přímo či nepřímo. (TODO!! 05:55)
-
-
-Nějaký základ takovéto meziblokové komunikace bychom také chtěli implementovat. (vodiče, ovládání )
-
-
-
-Skládání do nějakých komplexnějších tvarů vidíme jako potenciálně zajímavou herní vlastnost, obzvláště v kombinaci s různě velkými bloky. Budeme tedy toto téma chtít rozvinout a implementovat do naší práce. 
-
-
-
+\end{enumerate}

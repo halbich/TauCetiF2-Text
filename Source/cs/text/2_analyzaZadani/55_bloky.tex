@@ -3,7 +3,7 @@
 \subsection{Bloky a herní svět}
 \label{subsec:bloky}
 
-Pro naše potřeby bude stačit, když budeme mít bloky zarovnané do jednotné mřížky v rámci celého světa (tedy tak, jak to má \MC{}).  Z toho vyplývá, že nebudeme požadovat implementaci volné počáteční rotace bloku (ve smyslu rotace kolem vertikální osy). Opět zdůrazňujeme, že budeme implementovat prototyp hry se stavěním různě velkých bloků, jednotná mřížka tudíž bude v této fázi dostačovat. S tím souvisí další zjednodušení -- nechceme řešit terén ani jeho modifikace a s tím související řešení umisťování bloků. V této fázi si postačíme s pouhou rovinou. Protože techniky implementace rozsáhlých světů nejsou úplně triviální (použití systému chunků, streamování levelů apod.), nevidíme jako přínosné se jimi zabývat, aniž bychom věděli, že samotná koncepce stavby dynamicky škálovatelných bloků je správný směr dalšího vývoje. Proto budeme pro účely této práce považovat celou herní mapu se všemi postavenými a umístěnými objekty za dostatečně malou, která (ač celá načtená v paměti) zásadním způsobem neovlivňuje výkon ani vykreslování hry. Samozřejmě budeme požadovat, aby i v této variantě byla implementace herního světa dostatečně efektivní jak z pohledu výkonu, tak i z pohledu paměťové náročnosti. Podrobnější rozbor herního světa bude v detailní analýze (TODO link).
+Pro naše potřeby bude stačit, když budeme mít bloky zarovnané do jednotné mřížky v rámci celého světa (tedy tak, jak to má \MC{}).  Z toho vyplývá, že nebudeme požadovat implementaci volné počáteční rotace bloku (ve smyslu rotace kolem vertikální osy). Opět zdůrazňujeme, že budeme implementovat prototyp hry se stavěním různě velkých bloků, jednotná mřížka tudíž bude v této fázi dostačovat. S tím souvisí další zjednodušení -- nechceme řešit terén ani jeho modifikace a s tím související řešení umisťování bloků. V této fázi si postačíme s pouhou rovinou. Protože hry z kapitoly \ref{chap:uvod} mají rozsáhlé světy a techniky implementace rozsáhlých světů nejsou úplně triviální (použití systému chunků, streamování levelů apod.), nevidíme jako přínosné se jimi zabývat, aniž bychom věděli, že samotná koncepce stavby dynamicky škálovatelných bloků je správný směr dalšího vývoje. Proto budeme pro účely této práce považovat celou herní mapu se všemi postavenými a umístěnými objekty za dostatečně malou, která (ač celá načtená v paměti) zásadním způsobem neovlivňuje výkon ani vykreslování hry. Samozřejmě budeme požadovat, aby i v této variantě byla implementace herního světa dostatečně efektivní jak z pohledu výkonu, tak i z pohledu paměťové náročnosti. Podrobnější rozbor herního světa bude v detailní analýze (TODO link).
 
 Budeme chtít mít bloky, které nebudou pouze statické objekty ve hře. Bloky by měly mít svůj význam ve světě a mělo by jít s nimi interagovat. Navíc budeme chtít, aby bloky byly vizuálně přitažlivé, což bude u některých bloků znamenat, že je budeme muset vymodelovat v nějakém 3D modelovacím programu. Autor této práce však nějaké minimální znalosti v tomto oboru má, takže by to neměl být problém. \textit{Multiblokový} systém není potřeba implementovat. Vzhledem k dynamickému škálování bloků bude potřeba vyřešit škálování vzhledem k případným 3D modelům a také vzhledem k UV mapování textur -- chceme, aby se textury chovaly \uv{inteligentně} a při škálování bloku se textury (při zachování mapování na geometrii modelu) neroztahovaly do nějakých nepěkných výtvorů. 
 
@@ -52,23 +52,23 @@ Jako poslední je sloupec \textit{T}, tedy typ bloku. Typ bloku může být: \te
 
 \subsection{Podrobný popis bloků}
 
-V následujících odstavcích si podrobně popíšeme všechny bloky  a nastíníme jejich význam. Některé bloky mohou obsahovat energetické a kyslíkové \textit{komponenty}, jejichž význam bude zmíněn o pár odstavců dále (TODO link!).
+V následujících odstavcích si podrobně popíšeme všechny bloky  a nastíníme jejich význam. Některé bloky mohou obsahovat elektrické a kyslíkové \textit{komponenty}, jejichž význam bude zmíněn o pár odstavců dále (TODO link!).
 
 
 
 \subsubsection{A1 -- Blok základny}
 \label{blocks:A1}
-Tento blok je ve hře z toho důvodu, protože má sloužit jako základový blok staveb. Pokud bychom měli nerovný terén, tento blok by mohl zahrnovat podstavce pro vyrovnání terénu. Velikost v~ose Z omezena na 4 základní bloky. Obsahuje \textit{energetickou komponentu}.
+Tento blok je ve hře z toho důvodu, protože má sloužit jako základový blok staveb. Pokud bychom měli nerovný terén, tento blok by mohl zahrnovat podstavce pro vyrovnání terénu. Velikost v~ose Z omezena na 4 základní bloky. Obsahuje \textit{elektrickou komponentu}.
 
 
 \subsubsection{A2 -- Blok stavby}
 \label{blocks:A2}
-Tento blok je základním stavebním blokem ve hře a proto může existovat ve všech možných velikostech. Obsahuje \textit{energetickou komponentu}.
+Tento blok je základním stavebním blokem ve hře a proto může existovat ve všech možných velikostech. Obsahuje \textit{elektrickou komponentu}.
 
 
 \subsubsection{A3 -- Blok polykarbonátu}
 \label{blocks:A3}
-Tento blok je nejlevnější, neobsahuje žádné komponenty. Ideou bloku je podpora průhledných stěn a~také možné pomocné stavební konstrukce pro výstavbu do výšky. Inspiraci můžeme vidět v~používání třeba bloku hlíny ve hře \MC{}, kdy hráč vyskočí a~pod sebe umístí nový blok hlíny a~tím se ve světě posune o~1 metr výš.
+Tento blok je nejlevnější, neobsahuje žádné komponenty. Ideou bloku je podpora průhledných stěn a~také možné pomocné stavební konstrukce pro výstavbu do výšky. Inspiraci můžeme vidět v~používání třeba bloku hlíny ve hře \MC{}, kdy hráč vyskočí a~pod sebe umístí nový blok hlíny a~tím se ve světě posune o~1~metr výš.
 
 
 \subsubsection{A4 -- Zkosený blok základny}
@@ -89,46 +89,46 @@ Tento blok má stejné vlastnosti jako \nameref{blocks:A2} a opět definuje pouz
 
 \subsubsection{B1 -- Terminál}
 \label{blocks:B1}
-Terminál má pevnou velikost (1 x 8 x 5 bloků) a měl by vypadat jako nějaká obrazovka budoucnosti.  Obsahuje \textit{energetickou komponentu}. Terminál by pro hráče měl být použitelný přímo i nepřímo. Přímé použití by mělo dobít herní postavě energii, nepřímé by mělo otevřít uživatelské rozhraní. Co přesně by mělo být obsahem tohoto rozhraní bude řešeno v podrobné analýze (TODO link).
+Terminál má pevnou velikost (1 x 8 x 5 bloků) a měl by vypadat jako nějaká obrazovka budoucnosti.  Obsahuje \textit{elektrickou komponentu}. Terminál by pro hráče měl být použitelný přímo i nepřímo. Přímé použití by mělo dobít herní postavě energii, nepřímé by mělo otevřít uživatelské rozhraní. Co přesně by mělo být obsahem tohoto rozhraní bude řešeno v podrobné analýze (TODO link).
 
 \subsubsection{B2 -- Napájené okno}
 \label{blocks:B2}
-Napájené okno je omezeno pouze v jednom rozměru, jinak povolíme velikost od 2 do 20 násobku jednotkové krychle. Dolní omezení je zde z toho důvodu, že okno o velikosti 20 x 20 cm je zbytečně malé. Obsahuje \textit{energetickou komponentu}.
+Napájené okno je omezeno pouze v jednom rozměru, jinak povolíme velikost od 2 do 20 násobku jednotkové krychle. Dolní omezení je zde z toho důvodu, že okno o velikosti 20 x 20 cm je zbytečně malé. Obsahuje \textit{elektrickou komponentu}.
 
 
 \subsubsection{B3 -- Dveře}
 \label{blocks:B3}
-Dveře jsou další ze speciálních bloků s pevnou velikostí (7 x 7 x 11 bloků). Jejich účel je jasný - možnost uzavření budovy a pokud se rozhodneme implementovat systém okysličování vnitřků budov, tak i hermetické uzavření jednotlivých místností.
+Dveře jsou další ze speciálních bloků s pevnou velikostí (7 x 7 x 11 bloků). Jejich účel je jasný -- možnost uzavření budovy a pokud se rozhodneme implementovat systém okysličování vnitřků budov, tak i hermetické uzavření jednotlivých místností.
 
 
 \subsubsection{B4 -- Světlo}
 \label{blocks:B4}
-Blok světla má také jasný účel - osvětlení míst, kde není dostatek přirozeného světla či osvětlení v budově pokud nastane noc. Světlo by mělo být možné použít (přinejmenším ho chceme umět vypnout a zapnout). Obsahuje \textit{energetickou komponentu}. 
+Blok světla má také jasný účel -- osvětlení míst, kde není dostatek přirozeného světla či osvětlení v budově, pokud nastane noc. Světlo by mělo být možné použít (přinejmenším ho chceme umět vypnout a zapnout). Obsahuje \textit{elektrickou komponentu}. 
 
 
 \subsubsection{B5 -- Přepínač}
 \label{blocks:B5}
-Účel přepínače je zřejmý  - ovládání ostatních bloků. Proto bude muset být použitelný. Skvělé by bylo, kdybychom na základě vizualizace modelu přepínače ihned poznali stav, ve kterém se přepínač nachází. Obsahuje \textit{energetickou komponentu}. 
+Účel přepínače je zřejmý  -- ovládání ostatních bloků. Proto bude muset být použitelný. Skvělé by bylo, kdybychom na základě vizualizace modelu přepínače ihned poznali stav, ve kterém se přepínač nachází. Obsahuje \textit{elektrickou komponentu}. 
 
 
 \subsubsection{B6 -- Generátor energie}
 \label{blocks:B6}
-Tento blok byl přidán proto, aby hráč získával novou elektrickou energii z prostředí. Energie je vyráběna během bouře kyselého deště (TODO forward link), tato mechanika bude podrobněji popsána později. Na výšku byl blok omezen na 2 jednotkové krychle. Obsahuje \textit{energetickou komponentu}. 
+Tento blok byl přidán proto, aby hráč získával novou elektrickou energii z prostředí. Energie je vyráběna během bouře kyselého deště (TODO forward link), tato mechanika bude podrobněji popsána později. Na výšku byl blok omezen na 2 jednotkové krychle. Obsahuje \textit{elektrickou komponentu}. 
 
 
 \subsubsection{B7 -- Generátor objektů}
 \label{blocks:B7}
-Smyslem tohoto bloku je generování nových bloků. Vzhledem k dalším herním mechanikám můžeme říct, že to je spíše nutná komponenta \textit{Konstruktoru objektů} (sekce \ref{sec:konstruktor}). Na výšku byl blok omezen na 2 jednotkové krychle. Obsahuje \textit{energetickou komponentu}.
+Smyslem tohoto bloku je generování nových bloků. Vzhledem k dalším herním mechanikám můžeme říct, že to je spíše nutná komponenta \textit{Konstruktoru objektů} (sekce \ref{sec:konstruktor}). Na výšku byl blok omezen na 2 jednotkové krychle. Obsahuje \textit{elektrickou komponentu}.
 
 
 \subsubsection{B8 -- Akumulátor}
 \label{blocks:B8}
-Tento blok byl do hry přidán z toho důvodu, že je potřeba pokrýt energetické nároky stavby v období, kdy neprší kyselý déšť. Funkce akumulátoru je tedy uchování elektrické energie. Z toho vyplývá, že musí obsahovat  \textit{energetickou komponentu}. Bylo by také hezké, kdybychom měli ve hře rychlý náhled na úroveň jeho nabití.
+Tento blok byl do hry přidán z toho důvodu, že je potřeba pokrýt elektrické nároky stavby v období, kdy neprší kyselý déšť. Funkce akumulátoru je tedy uchování elektrické energie. Z toho vyplývá, že musí obsahovat  \textit{elektrickou komponentu}. Bylo by také hezké, kdybychom měli ve hře rychlý náhled na úroveň jeho nabití.
 
 
 \subsubsection{B9 -- Plnička kyslíkových bomb}
 \label{blocks:B9}
-Plnička je příklad bloku, která má  \textit{energetickou} a zároveň  \textit{kyslíkovou komponentu}. Jejím cílem je plnit  Kyslíkové bomby kyslíkem. Zároveň by bylo hezké, kdyby blok uměl doplnit kyslík herní postavě napřímo. Pokud to bude možné, rádi bychom viděli (podobně jako u stolu v \ME{}) náhled plněné kyslíkové bomby. Tedy aby hráč na první pohled věděl, zda je nějaká bomba plněna.
+Plnička je příklad bloku, která má  \textit{elektrickou} a zároveň  \textit{kyslíkovou komponentu}. Jejím cílem je plnit  Kyslíkové bomby kyslíkem. Zároveň by bylo hezké, kdyby blok uměl doplnit kyslík herní postavě napřímo. Pokud to bude možné, rádi bychom viděli (podobně jako u stolu v \ME{}) náhled plněné kyslíkové bomby. Tedy aby hráč na první pohled věděl, zda je nějaká bomba plněna.
 
 \subsubsection{B10 -- Kyslíková bomba}
 \label{blocks:B10}

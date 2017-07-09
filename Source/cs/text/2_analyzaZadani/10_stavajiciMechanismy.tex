@@ -77,12 +77,11 @@ Jak jsme se zmínili v části \ref{subsec:blocks}, bloky jsou v herním světě
 \subsubsection{Denní / noční cyklus}
 
 Všimněme si, že všechny hry implementují denní cyklus. To dodává hře na dynamičnosti -- ne všechny hráče by bavilo desítky či stovky hodin trávit v identickém prostředí. Navíc, pro vývojáře je to možnost, jak hráči připravit nějaké nebezpečí spojené s příchodem noci. Jeden příklad za všechny -- v \MC{u} se mnozí nepřátelé začínají objevovat, až když je pro ně dostatečná tma. Což nemusí být nutně způsobeno začátkem noci, stačí třeba bouřkové počasí, málo osvětlená jeskyně ve skále či podzemní prostory. Ovšem denním cyklem je hráč nucen se nepřátelům bránit a tím je pro něj zajištěn nějaký netriviální herní prvek, po jehož překonání má hráč obvykle radost a pocit úspěchu.
-Délka denního cyklu se různí podle hry. \MC{} má délku dne 20 minut, u dalších her to bude podobné.
+Délka denního cyklu se různí podle hry. \MC{} má délku dne 20 minut, u dalších her to je podobné.
 
 
-\subsubsection{Herní překážky}
-
-Mezi další herní překážky bychom mohli zařadit třeba \textit{proměnlivé počasí}, přítomnost nepřátelských \NPC{} nebo různá omezení herní postavy, za kterou hráč hraje. Mezi to se může počítat třeba \textit{zdraví}, \textit{výdrž}, \textit{hlad}, zbývající \textit{zásoba kyslíku} či \textit{energie} a mnohé další. Všechny námi zmiňované hry tyto mechanismy implementují a výsledný dojem z nich není u žádné z her natolik zásadní a inovativní, abychom se tím hlouběji zabývali.
+\subsubsection{Počasí}
+Zážitek ze hry umocňuje například \textit{proměnlivé počasí}. Stejně jako u denního cyklu, změna počasí do hry přináší prvek náhody a neopakovatelnosti hraní. Můžeme říci, že všechny námi zmíněné hry z kapitoly \ref{chap:uvod} počasí řeší (v závislosti na jejich herním stylu). 
 
 \subsubsection{(Ne)fyzikální chování}
 
@@ -101,7 +100,8 @@ U \ME{} a \SE{} jsou také pevné sloty, ale existuje zde koncept \textit{skupin
 Co se týče stavění, zbývající hry nepřináší nic nového či převratného. Pozorný čtenář si mohl všimnout, že v \MC{u} je možné, aby hráč nesl $36*64$ kostek kamene, každou o objemu $1\,\rm m^3$. Je zřejmé, že nosnost opět nevychází z realistických předpokladů. Nicméně u her s vyšším stupněm realismu se u nosnosti setkáváme, takže kupříkladu je omezena váha, kterou může hráčova postava nést. Navíc se u některých her s rostoucí zátěží zpomaluje pohyb. I toto je součástí herního designu, který větší či menší měrou odráží fyzikální realitu.
 
 \subsection{Herní postava}
-Mezi vlastnosti herní postavy bychom mohli zmínit \textit{zdraví}, \textit{výdrž}, \textit{hlad} a další podobné charakteristiky. Tyto vlastnosti jsou vlastně \textit{survival} prvky a hráč se musí o svoji herní postavu \uv{starat}, aby mu neumřela a bylo možné hru hrát dál. Zde opět můžeme říct, že tyto herní mechaniky hry z kapitoly \ref{chap:uvod} implementují podobným způsobem.
+Mezi vlastnosti herní postavy bychom mohli zmínit \textit{zdraví}, \textit{výdrž}, \textit{hlad}, zbývající \textit{zásoba kyslíku} či \textit{energie} a další podobné charakteristiky. Tyto vlastnosti jsou vlastně \textit{survival} prvky a hráč se musí o svoji herní postavu \uv{starat}, aby mu neumřela a aby mohl hru hrát dál. Zde opět můžeme říct, že tyto herní mechaniky hry z kapitoly \ref{chap:uvod} implementují podobným způsobem a výsledný dojem z nich není u žádné z her natolik zásadní a inovativní, abychom se tím hlouběji zabývali..
 Další vlastností, kterou jsme již zmínili, je nosnost v rámci inventáře postavy. Podrobněji jsme tuto mechaniku rozebrali v části \ref{subsec:inventory} a proto se tím zde nebudeme podrobněji zabývat. 
 Dále bychom mohli zmínit možnost přepínání pohledů (pohled z 1. osoby nebo z 3. osoby), což většina her také má. 
+
 
