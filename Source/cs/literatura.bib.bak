@@ -222,4 +222,20 @@
   url    = {http://www.spaceengineersgame.com/space-engineers-now-with-planets.html},
 }
 
+@Online{ue_gameInstance,
+  author = {Rama},
+  title  = {Global Data Access, Data Storage Class Accessible From Any CPP or BP Class During Runtime},
+  year   = {2016},
+  date   = {2016-09-05},
+  url    = {https://wiki.unrealengine.com/Global_Data_Access,_Data_Storage_Class_Accessible_From_Any_CPP_or_BP_Class_During_Runtime},
+}
+
+@Online{ue_performance,
+  author = {JamesG},
+  title  = {Blueprint Performance Benchmark?},
+  year   = {2014},
+  date   = {2014-03-26},
+  url    = {https://forums.unrealengine.com/showthread.php?1105-Blueprint-Performance-Benchmark},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}

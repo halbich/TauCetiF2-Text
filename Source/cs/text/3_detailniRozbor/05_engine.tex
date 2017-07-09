@@ -62,11 +62,11 @@ Co se lokalizace hry týče, museli bychom si napsat vlastní správu lokalizace
 
 
 \subsubsection{Unreal Engine}
-Oproti \UN{} je \UE{} podstatně komplexnější a~pochopení všech vztahů a~závislostí může být pro začínajícího herního programátora obtížné. Přes tuto zjevnou nevýhodu jsme však běhe, rešerš zjistili, že \UE{} nám poskytuje podstatně příjemnější prostředí pro vývoj s~komplexnějšími nástroji. Grafické možnosti máme díky materiálovému editoru k~dispozici od začátku a~nemusíme k~tomu umět psát shadery třeba v~jazyce HLSL. Je nám jasné, že výsledný grafický výkon nemusí být nutně optimální, nicméně vzhledem k~povaze této práce stejně nebudeme cílit na grafickou a~výkonovou optimalizaci.
+Oproti \UN{} je \UE{} podstatně komplexnější a~pochopení všech vztahů a~závislostí může být pro začínajícího herního programátora obtížné. Přes tuto zjevnou nevýhodu jsme však během rešerše zjistili, že \UE{} nám poskytuje podstatně příjemnější prostředí pro vývoj s~komplexnějšími nástroji. Grafické možnosti máme díky materiálovému editoru k~dispozici od začátku a~nemusíme k~tomu umět psát shadery třeba v~jazyce HLSL. Je nám jasné, že výsledný grafický výkon nemusí být nutně optimální, nicméně vzhledem k~povaze této práce stejně nebudeme cílit na grafickou a~výkonovou optimalizaci.
 
 Testy s~navigačním meshem a~jeho dynamickou aktualizací byly uspokojivé -- nenarazili jsme na žádný zádrhel nebo pokles výkonu během aktualizace meshe. 
 
-Co musíme zmínit jako nevýhodu je absence editovatelného terénu. (TODO link). V editoru je možné vytvořit krásný terén se rozličnými možnostmi detailů, nicméně tento terén není možné jednoduchým způsobem editovat. Chápeme to spíše jako nepříjemnost, než zásadní nevýhodu. 
+Co musíme zmínit jako nevýhodu je absence editovatelného terénu. V editoru je možné vytvořit krásný terén se rozličnými možnostmi detailů, nicméně tento terén není možné jednoduchým způsobem editovat. Chápeme to spíše jako nepříjemnost, než zásadní nevýhodu. 
 
 Další komplikaci vidíme v~použití \CPP{}, se kterým jsme v~době rešerše měli malé zkušenosti.
 
@@ -76,12 +76,11 @@ Další komplikaci vidíme v~použití \CPP{}, se kterým jsme v~době rešerše
 \subsection{Volba engine -verdikt}
 
 
-Nakonec jsme zvolili poslední možnost -- \UE{}. Autorovy znalosti především z~oblasti \texttt{C\#} sice hovořily pro použití \UN{}, nicméně výhody použití \UE{} převážily nad nevýhodami i~všemi výhodami \UN{}.	// TODO tohle chce vyladit
-
+Nakonec jsme zvolili poslední možnost -- \UE{}. Autorovy znalosti především z~oblasti \texttt{C\#} sice hovořily pro použití \UN{}, nicméně výhody použití \UE{} byly dostatečnými argumenty pro to, abychom navzdory malé znalosti \CPP{} a obtížnosti pro začínajícího vývojáře zvolili právě toto řešení.
 
 \section{Struktura projektu}
 
-Celý projekt v \UE{} je rozdělen do dvou částí -- \CPP{} část a~Blueprintová část. \UE{} umožňuje herním vývojářům implementovat celou hru kompletně za pomocí Blueprintů, tedy vizuálního rozhraní. Toho se však obvykle nevyužívá, protože vykonávání programu v~Blueprintu je přibližně 10 krát pomalejší, než vykonávání nativního \CPP{} kódu (TODO link). V praxi tak dochází k~tomu, že vývojář (i neprogramátor) může za pomocí Blueprintů rychle prototypovat funkcionalitu, kterou pak kodér přepíše do metod v~\CPP{}, správně tyto metody označí makry tak, aby \UE{} tyto metody v~kódu našel (což se provádí za pomocí reflexe v~\UBT{} a~použitím příslušných \CPP{} maker) a~upraví Blueprint tak, aby původní kód tyto metody volal.
+Celý projekt v \UE{} je rozdělen do dvou částí -- \CPP{} část a~Blueprintová část. \UE{} umožňuje herním vývojářům implementovat celou hru kompletně za pomocí Blueprintů, tedy vizuálního rozhraní. Toho se však obvykle nevyužívá, protože vykonávání programu v~Blueprintu je přibližně 10 krát pomalejší, než vykonávání nativního \CPP{} kódu (odpověď jednoho z vývojářů \UE{} na dotaz ohledně rychlosti Blueprintů: \uv{\textit{Blueprints are approximately the speed of UnrealScript in UE3, and our rule of thumb there was about 10x slower than C++.}},~\citep{ue_performance}). V praxi tak dochází k~tomu, že vývojář (i neprogramátor) může za pomocí Blueprintů rychle prototypovat funkcionalitu, kterou pak kodér přepíše do metod v~\CPP{}, správně tyto metody označí makry tak, aby \UE{} tyto metody v~kódu našel (což se provádí za pomocí reflexe v~\UBT{} a~použitím příslušných \CPP{} maker) a~upraví Blueprint tak, aby původní kód tyto metody volal.
 
  V Blueprintu je kód vizualizován jako graf uzlů a~jsou zde zaznamenány vztahy mezi těmito uzly. Uzly tedy odpovídají funkcím v~\CPP{} a~těm je pak možné předávat parametry ať už v~podobě proměnných definovaných v~\CPP{} kódu nějaké třídy, nebo proměnných definovaných přímo v~Blueprintu. Vztahy mezi uzly pak označují následující kód určený k~vykonávání. Můžeme také říct, že vykonávání kódu v~Blueprintu je \textit{interpretované}, z~čehož vyplývá absence případných kompilačních optimalizací. Ergo slabý výkon. 
 
