@@ -2,7 +2,17 @@
 
 \section{Bloky}
 
-V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací.
+V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací. V prvé řadě se změříme na celkovou strukturu bloků a následně budeme řešit, jak budeme spravovat konstanty ovlivňující chování bloků.
+
+\subsection{Celková struktura}
+
+Aby se nám s bloky dobře pracovalo, jistě bude vhodné využít jednoho ze základních principů \textit{OOP} (objektově orientovaného programování) -- dědičnosti. Takže v naší hře bude existovat základní třída, která bude vycházet ze třídy \TT{UActor} a bude předkem všech našich herních bloků.
+
+Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \textit{definici} daného bloku a referenci na třídu s vlastnostmi dané \textit{instance} bloku. Díky tomu, že oddělíme definiční třídu a instanční třídu, tak získáme možnost získat definiční třídu pro daný typ bloku za běhu hry pouze jednou a posléze tuto referenci předávat všem instancím bloku daného typu. Instanční třída bude mít pro každý blok jiné hodnoty, takže je zřejmé, že by měla být samostatná. Smyslem definičního souboru je popis omezujících podmínek kladených na daný typ bloku (například povolené minimální a maximální rozměry), přičemž hodnoty v instanční třídě by měly být v mezích dané definicí. Pro vlastnosti, které nejsou omezující (například cena 
+
+Určitě budeme schopni najít množinu vlastností, které mají všechny bloky společnou. Jak již bylo zmíněno v analýze (TODO ref), mezi tyto vlastnosti určitě bude patřit  \textit{pozice} ve světě, \textit{rotace} bloku a jeho \textit{velikost}.Tyto vlastnosti pak pro danou instanci můžeme nějakým způsobem serializovat do souboru a tím budeme mít validní soubor pro uložení rozehrané hry. 
+
+Protože jednotlivé bloky rozšiřují tyto základní informace o další vlastnosti (například \textit{elektrická} či \textit{kyslíková} komponenta má také své vlastnosti), můžeme se zamyslet nad tím, že bychom pro jednotlivé části bázovou třídu základních vlastností rozšířili. Zde ale narážíme na problém, protože jednotlivé bloky mohou komponenty libovolně kombinovat. Ačkoliv \CPP{} standardně povoluje vícenásobnou dědičnost tříd, \UE{} toto nepovoluje (TODO link!) a tudíž tento přístup není vhodný. Řešením bude rozdělit vlastnosti jednotlivých komponent do samostatných tříd a bloky, které budou tyto komponenty obsahovat, si pak budou držet referenci na instanci dané třídy s vlastnostmi pro danou komponentu. Jako bonus tím získáme typovou bezpečnost a odpadá nám nutnost přetypovávání na vyšší typ (protože ve společném předkovi všech bloků
 
 Z předchozí části víme, že budeme chtít takovou strukturu, abychom mohli v \UE{} snadno modifikovat hodnoty jejích vlastností. Takže nepřipadá v úvahu, abychom měli konstanty uložené ve zdrojovém kódu. Pak ale tyto konstanty budeme muset buď načítat z nějakého souboru, nebo budou muset být uložené v nějakém objektu z \UE{}.
 
