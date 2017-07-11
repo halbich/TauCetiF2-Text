@@ -238,4 +238,11 @@
   url    = {https://forums.unrealengine.com/showthread.php?1105-Blueprint-Performance-Benchmark},
 }
 
+@Online{ue_download,
+  author = {Epic Games},
+  title  = {Download Unreal Engine},
+  year   = {2017},
+  url    = {https://www.unrealengine.com/download},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}
