@@ -8,7 +8,9 @@ V této části rozebereme, jak můžeme definovat a~následně implementovat bl
 
 Aby se nám s bloky dobře pracovalo, jistě bude vhodné využít jednoho ze základních principů \textit{OOP} (objektově orientovaného programování) -- dědičnosti. Takže v naší hře bude existovat základní třída, která bude vycházet ze třídy \TT{UActor}\footnote{\TT{UActor} je základní třída \UEu{}, ze které dědí všechny herní objekty, které chceme v hlavní herní smyčce aktualizovat a renderovat.} a bude předkem všech našich herních bloků.
 
-Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \textit{definici} daného bloku a referenci na třídu s vlastnostmi dané \textit{instance} bloku. Díky tomu, že oddělíme definiční třídu a instanční třídu, tak získáme možnost získat definiční třídu pro daný typ bloku za běhu hry pouze jednou a posléze tuto referenci předávat všem instancím bloku daného typu. Instanční třída bude mít pro každý blok jiné hodnoty, takže je zřejmé, že by měla být samostatná. Smyslem definičního souboru je popis omezujících podmínek kladených na daný typ bloku (například povolené minimální a maximální rozměry), přičemž hodnoty v instanční třídě by měly být v mezích dané definicí. Vlastnosti, které nejsou omezující (například cena za postavení bloku), nebudeme uchovávat v \textit{instanční} třídě.
+Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \textit{definici} daného bloku a referenci na třídu s vlastnostmi dané \textit{instance} bloku. Díky tomu, že oddělíme definiční třídu a instanční třídu, tak získáme možnost získat definiční třídu pro daný typ bloku za běhu hry pouze jednou a posléze tuto referenci předávat všem instancím bloku daného typu. Instanční třída bude mít pro každý blok jiné hodnoty, takže je zřejmé, že by měla být samostatná. Smyslem definičního souboru je popis omezujících podmínek kladených na daný typ bloku (například povolené minimální a maximální rozměry), přičemž hodnoty v instanční třídě by měly být v mezích dané definicí. Vlastnosti, které nejsou omezující (například cena za postavení bloku), nebudeme uchovávat v \textit{instanční} třídě, tyto údaje budeme získávat přímo z \textit{definiční} třídy.
+
+\input{./text/3_detailniRozbor/12_bloky_komponenty.tex}
 
 Dále budeme držet komponenty.
 
@@ -47,4 +49,3 @@ Soubor obsahuje popis vlastno
 
 \input{./text/3_detailniRozbor/11_bloky_vlastnosti.tex}
 
-\input{./text/3_detailniRozbor/12_bloky_komponenty.tex}
