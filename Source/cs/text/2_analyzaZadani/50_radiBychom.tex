@@ -4,7 +4,7 @@
 
 \section{Co bychom chtěli implementovat}
 
-V následujících podkapitolách si rozebereme naše požadavky na hru. Vzhledem ke komplexnosti celé práce zde shrneme základní koncepci hry. Hráč má omezené zdroje elektrické energie a kyslíku a snaží se přežít na nehostinné planetě. V přežití mu může pomoci třeba postavení nové budovy, přečemž s prostředky musí šetřit. Hráčovým úhlavním nepřítelem je kyselý déšť, který ničí postavené budovy, ale zároveň je z něj možné vyrábět elektrickou energii. 
+V následujících podkapitolách si rozebereme naše požadavky na hru. Vzhledem ke komplexnosti celé práce zde shrneme základní koncepci hry. Hráč má omezené zdroje elektrické energie a~kyslíku a~snaží se přežít na nehostinné planetě. V přežití mu může pomoci třeba postavení nové budovy, přečemž s~prostředky musí šetřit. Hráčovým úhlavním nepřítelem je kyselý déšť, který ničí postavené budovy, ale zároveň je z~něj možné vyrábět elektrickou energii. 
 
 
 
@@ -17,7 +17,7 @@ V následujících podkapitolách si rozebereme naše požadavky na hru. Vzhlede
 Chceme, aby bloky v~elektrické síti spolu uměly komunikovat a~bylo třeba možné vzdáleně tyto bloky ovládat. Obdobný systém je možné nalézt i~ve hře \SE{}, kde jsou tlačítka pro ovládání různých dveří, pístů a~dalších interaktivních bloků. My pro základní ovládání použijeme blok \nameref{blocks:B5}.
 
 
-Celkově vidíme koncept elektrického vedení a elektrické sítě jako zajímavý i pro naši hru, takže obdobnou funkcionalitu bychom také chtěli mít.
+Celkově vidíme koncept elektrického vedení a~elektrické sítě jako zajímavý i~pro naši hru, takže obdobnou funkcionalitu bychom také chtěli mít.
 
 
 
@@ -30,14 +30,14 @@ Chceme hráči umožnit postavení komplexní struktury bloků, která bude dohr
 
 \subsection{Herní svět}
 
-Jaký bychom chtěli mít herní svět z pohledu bloků a jejich umisťování jsme již řešili v části \ref{subsec:bloky}. V následujících odstavcích se zaměříme na další charakteristiky světa naší hry.
+Jaký bychom chtěli mít herní svět z~pohledu bloků a~jejich umisťování jsme již řešili v~části \ref{subsec:bloky}. V následujících odstavcích se zaměříme na další charakteristiky světa naší hry.
 
 \subsubsection{Denní / noční cyklus}
-Aby naše hra nebyla úplně nudná z nedostatku stavebních bloků, tak budeme chtít mít také denní a noční cyklus. \MC{} má délku denní cyklu cca 20 minut. My zkusíme 30 minut\footnote{Původně jsme zamýšleli 60 minut, ale z interního testování během vývoje vyplynulo, že je to až příliš dlouhá doba, hlavně kvůli malému množství bloků.}.
+Aby naše hra nebyla úplně nudná z~nedostatku stavebních bloků, tak budeme chtít mít také denní a~noční cyklus. \MC{} má délku denní cyklu cca 20 minut. My zkusíme 30 minut\footnote{Původně jsme zamýšleli 60 minut, ale z~interního testování během vývoje vyplynulo, že je to až příliš dlouhá doba, hlavně kvůli malému množství bloků.}.
 
 \subsubsection{Počasí}
 
-V naší hře budeme chtít mít pouze dva druhy počasí -- jasno a kyselý déšť. Jak jsme již zmínili, kyselý déšť se nám bude hodit i jako zdroj elektrické energie, jasné počasí chceme z toho důvodu, že mít jenom jeden typ počasí by hráče brzy přestalo bavit. Budeme tedy chtít nějakým způsobem vizualizované počasí. Pokud to bude možné, budeme rádi, pokud ve hře bude i kombinace těchto dvou druhů, minimálně z toho důvodu, aby změna počasí byla dynamická a nebyla příliš náhlá. Kyselé deště budou přicházet v~náhodných intervalech a~budou sloužit jako překážka v~rozvoji hry. Zároveň to ale bude pro hráče nástroj, jak získávat prostředky pro ochranu před dalšími dešti a~rozvoj svých staveb. 
+V naší hře budeme chtít mít pouze dva druhy počasí -- jasno a~kyselý déšť. Jak jsme již zmínili, kyselý déšť se nám bude hodit i~jako zdroj elektrické energie, jasné počasí chceme z~toho důvodu, že mít jenom jeden typ počasí by hráče brzy přestalo bavit. Budeme tedy chtít nějakým způsobem vizualizované počasí. Pokud to bude možné, budeme rádi, pokud ve hře bude i~kombinace těchto dvou druhů, minimálně z~toho důvodu, aby změna počasí byla dynamická a~nebyla příliš náhlá. Kyselé deště budou přicházet v~náhodných intervalech a~budou sloužit jako překážka v~rozvoji hry. Zároveň to ale bude pro hráče nástroj, jak získávat prostředky pro ochranu před dalšími dešti a~rozvoj svých staveb. 
 
 \subsubsection{(Ne)fyzikální chování}
 
@@ -45,13 +45,13 @@ Fyzikou se nebudeme nijak podrobně zabývat. Pokud budeme mít možnost snadné
 
 \subsection{Inventář}
 
-Rádi bychom zkusili neomezeně mnoho slotů a tím, že jednotlivé inventární skupiny bude možné pokud možno automatizovaně spravovat tak, aby hráč nemusel neustále řešit správu inventáře. Počet inventárních skupin by měl být koncipován jako potenciálně nekonečný, ale pokud se bude ve výsledné hře počet skupin limitovat, nebude to příliš vadit.
+Rádi bychom zkusili neomezeně mnoho slotů a~tím, že jednotlivé inventární skupiny bude možné pokud možno automatizovaně spravovat tak, aby hráč nemusel neustále řešit správu inventáře. Počet inventárních skupin by měl být koncipován jako potenciálně nekonečný, ale pokud se bude ve výsledné hře počet skupin limitovat, nebude to příliš vadit.
 
-Položky v inventáři budou \textit{stavitelné} (ty, které vzejdou z \textit{konstruktoru objektů}) a \textit{umístitelné} (bloky, které je možné \uv{vzít} do inventáře a později je opět umístit do herního světa.
+Položky v~inventáři budou \textit{stavitelné} (ty, které vzejdou z~\textit{konstruktoru objektů}) a~\textit{umístitelné} (bloky, které je možné \uv{vzít} do inventáře a~později je opět umístit do herního světa.
 
 \subsection{Herní postava}
 \label{subsec:postava}
-Budeme chtít, aby naše herní postava měla \textit{zdraví}, zásobu \textit{kyslíku} a \textit{energie}. Všechny charakteristiky by mělo být možné obnovovat. Pokud hráčovo zdraví nebo kyslík bude na nule, hra by mělo skončit. Dále bychom chtěli mít možnost přepínání pohledů (pohled z 1. osoby nebo z 3. osoby). Hráč by také měl vidět \HUD{}, kde uvidí aktuální stav vlastností postavy a případné další informace (například během stavění).
+Budeme chtít, aby naše herní postava měla \textit{zdraví}, zásobu \textit{kyslíku} a~\textit{energie}. Všechny charakteristiky by mělo být možné obnovovat. Pokud hráčovo zdraví nebo kyslík bude na nule, hra by mělo skončit. Dále bychom chtěli mít možnost přepínání pohledů (pohled z~1. osoby nebo z~3. osoby). Hráč by také měl vidět \HUD{}, kde uvidí aktuální stav vlastností postavy a~případné další informace (například během stavění).
 
 
 

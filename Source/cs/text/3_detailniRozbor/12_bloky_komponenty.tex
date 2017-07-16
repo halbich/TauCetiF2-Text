@@ -4,21 +4,21 @@
 
 \section{Komponenty bloků}
 
-Abychom mohli snadno rozšiřovat vlastnosti a chování bloků, použijeme systém \textit{komponent}, který nám \UE{} nabízí. Komponenta je programová část, která ovlivňuje chování vlastníka dané komponenty. Cílem je pak dosáhnout toho, že je možné za běhu hry jednu komponentu transparentně vyměnit za jinou (komponentu s jinou implementací), a vlastník komponenty se nemusí zajímat o detaily implementace. V naší hře toto chování nejspíše nevyužijeme, ale použití komponent není na škodu a v případě dalšího vývoje budeme mít snazší práci. (TODO učesat)
+Abychom mohli snadno rozšiřovat vlastnosti a~chování bloků, použijeme systém \textit{komponent}, který nám \UE{} nabízí. Komponenta je programová část, která ovlivňuje chování vlastníka dané komponenty. Cílem je pak dosáhnout toho, že je možné za běhu hry jednu komponentu transparentně vyměnit za jinou (komponentu s~jinou implementací), a~vlastník komponenty se nemusí zajímat o~detaily implementace. V naší hře toto chování nejspíše nevyužijeme, ale použití komponent není na škodu a~v~případě dalšího vývoje budeme mít snazší práci. (TODO učesat)
 
 Z předchozí analýzy vyplývá, že budeme potřebovat řešit následující problémy:
 
 \begin{itemize}
-	\item Práce s kyslíkem
-	\item Práce s elektrickou sítí a energií
-	\item Interakce s uživatelem
-	\item Umístění bloku v herním světě
+	\item Práce s~kyslíkem
+	\item Práce s~elektrickou sítí a~energií
+	\item Interakce s~uživatelem
+	\item Umístění bloku v~herním světě
 \end{itemize}
 
 
-První dva body jsou ideální kandidáti na použití komponent. Pokud bychom se někdy v budoucnu rozhodli upravit chování této funkcionality či jej z libovolného důvodu měnit, komponentový systém pro nás bude výhodou. Navíc ne všechny herní bloky umí (z hlediska herního designu) s danými prvky pracovat. Jak jsme již zmínili dříve, \UE{} nepovoluje vícenásobnou dědičnost a bylo by velmi těžké vymyslet hiearchii dědičnosti bloků tak, abychom splnili požadavky pro všechny bloky a zároveň si \uv{nesvázali ruce} pro nové bloky. S použitím komponent to bude snadné -- bloky, které danou funkcionalitu mají umět, budou mít danou komponentu a budou s ní moci pracovat.
+První dva body jsou ideální kandidáti na použití komponent. Pokud bychom se někdy v~budoucnu rozhodli upravit chování této funkcionality či jej z~libovolného důvodu měnit, komponentový systém pro nás bude výhodou. Navíc ne všechny herní bloky umí (z hlediska herního designu) s~danými prvky pracovat. Jak jsme již zmínili dříve, \UE{} nepovoluje vícenásobnou dědičnost a~bylo by velmi těžké vymyslet hiearchii dědičnosti bloků tak, abychom splnili požadavky pro všechny bloky a~zároveň si \uv{nesvázali ruce} pro nové bloky. S použitím komponent to bude snadné -- bloky, které danou funkcionalitu mají umět, budou mít danou komponentu a~budou s~ní moci pracovat.
 
-Dalším problémem je interakce s uživatelem. Abychom věděli, že hráč s daným blokem chce interagovat, musíme vědět, že:
+Dalším problémem je interakce s~uživatelem. Abychom věděli, že hráč s~daným blokem chce interagovat, musíme vědět, že:
 \begin{itemize}
 	\item Je dostatečně blízko bloku
 	\item Z pohledu hráče se dívá na daný blok 
@@ -26,18 +26,18 @@ Dalším problémem je interakce s uživatelem. Abychom věděli, že hráč s d
 \end{itemize}
 
 
-\subsection{Interakce a označování}
+\subsection{Interakce a~označování}
 
-Nejsnazší způsob, jak zjistit, na jaký herní objekt se hráč dívá, je použití RayTracingu (TODO link?, formát textu?). Díky němu můžeme \uv{z kamery} vyslat virtuální paprsek, který má stejný směr, jako je směr pohledu kamery. Pokud bude hráčův \HUD{} zobrazovat zaměřovací kříž či nějaký obdobný mechanismus a náš paprsek bude z pohledu kamery tímto zaměřovačem procházet, hráč může cíleně mířit na herní objekty a my zároveň budeme mít správnou informaci o objektu, na který hráč zaměřovačem míří. Tento způsob získávání informace o objektech v hráčově zaměřovači je ve hrách běžný a použití RayTrace je (pokud je vhodně použito) i dostatečně rychlé.
+Nejsnazší způsob, jak zjistit, na jaký herní objekt se hráč dívá, je použití RayTracingu (TODO link?, formát textu?). Díky němu můžeme \uv{z kamery} vyslat virtuální paprsek, který má stejný směr, jako je směr pohledu kamery. Pokud bude hráčův \HUD{} zobrazovat zaměřovací kříž či nějaký obdobný mechanismus a~náš paprsek bude z~pohledu kamery tímto zaměřovačem procházet, hráč může cíleně mířit na herní objekty a~my zároveň budeme mít správnou informaci o~objektu, na který hráč zaměřovačem míří. Tento způsob získávání informace o~objektech v~hráčově zaměřovači je ve hrách běžný a~použití RayTrace je (pokud je vhodně použito) i~dostatečně rychlé.
 
-Nyní, když už víme, jak můžeme získávat informace o tom, na který objekt hráč míří, tak tento mechanismus ještě rozšíříme o další vlastnost. Je zapotřebí si uvědomit, že interakce s blokem a umisťování nového herního bloku (případně mazání) jsou prakticky jedna a ta samá akce. Liší se pouze výsledkem -- reakcí na stisk nějaké klávesy či tlačítka myši. Ale ve všech případech musíme vědět, na jaký blok hráč míří zaměřovačem, u umisťování navíc potřebujeme znát i přesný polygon, na který hráč míří. Konkrétní polygon potřebujeme znát z toho důvodu, že chceme, aby se přidávaný blok \uv{přilepil} k bloku, na který míříme. Tedy chceme zachovat herní mechaniku, která je v hrách z kapitoly \ref{chap:uvod} běžná a je natolik intuitivní a rozšířená, že změna této mechaniky by nejspíše nedopadla dobře a hráči by nebyla kladně přijata.
+Nyní, když už víme, jak můžeme získávat informace o~tom, na který objekt hráč míří, tak tento mechanismus ještě rozšíříme o~další vlastnost. Je zapotřebí si uvědomit, že interakce s~blokem a~umisťování nového herního bloku (případně mazání) jsou prakticky jedna a~ta samá akce. Liší se pouze výsledkem -- reakcí na stisk nějaké klávesy či tlačítka myši. Ale ve všech případech musíme vědět, na jaký blok hráč míří zaměřovačem, u~umisťování navíc potřebujeme znát i~přesný polygon, na který hráč míří. Konkrétní polygon potřebujeme znát z~toho důvodu, že chceme, aby se přidávaný blok \uv{přilepil} k~bloku, na který míříme. Tedy chceme zachovat herní mechaniku, která je v~hrách z~kapitoly \ref{chap:uvod} běžná a~je natolik intuitivní a~rozšířená, že změna této mechaniky by nejspíše nedopadla dobře a~hráči by nebyla kladně přijata.
 
-Všechny tyto požadavky lze splnit použitím metody \TT{LineTraceSingleByObjectType} (TODO ref?), které předáme správné parametry (především počátek a konec paprsku a typy objektů , které paprsek zaznamená) a ta nám vrátí strukturu, popisující výsledek RT. Z něj se můžeme dozvědět, jestli byl nějaký blok v cestě paprsku. A pokud ano, můžeme se ptát, zda měl komponentu interakce (potenciálně bychom mohli chtít bloky bez možnosti zaměření a interakce, jakožto nesmazatelné objekty). Pokud bude i tato podmínka splněna, můžeme se zajímat o další vlastnosti kolize paprsku s blokem a na základě toho se nějak chovat.
+Všechny tyto požadavky lze splnit použitím metody \TT{LineTraceSingleByObjectType} (TODO ref?), které předáme správné parametry (především počátek a~konec paprsku a~typy objektů , které paprsek zaznamená) a~ta nám vrátí strukturu, popisující výsledek RT. Z něj se můžeme dozvědět, jestli byl nějaký blok v~cestě paprsku. A pokud ano, můžeme se ptát, zda měl komponentu interakce (potenciálně bychom mohli chtít bloky bez možnosti zaměření a~interakce, jakožto nesmazatelné objekty). Pokud bude i~tato podmínka splněna, můžeme se zajímat o~další vlastnosti kolize paprsku s~blokem a~na základě toho se nějak chovat.
 
 
 \subsection{Umístění ve světě}
 
-Smyslem této komponenty je oddělení implementace bloku jako takového a implementace herního světa.
+Smyslem této komponenty je oddělení implementace bloku jako takového a~implementace herního světa.
 
 
 Ve výsledku tedy budeme chtít komponentu, která 

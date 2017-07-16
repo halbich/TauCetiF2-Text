@@ -2,36 +2,36 @@
 
 \section{Bloky}
 
-V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací. V prvé řadě se změříme na celkovou strukturu bloků a následně budeme řešit, jak budeme spravovat konstanty ovlivňující chování bloků.
+V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a~popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací. V prvé řadě se změříme na celkovou strukturu bloků a~následně budeme řešit, jak budeme spravovat konstanty ovlivňující chování bloků.
 
 \subsection{Celková struktura}
 
-Aby se nám s bloky dobře pracovalo, jistě bude vhodné využít jednoho ze základních principů \textit{OOP} (objektově orientovaného programování) -- dědičnosti. Takže v naší hře bude existovat základní třída, která bude vycházet ze třídy \TT{UActor}\footnote{\TT{UActor} je základní třída \UEu{}, ze které dědí všechny herní objekty, které chceme v hlavní herní smyčce aktualizovat a renderovat.} a bude předkem všech našich herních bloků.
+Aby se nám s~bloky dobře pracovalo, jistě bude vhodné využít jednoho ze základních principů \textit{OOP} (objektově orientovaného programování) -- dědičnosti. Takže v~naší hře bude existovat základní třída, která bude vycházet ze třídy \TT{UActor}\footnote{\TT{UActor} je základní třída \UEu{}, ze které dědí všechny herní objekty, které chceme v~hlavní herní smyčce aktualizovat a~renderovat.} a~bude předkem všech našich herních bloků.
 
-Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \textit{definici} daného bloku a referenci na třídu s vlastnostmi dané \textit{instance} bloku. Díky tomu, že oddělíme definiční třídu a instanční třídu, tak získáme možnost získat definiční třídu pro daný typ bloku za běhu hry pouze jednou a posléze tuto referenci předávat všem instancím bloku daného typu. Instanční třída bude mít pro každý blok jiné hodnoty, takže je zřejmé, že by měla být samostatná. Smyslem definičního souboru je popis omezujících podmínek kladených na daný typ bloku (například povolené minimální a maximální rozměry), přičemž hodnoty v instanční třídě by měly být v mezích dané definicí. Vlastnosti, které nejsou omezující (například cena za postavení bloku), nebudeme uchovávat v \textit{instanční} třídě, tyto údaje budeme získávat přímo z \textit{definiční} třídy.
+Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \textit{definici} daného bloku a~referenci na třídu s~vlastnostmi dané \textit{instance} bloku. Díky tomu, že oddělíme definiční třídu a~instanční třídu, tak získáme možnost získat definiční třídu pro daný typ bloku za běhu hry pouze jednou a~posléze tuto referenci předávat všem instancím bloku daného typu. Instanční třída bude mít pro každý blok jiné hodnoty, takže je zřejmé, že by měla být samostatná. Smyslem definičního souboru je popis omezujících podmínek kladených na daný typ bloku (například povolené minimální a~maximální rozměry), přičemž hodnoty v~instanční třídě by měly být v~mezích dané definicí. Vlastnosti, které nejsou omezující (například cena za postavení bloku), nebudeme uchovávat v~\textit{instanční} třídě, tyto údaje budeme získávat přímo z~\textit{definiční} třídy.
 
 \input{./text/3_detailniRozbor/12_bloky_komponenty.tex}
 
 Dále budeme držet komponenty.
 
-Určitě budeme schopni najít množinu vlastností, které mají všechny bloky společnou. Jak již bylo zmíněno v analýze (TODO ref), mezi tyto vlastnosti určitě bude patřit  \textit{pozice} ve světě, \textit{rotace} bloku a jeho \textit{velikost}.Tyto vlastnosti pak pro danou instanci můžeme nějakým způsobem serializovat do souboru a tím budeme mít validní soubor pro uložení rozehrané hry. 
+Určitě budeme schopni najít množinu vlastností, které mají všechny bloky společnou. Jak již bylo zmíněno v~analýze (TODO ref), mezi tyto vlastnosti určitě bude patřit  \textit{pozice} ve světě, \textit{rotace} bloku a~jeho \textit{velikost}.Tyto vlastnosti pak pro danou instanci můžeme nějakým způsobem serializovat do souboru a~tím budeme mít validní soubor pro uložení rozehrané hry. 
 
-Protože jednotlivé bloky rozšiřují tyto základní informace o další vlastnosti (například \textit{elektrická} či \textit{kyslíková} komponenta má také své vlastnosti), můžeme se zamyslet nad tím, že bychom pro jednotlivé části bázovou třídu základních vlastností rozšířili. Zde ale narážíme na problém, protože jednotlivé bloky mohou komponenty libovolně kombinovat. Ačkoliv \CPP{} standardně povoluje vícenásobnou dědičnost tříd, \UE{} toto nepovoluje (TODO link!) a tudíž tento přístup není vhodný. Řešením bude rozdělit vlastnosti jednotlivých komponent do samostatných tříd a bloky, které budou tyto komponenty obsahovat, si pak budou držet referenci na instanci dané třídy s vlastnostmi pro danou komponentu. Jako bonus tím získáme typovou bezpečnost a odpadá nám nutnost přetypovávání na vyšší typ (protože ve společném předkovi všech bloků
+Protože jednotlivé bloky rozšiřují tyto základní informace o~další vlastnosti (například \textit{elektrická} či \textit{kyslíková} komponenta má také své vlastnosti), můžeme se zamyslet nad tím, že bychom pro jednotlivé části bázovou třídu základních vlastností rozšířili. Zde ale narážíme na problém, protože jednotlivé bloky mohou komponenty libovolně kombinovat. Ačkoliv \CPP{} standardně povoluje vícenásobnou dědičnost tříd, \UE{} toto nepovoluje (TODO link!) a~tudíž tento přístup není vhodný. Řešením bude rozdělit vlastnosti jednotlivých komponent do samostatných tříd a~bloky, které budou tyto komponenty obsahovat, si pak budou držet referenci na instanci dané třídy s~vlastnostmi pro danou komponentu. Jako bonus tím získáme typovou bezpečnost a~odpadá nám nutnost přetypovávání na vyšší typ (protože ve společném předkovi všech bloků
 
-Z předchozí části víme, že budeme chtít takovou strukturu, abychom mohli v \UE{} snadno modifikovat hodnoty jejích vlastností. Takže nepřipadá v úvahu, abychom měli konstanty uložené ve zdrojovém kódu. Pak ale tyto konstanty budeme muset buď načítat z nějakého souboru, nebo budou muset být uložené v nějakém objektu z \UE{}.
+Z předchozí části víme, že budeme chtít takovou strukturu, abychom mohli v~\UE{} snadno modifikovat hodnoty jejích vlastností. Takže nepřipadá v~úvahu, abychom měli konstanty uložené ve zdrojovém kódu. Pak ale tyto konstanty budeme muset buď načítat z~nějakého souboru, nebo budou muset být uložené v~nějakém objektu z~\UE{}.
 
-Při načítání ze souboru máme více možností -- můžeme popisovat bloky a jejich chování v třeba XML souborech. Obdobné řešení používá hra \ME{}. Tyto soubory jsou pak zpracovány herním enginem během načítání hry. 
+Při načítání ze souboru máme více možností -- můžeme popisovat bloky a~jejich chování v~třeba XML souborech. Obdobné řešení používá hra \ME{}. Tyto soubory jsou pak zpracovány herním enginem během načítání hry. 
 
 \subsection{Textové soubory}
-V této části se zamyslíme nad použitím definic v textovém souboru. Může se jednat o množinu samostatných souborů, přičemž budeme uvažovat pouze XML soubory, nebo můžeme použít třeba popis bloků v nějakém tabulkovém formátu, třeba csv.
+V této části se zamyslíme nad použitím definic v~textovém souboru. Může se jednat o~množinu samostatných souborů, přičemž budeme uvažovat pouze XML soubory, nebo můžeme použít třeba popis bloků v~nějakém tabulkovém formátu, třeba csv.
 
 \subsubsection{Popis tabulkou}
-Pokud bychom měli velice málo vlastností bloků, tento přístup by mohl být použitelný. Nicméně s každým dalším nově přidaným blokem se do množiny všech vlastností mohou zanášet nové vlastnosti.  To by znamenalo, že popis ostatních bloků, které danou vlastnost nemají, by musel nutně v tomto tabulkovém zápisu uvažovat nějakou (byť prázdnou) hodnotu. Zbytečně by nám tak rostl definiční soubor. Další nevýhodou je absence typové bezpečnosti. 
+Pokud bychom měli velice málo vlastností bloků, tento přístup by mohl být použitelný. Nicméně s~každým dalším nově přidaným blokem se do množiny všech vlastností mohou zanášet nové vlastnosti.  To by znamenalo, že popis ostatních bloků, které danou vlastnost nemají, by musel nutně v~tomto tabulkovém zápisu uvažovat nějakou (byť prázdnou) hodnotu. Zbytečně by nám tak rostl definiční soubor. Další nevýhodou je absence typové bezpečnosti. 
 
 \subsubsection{Popis samostatným souborem -- XML}
-Proč neuvažujeme běžné soubory textového formátu? Výsledek je stejný jako při použití XML, ale nemůžeme zde použít definiční soubory pro automatickou kontrolu platnosti hodnot. Navíc bychom museli psát vlastní parser takového textového souboru, přičemž již hotové parsery XML jsou volně k dispozici. 
+Proč neuvažujeme běžné soubory textového formátu? Výsledek je stejný jako při použití XML, ale nemůžeme zde použít definiční soubory pro automatickou kontrolu platnosti hodnot. Navíc bychom museli psát vlastní parser takového textového souboru, přičemž již hotové parsery XML jsou volně k~dispozici. 
 
-Výhodou tohoto přístupu je také budoucí rozšiřovatelnost o nové bloky
+Výhodou tohoto přístupu je také budoucí rozšiřovatelnost o~nové bloky
 
 Soubor obsahuje popis vlastno
 
