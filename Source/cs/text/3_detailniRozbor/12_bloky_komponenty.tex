@@ -16,23 +16,54 @@ Z předchozí analýzy vyplývá, že budeme potřebovat řešit následující 
 \end{itemize}
 
 
-Tyto problémy jsou ideální kandidáti na použití komponent. Pokud bychom se někdy v~budoucnu rozhodli upravit chování některé funkcionality či jej z~libovolného důvodu měnit, komponentový systém pro nás bude výhodou. Navíc ne všechny herní bloky umí (z hlediska herního designu) kupříkladu s~kyslíkem či elektřinou pracovat. Jak jsme již zmínili dříve, \UE{} nepovoluje vícenásobnou dědičnost a~bylo by velmi těžké vymyslet hiearchii dědičnosti bloků tak, abychom splnili požadavky pro všechny bloky a~zároveň si \uv{nesvázali ruce} pro nové bloky. S použitím komponent to bude snadné -- bloky, které danou funkcionalitu mají umět, budou mít danou komponentu a~budou s~ní moci pracovat.
+Tyto problémy jsou ideální kandidáti na použití komponent. Pokud bychom se někdy v~budoucnu rozhodli upravit chování některé funkcionality či jej z~libovolného důvodu měnit, komponentový systém pro nás bude výhodou. Navíc ne všechny herní bloky umí (z hlediska herního designu) kupříkladu s~kyslíkem či elektřinou pracovat. Jak jsme již zmínili dříve, \UE{} nepovoluje vícenásobnou dědičnost a~bylo by velmi těžké vymyslet hierarchii dědičnosti bloků tak, abychom splnili požadavky pro všechny bloky a~zároveň si \uv{nesvázali ruce} pro nové bloky. S použitím komponent to bude snadné -- bloky, které danou funkcionalitu mají umět, budou mít danou komponentu a~budou s~ní moci pracovat. Taktéž tím u~kyslíku a~energie získáme možnost přiřadit tyto komponenty hráčově postavě a~tím nebudeme duplikovat funkcionalitu.
 
 \subsection{Komponenta kyslíku}
 
-- to je podobný jako energie
+Cílem komponenty kyslíku je udržování informace o~aktuálním množství \linebreak \uv{vlastněného} kyslíku a~dále pak převody mezi jednotlivými komponentami. Vzhledem k~tomu, že kyslík je vyráběn z~elektrické energie, blok s~elektrickou a~kyslíkovou komponentou může měnit množství vlastněného kyslíku. 
 
-- mít možnost uchování kyslíku, v~případě použitíí elektirky pak i~generování
+\subsubsection{Převádění kyslíku}
+Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme zajistit konzistenci dat při převodech kyslíku. Můžeme pro to využít primitiva pro zamykání \TT{FCriticalSection} (todo link). Kritickou sekci pak budeme korektně zamykat a~odemykat (stejně jako u~klasického vícevláknového programování). Algoritmy pro vkládání a~získání kyslíku budou mít následující signaturu:
+
+\begin{code}
+    // dodej kyslík komponentě
+    bool UOxygenComponent::PutAmount(float aviable,
+                                     float& actuallyPutted)
+
+    // získej kyslík z~komponenty                                     
+    bool UOxygenComponent::ObtainAmount(float requested,
+                                        float& actuallyObtained,
+                                        bool requireExact)
+\end{code}
+
+Princip je prostý -- metody vrací \TT{bool} jakožto hodnotu, zda bylo možné operaci korektně provést. Parametry předávané \textit{referencí} pak v~případě úspěchu obsahují hodnotu skutečně vloženého či získaného kyslíku. Poslední parametr u~metody pro získání kyslíku značí, zda je vyžadované přesné množství. Pokud kyslíková komponenta obsahuje méně kyslíku, než je požadované množství a~je požadované přesně zadané množství, převod nebude úspěšný a~metoda vrátí \TT{false}. Pokud nebude požadované přesně dané množství, skutečně získané množství může být menší a~je na volajícím, aby se tomuto faktu přizpůsobil.
+
+Obdobně jako u~bloků, kyslíková komponenta bude obsahovat reference na \textit{definiční} třídu a~\textit{instanční} třídu a~jejich chování bude vycházet z~principů chování definiční a~instanční třídy u~vlastností bloků. \textit{Definiční} třída definuje \textit{maximální objem drženého kyslíku} pro daný blok (a stejně jako u~výpočtu zdraví se pro danou instanci bloku použije algoritmus \ref{eq:alg}) a~dále definuje \textit{maximální přenesený objem kyslíku za 1~herní sekundu}. Z toho vyplývá, že můžeme řídit, jak dlouho bude probíhat přenos třeba z~bloku plničky do bloku kyslíkové bomby. Nebo z~bloku kyslíkové bomby k~hráči. Limitace přenosu pak přináší věrohodnější hráčský zážitek.
 
 \subsection{Komponenta energie}
 
-- popis energie, co to umí (např. výkon)
+Komponenta energie je mnohém velmi podobná Kyslíkové komponentě. Jejím cílem je udržování informace o~\uv{vlastněné} energii a~taktéž obsahuje \textit{definiční} a~\textit{instanční} třídu. \textit{Definice} pro daný blok také obsahuje \textit{maximální objem} a~\textit{limit přenosu}. Signatury metod pro převod energie jsou identické s~kyslíkovými.
 
-popis jednotlivých komponent dle předchozího, co všechno umí (např. přidání / odebrání hodnoty energie za použité zámku (není transakce))
+Navíc však komponenta energie umí pracovat s~elektrickou sítí. Aby byla komponenta v~nějaké elektrické síti, musí se blok vlastnící tuto komponentu dotýkat jiného bloku s~elektrickou komponentou. Protože vycházíme z~reálného světa, tento dotyk vlastně simuluje vodivý spoj. Proto musíme pro každý blok s~touto komponentou umět zadefinovat, jak takový vodivý spoj vypadá.
 
-\subsection{Komponenta elektrické sítě}
+\subsubsection{Vodivé spojení bloků}
 
--způsob zapojení do sítě
+Definovat vodivý spoj můžeme několika způsoby. Mohli bychom použít (stejně jako u~stavění ve hře \TM{}) systém přípojných bodů. Nicméně to by znamenalo, že bychom museli řešit, jak tento systém upravit pro dynamicky škálovatelné bloky. Navíc, pro nové vizuální reprezentace bloků bychom museli speciálně řešit umístění těchto přípojných bodů, i~vzhledem k~ostatním možným přípojným bloků ve hře). Další zásadní nevýhodou je to, jak bychom napojovali například krychle o~maximálním a~minimálním rozměru. Abychom mohli využít přípojných bodů, minimální krychle by musela definovat $6$ takových bodů a~maximální krychle pak $2~400$ těchto bodů. S rostoucí velikostí bloku se počet kontrolovaných přípojných bodů zvětšuje.  Tento postup nám nevyhovuje.
+
+Můžeme však zvolit obdobné řešení -- \uv{\textit{polygonální}}. Pro daný blok definujeme \textit{body}, které se budou v~rámci škálování korektně umisťovat vždy na stejné místo (například roh krychle). Dále pak definujeme \textit{polygony}, což je uspořádaný seznam bodů, které leží v~dané rovině. Tento seznam tvoří virtuální cyklus, takže mezi $k$-tým a~$(k+1)$-tým bodem je \textit{hrana} polygonu.
+
+V rámci algoritmu spojování bloků skrz vodivé spojení pak budeme hledat pro daný blok sousedy právě dle těchto definic. Budeme počítat s~tím, že polygony jsou v~rámci jedné roviny v~prostoru, přičemž daná rovina je rovnoběžná s~některou z~rovin mřížky herního světa. V rámci této práce si algoritmus usnadníme takovým způsobem, že jednotlivé studované polygony rozšíříme na \textit{boxy}, tedy najdeme nejmenší možný kvádr, který je zarovnaný do mřížky definované herním světem (tedy nemá vůči ní žádnou rotaci) a~obsahuje všechny body z~daného polygonu\footnote{Abychom mohli použít standardních metod \TT{FBox::Intersect(...)}, musíme \textit{box} rozšířit o~něco netriviálního (např. $1~cm$) ve směru normály dané roviny.}. Za validní a~vodivé elektrické vedení pak budeme považovat takové dva polygony, které mají neprázdný průnik těchto boxů. Jsme si vědomi faktu, že tato úprava jde proti snahám hry o~vyšší stupeň realismu, ale v~této fázi nám to stačí a~nepotřebujeme matematicky správné řešení.
+
+
+\subsection{Objekt elektrické sítě}
+
+//TODO proč jsme to tak udělali?
+
+Tento objekt popisuje jednu konkrétní elektrickou síť. Obsahuje seznam všech \textit{elektrických komponent} v~dané síti. Sama o~sobě nemusí mít žádnou složitou logiku. Síť by měla umět k~sobě přiřadit novou elektrickou komponentu či ji odebrat. 
+
+
+// TODO
+Ve hře pak bude jeden Actor, který se bude o~všechny sítě starat a~bude je hromadně aktualizovat -- protože sítě vznikají a~zanikají relativně rychle, je tam propagace do sítě, mnoho tikajících actorů -- bordel na update, proto jeden a~ten to vše vyřeší.
 
 
 
@@ -53,7 +84,7 @@ Nyní, když už víme, jak můžeme získávat informace o~tom, na který objek
 
 Pro implementaci nám poslouží metoda \TT{LineTraceSingleByObjectType},\linebreak které předáme správné parametry (především počátek a~konec paprsku a~typy objektů, které paprsek zaznamená) a~ta nám vrátí strukturu, popisující výsledek trasování. Z něj se můžeme dozvědět, jestli byl nějaký blok v~cestě paprsku. A pokud ano, můžeme se ptát, zda měl komponentu interakce (potenciálně bychom mohli chtít bloky bez možnosti zaměření a~interakce, jakožto nesmazatelné objekty). Pokud bude i~tato podmínka splněna, můžeme se zajímat o~další vlastnosti kolize paprsku s~blokem a~na základě toho se nějak chovat.
 
-Abychom hráči hraní usnadnili a zpříjemnili, budeme bloky zvýrazňovat za použití techniky \textit{obrysu} (todo outline tut link). A to v případě, že nic nestaví a daný označený blok je použitelný (takže hráč ví, že blok může používat), nebo v případě, kdy hráč staví (zvýrazníme hranice namířeného objektu). Tato technika je také využívána v různých hrách napříč různými herními žánry a proto její implementací nic nezkazíme. (ToDO barvičky? )
+Abychom hráči hraní usnadnili a~zpříjemnili, budeme bloky zvýrazňovat za použití techniky \textit{obrysu} (todo outline tut link). A to v~případě, že nic nestaví a~daný označený blok je použitelný (takže hráč ví, že blok může používat), nebo v~případě, kdy hráč staví (zvýrazníme hranice namířeného objektu). Tato technika je také využívána v~různých hrách napříč různými herními žánry a~proto její implementací nic nezkazíme. (ToDO barvičky? )
 
 
 \subsubsection{Možnost vzít blok do inventáře}
@@ -62,7 +93,7 @@ Abychom hráči hraní usnadnili a zpříjemnili, budeme bloky zvýrazňovat za 
 
 \subsection{Umístění ve světě}
 
-Smyslem této komponenty je oddělení implementace bloku jako takového a~implementace herního světa. Skrze tuto komponentu se blok bude moci dotazovat na ostatní bloky v herním světě, především pak bloky ve svém okolí. To bude důležité například pro elektrickou komponentu, která na základě \uv{sousedství} bude jednotlivé bloky vázat k sobě do elektrické sítě.
+Smyslem této komponenty je oddělení implementace bloku jako takového a~implementace herního světa. Skrze tuto komponentu se blok bude moci dotazovat na ostatní bloky v~herním světě, především pak bloky ve svém okolí. To bude důležité například pro elektrickou komponentu, která na základě \uv{sousedství} bude jednotlivé bloky vázat k~sobě do elektrické sítě.
 
 
 

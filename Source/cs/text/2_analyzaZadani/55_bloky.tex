@@ -15,7 +15,7 @@ Dále budeme chtít, aby bylo možné definovat jednotlivé vlastnosti bloků je
 
 Chceme navrhnout systém, ve kterém bude nejmenší blok o~hraně 20 cm, tedy objemu odpovídající 0,008 m$^3$. Tento blok nazveme jako \textit{jednotkový}, identicky s~tímto budeme používat i~pojem \textit{jednotková krychle}. Největší blok pak omezíme na 20-ti násobek jednotkové krychle ve všech 3 rozměrech. Největší blok tedy bude mít objem 64 m$^3$. Může se stát, že dolní limit bude příliš malý, ale v~tuto chvíli považujeme tuto konstantu za dostatečnou. Naopak horní limit bude nejspíše dostatečný -- práce s~příliš velkými bloky by mohla být neefektivní a~stavba nepřehledná.
 
-V následující tabulce (tabulka \ref{table:requiredBlocks}) si popíšeme, jaké bloky budeme ve hře chtít mít, jak by měly vypadat a~co by měly umět. Bloky jsme rozdělili do dvou kategorií -- první (\textbf{A}) jsou \textit{konstrukční} prvky, druhá kategorie (\textbf{B}) obsahuje \textit{funkční} prvky. \textit{Název} bloku je zřejmý. Sloupce \textit{Min} a~\textit{Max} popisují velikost bloku jako násobky jednotkové krychle. Dále jsou v~tabulce sloupce \textit{P} a~\textit{R}\footnote{Písmenka vychází z~anglického \textit{Pitch} a~\textit{Roll}. }. Ty popisují to, zda je blok možné rotovat podle daných os. Správně bychom tu měli mít i~sloupec \textit{Y} (z anglického \textit{Yawn}), ale protože je pro všechny bloky povolen, tak jsme tento sloupec vynechali. Smysl rotací lze nahlédnout v obrázku \ref{fig:axes}.
+V následující tabulce (tabulka \ref{table:requiredBlocks}) si popíšeme, jaké bloky budeme ve hře chtít mít, jak by měly vypadat a~co by měly umět. Bloky jsme rozdělili do dvou kategorií -- první (\textbf{A}) jsou \textit{konstrukční} prvky, druhá kategorie (\textbf{B}) obsahuje \textit{funkční} prvky. \textit{Název} bloku je zřejmý. Sloupce \textit{Min} a~\textit{Max} popisují velikost bloku jako násobky jednotkové krychle. Dále jsou v~tabulce sloupce \textit{P} a~\textit{R}\footnote{Písmenka vychází z~anglického \textit{Pitch} a~\textit{Roll}. }. Ty popisují to, zda je blok možné rotovat podle daných os. Správně bychom tu měli mít i~sloupec \textit{Y} (z anglického \textit{Yaw}), ale protože je pro všechny bloky povolen, tak jsme tento sloupec vynechali. Smysl rotací lze nahlédnout v~obrázku \ref{fig:axes}.
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=90mm]{../img/analysis/Yaw_Axis_Corrected}
@@ -27,7 +27,7 @@ V následující tabulce (tabulka \ref{table:requiredBlocks}) si popíšeme, jak
 
 
 
-Jako poslední je sloupec \textit{T}, tedy typ bloku. Typ bloku může být: \textit{Kostka}, \textit{Zkosený}, \textit{Rohový}, \textit{Vlastní}. Typ pak ovlivňuje další vlastnosti bloku, jako například cenu za jeho postavení, ale i~jeho zdraví. Podrobnější popis, včetně algoritmu výpočtu, je v části \ref{subsec:instVlast}.
+Jako poslední je sloupec \textit{T}, tedy typ bloku. Typ bloku může být: \textit{Kostka}, \textit{Zkosený}, \textit{Rohový}, \textit{Vlastní}. Typ pak ovlivňuje další vlastnosti bloku, jako například cenu za jeho postavení, ale i~jeho zdraví. Podrobnější popis, včetně algoritmu výpočtu, je v~části \ref{subsec:instVlast}.
 
 
 \FloatBarrier
@@ -63,6 +63,7 @@ Jako poslední je sloupec \textit{T}, tedy typ bloku. Typ bloku může být: \te
 
 \FloatBarrier
 
+(TODO popis sloupců na výšku? pokud bude čas)
 
 \subsection{Podrobný popis bloků}
 

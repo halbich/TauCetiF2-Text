@@ -2,12 +2,28 @@
 
 \section{Inventář}
 
-- je to vlastnost hráče
+Inventář bude vhodné implementovat jako komponentu, kterou posléze můžeme přiřadit herní postavě. Opět se zde opíráme o~fakt, že bychom v~budoucnu mohli mít bloky či \NPC{}, kteří také mají svůj inventář. Z kapitoly \ref{subsec:inventory} vyplývá, že inventář má několik základních vlastností:
 
-- v~inventáři má několik přepínatelných banků
+\begin{itemize}
+	\item Seznam postavitelných bloků
+	\item Seznam umístitelných bloků
+	\item Seznam inventárních skupin pro filtrování
+\end{itemize}
 
-- bank může být se stavitelnými bloky nebo s~intentárními předměty
+V momentě, kdy budeme chtít hráči nabídnout bloky k~postavení či umístění, oba seznamy dofiltrujeme dle aktuálně zvolené inventární skupiny. Musíme se tedy zaměřit na to, jak budeme řešit inventární skupiny.
 
-- bank je možné filtrovat
+\subsection{Inventární skupiny}
 
-- důvod pro použití banku -- rychlé přepnutí při stavění (minecraft složitá organizace při stavění a~použití 10+ druhů bloků)
+Protože má každý blok svoje definované \textit{tagy}, musíme vymyslet takový systém, abychom snadno filtrovali podle těchto tagů. Nejsnazší způsob je takový, kdy každá inventární skupina definuje, jaké tagy musí blok mít, aby byl přiřazen. Takže pro blok, který má být zobrazen v~rámci inventární skupiny platí, že blok definuje všechny tagy v~rámci dané inventární skupiny. Nicméně se může stát, že hráč bude chtít mít v~dané skupině takové bloky, které nemusí splňovat všechny tagy, ale splňují alespoň jeden z~definované skupiny. Z této myšlenky se dostáváme k~jednoznačnému zápisu algoritmu filtrování tagů -- \CNF{}. \CNF{} je označení pro \textit{konjunktivně normální formu}, užívané ve výrokové logice.
+
+Formálně bychom tuto myšlenku zapsali:
+
+(TODO zápic CNF)
+
+
+Při pohledu na formuli (TODO ref) vidíme, že můžeme implementovat takový systém, kdy \textit{inventární skupina} definuje \textit{inventární skupiny tagů} (konjunktivní vyhodnocení), přičemž \textit{inventární skupiny tagů} definují \textit{skupiny tagů} (disjunktivní vyhodnocení). Při vyhodnocování, zda blok patří do dané \textit{inventární skupiny}, tedy budeme sledovat to, zda daný blok splňuje všechny tyto \textit{inventární skupiny tagů} a~pro každou z~nich budeme zjišťovat, zda blok definuje alespoň jeden tag ze \textit{skupiny tagů}. 
+
+Abychom hráči ještě více zpříjemnili práci s~inventářem, nebudeme požadovat přesnou shodu tagů definovaných blokem a~\textit{skupinou tagů}. Bude nám totiž stačit pouze podmínka podřetězce, tedy podmínka, aby tag bloku obsahoval jako podřetězec tag ze \textit{skupiny tagů}. Tím dosáhneme toho, že hráč nebude muset v~inventáři vypisovat celé řetězce z~tagů, které si nadefinoval u~svých bloků. 
+
+
+
