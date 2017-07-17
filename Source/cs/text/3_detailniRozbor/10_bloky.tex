@@ -10,9 +10,40 @@ Aby se nám s~bloky dobře pracovalo, jistě bude vhodné využít jednoho ze z�
 
 Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \textit{definici} daného bloku a~referenci na třídu s~vlastnostmi dané \textit{instance} bloku. Díky tomu, že oddělíme definiční třídu a~instanční třídu, tak získáme možnost získat definiční třídu pro daný typ bloku za běhu hry pouze jednou a~posléze tuto referenci předávat všem instancím bloku daného typu. Instanční třída bude mít pro každý blok jiné hodnoty, takže je zřejmé, že by měla být samostatná. Smyslem definičního souboru je popis omezujících podmínek kladených na daný typ bloku (například povolené minimální a~maximální rozměry), přičemž hodnoty v~instanční třídě by měly být v~mezích dané definicí. Vlastnosti, které nejsou omezující (například cena za postavení bloku), nebudeme uchovávat v~\textit{instanční} třídě, tyto údaje budeme získávat přímo z~\textit{definiční} třídy.
 
+\subsection{Instanční vlastnosti}
+\label{subsec:instVlast}
+Mezi instanční vlastnosti zařadíme vlastnosti definované v části \ref{subsec:blocks} --  \textit{vizuální reprezentaci}, \textit{pozici ve světě}, \textit{rotaci}, \textit{velikost}, \textit{zdraví} apod. Protože máme dynamicky škálovatelné bloky, budeme chtít, abychom měli kupříkladu výpočet výsledného zdraví či ceny za postavení bloku bloku co nejjednodušší. K tomu využijeme vlastnost \textit{typ bloku}.
+
+Zadefinujme si následující konstanty pro daný \textit{typ}, vycházející z objemu základní krychle: (jednotlivé hodnoty odpovídají sloupci \textbf{T} v tabulce \ref{table:requiredBlocks})
+
+\begin{enumerate}
+	\item Krychle \textbf{K}: $1$
+	\item Zkosená krychle \textbf{Z}: $\frac{1}{2}$
+	\item Rohová krychle \textbf{R}: $\frac{1}{6}$
+	\item Vlastní \textbf{V}: $1$
+\end{enumerate}
+
+Tyto konstanty využijeme v následujícím algoritmu výpočtu
+
+\begin{equation}\label{eq:alg}
+	\bm H = \bm T * h  * x * y * z
+\end{equation}
+
+kde $x, y, z$ jsou rozměry bloku v daných osách, $\bm T$ je konstanta dle typu bloku, $h$ je nějaká základní hodnota (například zdraví) a $\bm H$ je výsledná hodnota vlastnosti. Výpočet \ref{eq:alg} se opírá o následující fakta:
+
+\begin{enumerate}
+	\item Blok, který je typu \textbf{V}, má vždy pevně definované rozměry a nelze jej škálovat.
+	\item Blok, který je typu \textbf{V}, do rovnice vždy dosazuje $ x = y = z = 1$.
+	\subitem To je čistě designová záležitost, abychom mohli během zadávání konstant pro daný blok tohoto typu vždy zadat pouze výslednou hodnotu. Vyhneme se tím přepočítávání a zadání konstant bude přehlednější.
+\end{enumerate}
+
+
+
+
 \input{./text/3_detailniRozbor/12_bloky_komponenty.tex}
 
-Dále budeme držet komponenty.
+\section{Definice bloků}
+
 
 Určitě budeme schopni najít množinu vlastností, které mají všechny bloky společnou. Jak již bylo zmíněno v~analýze (TODO ref), mezi tyto vlastnosti určitě bude patřit  \textit{pozice} ve světě, \textit{rotace} bloku a~jeho \textit{velikost}.Tyto vlastnosti pak pro danou instanci můžeme nějakým způsobem serializovat do souboru a~tím budeme mít validní soubor pro uložení rozehrané hry. 
 

@@ -16,7 +16,24 @@ Z předchozí analýzy vyplývá, že budeme potřebovat řešit následující 
 \end{itemize}
 
 
-První dva body jsou ideální kandidáti na použití komponent. Pokud bychom se někdy v~budoucnu rozhodli upravit chování této funkcionality či jej z~libovolného důvodu měnit, komponentový systém pro nás bude výhodou. Navíc ne všechny herní bloky umí (z hlediska herního designu) s~kyslíkem či elektřinou pracovat. Jak jsme již zmínili dříve, \UE{} nepovoluje vícenásobnou dědičnost a~bylo by velmi těžké vymyslet hiearchii dědičnosti bloků tak, abychom splnili požadavky pro všechny bloky a~zároveň si \uv{nesvázali ruce} pro nové bloky. S použitím komponent to bude snadné -- bloky, které danou funkcionalitu mají umět, budou mít danou komponentu a~budou s~ní moci pracovat.
+Tyto problémy jsou ideální kandidáti na použití komponent. Pokud bychom se někdy v~budoucnu rozhodli upravit chování některé funkcionality či jej z~libovolného důvodu měnit, komponentový systém pro nás bude výhodou. Navíc ne všechny herní bloky umí (z hlediska herního designu) kupříkladu s~kyslíkem či elektřinou pracovat. Jak jsme již zmínili dříve, \UE{} nepovoluje vícenásobnou dědičnost a~bylo by velmi těžké vymyslet hiearchii dědičnosti bloků tak, abychom splnili požadavky pro všechny bloky a~zároveň si \uv{nesvázali ruce} pro nové bloky. S použitím komponent to bude snadné -- bloky, které danou funkcionalitu mají umět, budou mít danou komponentu a~budou s~ní moci pracovat.
+
+\subsection{Komponenta kyslíku}
+
+- to je podobný jako energie
+
+- mít možnost uchování kyslíku, v~případě použitíí elektirky pak i~generování
+
+\subsection{Komponenta energie}
+
+- popis energie, co to umí (např. výkon)
+
+popis jednotlivých komponent dle předchozího, co všechno umí (např. přidání / odebrání hodnoty energie za použité zámku (není transakce))
+
+\subsection{Komponenta elektrické sítě}
+
+-způsob zapojení do sítě
+
 
 
 \subsection{Interakce a~označování}
@@ -34,17 +51,21 @@ Nejsnazší způsob, jak zjistit, na jaký herní objekt se hráč dívá, je po
 
 Nyní, když už víme, jak můžeme získávat informace o~tom, na který objekt hráč míří, tak tento mechanismus ještě rozšíříme o~další vlastnost. Je zapotřebí si uvědomit, že interakce s~blokem a~umisťování nového herního bloku (případně mazání) jsou prakticky stejné akce. Liší se pouze výsledkem -- reakcí na stisk nějaké klávesy či tlačítka myši. Ale ve všech případech musíme vědět, na jaký blok hráč míří zaměřovačem, u~umisťování navíc potřebujeme znát i~přesný polygon, na který hráč míří. Konkrétní polygon potřebujeme znát z~toho důvodu, že chceme, aby se přidávaný blok \uv{přilepil} k~bloku, na který míříme. Tedy chceme zachovat herní mechaniku, která je v~hrách z~kapitoly \ref{chap:uvod} běžná a~je natolik intuitivní a~rozšířená, že změna této mechaniky by nejspíše nedopadla dobře a~hráči by nebyla kladně přijata.
 
-Všechny tyto požadavky lze splnit použitím metody \TT{LineTraceSingleByObjectType} (TODO ref?), které předáme správné parametry (především počátek a~konec paprsku a~typy objektů , které paprsek zaznamená) a~ta nám vrátí strukturu, popisující výsledek RT. Z něj se můžeme dozvědět, jestli byl nějaký blok v~cestě paprsku. A pokud ano, můžeme se ptát, zda měl komponentu interakce (potenciálně bychom mohli chtít bloky bez možnosti zaměření a~interakce, jakožto nesmazatelné objekty). Pokud bude i~tato podmínka splněna, můžeme se zajímat o~další vlastnosti kolize paprsku s~blokem a~na základě toho se nějak chovat.
+Pro implementaci nám poslouží metoda \TT{LineTraceSingleByObjectType},\linebreak které předáme správné parametry (především počátek a~konec paprsku a~typy objektů, které paprsek zaznamená) a~ta nám vrátí strukturu, popisující výsledek trasování. Z něj se můžeme dozvědět, jestli byl nějaký blok v~cestě paprsku. A pokud ano, můžeme se ptát, zda měl komponentu interakce (potenciálně bychom mohli chtít bloky bez možnosti zaměření a~interakce, jakožto nesmazatelné objekty). Pokud bude i~tato podmínka splněna, můžeme se zajímat o~další vlastnosti kolize paprsku s~blokem a~na základě toho se nějak chovat.
 
+Abychom hráči hraní usnadnili a zpříjemnili, budeme bloky zvýrazňovat za použití techniky \textit{obrysu} (todo outline tut link). A to v případě, že nic nestaví a daný označený blok je použitelný (takže hráč ví, že blok může používat), nebo v případě, kdy hráč staví (zvýrazníme hranice namířeného objektu). Tato technika je také využívána v různých hrách napříč různými herními žánry a proto její implementací nic nezkazíme. (ToDO barvičky? )
+
+
+\subsubsection{Možnost vzít blok do inventáře}
+
+- bloky mohou být sebratelné, tedy hráč si je může dát do svého inventáře. vlastnosti jako třeba uchovaná hodnota kyslíku, pak zůstávají zachované
 
 \subsection{Umístění ve světě}
 
-Smyslem této komponenty je oddělení implementace bloku jako takového a~implementace herního světa.
+Smyslem této komponenty je oddělení implementace bloku jako takového a~implementace herního světa. Skrze tuto komponentu se blok bude moci dotazovat na ostatní bloky v herním světě, především pak bloky ve svém okolí. To bude důležité například pro elektrickou komponentu, která na základě \uv{sousedství} bude jednotlivé bloky vázat k sobě do elektrické sítě.
 
 
-Ve výsledku tedy budeme chtít komponentu, která 
 
-popis jednotlivých komponent dle předchozího, co všechno umí (např. přidání / odebrání hodnoty energie za použité zámku (není transakce))
 
 
 
