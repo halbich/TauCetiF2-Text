@@ -245,4 +245,12 @@
   url    = {https://www.unrealengine.com/download},
 }
 
+@Online{wp_axes,
+  author = {Wikipedia},
+  title  = {Aircraft principal axes},
+  year   = {2017},
+  date   = {2017-06-09},
+  url    = {https://en.wikipedia.org/wiki/Aircraft_principal_axes},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}

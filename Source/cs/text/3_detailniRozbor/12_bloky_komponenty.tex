@@ -3,6 +3,7 @@
 
 
 \section{Komponenty bloků}
+\label{sec:komponents}
 
 Abychom mohli snadno rozšiřovat vlastnosti a~chování bloků, použijeme systém \textit{komponent}, který nám \UE{} nabízí. Komponenta je programová část, která ovlivňuje chování vlastníka dané komponenty. Cílem je pak dosáhnout toho, že je možné za běhu hry jednu komponentu transparentně vyměnit za jinou (komponentu s~jinou implementací), a~vlastník komponenty se nemusí zajímat o~detaily implementace.
 
@@ -23,7 +24,7 @@ Tyto problémy jsou ideální kandidáti na použití komponent. Pokud bychom se
 Cílem komponenty kyslíku je udržování informace o~aktuálním množství \linebreak \uv{vlastněného} kyslíku a~dále pak převody mezi jednotlivými komponentami. Vzhledem k~tomu, že kyslík je vyráběn z~elektrické energie, blok s~elektrickou a~kyslíkovou komponentou může měnit množství vlastněného kyslíku. 
 
 \subsubsection{Převádění kyslíku}
-Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme zajistit konzistenci dat při převodech kyslíku. Můžeme pro to využít primitiva pro zamykání \TT{FCriticalSection} (todo link). Kritickou sekci pak budeme korektně zamykat a~odemykat (stejně jako u~klasického vícevláknového programování). Algoritmy pro vkládání a~získání kyslíku budou mít následující signaturu:
+Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme zajistit konzistenci dat při převodech kyslíku. Můžeme pro to využít primitiva pro zamykání \TT{FCriticalSection}. Kritickou sekci pak budeme korektně zamykat a~odemykat (stejně jako u~klasického vícevláknového programování). Algoritmy pro vkládání a~získání kyslíku budou mít následující signaturu:
 
 \begin{code}
     // dodej kyslík komponentě
@@ -78,13 +79,13 @@ Dalším problémem je interakce s~uživatelem. Abychom věděli, že hráč s~d
 
 
 
-Nejsnazší způsob, jak zjistit, na jaký herní objekt se hráč dívá, je použití RayTracingu (TODO link?, formát textu?). Díky němu můžeme \uv{z kamery} vyslat virtuální paprsek, který má stejný směr, jako je směr pohledu kamery. Pokud bude hráčův \HUD{} zobrazovat zaměřovací kříž či nějaký obdobný mechanismus a~náš paprsek bude z~pohledu kamery tímto zaměřovačem procházet, hráč může cíleně mířit na herní objekty a~my zároveň budeme mít správnou informaci o~objektu, na který hráč zaměřovačem míří. Tento způsob získávání informace o~objektech v~hráčově zaměřovači je ve hrách běžný a~použití RayTrace je (pokud je vhodně použito) i~dostatečně rychlé.
+Nejsnazší způsob, jak zjistit, na jaký herní objekt se hráč dívá, je použití techniky sledování paprsku (\textit{ray tracing}). Díky němu můžeme \uv{z kamery} vyslat virtuální paprsek, který má stejný směr, jako je směr pohledu kamery. Pokud bude hráčův \HUD{} zobrazovat zaměřovací kříž (či použijeme nějaký obdobný mechanismus) a~náš paprsek bude z~pohledu kamery tímto zaměřovačem procházet, hráč může cíleně mířit na herní objekty a~my zároveň budeme mít správnou informaci o~objektu, na který hráč zaměřovačem míří. Tento způsob získávání informace o~objektech v~hráčově zaměřovači je ve hrách běžný a~jeho použití je (pokud je vhodně použito) i~dostatečně rychlé.
 
 Nyní, když už víme, jak můžeme získávat informace o~tom, na který objekt hráč míří, tak tento mechanismus ještě rozšíříme o~další vlastnost. Je zapotřebí si uvědomit, že interakce s~blokem a~umisťování nového herního bloku (případně mazání) jsou prakticky stejné akce. Liší se pouze výsledkem -- reakcí na stisk nějaké klávesy či tlačítka myši. Ale ve všech případech musíme vědět, na jaký blok hráč míří zaměřovačem, u~umisťování navíc potřebujeme znát i~přesný polygon, na který hráč míří. Konkrétní polygon potřebujeme znát z~toho důvodu, že chceme, aby se přidávaný blok \uv{přilepil} k~bloku, na který míříme. Tedy chceme zachovat herní mechaniku, která je v~hrách z~kapitoly \ref{chap:uvod} běžná a~je natolik intuitivní a~rozšířená, že změna této mechaniky by nejspíše nedopadla dobře a~hráči by nebyla kladně přijata.
 
 Pro implementaci nám poslouží metoda \TT{LineTraceSingleByObjectType},\linebreak které předáme správné parametry (především počátek a~konec paprsku a~typy objektů, které paprsek zaznamená) a~ta nám vrátí strukturu, popisující výsledek trasování. Z něj se můžeme dozvědět, jestli byl nějaký blok v~cestě paprsku. A pokud ano, můžeme se ptát, zda měl komponentu interakce (potenciálně bychom mohli chtít bloky bez možnosti zaměření a~interakce, jakožto nesmazatelné objekty). Pokud bude i~tato podmínka splněna, můžeme se zajímat o~další vlastnosti kolize paprsku s~blokem a~na základě toho se nějak chovat.
 
-Abychom hráči hraní usnadnili a~zpříjemnili, budeme bloky zvýrazňovat za použití techniky \textit{obrysu} (todo outline tut link). A to v~případě, že nic nestaví a~daný označený blok je použitelný (takže hráč ví, že blok může používat), nebo v~případě, kdy hráč staví (zvýrazníme hranice namířeného objektu). Tato technika je také využívána v~různých hrách napříč různými herními žánry a~proto její implementací nic nezkazíme. (ToDO barvičky? )
+Abychom hráči hraní usnadnili a~zpříjemnili, budeme bloky zvýrazňovat za použití techniky \textit{obrysu} (implementace zvýrazňování bude vycházet z tutorialu \citep{ue_outline_tut}). Tato technika je také využívána v~různých hrách napříč různými herními žánry a~proto její implementací nic nezkazíme. Obrys zobrazíme v~případě, kdy hráč nic nestaví a~daný označený blok je použitelný (takže hráč ví, že blok může používat), nebo v~případě, kdy hráč staví (zvýrazníme hranice namířeného objektu). Barvu obrysu můžeme zvolit kupříkladu zelenou pro použitelný blok, žlutou při stavění a červenou při odebírání bloku. 
 
 
 \subsubsection{Možnost vzít blok do inventáře}

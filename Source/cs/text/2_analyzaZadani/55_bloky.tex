@@ -3,7 +3,7 @@
 \subsection{Bloky a~herní svět}
 \label{subsec:bloky}
 
-Pro naše potřeby bude stačit, když budeme mít bloky zarovnané do jednotné mřížky v~rámci celého světa (tedy tak, jak to má \MC{}). Z toho vyplývá, že nebudeme požadovat implementaci volné počáteční rotace bloku (ve smyslu rotace kolem vertikální osy). Opět zdůrazňujeme, že budeme implementovat prototyp hry se stavěním různě velkých bloků, jednotná mřížka tudíž bude v~této fázi dostačovat. S tím souvisí další zjednodušení -- nechceme řešit terén ani jeho modifikace a~s~tím související řešení umisťování bloků. V této fázi si postačíme s~pouhou rovinou. Protože hry z~kapitoly \ref{chap:uvod} mají rozsáhlé světy a~techniky implementace rozsáhlých světů nejsou úplně triviální (použití systému chunků, streamování levelů apod.), nevidíme jako přínosné se jimi zabývat, aniž bychom věděli, že samotná koncepce stavby dynamicky škálovatelných bloků je správný směr dalšího vývoje. Proto budeme pro účely této práce považovat celou herní mapu se všemi postavenými a~umístěnými objekty za dostatečně malou, která (ač celá načtená v~paměti) zásadním způsobem neovlivňuje výkon ani vykreslování hry. Samozřejmě budeme požadovat, aby i~v~této variantě byla implementace herního světa dostatečně efektivní jak z~pohledu výkonu, tak i~z~pohledu paměťové náročnosti. Podrobnější rozbor herního světa bude v~detailní analýze (TODO link).
+Pro naše potřeby bude stačit, když budeme mít bloky zarovnané do jednotné mřížky v~rámci celého světa (tedy tak, jak to má \MC{}). Z toho vyplývá, že nebudeme požadovat implementaci volné počáteční rotace bloku (ve smyslu rotace kolem vertikální osy). Opět zdůrazňujeme, že budeme implementovat prototyp hry se stavěním různě velkých bloků, jednotná mřížka tudíž bude v~této fázi dostačovat. S tím souvisí další zjednodušení -- nechceme řešit terén ani jeho modifikace a~s~tím související řešení umisťování bloků. V této fázi si postačíme s~pouhou rovinou. Protože hry z~kapitoly \ref{chap:uvod} mají rozsáhlé světy a~techniky implementace rozsáhlých světů nejsou úplně triviální (použití systému chunků, streamování levelů apod.), nevidíme jako přínosné se jimi zabývat, aniž bychom věděli, že samotná koncepce stavby dynamicky škálovatelných bloků je správný směr dalšího vývoje. Proto budeme pro účely této práce považovat celou herní mapu se všemi postavenými a~umístěnými objekty za dostatečně malou, která (ač celá načtená v~paměti) zásadním způsobem neovlivňuje výkon ani vykreslování hry. Samozřejmě budeme požadovat, aby i~v~této variantě byla implementace herního světa dostatečně efektivní jak z~pohledu výkonu, tak i~z~pohledu paměťové náročnosti. Podrobnější rozbor herního světa bude v~detailní analýze v části \ref{sec:blocksWorld}.
 
 Budeme chtít mít bloky, které nebudou pouze statické objekty ve hře. Bloky by měly mít svůj význam ve světě a~mělo by jít s~nimi interagovat. Navíc budeme chtít, aby bloky byly vizuálně přitažlivé, což bude u~některých bloků znamenat, že je budeme muset vymodelovat v~nějakém 3D modelovacím programu. Autor této práce však nějaké minimální znalosti v~tomto oboru má, takže by to neměl být problém. \textit{Multiblokový} systém není potřeba implementovat. Vzhledem k~dynamickému škálování bloků bude potřeba vyřešit škálování vzhledem k~případným 3D modelům a~také vzhledem k~UV mapování textur -- chceme, aby se textury chovaly \uv{inteligentně} a~při škálování bloku se textury (při zachování mapování na geometrii modelu) neroztahovaly do nějakých nepěkných výtvorů. 
 
@@ -36,7 +36,7 @@ Jako poslední je sloupec \textit{T}, tedy typ bloku. Typ bloku může být: \te
 \begin{table}[h]
 \begin{tabular}{|rll*{5}{c}|}
 	\hline
-	\tableColumnTitles{Název}								{	&	Min		&	Max			&	P			&	R			&T	}		\hline
+	\tableColumnTitles{Název}								{	&	\rotatebox{0}{Min~} 		&	\rotatebox{0}{Max~}			&	\rotatebox{90}{Pitch~}			&	\rotatebox{90}{Roll~}			& \rotatebox{90}{Typ~}	}		\hline
 	\currentCategory{\textbf{Základní bloky}} 																					\\		\hline
 		\mytablerow 				& Blok základny				& 1--1--4	& 20--20--4		& 				& 				&K	\\		\hline
 		\mytablerow 				& Blok stavby				& 1--1--1	& 20--20--20	& \checkmark	& \checkmark	&K	\\		\hline
@@ -63,11 +63,10 @@ Jako poslední je sloupec \textit{T}, tedy typ bloku. Typ bloku může být: \te
 
 \FloatBarrier
 
-(TODO popis sloupců na výšku? pokud bude čas)
 
 \subsection{Podrobný popis bloků}
 
-V následujících odstavcích si podrobně popíšeme všechny bloky a~nastíníme jejich význam. Některé bloky mohou obsahovat elektrické a~kyslíkové \textit{komponenty}, jejichž význam bude zmíněn o~pár odstavců dále (TODO link!).
+V následujících odstavcích si podrobně popíšeme všechny bloky a~nastíníme jejich význam. Některé bloky mohou obsahovat elektrické a~kyslíkové \textit{komponenty}. Význam těchto komponent a důvod, proč je budeme chtít mít jako komponenty bude řešen v části \ref{sec:komponents}.
 
 
 
@@ -128,7 +127,7 @@ Blok světla má také jasný účel -- osvětlení míst, kde není dostatek p�
 
 \subsubsection{B6 -- Generátor energie}
 \label{blocks:B6}
-Tento blok byl přidán proto, aby hráč získával novou elektrickou energii z~prostředí. Energie je vyráběna během bouře kyselého deště (TODO forward link), tato mechanika bude podrobněji popsána později. Na výšku byl blok omezen na 2 jednotkové krychle. Obsahuje \textit{elektrickou komponentu}. 
+Tento blok byl přidán proto, aby hráč získával novou elektrickou energii z~prostředí. Energie je vyráběna během bouře kyselého deště (více o kyselém dešti v části \ref{subsubsec:weather}), tato mechanika bude podrobněji popsána později. Na výšku byl blok omezen na 2 jednotkové krychle. Obsahuje \textit{elektrickou komponentu}. 
 
 
 \subsubsection{B7 -- Generátor objektů}
