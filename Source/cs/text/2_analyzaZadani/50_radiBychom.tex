@@ -4,7 +4,7 @@
 
 \section{Co bychom chtěli implementovat}
 
-V následujících podkapitolách si rozebereme naše požadavky na hru. Vzhledem ke komplexnosti celé práce zde shrneme základní koncepci hry. Hráč má omezené zdroje elektrické energie a~kyslíku a~snaží se přežít na nehostinné planetě. V přežití mu může pomoci třeba postavení nové budovy, přečemž s~prostředky musí šetřit. Hráčovým úhlavním nepřítelem je kyselý déšť, který ničí postavené budovy, ale zároveň je z~něj možné vyrábět elektrickou energii. 
+V následujících podkapitolách si rozebereme naše požadavky na hru. Vzhledem ke komplexnosti celé práce zde shrneme základní koncepci hry. Hráč má omezené zdroje elektrické energie a~kyslíku a~snaží se přežít na nehostinné planetě. V přežití mu může pomoci třeba postavení nové budovy, přičemž s~prostředky musí šetřit. Hráčovým úhlavním nepřítelem je kyselý déšť, který ničí postavené budovy, ale zároveň je z~něj možné vyrábět elektrickou energii. 
 
 
 
@@ -26,14 +26,14 @@ Chceme, aby bloky měly zdraví a~aby bylo možné je zničit. Bloky v~elektrick
 
 \subsection{Skládání bloků do struktur}
 
-Chceme hráči umožnit postavení komplexní struktury bloků, která bude dohromady dávat nějaký speciální význam.V našem případě to bude \textit{Konstruktor objektů} (\ref{sec:konstruktor}), díky kterému za pomoci bloku \nameref{blocks:B1} může hráč vytváře nové bloky, které pak bude moci umístit do světa. V našem pojetí to bude spíše objekt, který bude imaginárně vymýšlet optimální rozvržení bloku (de facto takový automatizovaný návrhář nových bloků). Bloky jednou vymyšlené pak hráč bude moci stavět libovolně mnohokrát, jen musí mít dostatečnou zásobu energie pro jejich postavení.
+Chceme hráči umožnit postavení komplexní struktury bloků, která bude dohromady dávat nějaký speciální význam. V našem případě to bude \textit{Konstruktor objektů} (\ref{sec:konstruktor}), díky kterému za pomoci bloku \nameref{blocks:B1} může hráč vytvářet nové bloky, které pak bude moci umístit do světa. V našem pojetí to bude spíše objekt, který bude imaginárně vymýšlet optimální rozvržení bloků (de facto takový automatizovaný návrhář nových bloků). Bloky jednou vymyšlené pak hráč bude moci stavět libovolně mnohokrát, jen musí mít dostatečnou zásobu energie pro jejich postavení.
 
 \subsection{Herní svět}
 
 Jaký bychom chtěli mít herní svět z~pohledu bloků a~jejich umisťování jsme již řešili v~části \ref{subsec:bloky}. V následujících odstavcích se zaměříme na další charakteristiky světa naší hry.
 
 \subsubsection{Denní / noční cyklus}
-Aby naše hra nebyla úplně nudná z~nedostatku stavebních bloků, tak budeme chtít mít také denní a~noční cyklus. \MC{} má délku denní cyklu cca 20 minut. My zkusíme 30 minut\footnote{Původně jsme zamýšleli 60 minut, ale z~interního testování během vývoje vyplynulo, že je to až příliš dlouhá doba, hlavně kvůli malému množství bloků.}.
+Aby naše hra nebyla úplně nudná z~nedostatku stavebních bloků, tak budeme chtít mít také denní a~noční cyklus. \MC{} má délku denního cyklu 20 minut. My zkusíme 30 minut\footnote{Původně jsme zamýšleli 60 minut, ale z~interního testování během vývoje vyplynulo, že je to až příliš dlouhá doba, hlavně kvůli malému množství bloků.}.
 
 \subsubsection{Počasí}
 \label{subsubsec:weather}
@@ -46,7 +46,7 @@ Fyzikou se nebudeme nijak podrobně zabývat. Pokud budeme mít možnost snadné
 
 \subsection{Inventář}
 \label{subsec:inventory}
-Rádi bychom zkusili neomezeně mnoho slotů a~tím, že jednotlivé inventární skupiny bude možné pokud možno automatizovaně spravovat tak, aby hráč nemusel neustále řešit správu inventáře. Počet inventárních skupin by měl být koncipován jako potenciálně nekonečný, ale pokud se bude ve výsledné hře počet skupin limitovat, nebude to příliš vadit.
+Rádi bychom ve hře měli neomezeně mnoho inventárních slotů s~tím, že jednotlivé inventární skupiny bude možné spravovat takovým způsobem, aby hráč nemusel bloky do slotů přiřazovat ručně. Počet inventárních skupin by měl být koncipován jako potenciálně nekonečný, ale pokud se bude ve výsledné hře počet skupin limitovat, nebude nám to příliš vadit.
 
 Položky v~inventáři budou \textit{stavitelné} (ty, které vzejdou z~\textit{konstruktoru objektů}) a~\textit{umístitelné} (bloky, které je možné \uv{vzít} do inventáře a~později je opět umístit do herního světa.
 

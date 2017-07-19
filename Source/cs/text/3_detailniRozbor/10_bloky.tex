@@ -12,7 +12,7 @@ Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \texti
 
 \subsection{Instanční vlastnosti}
 \label{subsec:instVlast}
-Mezi instanční vlastnosti zařadíme vlastnosti definované v~části \ref{subsec:blocks} --  \textit{vizuální reprezentaci}, \textit{pozici ve světě}, \textit{rotaci}, \textit{velikost}, \textit{zdraví} apod. Protože máme dynamicky škálovatelné bloky, budeme chtít, abychom měli kupříkladu výpočet výsledného zdraví či ceny za postavení bloku bloku co nejjednodušší. K tomu využijeme vlastnost \textit{typ bloku}.
+Mezi instanční vlastnosti zařadíme vlastnosti definované v~části \ref{subsec:blocks} --  \textit{vizuální reprezentaci}, \textit{pozici ve světě}, \textit{rotaci}, \textit{velikost}, \textit{zdraví} apod. Protože máme dynamicky škálovatelné bloky, budeme chtít, abychom měli kupříkladu výpočet výsledného zdraví či ceny za postavení bloku bloku co nejjednodušší. K tomu využijeme vlastnost \textit{typ bloku}. (TODO když má blok nějakou vlastnost, tak podle typu a~rozměěrů se přepočítá výsledná síla vlastnost, abstraktní cena, bloky různě velké, pak přepočet)
 
 Zadefinujme si následující konstanty pro daný \textit{typ}, vycházející z~objemu základní krychle: (jednotlivé hodnoty odpovídají sloupci \textbf{T} v~tabulce \ref{table:requiredBlocks})
 
@@ -44,7 +44,7 @@ kde $x, y, z$ jsou rozměry bloku v~daných osách, $\bm T$ je konstanta dle typ
 
 \section{Definice bloků TODO}
 
-Jak je řečeno v analýze (..) potřebujeme tyhle vlastnosti: (TODO)
+Jak je řečeno v~analýze (..) potřebujeme tyhle vlastnosti: (TODO)
 
 Určitě budeme schopni najít množinu vlastností, které mají všechny bloky společnou. Jak již bylo zmíněno v~analýze (TODO ref), mezi tyto vlastnosti určitě bude patřit  \textit{pozice} ve světě, \textit{rotace} bloku a~jeho \textit{velikost}.Tyto vlastnosti pak pro danou instanci můžeme nějakým způsobem serializovat do souboru a~tím budeme mít validní soubor pro uložení rozehrané hry. 
 
@@ -61,7 +61,7 @@ V této části se zamyslíme nad použitím definic v~textovém souboru. Může
 Pokud bychom měli velice málo vlastností bloků, tento přístup by mohl být použitelný. Nicméně s~každým dalším nově přidaným blokem se do množiny všech vlastností mohou zanášet nové vlastnosti.  To by znamenalo, že popis ostatních bloků, které danou vlastnost nemají, by musel nutně v~tomto tabulkovém zápisu uvažovat nějakou (byť prázdnou) hodnotu. Zbytečně by nám tak rostl definiční soubor. Další nevýhodou je absence typové bezpečnosti. 
 
 \subsubsection{Popis samostatným souborem -- XML}
-Běžné soubory textového formátu není potřeba brát v potaz. Výsledek je stejný jako při použití XML, ale nemůžeme zde použít definiční soubory pro automatickou kontrolu platnosti hodnot. Navíc bychom museli psát vlastní parser takového textového souboru, přičemž již hotové parsery XML jsou volně k~dispozici. 
+Běžné soubory textového formátu není potřeba brát v~potaz. Výsledek je stejný jako při použití XML, ale nemůžeme zde použít definiční soubory pro automatickou kontrolu platnosti hodnot. Navíc bychom museli psát vlastní parser takového textového souboru, přičemž již hotové parsery XML jsou volně k~dispozici. 
 
 Výhodou tohoto přístupu je také budoucí rozšiřovatelnost o~nové bloky
 

@@ -253,4 +253,20 @@
   url    = {https://en.wikipedia.org/wiki/Aircraft_principal_axes},
 }
 
+@Online{ue_outline_tut,
+  author = {PawelM},
+  title  = {Creating outline effect around objects},
+  year   = {2014},
+  date   = {2014-06-06},
+  url    = {http://www.michalorzelek.com/blog/tutorial-creating-outline-effect-around-objects/},
+}
+
+@Online{ue_ubt,
+  author = {Epic Games},
+  title  = {Build Automation (Epic's Build Tools \& Infrastructure)},
+  year   = {2014},
+  date   = {2014-08-12},
+  url    = {https://de45xmedrsdbp.cloudfront.net/Resources/files/BuildTools-2031748007.pdf},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}
