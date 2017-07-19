@@ -2,6 +2,29 @@
 
 \section{Modul Blocks (C++)}
 
+
+
+\subsubsection{Převádění kyslíku}
+Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme zajistit konzistenci dat při převodech kyslíku. Můžeme pro to využít primitiva pro zamykání \TT{FCriticalSection}. Kritickou sekci pak budeme korektně zamykat a~odemykat (stejně jako u~klasického vícevláknového programování). Algoritmy pro vkládání a~získání kyslíku budou mít následující signaturu:
+
+\begin{code}
+    // dodej kyslík komponentě
+    bool UOxygenComponent::PutAmount(float aviable,
+                                     float& actuallyPutted)
+
+    // získej kyslík z~komponenty                                     
+    bool UOxygenComponent::ObtainAmount(float requested,
+                                        float& actuallyObtained,
+                                        bool requireExact)
+\end{code}
+
+TODO přesunout do programátoské, nechat jen obecný kecy co a~jak
+
+Princip je prostý -- metody vrací \TT{bool} jakožto hodnotu, zda bylo možné operaci korektně provést. Parametry předávané \textit{referencí} pak v~případě úspěchu obsahují hodnotu skutečně vloženého či získaného kyslíku. Poslední parametr u~metody pro získání kyslíku značí, zda je vyžadované přesné množství. Pokud kyslíková komponenta obsahuje méně kyslíku, než je požadované množství a~je požadované přesně zadané množství, převod nebude úspěšný a~metoda vrátí \TT{false}. Pokud nebude požadované přesně dané množství, skutečně získané množství může být menší a~je na volajícím, aby se tomuto faktu přizpůsobil.
+
+
+
+
 Modul bloků obsahuje podstatné informace o~tom, jak hra pracuje s~bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty apod. Také je v~tomto modulu možné nalézt specifické implementace jednotlivých bloků.
 
 V dalším textu se budeme odkazovat na složky. Odkazujeme se tím do složek \TT{/Source/Blocks/Public} a~jejich \TT{Private} implementací. Strukturu bychom mohli shrnout následovně:

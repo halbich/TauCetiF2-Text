@@ -262,7 +262,7 @@
 }
 
 @Online{ue_ubt,
-  author = {Epic Games},
+  author = {Gerke Max Preussner},
   title  = {Build Automation (Epic's Build Tools \& Infrastructure)},
   year   = {2014},
   date   = {2014-08-12},

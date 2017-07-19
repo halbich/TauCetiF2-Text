@@ -2,19 +2,21 @@
 
 \section{Bloky}
 
-V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a~popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací. V~prvé řadě se změříme na celkovou strukturu bloků a~následně budeme řešit, jak budeme spravovat konstanty ovlivňující chování bloků.
+V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a~popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací.\linebreak V~prvé řadě se změříme na celkovou strukturu bloků a~následně budeme řešit, jak budeme spravovat konstanty ovlivňující chování bloků.
 
 \subsection{Celková struktura}
 
-Aby se nám s~bloky dobře pracovalo, jistě bude vhodné využít jednoho ze základních principů \textit{OOP} (objektově orientovaného programování) -- dědičnosti. Takže v~naší hře bude existovat základní třída, která bude vycházet ze třídy \TT{UActor}\footnote{\TT{UActor} je základní třída \UEu{}, ze které dědí všechny herní objekty, které chceme v~hlavní herní smyčce aktualizovat a~renderovat.} a~bude předkem všech našich herních bloků.
+Aby se nám s~bloky dobře pracovalo, jistě bude vhodné využít jednoho ze základních principů \textit{OOP} (objektově orientovaného programování) -- dědičnosti. Takže v~naší hře bude existovat základní třída, která bude vycházet ze třídy \TT{UActor}\footnote{\TT{UActor} je základní třída \UEu{}, ze které dědí všechny herní objekty, které chceme v~hlavní herní smyčce aktualizovat a~renderovat.} a~bude předkem všech našich herních bloků. Tato třída by měla být kvůli rychlosti napsána v~\CPP{}.
 
 Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \textit{definici} daného bloku a~referenci na třídu s~vlastnostmi dané \textit{instance} bloku. Díky tomu, že oddělíme definiční třídu a~instanční třídu, tak získáme možnost získat definiční třídu pro daný typ bloku za běhu hry pouze jednou a~posléze tuto referenci předávat všem instancím bloku daného typu. Instanční třída bude mít pro každý blok jiné hodnoty, takže je zřejmé, že by měla být samostatná. Smyslem definičního souboru je popis omezujících podmínek kladených na daný typ bloku (například povolené minimální a~maximální rozměry), přičemž hodnoty v~instanční třídě by měly být v~mezích dané definicí. Vlastnosti, které nejsou omezující (například cena za postavení bloku), nebudeme uchovávat v~\textit{instanční} třídě, tyto údaje budeme získávat přímo z~\textit{definiční} třídy.
 
+Pokud bychom zvolili jiný postup, snadno bychom si mohli \uv{svázat} ruce. Pokud by například \textit{instanční} vlastnosti byly vlastní součástí bázové třídy, systém ukládání hry by musel být schopen vidět a~pracovat minimálně s~touto bázovou třídou. Pokud však tyto vlastnosti vložíme do nějakého kontejneru (tedy třídy, která bude sloužit pouze jako přepravka pro data), tento kontejner klidně můžeme umístit do samostatného modulu\footnote{Moduly si lze představit jako samostatné knihovny, které se navzájem (acyklicky) referencují.}, nezávisle na modulu bloků a~modulu ukládání hry.  (TODO link na herní moduly)
+
 \subsection{Instanční vlastnosti}
 \label{subsec:instVlast}
-Mezi instanční vlastnosti zařadíme vlastnosti definované v~části \ref{subsec:blocks} --  \textit{vizuální reprezentaci}, \textit{pozici ve světě}, \textit{rotaci}, \textit{velikost}, \textit{zdraví} apod. Protože máme dynamicky škálovatelné bloky, budeme chtít, abychom měli kupříkladu výpočet výsledného zdraví či ceny za postavení bloku bloku co nejjednodušší. K~tomu využijeme vlastnost \textit{typ bloku}. (TODO když má blok nějakou vlastnost, tak podle typu a~rozměěrů se přepočítá výsledná síla vlastnost, abstraktní cena, bloky různě velké, pak přepočet)
+Mezi instanční vlastnosti zařadíme vlastnosti definované v~části \ref{subsec:blocks} --  \textit{vizuální reprezentaci}, \textit{pozici ve světě}, \textit{rotaci}, \textit{velikost}, \textit{zdraví} apod. U~některých vlastností bychom navíc chtěli dosáhnout toho, aby konkrétní instance bloků měly rozdílné hodnoty dané vlastnosti v~závislosti na jejich velikosti. Jako ideu si můžeme představit následující: blok, který je větší než jiný blok stejného typu, bude mít více zdraví, protože je bytelnější a~více toho vydrží. Z~této úvahy nám zároveň vyplývá, že kromě rozměrů bloku se do výpočtu zapojuje i~typ bloku. Jako příklad uveďme fakt, že Zkosená krychle má oproti Krychli stejných rozměrů poloviční objem. Chceme dosáhnout nějaké úrovně realismu a~snadno nahlédneme, že cena za postavení těchto bloků (stejných rozměrů, ale různých typů) nemůže být stejná (ekvivalentně -- bylo zapotřebí poloviční množství materiálu k~výrobě jednoho bloku oproti druhému).
 
-Zadefinujme si následující konstanty pro daný \textit{typ}, vycházející z~objemu základní krychle: (jednotlivé hodnoty odpovídají sloupci \textbf{T} v~tabulce \ref{table:requiredBlocks})
+Z předchozího odstavce se tedy dostáváme k~algoritmu, kdy výsledná hodnota nějaké vlastnosti je pro danou instanci bloku počítána ze základní hodnoty (konstanty) pro daný blok, nějakého koeficientu dle typu bloku a~z~rozměrů bloku. Zadefinujme si následující konstanty pro daný \textit{typ}, vycházející z~objemu základní krychle: (jednotlivé hodnoty odpovídají sloupci \textbf{T} v~tabulce \ref{table:requiredBlocks})
 
 \begin{enumerate}
 	\item Krychle \textbf{K}: $1$
@@ -29,7 +31,7 @@ Tyto konstanty využijeme v~následujícím algoritmu výpočtu
 	\bm H = \bm T * h  * x * y * z
 \end{equation}
 
-kde $x, y, z$ jsou rozměry bloku v~daných osách, $\bm T$ je konstanta dle typu bloku, $h$ je nějaká základní hodnota (například zdraví) a~$\bm H$ je výsledná hodnota vlastnosti. Výpočet \ref{eq:alg} se opírá o~následující fakta:
+kde $x, y, z$ jsou rozměry bloku v~daných osách, $\bm T$ je konstanta dle typu bloku, $h$ je nějaká základní hodnota dané vlastnosti (například zdraví) a~$\bm H$ je výsledná hodnota vlastnosti. Výpočet \ref{eq:alg} se opírá o~následující fakta:
 
 \begin{enumerate}
 	\item Blok, který je typu \textbf{V}, má vždy pevně definované rozměry a~nelze jej škálovat.
