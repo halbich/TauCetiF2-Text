@@ -1,6 +1,7 @@
 %!TEX root = ../../prace.tex
 
 \section{Struktura kódu}
+\label{sec:struct}
 
 Protože jsme zvolili implementaci práce v~\UE{}, můžeme využít toho, že engine umožňuje rozdělit celý herní projekt do jednotlivých herních modulů~\citep{epicGameplayModules}. Tím docílíme modularity, nebudeme mít celý projekt v~jednom kuse a~zároveň tím urychlíme překlad projektu při kompilaci.\\
 Každý \UE{} projekt musí definovat právě jeden primární herní modul. Pokud využijeme možnosti vytvoření nového projektu založeného na \CPP{}, editor tento modul automaticky vytvoří za nás. My jsme pojmenovali náš projekt {\tt TauCetiF2} a~tak se jmenuje i~náš primární modul.

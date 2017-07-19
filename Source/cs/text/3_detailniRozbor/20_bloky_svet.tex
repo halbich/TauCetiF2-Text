@@ -3,7 +3,7 @@
 \section{Bloky v~herním světě}
 \label{sec:blocksWorld}
 
-Způsobů, jak reprezentovat bloky ve světě, je více, takže bychom měli jednotlivé varianty porovnat a~vyhodnotit. V~této chvíli si také musíme určit, jak velký chceme náš herní svět mít. Na základě tohoto důležitého požadavku budeme posuzovat vhodnost jednotlivých implementací. My jsme se rozhodli, že hráči nabídneme rozsáhlý svět čtvercového půdorysu o~rozloze $100\,\ km^2$ a~výšky $5\,\ km$. Teď trochu předběhneme a~prozradíme, že nás k~tomuto rozhodnutí vedla touha, aby datové struktury nebyly úplně triviální (třeba dvourozměrné pole). Zároveň s~tím si ale uvědomujeme, že správně by hra měla řešit takto velký svět tak, aby i~velké množství bloků hru nezpomalovalo či dokonce neshodilo celou hru (třeba z~nedostatku paměti RAM). Nicméně jak jsme zmínili v~kapitole (TODO ref), budeme v~této práci očekávat takové množství bloků, aby hra jejich počet zvládala.
+Způsobů, jak reprezentovat bloky ve světě, je více, takže bychom měli jednotlivé varianty porovnat a~vyhodnotit. V~této chvíli si také musíme určit, jak velký chceme náš herní svět mít. Na základě tohoto důležitého požadavku budeme posuzovat vhodnost jednotlivých implementací. My jsme se rozhodli, že hráči nabídneme rozsáhlý svět čtvercového půdorysu o~rozloze $100\,\ km^2$ a~výšky $5\,\ km$. Teď trochu předběhneme a~prozradíme, že nás k~tomuto rozhodnutí vedla touha, aby datové struktury nebyly úplně triviální (třeba dvourozměrné pole). Zároveň s~tím si ale uvědomujeme, že správně by hra měla řešit takto velký svět tak, aby i~velké množství bloků hru nezpomalovalo či dokonce neshodilo celou hru (třeba z~nedostatku paměti RAM). Nicméně jak jsme zmínili v~kapitole (TODO ref), budeme v~této práci očekávat takové množství bloků, jejichž počet hra bez problémů zvládne.
 
 Námi definované hranice herního světa se u~bloků projeví tak, že v~rámci herního světa můžeme mít až  $50~000 * 50~000 * 25~000$ bloků jednotkové velikosti, což je opravdu mnoho. Prvně se tedy zaměříme na to, jak vůbec můžeme bloky reprezentovat a~zároveň s~tím budeme řešit, jak se vypořádat s~různými rozměry bloků.
 
@@ -68,6 +68,6 @@ Vzhledem k~dynamicky škálovatelným bloků budeme požadovat, aby bylo možné
 Všechny tvary z~obrázku \ref{fig:konfig} by měly dohromady tvořit stejný tvar, ačkoliv splnění tohoto tvaru bylo u~každého tvaru rozdílné. Tento přístup však přináší mnoho problémů. Pro příklad uvažme rozklad bloku \nameref{blocks:A5} netriviální velikosti (kupříkladu [2,~1,~2], tedy šířky jednotkového bloku). Je zřejmé, že stejného tvaru je možné dosáhnout použitím dvou stejných bloků velikosti [1,~1,~1] a~jednoho bloku \nameref{blocks:A2} velikosti [1,~1,~1] (pokud budeme uvažovat, že tyto dva bloky je možné vzájemně kombinovat).
 
 Z předchozích poznatků vyplývá, že definice nějakého komplexního tvaru, složeného z~různých typů bloků
-(TODO)
+(TODO dokončit)
 
 

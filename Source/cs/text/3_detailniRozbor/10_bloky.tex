@@ -10,7 +10,7 @@ Aby se nám s~bloky dobře pracovalo, jistě bude vhodné využít jednoho ze z�
 
 Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \textit{definici} daného bloku a~referenci na třídu s~vlastnostmi dané \textit{instance} bloku. Díky tomu, že oddělíme definiční třídu a~instanční třídu, tak získáme možnost získat definiční třídu pro daný typ bloku za běhu hry pouze jednou a~posléze tuto referenci předávat všem instancím bloku daného typu. Instanční třída bude mít pro každý blok jiné hodnoty, takže je zřejmé, že by měla být samostatná. Smyslem definičního souboru je popis omezujících podmínek kladených na daný typ bloku (například povolené minimální a~maximální rozměry), přičemž hodnoty v~instanční třídě by měly být v~mezích dané definicí. Vlastnosti, které nejsou omezující (například cena za postavení bloku), nebudeme uchovávat v~\textit{instanční} třídě, tyto údaje budeme získávat přímo z~\textit{definiční} třídy.
 
-Pokud bychom zvolili jiný postup, snadno bychom si mohli \uv{svázat} ruce. Pokud by například \textit{instanční} vlastnosti byly vlastní součástí bázové třídy, systém ukládání hry by musel být schopen vidět a~pracovat minimálně s~touto bázovou třídou. Pokud však tyto vlastnosti vložíme do nějakého kontejneru (tedy třídy, která bude sloužit pouze jako přepravka pro data), tento kontejner klidně můžeme umístit do samostatného modulu\footnote{Moduly si lze představit jako samostatné knihovny, které se navzájem (acyklicky) referencují.}, nezávisle na modulu bloků a~modulu ukládání hry.  (TODO link na herní moduly)
+Pokud bychom zvolili jiný postup, snadno bychom si mohli \uv{svázat} ruce. Pokud by například \textit{instanční} vlastnosti byly vlastní součástí bázové třídy, systém ukládání hry by musel být schopen vidět a~pracovat minimálně s~touto bázovou třídou. Pokud však tyto vlastnosti vložíme do nějakého kontejneru (tedy třídy, která bude sloužit pouze jako přepravka pro data), tento kontejner klidně můžeme umístit do samostatného modulu\footnote{Moduly si lze představit jako samostatné knihovny, které se navzájem (acyklicky) referencují.}, nezávisle na modulu bloků a~modulu ukládání hry.  Podrobněji se herním modulům věnujeme v části \ref{sec:struct}, nyní je však nemusíme dopodrobna řešit.
 
 \subsection{Instanční vlastnosti}
 \label{subsec:instVlast}
@@ -39,24 +39,20 @@ kde $x, y, z$ jsou rozměry bloku v~daných osách, $\bm T$ je konstanta dle typ
 	\subitem To je čistě designová záležitost, abychom mohli během zadávání konstant pro daný blok tohoto typu vždy zadat pouze výslednou hodnotu. Vyhneme se tím přepočítávání a~zadání konstant bude přehlednější.
 \end{enumerate}
 
-
+Díky algoritmu \ref{eq:alg} tak může herní designér snadno nastavovat základní koeficienty vlastností a hra bude výsledné hodnoty vlastností za běhu upravovat dle konfigurace hráčem postaveného bloku.
 
 
 \input{./text/3_detailniRozbor/12_bloky_komponenty.tex}
 
 \section{Definice bloků TODO}
 
-Jak je řečeno v~analýze (..) potřebujeme tyhle vlastnosti: (TODO)
+Jak bylo řečeno v~analýze (TODO ref), potřebujeme u bloků definovat mj.~následující vlastnosti: \textit{minimální} a \textit{maximální} velikost, \textit{typ} bloku dle (TODO ref), možnost \textit{rotace} bloku dle daných os apod. Dále budeme u bloků potřebovat zaznamenat, že blok má \textit{elektrickou} či \textit{kyslíkovou} komponentu a definovat omezující vlastnosti této komponenty. Z předchozí části (TODO ref) víme, že budeme chtít mít takovou strukturu, abychom mohli v~\UEu{} snadno modifikovat hodnoty těchto vlastností. Takže nepřipadá v~úvahu, abychom měli tyto konstanty uložené ve zdrojovém kódu. Pak je ale budeme muset načítat z~nějakého souboru, nebo budou muset být uložené v~nějakém definičním objektu, editovatelným z~Editoru.
 
-Určitě budeme schopni najít množinu vlastností, které mají všechny bloky společnou. Jak již bylo zmíněno v~analýze (TODO ref), mezi tyto vlastnosti určitě bude patřit  \textit{pozice} ve světě, \textit{rotace} bloku a~jeho \textit{velikost}.Tyto vlastnosti pak pro danou instanci můžeme nějakým způsobem serializovat do souboru a~tím budeme mít validní soubor pro uložení rozehrané hry. 
-
-Protože jednotlivé bloky rozšiřují tyto základní informace o~další vlastnosti (například \textit{elektrická} či \textit{kyslíková} komponenta má také své vlastnosti), můžeme se zamyslet nad tím, že bychom pro jednotlivé části bázovou třídu základních vlastností rozšířili. Zde ale narážíme na problém, protože jednotlivé bloky mohou komponenty libovolně kombinovat. Ačkoliv \CPP{} standardně povoluje vícenásobnou dědičnost tříd, \UE{} toto nepovoluje (TODO link!) a~tudíž tento přístup není vhodný. Řešením bude rozdělit vlastnosti jednotlivých komponent do samostatných tříd a~bloky, které budou tyto komponenty obsahovat, si pak budou držet referenci na instanci dané třídy s~vlastnostmi pro danou komponentu. Jako bonus tím získáme typovou bezpečnost a~odpadá nám nutnost přetypovávání na vyšší typ (protože ve společném předkovi všech bloků
-
-Z předchozí části víme, že budeme chtít takovou strukturu, abychom mohli v~\UE{} snadno modifikovat hodnoty jejích vlastností. Takže nepřipadá v~úvahu, abychom měli konstanty uložené ve zdrojovém kódu. Pak ale tyto konstanty budeme muset buď načítat z~nějakého souboru, nebo budou muset být uložené v~nějakém objektu z~\UE{}.
-
-Při načítání ze souboru máme více možností -- můžeme popisovat bloky a~jejich chování například v~XML souborech. Obdobné řešení používá hra \ME{}. Tyto soubory jsou pak zpracovány herním enginem během načítání hry. 
+(TODO) textové či binární soubory
 
 \subsection{Textové soubory}
+Při načítání ze souboru máme více možností -- můžeme popisovat bloky a~jejich chování například v~XML souborech. Obdobné řešení používá hra \ME{}. Tyto soubory jsou pak zpracovány herním enginem během načítání hry. 
+
 V této části se zamyslíme nad použitím definic v~textovém souboru. Může se jednat o~množinu samostatných souborů, přičemž budeme uvažovat pouze XML soubory, nebo můžeme použít třeba popis bloků v~nějakém tabulkovém formátu, třeba csv.
 
 \subsubsection{Popis tabulkou}
@@ -67,19 +63,9 @@ Běžné soubory textového formátu není potřeba brát v~potaz. Výsledek je 
 
 Výhodou tohoto přístupu je také budoucí rozšiřovatelnost o~nové bloky
 
-Soubor obsahuje popis vlastno
-
-- externě editovatelné formáty (+ -- modding, -- těžší implementace, parsing, validace)
-- binární formát
-
-- xml
-
-
-- interní formát
-- specifické subclassy pro bloky včetně specifických vlastností přímo na 
-- definiční struktura
+\subsubsection{Binární zápis}
+(TODO) zde popsat ideu přístupu k UObjectu, editovatelnost z editoru, absence kompilace, typová bezpečnost
 
 
 
-\input{./text/3_detailniRozbor/11_bloky_vlastnosti.tex}
 

@@ -5,7 +5,7 @@
 \section{Komponenty bloků}
 \label{sec:komponents}
 
-Nyní přistoupíme k~řešení problému rozšiřování funkcionality bloků. Z~analýzy v~části \ref{subsec:bloky} vyplývá, že některé bloky mají mj.~elektrickou komponentu, některé mají kyslíkovou komponentu a~jeden z~nich má obojí. Tradiční přístup \textit{OOP} nám nabízí použití rozhraní či dědičnosti. Práce s~rozhraním není v~\UEu{} nikterak jednoduchá, takže bychom rádi našli snazší cestu. Ačkoliv \CPP{} umožňuje vícenásobnou dědičnost, \UE{} ji kvůli svým nástrojům nepovoluje. Navíc by bylo velmi těžké vymyslet takovou hierarchii dědičnosti bloků, abychom splnili požadavky pro všechny bloky a~přitom si zároveň neuzavřeli cestu pro implementaci nových bloků. 
+Nyní přistoupíme k~řešení problému rozšiřování funkcionality bloků. Z~analýzy v~části \ref{subsec:bloky} vyplývá, že některé bloky mají mj.~elektrickou komponentu, některé mají kyslíkovou komponentu a~jeden z~nich má obojí. Tradiční přístup \textit{OOP} nám nabízí použití rozhraní či dědičnosti. Práce s~rozhraním není v~\UEu{} nikterak jednoduchá, takže bychom rádi našli snazší cestu. Ačkoliv \CPP{} umožňuje vícenásobnou dědičnost, \UE{} ji kvůli svým kompilačním nástrojům nepovoluje. Navíc by bylo velmi těžké vymyslet takovou hierarchii dědičnosti bloků, abychom splnili požadavky pro všechny bloky a~přitom si zároveň neuzavřeli cestu pro implementaci nových bloků. 
 
 Jednou z~dalších možností, jak problém sdílené funkcionality řešit, je systém \textit{komponent}, který nám \UE{} nabízí. Komponenta je programová část, která ovlivňuje chování vlastníka dané komponenty. Cílem je pak dosáhnout toho, že je možné za běhu hry jednu komponentu transparentně vyměnit za jinou (komponentu s~jinou implementací), a~vlastník komponenty se nemusí zajímat o~detaily implementace. Díky tomu je možné snadno rozšiřovat vlastnosti a~chování vlastníků dané komponenty.
 
@@ -65,7 +65,7 @@ V rámci algoritmu spojování bloků skrz vodivé spojení pak budeme hledat pr
 
 Spojování bloků do elektrické sítě nevyžaduje žádnou speciální logiku. V~rámci přidávání bloku do herního světa budeme potřebovat vědět o~sousedních blocích (TODO stromy). Pokud bude vazba se sousedním blokem vyhodnocena jako validní vodivý spoj, může se nově připojený blok připojit ke stávající síti, v~níž je i~daný sousední blok.
 
-Pokud budeme vycházet z~premisy, že každý blok je zapojen právě v~jedné elektrické síti a~všechny bloky v~rámci jedné elektrické sítě jsou mezi sebou vodivě spojeny, dojdeme k~závěru, že při manipulaci bude vznikat a~zanikat velké množství elektrických sítí. Stačí si uvědomit, že k~bloku \nameref{blocks:A1} o~maximální možné velikosti můžeme připojit až 600 bloků, které patří do jedné sítě (pro každou stěnu máme 100 bloků stejného typu a~minimální velikosti, uspořádaných do šachovnicového tvaru). Pokud pak odebereme centrální blok, může nám vzniknout právě až 600 nových elektrických sítí. Navíc, díky počasí se může stát, že bloky budou odebírány ze světa zcela neuspořádaně (na základě náhodně udělovaného poškození). Musíme tedy vymyslet algoritmus, jak pro všechny bloky v~herním světě udržovat správné informace o~jejich síti.
+Pokud budeme vycházet z~premisy, že každý blok je zapojen právě v~jedné elektrické síti a~všechny bloky v~rámci jedné elektrické sítě jsou mezi sebou vodivě spojeny, tak nutně musíme dojít k~závěru, že při manipulaci s blokem budeme muset elektrické sítě aktualizovat. Přidáním bloku jsme bychom mohli vodivě propojit dvě či více sítí, při odebírání se nám daná elektrická síť může rozpadnout na více samostatných komponent. Těchto elektrických sítí může vznikat a~zanikat velké množství. Stačí si uvědomit, že k~bloku \nameref{blocks:A1} o~maximální možné velikosti můžeme připojit až 600 bloků, které budou patřit do stejné sítě (pro každou stěnu máme 100 bloků stejného typu a~minimální velikosti, uspořádaných do šachovnicového vzoru). Pokud pak odebereme centrální blok, může nám vzniknout právě až 600 nových elektrických sítí. Navíc, díky počasí se může stát, že bloky budou odebírány ze světa zcela neuspořádaně (na základě náhodně udělovaného poškození). Musíme tedy vymyslet algoritmus, jak pro všechny bloky v~herním světě udržovat správné informace o~jejich síti.
 
 Protože nemůžeme nic předpokládat o~tom, jak se budou bloky v~elektrické síti chovat, musíme při změně (přidání či odebrání) nějakého bloku v~síti provést přepočítání. Nejjednodušší bude varianta na \textit{algoritmus vlny}. Jednotlivé sítě budeme podle potřeby odstraňovat či slévat. Popišme si nyní pravidla, která budeme muset ve hře mít. Jako sousedy budeme chápat bloky dostupné skrze vodivé spojení.
 
@@ -125,10 +125,6 @@ Pro implementaci nám poslouží metoda \TT{LineTraceSingleByObjectType},\linebr
 
 Abychom hráči hraní usnadnili a~zpříjemnili, budeme bloky zvýrazňovat za použití techniky \textit{obrysu} (implementace zvýrazňování bude vycházet z~tutorialu~\citep{ue_outline_tut}). Tato technika je také využívána v~různých hrách napříč různými herními žánry a~proto její implementací nic nezkazíme. Obrys zobrazíme v~případě, kdy hráč nic nestaví a~daný označený blok je použitelný (takže hráč ví, že blok může používat), nebo v~případě, kdy hráč staví (zvýrazníme hranice namířeného objektu). Barvu obrysu můžeme zvolit kupříkladu zelenou pro použitelný blok, žlutou při stavění a~červenou při odebírání bloku. 
 
-
-\subsubsection{Možnost vzít blok do inventáře}
-
-- bloky mohou být sebratelné, tedy hráč si je může dát do svého inventáře. vlastnosti jako třeba uchovaná hodnota kyslíku, pak zůstávají zachované
 
 \subsection{Umístění ve světě}
 
