@@ -2,9 +2,9 @@
 
 \section{Modul Game Save (C++)}
 
-Modul GameSave slouží k~ukládání a~načítání informací o~probíhající hře do binárního formátu. K tomu používáme streamové operátory $<<$, které jsou v~tomto případě implementovány tak, že je možné je použít jak pro ukládání, tak pro načítání. // TODO link na tutorial
+Modul GameSave slouží k~ukládání a~načítání informací o~probíhající hře do binárního formátu. K~tomu používáme streamové operátory $<<$, které jsou v~tomto případě implementovány tak, že je možné je použít jak pro ukládání, tak pro načítání. // TODO link na tutorial
 
-Díky tomuto přístupu tak můžeme definovat celou strukturu výsledného binárního souboru na jednom místě a~tedy rozšiřování uložené hry je triviální. Co si ovšem musíme pohlídat je to, abychom si drželi informaci o~verzi uloženého souboru. V našem případě, pokud se bude lišit verze načteného souboru a~uložená konstanta v~programu, save prostě odmítneme (a dokonce smažeme). V produkčním prostředí bychom si mazání nemohli dovolit, ale museli bychom save ignorovat a~uživateli zobrazit nějakou hlášku o~tom, že verze souboru není podporovaná. My jsme se však v~tomto případě rozhodli save mazat, protože jsme očekávali, že během vývoje hry se bude binární struktura savu často rozšiřovat. Po každé iteraci jsme si savy prostě vytvořili nové.
+Díky tomuto přístupu tak můžeme definovat celou strukturu výsledného binárního souboru na jednom místě a~tedy rozšiřování uložené hry je triviální. Co si ovšem musíme pohlídat je to, abychom si drželi informaci o~verzi uloženého souboru. V~našem případě, pokud se bude lišit verze načteného souboru a~uložená konstanta v~programu, save prostě odmítneme (a dokonce smažeme). V~produkčním prostředí bychom si mazání nemohli dovolit, ale museli bychom save ignorovat a~uživateli zobrazit nějakou hlášku o~tom, že verze souboru není podporovaná. My jsme se však v~tomto případě rozhodli save mazat, protože jsme očekávali, že během vývoje hry se bude binární struktura savu často rozšiřovat. Po každé iteraci jsme si savy prostě vytvořili nové.
 
 Zamysleme se nad tím, co by se stalo, kdybychom se snažili načíst save jiné verze. Celá hra by nejspíše byla ukončena s~chybou, protože by se pokoušela číst neplatná data a/nebo by očekávala nějaká data tam, kde žádná nejsou. Tím bychom četli z~neplatné lokace.
 
@@ -74,7 +74,7 @@ void USaveGameCarrier::SaveLoadData(
 }
 \end{code}
 
-Třídu dědící z~UObjektu jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul Blocks si těmito daty naplní své vlastní objekty, které se pak dále využívají ve hře. A naopak, před samotným uložením se postará o~to, aby bylo toto pole korektně naplněno všemi daty určenými k~uložení. O samotnou serializaci a~deserializaci dat do a~z~přepravky se stará pouze modul GameSave.
+Třídu dědící z~UObjektu jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul Blocks si těmito daty naplní své vlastní objekty, které se pak dále využívají ve hře. A~naopak, před samotným uložením se postará o~to, aby bylo toto pole korektně naplněno všemi daty určenými k~uložení. O~samotnou serializaci a~deserializaci dat do a~z~přepravky se stará pouze modul GameSave.
 
 Celý systém vychází z~tutoriálu~\citep{ue_save_system} je postaven na tom, že v~C++ je možné přetěžovat operátory, mimo jiné i~$<<$. Této vlastnosti je využito tak šikovně, že v~závislosti na volání funkce buď zapisuje do archivu, nebo z~něj čte, ale pořád se jedná o~jediný zápis jedné funkce. To je výhodné, protože to předchází chybám, které by mohly vzniknout při použití 2 metod -- jedné čtecí, jedné zapisovací. Chybám typu přehození dvou datových typů (což by v~případě typů různých velikostí znamenalo následné špatné pochopení binárních dat), nebo kupříkladu prohození dvou vlastností stejného typu, což by vytvářelo těžko odhalitelné situace změn hodnot ve hře.
 

@@ -2,7 +2,7 @@
 
 \section{Bloky}
 
-V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a~popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací. V prvé řadě se změříme na celkovou strukturu bloků a~následně budeme řešit, jak budeme spravovat konstanty ovlivňující chování bloků.
+V této části rozebereme, jak můžeme definovat a~následně implementovat bloky a~popíšeme, jaké jsou výhody a~nevýhody jednotlivých implementací. V~prvé řadě se změříme na celkovou strukturu bloků a~následně budeme řešit, jak budeme spravovat konstanty ovlivňující chování bloků.
 
 \subsection{Celková struktura}
 
@@ -12,7 +12,7 @@ Tento prapředek bude obsahovat dvě podstatné informace -- referenci na \texti
 
 \subsection{Instanční vlastnosti}
 \label{subsec:instVlast}
-Mezi instanční vlastnosti zařadíme vlastnosti definované v~části \ref{subsec:blocks} --  \textit{vizuální reprezentaci}, \textit{pozici ve světě}, \textit{rotaci}, \textit{velikost}, \textit{zdraví} apod. Protože máme dynamicky škálovatelné bloky, budeme chtít, abychom měli kupříkladu výpočet výsledného zdraví či ceny za postavení bloku bloku co nejjednodušší. K tomu využijeme vlastnost \textit{typ bloku}. (TODO když má blok nějakou vlastnost, tak podle typu a~rozměěrů se přepočítá výsledná síla vlastnost, abstraktní cena, bloky různě velké, pak přepočet)
+Mezi instanční vlastnosti zařadíme vlastnosti definované v~části \ref{subsec:blocks} --  \textit{vizuální reprezentaci}, \textit{pozici ve světě}, \textit{rotaci}, \textit{velikost}, \textit{zdraví} apod. Protože máme dynamicky škálovatelné bloky, budeme chtít, abychom měli kupříkladu výpočet výsledného zdraví či ceny za postavení bloku bloku co nejjednodušší. K~tomu využijeme vlastnost \textit{typ bloku}. (TODO když má blok nějakou vlastnost, tak podle typu a~rozměěrů se přepočítá výsledná síla vlastnost, abstraktní cena, bloky různě velké, pak přepočet)
 
 Zadefinujme si následující konstanty pro daný \textit{typ}, vycházející z~objemu základní krychle: (jednotlivé hodnoty odpovídají sloupci \textbf{T} v~tabulce \ref{table:requiredBlocks})
 

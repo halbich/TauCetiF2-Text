@@ -2,7 +2,7 @@
 
 \section{Inventář}
 
-Inventář bude vhodné implementovat jako komponentu, kterou posléze můžeme přiřadit herní postavě. Opět se zde opíráme o~fakt, že bychom v~budoucnu mohli mít bloky či \NPC{}, kteří také mají svůj inventář. Z kapitoly \ref{subsec:inventory} vyplývá, že inventář má několik základních vlastností:
+Inventář bude vhodné implementovat jako komponentu, kterou posléze můžeme přiřadit herní postavě. Opět se zde opíráme o~fakt, že bychom v~budoucnu mohli mít bloky či \NPC{}, kteří také mají svůj inventář. Z~kapitoly \ref{subsec:inventory} vyplývá, že inventář má několik základních vlastností:
 
 \begin{itemize}
 	\item Seznam postavitelných bloků
@@ -14,7 +14,7 @@ V momentě, kdy budeme chtít hráči nabídnout bloky k~postavení či umístě
 
 \subsection{Inventární skupiny}
 
-Protože má každý blok svoje definované \textit{tagy}, musíme vymyslet takový systém, abychom snadno filtrovali podle těchto tagů. Nejsnazší způsob je takový, kdy každá inventární skupina definuje, jaké tagy musí blok mít, aby byl přiřazen. Takže pro blok, který má být zobrazen v~rámci inventární skupiny platí, že blok definuje všechny tagy v~rámci dané inventární skupiny. Nicméně se může stát, že hráč bude chtít mít v~dané skupině takové bloky, které nemusí splňovat všechny tagy, ale splňují alespoň jeden z~definované skupiny. Z této myšlenky se dostáváme k~jednoznačnému zápisu algoritmu filtrování tagů -- \CNF{}. \CNF{} je označení pro \textit{konjunktivně normální formu}, užívané ve výrokové logice.
+Protože má každý blok svoje definované \textit{tagy}, musíme vymyslet takový systém, abychom snadno filtrovali podle těchto tagů. Nejsnazší způsob je takový, kdy každá inventární skupina definuje, jaké tagy musí blok mít, aby byl přiřazen. Takže pro blok, který má být zobrazen v~rámci inventární skupiny platí, že blok definuje všechny tagy v~rámci dané inventární skupiny. Nicméně se může stát, že hráč bude chtít mít v~dané skupině takové bloky, které nemusí splňovat všechny tagy, ale splňují alespoň jeden z~definované skupiny. Z~této myšlenky se dostáváme k~jednoznačnému zápisu algoritmu filtrování tagů -- \CNF{}. \CNF{} je označení pro \textit{konjunktivně normální formu}, užívané ve výrokové logice.
 
 Formálně bychom tuto myšlenku zapsali jako:
 \begin{equation}\label{eq:cnf}

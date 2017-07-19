@@ -26,7 +26,7 @@ Pokud bude hra úspěšná, rádi bychom rozšířili hru o~další herní prvky
 	\item Podporu síťové hry
 \end{itemize}
 
-Cílová platformy pro nás bude PC s~OS Windows. Pokud se rozhodneme pro již existující herní engine, který bude navíc podporovat multiplatformní vývoj, bude to pro nás, i~s~ohledem na další vývoj, plus. Dále bychom chtěli minimalizovat finanční náklady na vývoj. Z toho vyplývá, že placené řešení bychom byli ochotni použít pouze pokud by to pro nás znamenalo naprostou výhodu oproti jiným, neplaceným řešením.
+Cílová platformy pro nás bude PC s~OS Windows. Pokud se rozhodneme pro již existující herní engine, který bude navíc podporovat multiplatformní vývoj, bude to pro nás, i~s~ohledem na další vývoj, plus. Dále bychom chtěli minimalizovat finanční náklady na vývoj. Z~toho vyplývá, že placené řešení bychom byli ochotni použít pouze pokud by to pro nás znamenalo naprostou výhodu oproti jiným, neplaceným řešením.
 
 Dalším kritériem je volba programovacího jazyka. Ta vychází z~autorových znalostí. Budeme tedy preferovat primárně jazyk \CS{}, který známe nejlépe. Pokud to bude nezbytně nutné, nebudeme se bránit ani jazyku \CPP{}, který je v~herní branži dlouho zavedený a~je stále hojně využívaný. Ačkoliv zkušenost s~tímto programovacím jazykem máme minimální, můžeme se tímto způsobem naučit novým dovednostem.
 
@@ -39,12 +39,13 @@ Zamysleme se tedy nad tím, jak můžeme naši hru implementovat. Máme na výb�
 \end{itemize}
 
 \subsubsection{Vlastní engine}
-Tuto možnost rovnou zavrhneme. Vzhledem k~tomu, kolik funkcionality budeme implementovat, nevidíme přínos v~další práci s~implementací vlastního enginu. Naším cílem je prototyp hry a~tudíž nechceme ztrácet drahocenný čas vývojem nutných nástrojů a~systému pro naši hru. V následujícím textu se tedy zaměříme na možnosti použití nějakého již existujícího řešení.
+Tuto možnost rovnou zavrhneme. Vzhledem k~tomu, kolik funkcionality budeme implementovat, nevidíme přínos v~další práci s~implementací vlastního enginu. Naším cílem je prototyp hry a~tudíž nechceme ztrácet drahocenný čas vývojem nutných nástrojů a~systému pro naši hru. V~následujícím textu se tedy zaměříme na možnosti použití nějakého již existujícího řešení.
 
 
 \subsection{Využití již existujícího řešení}
+\label{subsec:existingEngine}
 Možných použitých enginů a~frameworků je opravdu mnoho. Pro jejich seznam se můžeme podívat do databáze herních enginů na stránce Devmaster. Jen zde je možné nalézt 236 možných řešení našeho problému volby herního enginu~\citep{engines_list}. Všechny záznamy jsme omezili na \textit{vývojově aktivní}, v~jazycích \CS{}, \CPP{} a~vybrali jsme námi požadované vlastnosti.
-Je zřejmé, že možností na výběr máme opravdu hodně. V následujících podkapitolách si jednotlivé možnosti podrobně rozebereme.
+Je zřejmé, že možností na výběr máme opravdu hodně. V~následujících kapitolách si jednotlivé možnosti podrobně rozebereme.
 
 
 
@@ -53,7 +54,7 @@ Je zřejmé, že možností na výběr máme opravdu hodně. V následujících 
 Máme na výběr z~více druhů grafických frameworků postavených na různých platformách. Mezi známějšími bychom mohli uvést například \XNA{} (\CS{}) či jeho klon \MG{} (\CS{}). Oba frameworky jsou k~dispozici zdarma, podpora \XNA{} je v~současné době už ukončena, vývoj \MG{} je stále aktivní. Implementace hry s~použitím některého z~těchto frameworků by byla rychlejší než v~předchozím případě, ale stále bychom museli spoustu funkcionality implementovat sami. 
 
 \subsection{Existující herní engine}
-Jak jsme již předeslali výše, v~této kategorii máme nejvíce možností. Buď můžeme využít enginy jako třeba \OG{} (\CPP{}), nebo použít více robustnější řešení v~podobě enginů typu \UN{} (\texttt{C\#}) či \UE{} (\texttt{C++})\footnote{V době volby herního engine byl další známý zástupce \CRY{} placený a~proto jsme tento herní engine nebrali v~potaz.}. Zde opět použijeme předchozí argument -- budeme hledat engine, který nám nabídne pokud možno co nejvíce uživatelské a~vývojářské přívětivosti a~bude poskytovat dostatek nástrojů pro vývoj naší hry v~uvažovaném rozsahu.
+Jak jsme již předeslali v~sekci \ref{subsec:existingEngine}, v~této kategorii máme nejvíce možností. Buď můžeme využít enginy jako třeba \OG{} (\CPP{}), nebo použít více robustnější řešení v~podobě enginů typu \UN{} (\texttt{C\#}) či \UE{} (\texttt{C++})\footnote{V době volby herního engine byl další známý zástupce \CRY{} placený a~proto jsme tento herní engine nebrali v~potaz.}. Zde opět použijeme předchozí argument -- budeme hledat engine, který nám nabídne pokud možno co nejvíce uživatelské a~vývojářské přívětivosti a~bude poskytovat dostatek nástrojů pro vývoj naší hry v~uvažovaném rozsahu.
 
 Výhodou zmíněných robustních enginů je to, že jsou k~dispozici zdarma. Taktéž zde, díky práci komunity, existuje pro oba enginy kvalitní vývojová dokumentace. Dalším kladem je fakt, že jsou oba multiplatformní a~tedy zde existuje relativně snadný postup v~případě distribuce na různé typy herních zařízení. Pojďme si je tedy rozebrat podrobněji.
 
@@ -70,7 +71,7 @@ Oproti \UN{} je \UE{} podstatně komplexnější a~pochopení všech vztahů a~z
 
 Testy s~navigačním meshem a~jeho dynamickou aktualizací byly uspokojivé -- nenarazili jsme na žádný zádrhel nebo pokles výkonu během aktualizace meshe. 
 
-Co musíme zmínit jako nevýhodu je absence editovatelného terénu. V editoru je možné vytvořit krásný terén se rozličnými možnostmi detailů, nicméně tento terén není možné jednoduchým způsobem editovat. Chápeme to spíše jako nepříjemnost, než zásadní nevýhodu. 
+Co musíme zmínit jako nevýhodu je absence editovatelného terénu. V~editoru je možné vytvořit krásný terén se rozličnými možnostmi detailů, nicméně tento terén není možné jednoduchým způsobem editovat. Chápeme to spíše jako nepříjemnost, než zásadní nevýhodu. 
 
 Další komplikaci vidíme v~použití \CPP{}, se kterým jsme v~době rešerše měli malé zkušenosti.
 
@@ -84,12 +85,8 @@ Nakonec jsme zvolili poslední možnost -- \UE{}. Autorovy znalosti především
 
 \section{Struktura projektu}
 
-Celý projekt v~\UE{} je rozdělen do dvou částí -- \CPP{} část a~Blueprintová část. V Blueprintu je kód vizualizován jako graf uzlů a~jsou zde zaznamenány vztahy mezi těmito uzly. Uzly tedy odpovídají funkcím v~\CPP{} a~těm je pak možné předávat parametry ať už v~podobě proměnných definovaných v~\CPP{} kódu nějaké třídy, nebo proměnných definovaných přímo v~Blueprintu. Vztahy mezi uzly pak označují následující kód určený k~vykonávání. Můžeme také říct, že vykonávání kódu v~Blueprintu je \textit{interpretované}.
+Celý projekt v~\UE{} je rozdělen do dvou částí -- \CPP{} část a~Blueprintová část. V~Blueprintu je kód vizualizován jako graf uzlů a~jsou zde zaznamenány vztahy mezi těmito uzly. Uzly tedy odpovídají funkcím v~\CPP{} a~těm je pak možné předávat parametry ať už v~podobě proměnných definovaných v~\CPP{} kódu nějaké třídy, nebo proměnných definovaných přímo v~Blueprintu. Vztahy mezi uzly pak označují následující kód určený k~vykonávání. Můžeme také říct, že vykonávání kódu v~Blueprintu je \textit{interpretované}.
 
- \UE{} umožňuje herním vývojářům implementovat celou hru kompletně za pomocí Blueprintů, tedy vizuálního rozhraní. Toho se však obvykle nevyužívá, protože vykonávání programu v~Blueprintu je přibližně 10 krát pomalejší, než vykonávání nativního \CPP{} kódu (odpověď jednoho z~vývojářů \UE{} na dotaz ohledně rychlosti Blueprintů: \uv{\textit{Blueprints are approximately the speed of UnrealScript in UE3, and our rule of thumb there was about 10x slower than C++.}},~\citep{ue_performance}). V praxi tak dochází k~tomu, že vývojář (i neprogramátor) může za pomocí Blueprintů rychle prototypovat funkcionalitu, kterou pak kodér přepíše do metod v~\CPP{}, správně tyto metody označí makry tak, aby \UE{} tyto metody v~kódu našel (což se provádí za pomocí reflexe v~\UBT{}\footnote{\UBT{} je zkratka pro \textit{Unreal Build Tool}, což je \CS{} nástroj, který slouží pro potřeby kompilace projektů napsaných v~\UEu{} a~navíc umí třeba vygenerovat projekt pro Visual Studio pouze z~adresářové struktury zdrojových kódů (oficiální prezentace Epic Games o~ automatizaci kompilace~\citep{ue_ubt}).} a~použitím příslušných \CPP{} maker) a~upraví Blueprint tak, aby původní kód tyto metody volal.
+ \UE{} umožňuje herním vývojářům implementovat celou hru kompletně za pomocí Blueprintů, tedy vizuálního rozhraní. Toho se však obvykle nevyužívá, protože vykonávání programu v~Blueprintu je přibližně 10 krát pomalejší, než vykonávání nativního \CPP{} kódu (odpověď jednoho z~vývojářů \UE{} na dotaz ohledně rychlosti Blueprintů: \uv{\textit{Blueprints are approximately the speed of UnrealScript in UE3, and our rule of thumb there was about 10x slower than C++.}},~\citep{ue_performance}). V~praxi tak dochází k~tomu, že vývojář (i neprogramátor) může za pomocí Blueprintů rychle prototypovat funkcionalitu, kterou pak kodér přepíše do metod v~\CPP{}, správně tyto metody označí makry tak, aby \UE{} tyto metody v~kódu našel (což se provádí za pomocí reflexe v~\UBT{}\footnote{\UBT{} je zkratka pro \textit{Unreal Build Tool}, což je \CS{} nástroj, který slouží pro potřeby kompilace projektů napsaných v~\UEu{} a~navíc umí třeba vygenerovat projekt pro Visual Studio pouze z~adresářové struktury zdrojových kódů (oficiální prezentace Epic Games o~ automatizaci kompilace~\citep{ue_ubt}).} a~použitím příslušných \CPP{} maker) a~upraví Blueprint tak, aby původní kód tyto metody volal.
  
- 
-  (TODO závěr: jak se mě to týká? Co budu používat?)
-  
-  My toho využijeme a~budeme mišmaš používat obé.
-
+Rádi bychom využili kombinace obou přístupů. Díky Blueprintům můžeme rychle prototypovat vyvíjenou funkcionalitu a~následně ji přenést do výkonnějšího \CPP{} kódu. Dále očekáváme, že ne veškerá funkcionalita bude muset být přístupná z~Blueprintu. Zároveň přitom budeme chtít, abychom určité části hry (kupříkladu bloky) mohli snadno spravovat z~Editoru a~nemuseli jsme tak často kompilovat upravený kód. Budeme tedy muset najít vhodný kompromis mezi oběma přístupy.

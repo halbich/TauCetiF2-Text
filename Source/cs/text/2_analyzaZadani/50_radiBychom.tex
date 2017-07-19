@@ -4,7 +4,7 @@
 
 \section{Co bychom chtěli implementovat}
 
-V následujících podkapitolách si rozebereme naše požadavky na hru. Vzhledem ke komplexnosti celé práce zde shrneme základní koncepci hry. Hráč má omezené zdroje elektrické energie a~kyslíku a~snaží se přežít na nehostinné planetě. V přežití mu může pomoci třeba postavení nové budovy, přičemž s~prostředky musí šetřit. Hráčovým úhlavním nepřítelem je kyselý déšť, který ničí postavené budovy, ale zároveň je z~něj možné vyrábět elektrickou energii. 
+V následujících podkapitolách si rozebereme naše požadavky na hru. Vzhledem ke komplexnosti celé práce zde shrneme základní koncepci hry. Hráč má omezené zdroje elektrické energie a~kyslíku a~snaží se přežít na nehostinné planetě. V~přežití mu může pomoci třeba postavení nové budovy, přičemž s~prostředky musí šetřit. Hráčovým úhlavním nepřítelem je kyselý déšť, který ničí postavené budovy, ale zároveň je z~něj možné vyrábět elektrickou energii. 
 
 
 
@@ -26,11 +26,11 @@ Chceme, aby bloky měly zdraví a~aby bylo možné je zničit. Bloky v~elektrick
 
 \subsection{Skládání bloků do struktur}
 
-Chceme hráči umožnit postavení komplexní struktury bloků, která bude dohromady dávat nějaký speciální význam. V našem případě to bude \textit{Konstruktor objektů} (\ref{sec:konstruktor}), díky kterému za pomoci bloku \nameref{blocks:B1} může hráč vytvářet nové bloky, které pak bude moci umístit do světa. V našem pojetí to bude spíše objekt, který bude imaginárně vymýšlet optimální rozvržení bloků (de facto takový automatizovaný návrhář nových bloků). Bloky jednou vymyšlené pak hráč bude moci stavět libovolně mnohokrát, jen musí mít dostatečnou zásobu energie pro jejich postavení.
+Chceme hráči umožnit postavení komplexní struktury bloků, která bude dohromady dávat nějaký speciální význam. V~našem případě to bude \textit{Konstruktor objektů} (\ref{sec:konstruktor}), díky kterému za pomoci bloku \nameref{blocks:B1} může hráč vytvářet nové bloky, které pak bude moci umístit do světa. V~našem pojetí to bude spíše objekt, který bude imaginárně vymýšlet optimální rozvržení bloků (de facto takový automatizovaný návrhář nových bloků). Bloky jednou vymyšlené pak hráč bude moci stavět libovolně mnohokrát, jen musí mít dostatečnou zásobu energie pro jejich postavení.
 
 \subsection{Herní svět}
 
-Jaký bychom chtěli mít herní svět z~pohledu bloků a~jejich umisťování jsme již řešili v~části \ref{subsec:bloky}. V následujících odstavcích se zaměříme na další charakteristiky světa naší hry.
+Jaký bychom chtěli mít herní svět z~pohledu bloků a~jejich umisťování jsme již řešili v~části \ref{subsec:bloky}. V~následujících odstavcích se zaměříme na další charakteristiky světa naší hry.
 
 \subsubsection{Denní / noční cyklus}
 Aby naše hra nebyla úplně nudná z~nedostatku stavebních bloků, tak budeme chtít mít také denní a~noční cyklus. \MC{} má délku denního cyklu 20 minut. My zkusíme 30 minut\footnote{Původně jsme zamýšleli 60 minut, ale z~interního testování během vývoje vyplynulo, že je to až příliš dlouhá doba, hlavně kvůli malému množství bloků.}.
@@ -42,7 +42,7 @@ V naší hře budeme chtít mít pouze dva druhy počasí -- jasno a~kyselý dé
 
 \subsubsection{(Ne)fyzikální chování}
 
-Fyzikou se nebudeme nijak podrobně zabývat. Pokud budeme mít možnost snadné implementace nějaké fyziky, budeme za to rádi. V tuto chvíli však fyziku nevidíme jako klíčovou vlastnost naší hry. 
+Fyzikou se nebudeme nijak podrobně zabývat. Pokud budeme mít možnost snadné implementace nějaké fyziky, budeme za to rádi. V~tuto chvíli však fyziku nevidíme jako klíčovou vlastnost naší hry. 
 
 \subsection{Inventář}
 \label{subsec:inventory}
