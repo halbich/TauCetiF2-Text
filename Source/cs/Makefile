@@ -23,3 +23,6 @@ clean:
 bib:
 	/usr/local/texlive/2016/bin/x86_64-linux/bibtex prace	
 	
+abs: 
+	/usr/local/texlive/2016/bin/x86_64-linux/pdflatex abstractCs
+	/usr/local/texlive/2016/bin/x86_64-linux/pdflatex abstractEn

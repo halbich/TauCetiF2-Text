@@ -269,4 +269,12 @@
   url    = {https://de45xmedrsdbp.cloudfront.net/Resources/files/BuildTools-2031748007.pdf},
 }
 
+@Online{so_pattern,
+  author = {Pavel Halbich},
+  title  = {Recognize pattern in 3D environment},
+  year   = {2016},
+  date   = {2016-01-27},
+  url    = {https://stackoverflow.com/questions/35048333/recognize-pattern-in-3d-environment},
+}
+
 @Comment{jabref-meta: databaseType:biblatex;}
