@@ -44,7 +44,7 @@ Díky algoritmu \ref{eq:alg} tak může herní designér snadno nastavovat zákl
 
 \input{./text/3_detailniRozbor/12_bloky_komponenty.tex}
 
-\section{Definice bloků TODO}
+\section{Definice bloků}
 
 Jak bylo řečeno v~analýze v~části \ref{sec:chceme}, potřebujeme u~bloků definovat mj.~následující vlastnosti: \textit{minimální} a~\textit{maximální} velikost, \textit{typ} bloku, možnost \textit{rotace} bloku dle daných os apod. Dále budeme u~bloků potřebovat zaznamenat, že blok má \textit{elektrickou} či \textit{kyslíkovou} komponentu a~definovat omezující vlastnosti této komponenty. Dále požadujeme, abychom mohli snadno modifikovat hodnoty těchto vlastností. Tento požadavek vznášíme z~toho důvodu, aby herní designér mohl rychle a~jednoduše ladit nastavení těchto konstant a~vyvažovat tak celkovou obtížnost hry. Takže nepřipadá v~úvahu, abychom měli tyto konstanty uložené ve zdrojovém kódu, protože jakákoliv úprava by znamenala opětovnou kompilaci hry a~to u~herních projektů často zabere netriviální čas. Pak je ale budeme muset načítat z~nějakého souboru, nebo budou muset být uložené v~nějakém definičním objektu, editovatelným z~Editoru.
 
@@ -64,4 +64,6 @@ Binární zápis již není pro běžného člověka tak snadno čitelný, ale t
 Kromě toho, že tímto přístupem splňujeme požadavek na editovatelnost z~Editoru, získáváme také navíc typovou bezpečnost uložených hodnot. Dále máme možnost (v případě nějakých definičních specialit) vytvořit vlastní editační panely pro dané netriviální vlastnosti definičního souboru. 
 
 
+\subsection{Definice bloků -- verdikt}
 
+Na základě výše zmíněných poznatků jsme se rozhodli, že budeme bloky definovat v~binárním formátu. V~\CPP{} implementujeme definiční třídu s~vhodnou strukturou a~v~Editoru pak následně vytvoříme Blueprintové assety, ve kterých požadované vlastnosti pro námi požadované bloky nadefinujeme. Získáme tak možnost snadné úpravy požadovaných vlastností v~Editoru a~typovou bezpečnost vyplněných hodnot.
