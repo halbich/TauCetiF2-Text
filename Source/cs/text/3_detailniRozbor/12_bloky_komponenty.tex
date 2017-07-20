@@ -19,7 +19,7 @@ Z předchozí analýzy vyplývá, že budeme potřebovat řešit následující 
 \end{itemize}
 
 
-Tyto problémy jsou ideální kandidáti na použití komponent. Pokud bychom se někdy v~budoucnu rozhodli upravit chování některé funkcionality či jej z~libovolného důvodu změnit, komponentový systém pro nás bude výhodou. Navíc ne všechny herní bloky umí (z hlediska herního designu) kupříkladu s~kyslíkem či elektřinou pracovat. Jak jsme již zmínili dříve,  s~použitím komponent to bude snadné -- bloky, které danou funkcionalitu mají umět, budou mít danou komponentu a~budou s~ní moci pracovat. Taktéž tím u~kyslíku a~energie získáme možnost přiřadit tyto komponenty hráčově postavě a~tím nebudeme duplikovat funkcionalitu.
+Tyto problémy jsou ideální kandidáti na použití komponent. Pokud bychom se někdy v~budoucnu rozhodli upravit chování některé funkcionality či je z~libovolného důvodu změnit, komponentový systém pro nás bude výhodou. Navíc ne všechny herní bloky umí (z hlediska herního designu) kupříkladu s~kyslíkem či elektřinou pracovat. Jak jsme již zmínili dříve, s~použitím komponent to bude snadné -- bloky, které danou funkcionalitu mají umět, budou mít danou komponentu a~budou s~ní moci pracovat. Taktéž tím u~kyslíku a~energie získáme možnost přiřadit tyto komponenty hráčově postavě a~tím nebudeme duplikovat funkcionalitu.
 
 \subsection{Komponenta kyslíku}
 
@@ -27,7 +27,7 @@ Cílem komponenty kyslíku by mělo být udržování informace o~aktuálním mn
 
 
 
-Obdobně jako u~bloků, kyslíková komponenta bude obsahovat reference na \textit{definiční} třídu a~\textit{instanční} třídu a~jejich chování bude vycházet z~principů chování definiční a~instanční třídy u~vlastností bloků. \textit{Definiční} třída bude definovat \textit{maximální objem drženého kyslíku} pro daný blok (a stejně jako u~výpočtu zdraví se pro danou instanci bloku použije algoritmus \ref{eq:alg}). Dále bude definovat \textit{maximální přenesený objem kyslíku za 1~herní sekundu}. Z~toho vyplývá, že budeme mít možnost řídit, jak dlouho bude probíhat přenos třeba z~bloku \RB{B9} do bloku \RB{B10}, nebo z~bloku \RB{B10} k~herní postavě hráče. Od této limitace přenosu si slibujeme, že hráčům přinese  věrohodnější herní zážitek. 
+Obdobně jako u~bloků, kyslíková komponenta bude obsahovat reference na \textit{definiční} třídu a~\textit{instanční} třídu a~jejich chování bude vycházet z~principů chování definiční a~instanční třídy u~vlastností bloků. \textit{Definiční} třída bude definovat \textit{maximální objem drženého kyslíku} pro daný blok (a stejně jako u~výpočtu zdraví se pro danou instanci bloku použije algoritmus \ref{eq:alg}). Dále bude definovat \textit{maximální přenesený objem kyslíku za 1~herní sekundu}. Z~toho vyplývá, že budeme mít možnost řídit, jak dlouho bude probíhat přenos třeba z~bloku \RB{B9} do bloku \RB{B10}, nebo z~bloku \RB{B10} k~herní postavě hráče. Od této limitace přenosu si slibujeme, že hráčům přinese věrohodnější herní zážitek. 
 
 \subsection{Komponenta energie}
 \label{subsec:encomp}
@@ -40,7 +40,7 @@ Navíc bychom chtěli, aby Energetická komponenta uměla pracovat s~\textit{ele
 
 Nejprve bychom měli zadefinovat pojem \textit{vodivý spoj} a~také zmínit jeho vlastnosti. V~naší hře budeme jako \textit{vodivý spoj} chápat propojení bloků skrze netriviální plochu. Tedy dvě stejně velké krychle mohou být vodivě spojeny, pokud mají společný dotyk jejich stěn alespoň o~velikosti stěny jednotkové krychle. Pokud se budou dotýkat hranami, nebo dokonce jen rohy, nebude toto postavení bráno jako vodivý spoj.
 
-Pro implementaci bychom mohli použít (stejně jako u~stavění ve hře \TM{}) systém přípojných bodů. Nicméně to by znamenalo, že bychom museli řešit, jak tento systém upravit pro dynamicky škálovatelné bloky. Navíc, pro nové vizuální reprezentace bloků bychom museli speciálně řešit umístění těchto přípojných bodů, i~vzhledem k~ostatním možným přípojným bloků ve hře). Další zásadní nevýhodou tohoto návrhu je způsob, jak bychom napojovali například krychle o~maximálním a~minimálním rozměru. Abychom mohli využít přípojných bodů, minimální krychle by musela definovat $6$ takových bodů a~maximální krychle pak $2~400$ těchto bodů. S~rostoucí velikostí bloku se počet kontrolovaných přípojných bodů zvětšuje a~obáváme se, že výpočetní algoritmy by mohly být při kontrole velmi pomalé.  Tento postup nám nevyhovuje.
+Pro implementaci bychom mohli použít (stejně jako u~stavění ve hře \TM{}) systém přípojných bodů. Nicméně to by znamenalo, že bychom museli řešit, jak tento systém upravit pro dynamicky škálovatelné bloky. Navíc, pro nové vizuální reprezentace bloků bychom museli speciálně řešit umístění těchto přípojných bodů, i~vzhledem k~ostatním možným blokům ve hře). Další zásadní nevýhodou tohoto návrhu je způsob, jak bychom napojovali například krychle o~maximálním a~minimálním rozměru. Abychom mohli využít přípojných bodů, minimální krychle by musela definovat $6$ takových bodů a~maximální krychle pak $2~400$ těchto bodů. S~rostoucí velikostí bloku se počet kontrolovaných přípojných bodů zvětšuje a~obáváme se, že výpočetní algoritmy by mohly být při kontrole velmi pomalé. Tento postup nám nevyhovuje.
 
 
 

@@ -1,14 +1,15 @@
 %!TEX root = ../../prace.tex
 
 
-\section{Elektrická síť TODO 1600}
+\section{Elektrická síť}
 \label{sec:energyNet}
-Účel elektrické sítě ve hře vychází z~reálného světa. Chceme, aby bloky spolu mezi sebou uměly komunikovat skrze nějakou síť a~aby přes tuto síť bylo možné automaticky převádět energii, třeba z~bloku \RB{B6} do bloku \RB{B8}. Na elektrickou síť nebudeme klást žádné omezující požadavky (například limitací přenosové kapacity bloků tvořících danou síť). Na chování bloků dané sítě při její aktualizaci však ano, tomuto problému se věnujeme v~části (TODO ref).
+Účel elektrické sítě ve hře vychází z~reálného světa. Chceme, aby bloky spolu mezi sebou uměly komunikovat skrze nějakou síť a~aby přes tuto síť bylo možné automaticky převádět energii, třeba z~bloku \RB{B6} do bloku \RB{B8}. Na elektrickou síť nebudeme klást žádné omezující požadavky (například limitací přenosové kapacity bloků tvořících danou síť).
 
-Pokud budeme vycházet z~premisy, že každý blok je zapojen právě v~jedné elektrické síti a~všechny bloky v~rámci jedné elektrické sítě jsou mezi sebou vodivě spojeny (viz kapitola \ref{subsec:encomp}), tak nutně musíme dojít k~závěru, že při manipulaci s~bloky budeme muset elektrické sítě aktualizovat. Přidáním bloku jsme bychom mohli vodivě propojit dvě či více sítí, při odebírání se nám daná elektrická síť může rozpadnout na více samostatných komponent. Těchto elektrických sítí může vznikat a~zanikat velké množství. Stačí si uvědomit, že k~bloku \RB{A1} o~maximální možné velikosti můžeme připojit až 600 bloků, které budou patřit do stejné sítě (pro každou stěnu máme 100 bloků stejného typu a~minimální velikosti, uspořádaných do šachovnicového vzoru). Pokud pak odebereme centrální blok, může nám vzniknout právě až 600 nových elektrických sítí. Navíc, díky počasí se může stát, že bloky budou odebírány ze světa zcela neuspořádaně (na základě náhodně udělovaného poškození). Musíme tedy vymyslet algoritmus, jak pro všechny bloky v~herním světě udržovat správné informace o~jejich síti.
+Pokud budeme vycházet z~premisy, že každý blok je zapojen právě v~jedné elektrické síti a~všechny bloky v~rámci jedné elektrické sítě jsou mezi sebou vodivě spojeny (viz kapitola \ref{subsec:encomp}), tak nutně musíme dojít k~závěru, že při manipulaci s~bloky budeme muset elektrické sítě aktualizovat. Přidáním bloku bychom mohli vodivě propojit dvě či více sítí, při odebírání se nám daná elektrická síť může rozpadnout na více samostatných komponent. Těchto elektrických sítí může vznikat a~zanikat velké množství. Stačí si uvědomit, že k~bloku \RB{A1} o~maximální možné velikosti můžeme připojit až 600 bloků, které budou patřit do stejné sítě (pro každou stěnu máme 100 bloků stejného typu a~minimální velikosti, uspořádaných do šachovnicového vzoru). Pokud pak odebereme centrální blok, může nám vzniknout právě až 600 nových elektrických sítí. Navíc, díky počasí se může stát, že bloky budou odebírány ze světa zcela neuspořádaně (na základě náhodně udělovaného poškození). Musíme tedy vymyslet algoritmus, jak pro všechny bloky v~herním světě udržovat správné informace o~jejich síti.
 
 Protože nemůžeme nic předpokládat o~tom, jak se budou bloky v~elektrické síti chovat, musíme při změně (přidání či odebrání) nějakého bloku v~síti provést přepočítání a~to i~u~sítě, která již může být přepočítávána. Nejjednodušší bude varianta na \textit{algoritmus vlny}. Jednotlivé sítě budeme podle potřeby odstraňovat či slévat. 
 
+\pagebreak
 Aby algoritmus vlny fungoval, je zapotřebí u~elektrické sítě a~každého bloku v~ní udržovat informaci o~stavu. Ty jsou tři:
 \begin{itemize}
 	\item Nevalidní
@@ -18,45 +19,64 @@ Aby algoritmus vlny fungoval, je zapotřebí u~elektrické sítě a~každého bl
 
 Volba stavů je zřejmá a~vychází z~principů algoritmu vlny. Navíc tím můžeme požadovat, aby hra počítala s~tím, že elektrická síť a~bloky v~ní mohou být v~různých stavech a~tomu pak přizpůsobila svoji další funkcionalitu (například síť ve stavu \textit{ve výpočtu} nebude převádět zdroje sítě mezi bloky, které nejsou ve stavu \textit{validní} -- tedy těch, které již byly zpracovány algoritmem).
 
+\subsection{Princip aktualizace sítě}
 
-(TODO přeuspořádat následující, dotáhnout)
+V předchozí části jsme zjistili, že nám může v jednom okamžiku vzniknout velké množství sítí, jež je třeba aktualizovat. Navíc platí, že sítě mohou být rozsáhlé. Abychom co nejméně zasahovali do funkcionality aktualizovaných sítí, musíme nějakým způsobem zajistit, aby byla aktualizace sítí férová pro všechny sítě k aktualizaci. Vzhledem k tomu, že při nově vzniklém požadavku na aktualizaci sítě nevíme vůbec nic o tom, které bloky nakonec v dané síti budou, nemá smysl se zabývat myšlenkou upřednostňování aktualizace nějaké sítě vůči jiné, protože nemáme žádné faktické podklady pro to, jakou síť bychom měli upřednostnit.
 
-TODO algoritmus obsovy sítě do programátorský
+Musíme tedy mít k dispozici \textit{frontu sítí k aktualizaci}. Každá síť z této fronty si pak bude muset držet \textit{vlastní} frontu \textit{bloků k aktualizaci}. V algoritmu budeme postupně z fronty vybírat sítě, provedeme u nich krok algoritmu vlny a případně je opět zařadíme do fronty. Tím zajistíme férovou aktualizaci pro všechny zúčastněné sítě.
 
+Dále popíšeme, jak vypadá jeden krok algoritmu vlny. Jako sousedy budeme chápat bloky dostupné skrze vodivé spojení. Krok bude následující:
 
-Popišme si nyní pravidla, která budeme muset ve hře mít. Jako sousedy budeme chápat bloky dostupné skrze vodivé spojení.
-
-\subsubsection{Přidávání bloku}
-Platí, že každý blok přidaný do herního světa si vytvoří svoji vlastní elektrickou síť.
-(TODO kontrola enums níže)
 \begin{enumerate}
-	\item Pokud blok nemá žádné sousedy, nemusí dělat nic (svoji síť už má)
-	\item Pokud mají všichni sousedé stejnou síť, blok se k~ní připojí
-	\item Pokud mezi sousedy existují alespoň dvě různé elektrické sítě, blok si vytvoří novou elektrickou síť, propojí ji s~ostatními sítěmi a~vyvolá přepočet sítí
+	\item Vyber blok \textbf{B} z fronty bloků k aktualizaci.
+	\item Zkontroluj, že je \textbf{B} stále validní (zatímco \textbf{B} čekal ve frontě, mohl být mezi tím zničen bouří kyselého deště). Pokud není validní, skonči.
+	\item \textbf{B} označ jako \textit{Validní}.
+	\item Pro všechny sousedy \textbf{S} bloku \textbf{B} se podívej na jejich síť a stav bloku a vykonej akci dle tabulky \ref{table:networkAlg}.
 \end{enumerate}
+
+
+\begin{table}[h]
+\centering
+\begin{tabular}{| l | l | l | l |}
+	\hline
+	Sít  \textbf{S}~~~$\backslash$~~ Stav \textbf{S}	& Nevalidní			& Ve výpočtu	& Validní 			\\ \hline
+	Stejná jako \textbf{B}					& Naplánuj 	 		& Nic 			& Nic 	     			\\ \hline
+	Jiná než \textbf{B} 						& \uv{Ukradni} a naplánuj & Nic 			& Spoj sítě do jedné   	\\ \hline
+\end{tabular}
+\caption{Požadované bloky a~jejich základní vlastnosti}
+\label{table:networkAlg}
+\end{table}
+
+\FloatBarrier
+
+Abychom dobře pochopili význam akcí v tabulce \ref{table:networkAlg}, měli bychom jednotlivé akce podrobněji popsat. Začněme situací, kdy je \textbf{S} ve stejné síti jako \textbf{B}.
+
+Pokud je stav \textbf{S} \textit{Nevalidní}, pak musíme tento nalezený blok přidat do fronty bloků k aktualizaci. Pokud je ve stavu \textit{Ve výpočtu}, pak je již naplánován, ale ještě nebyl zpracován (jinak by byl označen jako \textit{Validní}). Pokud je označen jako \textit{Validní}, byl již zpracován. Tyto kroky odpovídají standardnímu výpočtu algoritmu vlny. Pojďme se nyní podívat na situace, kdy jsou sítě \textbf{S} a \textbf{B} \textit{odlišné}.
+
+Pokud je stav \textbf{S} \textit{Nevalidní}, pak můžeme tento blok přiřadit do sítě \textbf{B} a naplánovat ho ke zpracování. Určitě platí, že blok není v žádné frontě ke zpracování (jinak by měl jiný stav). Pokud bychom ho \uv{neukradli}, zbytečně bychom tím ztratili cyklus kroku algoritmu. Navíc, jak je zmíněno v části \ref{subsec:reac}, při odebírání je původní síť ponechána netknutá a bloky jsou zneplatněny. Bez této vlastnosti bychom neuměli \uv{rozebrat} původní síť. Pokud je \textbf{S} ve stavu \textit{Ve výpočtu}, pak je již naplánován a nemusíme dělat nic. Zde je důležitý fakt, že \textbf{S} bude někdy v budoucnu vykonávat 4. krok algoritmu vlny a tudíž nutně narazí na \textbf{B}, jakožto svého souseda s jinou sítí. Ale protože \textbf{B} bude v té době ve stavu \textit{Validní}, případ se tím převede na zbývající možnost. Když je \textbf{S} označen jako \textit{Validní}, pak musíme obě sítě spojit do jedné, protože všechny \textit{Validní} bloky z obou sítí jsou propojeny skrze vodivé spojení \textbf{B} a \textbf{S} a tudíž musí mít i stejnou síť.
+
+
+
+\subsection{Reakce na přidání a odebrání bloku}
+\label{subsec:reac}
+\subsubsection{Přidávání bloku}
+Přidání bloku do systému elektrických sítí je jednoduché. Platí, že každý blok přidaný do herního světa si při přidávání vytvoří svoji vlastní elektrickou síť. Ta je pak přidána mezi všechny elektrické sítě v herním světě a je naplánovaná její \textit{aktualizace}. 
 
 \subsubsection{Odebírání bloku}
-Platí, že každý odebíraný blok z~herního světa vždy odstraní síť, ve které je připojen, a~pro všechny jeho sousedy jsou vytvořeny nové sítě.
+Každý odebíraný blok z~herního světa vždy zneplatní celou síť, ke které je připojen (takže všechny bloky jsou v nevalidním stavu), a~pro všechny jeho sousedy vytvoří nové sítě, které následně naplánuje k \textit{aktualizaci}. Po dokončení všech aktualizačních výpočtů všech elektrických sítí je pak původní elektrická síť odstraněna. Dříve tak nesmíme učinit, protože bychom přišli o vazby na bloky. Zde je také vidět, proč musíme umět \uv{krást} bloky.
 
-\begin{enumerate}
-	\item Pokud blok nemá žádné sousedy, svoji síť ze hry odstraní a~dále nedělá nic
-	\item Pokud má blok právě jednoho souseda, odpojí od se od dané sítě
-	\item Pokud má alespoň dva sousedy, pro každého vytvoří novou síť a~vyvolá přepočet sítí
-\end{enumerate}
+\subsection{Optimalizace algoritmu}
 
-\subsection{Udržování konzistence elektrických sítí TODO}
-
-Jak je vidět z~předchozí kapitoly, objektů k~aktualizaci může být velmi mnoho. Nesmíme však dopustit, aby se nám při přepočítávání začala hra zpomalovat či přímo zasekávat\footnote{Tato situace může snadno nastat, protože herní a~renderovací smyčky se na konci svých cyklů synchronizují, aby pro výpočet dalšího framu začínaly stejně.}. Opět máme více možností řešení, jak se k~tomuto problému postavit. 
+Jak je vidět z~předchozí kapitoly, výpočtů v~aktualizaci může být velmi mnoho. Nesmíme však dopustit, aby se nám při přepočítávání začala hra zpomalovat či přímo zasekávat\footnote{Tato situace může snadno nastat, protože herní a~renderovací smyčky se na konci svých cyklů synchronizují, aby pro výpočet dalšího framu začínaly stejně.}. Opět máme více možností řešení, jak se k~tomuto problému postavit. 
 
 Jedním z~možných řešení je spuštění výpočtů na samostatném výpočetním vlákně. Zde bohužel narážíme na problém, že výpočty ve vláknech v~\UEu{} nemohou přímo přistupovat k~herním objektům a~tudíž je nutné používat pomocných datových struktur a~výsledky poté zpětně propagovat. Kromě toho také narážíme na problém, kdy v~případě velmi silné bouře kyselých dešťů bude nejspíše často nutné výpočet předčasně ukončit a~spustit znovu.
 
-My navrhujeme následující algoritmus, využívající front požadavků ke zpracování a~omezení výpočetního času. 
+Algoritmus bude mít přidělené nějaké maximální kvantum času, řekněme tolik, aby při jeho výpočtech hra dosahovala alespoň 30 snímků za sekundu. Pokud toto kvantum vyčerpá, nebude začínat další výpočty a naplánovanou práci nechá do dalšího cyklu herní smyčky. Tím vcelku jednoduchým a~elegantním způsobem zajistíme aktualizace i~pro velice rozsáhlé sítě bez negativního vlivu na plynulost hry.
 
- Dalším netriviálním faktem je, že v~algoritmu existuje fronta sítí k~přepočítání, přičemž každá taková má svoji frontu bloků v~síti k~přepočítání. Hlavním krokem algoritmu je pak výběr sítě k~přepočítání a~provedení jednoho kroku přepočtu. Následně, pokud má tato síť stále nějaké bloky k~přepočtu, je zařazena na konec přepočítávací fronty a~tam čeká, dokud nebude opět vyzvednuta. Může se však stát, že jistou posloupností kroků při mazání bude tato síť označena jako nevalidní a~dále se přepočítávat nebude.
 
-Algoritmus bude mít přidělené nějaké maximální kvantum času, řekněme tak, aby při jeho výpočtech hra dosahovala alespoň 30 snímků za sekundu. Tím vcelku jednoduchým a~elegantním způsobem zajistíme přepočty i~pro velice rozsáhlé sítě. 
 
-TODO tabulka případů, říct, že tohle bude komponenta
+
+
 
 
 
@@ -65,7 +85,7 @@ TODO tabulka případů, říct, že tohle bude komponenta
 
 Způsobů, jak reprezentovat bloky ve světě, je více, takže bychom měli jednotlivé varianty porovnat a~vyhodnotit. V~této chvíli si také musíme určit, jak velký chceme náš herní svět mít. Na základě tohoto důležitého požadavku budeme posuzovat vhodnost jednotlivých implementací. My jsme se rozhodli, že hráči nabídneme rozsáhlý svět čtvercového půdorysu o~rozloze $100\,\ km^2$ a~výšky $5\,\ km$. (TODO upravit větu 2000) Teď trochu předběhneme a~prozradíme, že nás k~tomuto rozhodnutí vedla snaha, aby datové struktury nebyly úplně triviální (třeba dvourozměrné pole). Zároveň s~tím si ale uvědomujeme, že správně by hra měla řešit takto velký svět tak, aby i~velké množství bloků hru nezpomalovalo či dokonce neshodilo celou hru (třeba z~nedostatku paměti RAM). Nicméně jak jsme zmínili v~kapitole (TODO ref), budeme v~této práci očekávat takové množství bloků, jejichž počet hra bez problémů zvládne.
 
-Námi definované hranice herního světa se u~bloků projeví tak, že v~rámci herního světa můžeme mít až  $50~000 * 50~000 * 25~000$ bloků jednotkové velikosti, což je opravdu mnoho. Nejprve se tedy zaměříme na to, jak vůbec můžeme bloky reprezentovat a~zároveň s~tím budeme řešit, jak se vypořádat s~různými rozměry bloků.
+Námi definované hranice herního světa se u~bloků projeví tak, že v~rámci herního světa můžeme mít až $50~000 * 50~000 * 25~000$ bloků jednotkové velikosti, což je opravdu mnoho. Nejprve se tedy zaměříme na to, jak vůbec můžeme bloky reprezentovat a~zároveň s~tím budeme řešit, jak se vypořádat s~různými rozměry bloků.
 
 \subsection{Použití dvourozměrného pole}
 
@@ -100,7 +120,7 @@ Vyřešili jsme, jak přistupovat k~jednotkovým blokům, ale ještě musíme vy
 \begin{itemize}
 	\item Vizuální reprezentace krychle je centrovaná, takže pokud ji umístíme na souřadnice [0, 0, 0] v~souřadnicovém systému \UEu{}, fyzické hranice bloku budou $\{ [-20, 20], [-20, 20], [-20, 20]\}$ v~osách $\{X, Y, Z\}$.
 	\item Z~toho důvodu, že máme povrch planety umístěn v~ose $Z = -10$, nejbližší validní umístění tohoto bloku je na pozici [0, 0, 10] v~souřadnicovém systému \UEu{}.
-	\item Blok bude mít naši herní souřadnici podle umístění svého středu. Pokud střed neodpovídá přesné pozici jednotkového bloku v~herním světě, \textit{virtuálně} se posouvá na nejbližší nižší pozici ve všech osách po se zarovnáním do herní mřížky. Takže herní souřadnice našeho bloku zůstanou [0, 0, 0]. 
+	\item Blok bude mít naši herní souřadnici podle umístění svého středu. Pokud střed neodpovídá přesné pozici jednotkového bloku v~herním světě, \textit{virtuálně} se posouvá na nejbližší nižší pozici ve všech osách se zarovnáním do herní mřížky. Takže herní souřadnice našeho bloku zůstanou [0, 0, 0]. 
 	\item Pokud bychom měli výšku krychle 3, herní souřadnice by pak byla [0, 0, 1] (střed bloku odpovídá konkrétní pozici jednotkové krychle v~rámci herního světa) a~blok by byl na pozici [0, 0, 20] v~souřadnicovém systému \UEu{}.
 	\item Rotace bloku jsou vůči chápanému středu bloku v~rámci našeho souřadnicového systému. Z~toho vyplývá, že námi uvažovaná krychle bude při rotaci kolem vertikální osy měnit i~svoji pozici v~rámci souřadnicového systému \UEu{}.
 \end{itemize}
@@ -114,7 +134,7 @@ Abychom to celé uzavřeli, tak budeme chtít, aby jednotlivé vrcholy našeho K
 
 \subsection{Zapojení do rozpoznávání tvarů}
 
-Vzhledem k~dynamicky škálovatelným bloků budeme požadovat, aby bylo možné bloky skládat do tvarů libovolným splňujícím způsobem. Dobře je to vidět na následujícím obrázku \ref{fig:konfig}:
+Vzhledem k~dynamicky škálovatelným blokům budeme požadovat, aby bylo možné bloky skládat do tvarů libovolným splňujícím způsobem. Dobře je to vidět na následujícím obrázku \ref{fig:konfig}:
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/analysis/konfigurace}

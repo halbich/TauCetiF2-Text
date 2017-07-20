@@ -44,7 +44,7 @@ Další logika je snadná -- proběhne pokus o~kompletní načtení dat do insta
 
 \textit{World Controller} je především implementován v~\CPP{}. Ačkoliv je v~hlavní herní mapě umístěn jeho Blueprintový potomek, ten sám nepřináší nic významného. Cílem tohoto kontroléru je správa bloků v~herním světě a~všeho, co se toho týká.
 
-Tento herní objekt si udržuje seznam všech herních bloků v~herním světě. Zároveň má ke každého bloku dynamicky přiřazenou obsluhu různých událostí. Společnou pro všechny je \TT{OnDestroyRequestedEvent}, která je definovaná v~bázové třídě bloků a~slouží k~notifikaci toho, že se blok chce zničit. Tato událost může být vyvolána jako důsledek kyselého deště, kdy po zásazích kleslo zdraví bloku na nulu.
+Tento herní objekt si udržuje seznam všech herních bloků v~herním světě. Zároveň má ke každému bloku dynamicky přiřazenou obsluhu různých událostí. Společnou pro všechny je \TT{OnDestroyRequestedEvent}, která je definovaná v~bázové třídě bloků a~slouží k~notifikaci toho, že se blok chce zničit. Tato událost může být vyvolána jako důsledek kyselého deště, kdy po zásazích kleslo zdraví bloku na nulu.
 
 Další důležitou vlastností tohoto objektu je držení reference na kořen stromové struktury reprezentující umístění bloků v~herním světě. Této vlastnosti pak mohou využívat ostatní objekty hry a~kupříkladu se mohou dotazovat na volné místo.
 
@@ -64,7 +64,7 @@ GameWeatherPawn funguje jako správce počasí. Je ovládán \textit{AI kontrol�
 
 Služba aktualizace času (na obrázku zeleně) neustále aktualizuje uplynulý herní čas a~řídí se přitom hodnotou z~(todo ref) herního objektu oblohy. Dále máme ve stromě tři funkce, které se starají o~kontrolu stavu počasí a~případnou aktualizaci navázaných herních objektů -- oblohy. 
 
-Oproti automatu jsme zde přidali drobnou optimalizaci -- pokud jsme ve fázi stabilního počasí a~neměníme žádné parametry, vyhodnocování stromu přejde do nejpravější větve, kde bude čekat po nějaký spočítaný čas. Spolu s~vhodným nastavením aktualizační služby jsme tak dosáhli toho, během této doby jsou aktualizace méně časté (protože je stejně k~ničemu nepotřebujeme a~ušetříme tak výpočetní čas), ale jakmile se mění počasí, aktualizace uplynulého času je častější.
+Oproti automatu jsme zde přidali drobnou optimalizaci -- pokud jsme ve fázi stabilního počasí a~neměníme žádné parametry, vyhodnocování stromu přejde do nejpravější větve, kde bude čekat po nějaký spočítaný čas. Spolu s~vhodným nastavením aktualizační služby jsme tak dosáhli toho, že během této doby jsou aktualizace méně časté (protože je stejně k~ničemu nepotřebujeme a~ušetříme tak výpočetní čas), ale jakmile se mění počasí, aktualizace uplynulého času je častější.
 
 
 \begin{figure}[!ht]\centering
