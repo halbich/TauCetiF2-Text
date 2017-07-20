@@ -1,6 +1,6 @@
 %!TEX root = ../../prace.tex
 
-\section{Struktura projektu v~Unreal Enginu TODO}
+\section{Struktura projektu v~Unreal Engine TODO}
 \label{sec:ueStructure}
 
 Nejzákladnějším prvkem celého projektu v~\UEu{} jsou herní \textit{mapy}. Mapy obsahují herní objekty, které tvoří jádro hry. Mohou to být viditelné (renderovatelné) objekty, ale i~různé objekty implementující herní logiku. Těm druhým se obvykle říká \textit{kontroléry}, protože nedělají nic jiného, než jen nějakým implementovaným způsobem řídí hru.
@@ -47,7 +47,7 @@ U zbývajících stojí za zmínku pouze \textit{Landscape6}, který na sobě m�
 
 \subsubsection{Průběh nahrávání hlavní herní mapy}
 
-Jakmile je vyvolána událost \textit{Event BeginPlay}, hra se podívá do hlavní herní instance\footnote{Herní instance je jediná třída v~\UEu{}, která je stejná po celou dobu života hry. V~zásadě tak kopíruje koncept návrhového vzoru \textit{Singleton} a~my ji můžeme využít pro předávání informací při přechodu mezi mapami.}, jaký level je požadován na nahrání. Tato informace je do herní instance uložena během výběru nové hry, či v~případě hlavního menu z~hlavního Blueprintu mapy. Protože nemáme zajištěné pořadí vykonávání události \textit{BeginPlay}, musíme počkat, než nám některé objekty (jako třeba WorldController) dají najevo, že byly úspěšně inicializovány.
+Jakmile je vyvolána událost \textit{BeginPlay}, hra se podívá do hlavní herní instance\footnote{Herní instance je jediná třída v~\UEu{}, která je stejná po celou dobu života hry. V~zásadě tak kopíruje koncept návrhového vzoru \textit{Singleton} a~my ji můžeme využít pro předávání informací při přechodu mezi mapami.}, jaký level je požadován na nahrání. Tato informace je do herní instance uložena během výběru nové hry, či v~případě hlavního menu z~hlavního Blueprintu mapy. Protože nemáme zajištěné pořadí vykonávání události \textit{BeginPlay}, musíme počkat, než nám některé objekty (jako třeba WorldController) dají najevo, že byly úspěšně inicializovány.
 
 Další logika je snadná -- proběhne pokus o~kompletní načtení dat do instance objektu uložené hry a~postupně u~všech herních objektů s~podporou ukládání her voláme načítání dat z~objektu uložené hry. Po ukončení této fáze se hra pokusí zobrazit případné chyby vzniklé během načítání (což nejčastěji bude spíše validační hláška) a~vyvolá se odtemnění skrze \textit{Remote Event}. Na tuto událost pak reaguje mapa LoadingScreen (jež načítání MainMap vždy vyvolá) a~proběhne animace, kdy se nahrávací obrazovka postupně zprůhlední, až nakonec není vidět.
 
@@ -58,7 +58,7 @@ Další logika je snadná -- proběhne pokus o~kompletní načtení dat do insta
 
 Tento herní objekt si udržuje seznam všech herních bloků v~herním světě. Zároveň má ke každého bloku dynamicky přiřazenou obsluhu různých událostí. Společnou pro všechny je \TT{OnDestroyRequestedEvent}, která je definovaná v~bázové třídě bloků a~slouží k~notifikaci toho, že se blok chce zničit. Tato událost může být vyvolána jako důsledek kyselého deště, kdy po zásazích kleslo zdraví bloku na nulu.
 
-Další důležitou vlastností tohoto objektu je držení reference na kořen stromové struktury reprezentující umístění bloků v~herním světě. Této vlastnosti pak mohou využívat ostatní objekty hry a~kupříkladu se dotazovat na volné místo.
+Další důležitou vlastností tohoto objektu je držení reference na kořen stromové struktury reprezentující umístění bloků v~herním světě. Této vlastnosti pak mohou využívat ostatní objekty hry a~kupříkladu se mohou dotazovat na volné místo.
 
 
 \subsection{bloky}
@@ -68,33 +68,30 @@ Kde a~jak definované, obrázek, jak se to definuje konstanty
 
 \subsection{GameElectricityPawn}
 
-elektrika, AI controller
+Herní objekt GameElectricityPawn má přiřazenou komponentu\linebreak \TT{UGameElectricityComponent}, která spravuje všechny elektrické sítě v herním světě. \textit{World Controller} si během události \textit{BeginPlay} tento herní objekt najde a uloží si referenci na komponentu správy elektrických sítí. Díky tomu poté může bloky přidávat či odebírat ze sítě voláním příslušných metod v elektrické komponentě.
 
-\subsection{Game Weather Pawn}
 
-počasí, AI controller, BT počasí + komponenty
+\subsection{GameWeatherPawn}
+GameWeatherPawn funguje jako správce počasí. Je ovládán \textit{AI kontrolérem}, který je možné nalézt v \TT{/Content/Blueprints/World/Weather}. V té samé složce je možné nalézt všechny assety, které s počasím souvisí. Mimo jiné je zde možné nalézt ovládací Behavior Tree. Podoba ovládacího behaviorálního stromu je vidět na obrázku \ref{fig:weatherBP}. Strom se v zásadě nijak neliší od uvažovaného automatu z kapitoly (TODO ref!). 
+
+Služba aktualizace času (na obrázku zeleně) neustále aktualizuje uplynulý herní čas a řídí se přitom hodnotou z (todo ref) herního objektu oblohy. Dále máme ve stromě tři funkce, které se starají o kontrolu stavu počasí a případnou aktualizaci navázaných herních objektů -- oblohy. 
+
+Oproti automatu jsme zde přidali drobnou optimalizaci -- pokud jsme ve fázi stabilního počasí a neměníme žádné parametry, vyhodnocování stromu přejde do nejpravější větve, kde bude čekat po nějaký spočítaný čas. Spolu s vhodným nastavením aktualizační služby jsme tak dosáhli toho, během této doby jsou aktualizace méně časté (protože je stejně k ničemu nepotřebujeme a ušetříme tak výpočetní čas), ale jakmile se mění počasí, aktualizace uplynulého času je častější.
+
+
+\begin{figure}[!ht]\centering
+\includegraphics[ width=140mm]{../img/program/weatherBT}
+\caption{Behavior Tree pro ovládání počasí}
+\label{fig:ue_weatherBP}
+\end{figure}
+\FloatBarrier
+
+
 
 \subsection{SkyBP}
 
-denní cyklus -- popis
+Tento herní objekt je kompletně implementován v Blueprintu a vychází ze základního assetu oblohy, který je v \UEu{} dostupný. Navíc jsme upravili jeho chování tak, aby na herní instanci vyvolával globální událost \textit{Daytime Changed}, díky které pak mohou fungovat automatizované přepínače. Parametry jsou řízeny křivkami na základě aktuálního herního času. Tyto křivky se nacházejí v \TT{/Content/Blueprints/World/SkyCurves}.
 
-\subsection{AmbientSound}
-
-řeší hudbu ve hře
-
-\subsection{Tutorial}
-
-řeší tutorial, používá widgety
-
-
-\subsection{Lokalizacer}
-
-nastínit lokalizaci
-
-
-
-\subsection{UI}
-nastínit UI -- základní widgety atd.
 
 
 
