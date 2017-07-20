@@ -94,7 +94,7 @@ Představme si, že bychom herní svět reprezentovali polem. Pak bychom potřeb
 \subsection{Stromové struktury}
 \label{subsec:trees}
 
-Jako rozumný nápad se jeví použití stromových struktur, které nám budou reprezentovat svět podle skutečně zabraných pozic v~herním světě. Kdybychom povolili volnou počáteční rotaci, zřejmě bychom museli přistoupit k~nějaké variantě \textit{clusterů}, tedy shluků bloků ve stejné ortogonální mřížce. Protože tuto vlastnost nepovolujeme, můžeme se zabývat jinými datovými strukturami. Běžně používané datové struktury ve hrách jsou například:
+Jako rozumný nápad se jeví použití stromových struktur, které nám budou reprezentovat svět podle skutečně zabraných pozic v~herním světě. Kdybychom povolili volnou počáteční rotaci, zřejmě bychom museli přistoupit k~nějaké variantě \textit{clusterů}, tedy shluků bloků ve stejné ortogonální mřížce. Protože tuto vlastnost nepovolujeme, můžeme se zabývat jinými datovými strukturami. Ve hrách jsou běžně používané například:
 \pagebreak
 \begin{itemize}
 	\item Octree
@@ -117,25 +117,25 @@ K-D strom je pro naši situaci vhodnější, protože při správné implementac
 Abychom si usnadnili indexování bloků, budeme uvažovat, že bloky jsou\linebreak v~osách X a~Y indexovány v~intervalu <-25~000, 25~000>. V~ose Z~(tedy vertikální ose) budeme bloky indexovat v~intervalu <0, 25~000> a~indexy ve všech osách budou celočíselné. Dále určíme fakt, že jednotkový blok na herních souřadnicích [0, 0, 0] bude v~\UEu{} reprezentován na pozici [0, 0, 0]. 
 
 \subsubsection{Střed bloku a~škálování}
-Pro potřeby porozumění následujícího textu se přesuneme z~3D prostoru, ve kterém v~\UEu{} pracujeme, do 1D prostoru. Jednotkovou úsečkou budeme rozumět úsečku o~délce $20\,\ cm$. Tuto jednotkovou úsečku umístíme na osu tak, že střed úsečky je přesně ve středu osy. Tudíž kraje jednotkové úsečky jsou v~bodech [-10], [10].
+Pro potřeby porozumění následujícího textu se přesuneme z~3D prostoru, ve kterém v~\UEu{} pracujeme, do 1D prostoru. Jednotkovou úsečkou budeme rozumět úsečku o~délce $20\,\ cm$ (chceme zde zachovat konzistenci s~požadavkem na minimální velikost bloku z~kapitoly \ref{subsec:bloky}). Tuto jednotkovou úsečku umístíme na osu tak, že střed úsečky je přesně ve středu osy. Tudíž kraje jednotkové úsečky jsou v~bodech [-10], [10].
 
-Nyní potřebujeme určit body osy, ke kterým budeme střed jednotkové úsečky přichytávat. To budou přesně $k$-násobky délky jednotkové úsečky pro libovolné celočíselné $k$. Nyní můžeme říci, že pokud budeme chtít umístit jednotkovou úsečku na $n$-tý index osy, střed této jednotkové úsečky bude v~bodě $n * 20$ a~kraje jednotkové úsečky budou v~bodech $[(n * 20) -- 10]$ a~$[(n * 20) + 10]$. Vidíme, že kraje jednotkové úsečky jsou správně zarovnané a~pro $n = 0$ odpovídají umístění jednotkové úsečky.
+Nyní potřebujeme určit body osy, ke kterým budeme střed jednotkové úsečky přichytávat. To budou přesně $k$-násobky délky jednotkové úsečky pro libovolné celočíselné $k$. Nyní můžeme říci, že pokud budeme chtít umístit jednotkovou úsečku na $n$-tý index osy, střed této jednotkové úsečky bude v~bodě $(n * 20)$ a~kraje jednotkové úsečky budou v~bodech $[(n * 20) -- 10]$ a~$[(n * 20) + 10]$. Vidíme, že kraje jednotkové úsečky jsou správně zarovnané a~pro $n = 0$ odpovídají umístění jednotkové úsečky.
 
-Nyní si představme situaci, že chceme na osu umístit jednotkovou úsečku zvětšenou na \textit{dvojnásobek} (označme ji \textbf{D}). Zvětšování je symetrické dle středu a~po umístění \textbf{D} na \textit{nultý} index osy dostáváme, že kraje \textbf{D} jsou v~bodech [-20], [20]. Nyní vidíme, že kraje \textbf{D} nejsou správně zarovnané, protože prochází námi definovanými body pro přichytávání. Kdybychom teď chtěli na index 1 umístit jednotkovou úsečku, obě úsečky se nám protínají a~to je špatně -- chceme dosáhnout toho, aby i~po libovolném zvětšení jednotkové úsečky byla tato úsečka správně zarovnaná.
+Nyní si představme situaci, kdy chceme na osu umístit jednotkovou úsečku zvětšenou na \textit{dvojnásobek} (označme ji \textbf{D}). Zvětšování je symetrické dle středu a~po umístění \textbf{D} na \textit{nultý} index osy dostáváme, že kraje \textbf{D} jsou v~bodech [-20], [20]. Nyní vidíme, že kraje \textbf{D} nejsou správně zarovnané, protože prochází námi definovanými body pro přichytávání. Kdybychom teď chtěli na index 1 umístit jednotkovou úsečku, obě úsečky se nám protínají a~to je špatně -- chceme dosáhnout toho, aby i~při libovolném zvětšení jednotkové úsečky byla tato úsečka správně zarovnaná.
 
-Je důležité si uvědomit, že problém z~předchozího odstavce vzniká (díky symetrii zvětšování) pouze při škálování \textit{sudým} číslem. Pro tato čísla musíme udělat to, že střed bloku si \uv{virtuálně} posuneme tak, abychom celou škálovanou úsečku správně zarovnali do námi definovaných hranic (tento virtuální střed budeme správně přichytávat k~ose). Při určování virtuálního středu se budeme řídit pravidlem \uv{nejbližšího nižšího} možného středu. 
+Je důležité si uvědomit, že problém z~předchozího odstavce vzniká (díky symetrii zvětšování) pouze při škálování \textit{sudým} číslem. Pro tato čísla musíme udělat to, že si střed bloku  \uv{virtuálně} posuneme tak, abychom celou škálovanou úsečku správně zarovnali do námi definovaných hranic (tento virtuální střed budeme správně přichytávat k~ose). Při určování virtuálního středu se budeme řídit pravidlem \uv{nejbližšího nižšího} možného středu. 
 
 Demonstrujme posouvání virtuálního středu následujícím příkladem.\linebreak Vezměme si čtyřnásobně zvětšenou jednotkovou úsečku, označme si ji jako \textbf{Č}. Budeme ji chtít umístit na \textit{nultý} index osy. Bez posouvání středu bychom řekli, že hranice úsečky jsou v~bodech [-40], [40]. Představme si \textbf{Č} rozloženou na jednotkové úsečky, zleva indexované od 0. Nyní máme střed na indexu [$1,5$], tedy \textit{mezi} jednotkovými úsečkami 1 a~2. Pravidlem \uv{nejbližšího nižšího} virtuálně posuneme střed \textbf{Č} na index [1]. Když pak jednotkou úsečku na indexu [1] správně přichytíme k~ose, hranice se nám posunou o~$10\,\ cm$ doprava, kraje \textbf{Č} budou v~bodech [-30], [50] a~tím dosáhneme správného zarovnání.
 
-Posledním krokem je rozšíření výše uvedených myšlenek všechny tři souřadnice 3D prostoru. Nyní už víme, jaký způsobem budeme řešit zarovnání bloku o~nějaké škále na daných \textit{herních} souřadnicích. Zároveň z~toho můžeme vidět, jakým způsobem budeme postupovat při převodu z~našeho souřadnicového systému do systému souřadnic v~rámci \UEu{}.
+Posledním krokem je rozšíření výše uvedených myšlenek na všechny tři souřadnice 3D prostoru. Nyní už víme, jaký způsobem budeme řešit zarovnání bloku o~nějaké škále na daných \textit{herních} souřadnicích. Zároveň z~toho můžeme vidět, jakým způsobem budeme postupovat při převodu z~našeho souřadnicového systému do systému souřadnic v~rámci \UEu{}.
  
 \subsubsection{Důsledky škálování}
 
 Z výše uvedených faktů je vidět, že ve hře budou muset existovat pravidla pro výpočty mezi souřadnicovým systémem naší hry a~souřadnicovým systémem \UEu{}. Dále z~toho vyplývá, že pokud má blok netriviální škálování, dle výše uvedených pravidel může inherentně \uv{zabrat} některé pozice v~našem souřadnicovém systému a~jiné bloky pak tento prostor nemohou obývat. To je skvělý výsledek, protože tím máme vyřešené konkrétní pozice a~nemohou nám nastat konflikty umístění bloků.
 
-Dalším důležitým důsledkem je způsob rotací škálovaných bloků. Budeme chtít, aby blok rotoval vzhledem k \textit{virtuálnímu} středu. 
+Dalším důležitým důsledkem je způsob rotací škálovaných bloků. Budeme chtít, aby blok rotoval vzhledem k~\textit{virtuálnímu} středu. 
 
-Dále máme usnadněné výpočty hranic bloku vůči globální souřadnicovému systému \UEu{}. K tomu nám stačí umístění v~našem souřadnicovém systému, velikosti a~rotaci bloku. Výsledkem pak může být Min-Max box, který můžeme použít pro dotazy nad naším K-D stromem. Jednoduchým a~rychlým výpočtem pak můžeme analyzovat, jestli mají nějaké dva bloky nějaký netriviální průnik, jestli se dotýkají apod.
+Dále máme usnadněné výpočty hranic bloku vůči globálnímu souřadnicovému systému \UEu{}. K~tomu nám stačí znát umístění v~našem souřadnicovém systému, velikosti a~rotaci bloku. Výsledkem pak může být Min-Max box, který můžeme použít pro dotazy nad naším K-D stromem. Jednoduchým a~rychlým výpočtem pak můžeme analyzovat, jestli mají nějaké dva bloky nějaký netriviální průnik, jestli se dotýkají apod.
 
 
 \subsubsection{Důsledky reprezentace bloků na herní svět}
@@ -145,7 +145,7 @@ Budeme chtít, aby jednotlivé vrcholy našeho K-D stromu znaly svoji reprezenta
 
 \subsection{Zapojení do rozpoznávání tvarů}
 
-Vzhledem k~dynamicky škálovatelným blokům budeme požadovat, aby bylo možné bloky skládat do tvarů libovolným splňujícím způsobem. Dobře je to vidět na následujícím obrázku \ref{fig:konfig}:
+Vzhledem k~dynamicky škálovatelným blokům budeme požadovat, aby bylo možné bloky skládat do tvarů libovolným splňujícím způsobem. Tedy by mělo být jedno, zda do tvaru umístíme jeden blok velikosti [1, 1, 2], nebo dva jednotkové bloky vedle sebe. Představu o~tomto konceptu si lze udělat z~obrázku \ref{fig:konfig}, který zobrazuje 4 splňující varianty stejného tvaru.
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=140mm]{../img/analysis/konfigurace}
@@ -157,9 +157,9 @@ Vzhledem k~dynamicky škálovatelným blokům budeme požadovat, aby bylo možn�
 
 \FloatBarrier
 
-Všechny tvary z~obrázku \ref{fig:konfig} by měly dohromady tvořit stejný tvar, ačkoliv splnění tohoto tvaru bylo u~každého tvaru rozdílné. Tento přístup však přináší mnoho problémů. Pro příklad uvažme rozklad bloku \RB{A5} netriviální velikosti (kupříkladu [2,~1,~2], tedy šířky jednotkového bloku). Je zřejmé, že stejného tvaru je možné dosáhnout použitím dvou stejných bloků velikosti [1,~1,~1] a~jednoho bloku \RB{A2} velikosti [1,~1,~1] (pokud budeme uvažovat, že tyto dva bloky je možné vzájemně kombinovat).
+\subsubsection{Komplexní systém rozpoznávání tvarů}
+Výše zmíněný přístup k~rozpoznávání tvarů však přináší mnoho nových problémů. Pro příklad uvažme rozklad bloku \RB{A5} netriviální velikosti (kupříkladu [2,~1,~2], tedy šířky jednotkového bloku). Je zřejmé, že stejného tvaru je možné dosáhnout použitím dvou stejných bloků velikosti [1,~1,~1] a~jednoho bloku \RB{A2} velikosti [1,~1,~1] (pokud budeme uvažovat, že je možné tyto dva bloky vzájemně kombinovat). Bloky v~herním světě by se pak musely nějakým způsobem sdružovat do těchto vyšších celků a~ty pak vyhodnocovat vůči definovaným tvarům, či případně jinak rozpoznávat, zda jsou součástí nějakého předem definovaného tvaru. Z~důvodu celkové náročnosti tohoto přístupu jsme se rozhodli, že tento komplexní systém nebudeme v~naší práci požadovat. Nicméně, tato myšlenka se nám velice líbí, takže ji necháme jako možné budoucí rozšíření této práce.
 
-Z předchozích poznatků vyplývá, že definice nějakého komplexního tvaru, složeného z~různých typů bloků
-(TODO dokončit)
+
 
 
