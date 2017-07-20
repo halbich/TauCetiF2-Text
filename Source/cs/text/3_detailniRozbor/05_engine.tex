@@ -39,7 +39,7 @@ Zamysleme se tedy nad tím, jak můžeme naši hru implementovat. Máme na výb�
 \end{itemize}
 
 \subsubsection{Vlastní engine}
-Tuto možnost rovnou zavrhneme. Vzhledem k~tomu, kolik funkcionality budeme implementovat, nevidíme přínos v~další práci s~implementací vlastního enginu. Naším cílem je prototyp hry a~tudíž nechceme ztrácet drahocenný čas vývojem nutných nástrojů a~systému pro naši hru. V~následujícím textu se tedy zaměříme na možnosti použití nějakého již existujícího řešení.
+Vzhledem k~tomu, kolik funkcionality budeme implementovat, nevidíme přínos v~další práci s~implementací vlastního enginu. Naším cílem je prototyp hry a~tudíž nechceme ztrácet drahocenný čas vývojem nutných nástrojů a~systému pro naši hru. V~následujícím textu se tedy zaměříme na možnosti použití nějakého již existujícího řešení.
 
 
 \subsection{Využití již existujícího řešení}
@@ -78,15 +78,15 @@ Další komplikaci vidíme v~použití \CPP{}, se kterým jsme v~době rešerše
 
 
 
-\subsection{Volba engine -- verdikt}
+\subsection{Volba herního enginu -- verdikt}
 
 
-Nakonec jsme zvolili poslední možnost -- \UE{}. Autorovy znalosti především z~oblasti \texttt{C\#} sice hovořily pro použití \UN{}, nicméně výhody použití \UE{} byly dostatečnými argumenty pro to, abychom navzdory malé znalosti \CPP{} a~obtížnosti pro začínajícího vývojáře zvolili právě toto řešení.
+Nakonec jsme zvolili poslední možnost -- \UE{}. Autorovy znalosti především z~oblasti \texttt{C\#} sice hovořily pro použití \UN{}, nicméně výhody použití \UEu{} byly dostatečnými argumenty pro to, abychom navzdory malé znalosti \CPP{} a~obtížnosti pro začínajícího vývojáře zvolili právě toto řešení.
 
 \section{Struktura projektu}
 
 Celý projekt v~\UE{} je rozdělen do dvou částí -- \CPP{} část a~Blueprintová část. V~Blueprintu je kód vizualizován jako graf uzlů a~jsou zde zaznamenány vztahy mezi těmito uzly. Uzly tedy odpovídají funkcím v~\CPP{} a~těm je pak možné předávat parametry ať už v~podobě proměnných definovaných v~\CPP{} kódu nějaké třídy, nebo proměnných definovaných přímo v~Blueprintu. Vztahy mezi uzly pak označují následující kód určený k~vykonávání. Můžeme také říct, že vykonávání kódu v~Blueprintu je \textit{interpretované}.
 
- \UE{} umožňuje herním vývojářům implementovat celou hru kompletně za pomocí Blueprintů, tedy vizuálního rozhraní. Toho se však obvykle nevyužívá, protože vykonávání programu v~Blueprintu je přibližně 10 krát pomalejší, než vykonávání nativního \CPP{} kódu (odpověď jednoho z~vývojářů \UE{} na dotaz ohledně rychlosti Blueprintů: \uv{\textit{Blueprints are approximately the speed of UnrealScript in UE3, and our rule of thumb there was about 10x slower than C++.}},~\citep{ue_performance}). V~praxi tak dochází k~tomu, že vývojář (i neprogramátor) může za pomocí Blueprintů rychle prototypovat funkcionalitu, kterou pak kodér přepíše do metod v~\CPP{}, správně tyto metody označí makry tak, aby \UE{} tyto metody v~kódu našel (což se provádí za pomocí reflexe v~\UBT{}\footnote{\UBT{} je zkratka pro \textit{Unreal Build Tool}, což je \CS{} nástroj, který slouží pro potřeby kompilace projektů napsaných v~\UEu{} a~navíc umí třeba vygenerovat projekt pro Visual Studio pouze z~adresářové struktury zdrojových kódů (oficiální prezentace Epic Games o~ automatizaci kompilace~\citep{ue_ubt}).} a~použitím příslušných \CPP{} maker) a~upraví Blueprint tak, aby původní kód tyto metody volal.
+ \UE{} umožňuje herním vývojářům implementovat celou hru kompletně za pomocí Blueprintů, tedy vizuálního rozhraní. Toho se však obvykle nevyužívá, protože vykonávání programu v~Blueprintu je přibližně 10 krát pomalejší, než vykonávání nativního \CPP{} kódu (odpověď jednoho z~vývojářů \UEu{} na dotaz ohledně rychlosti Blueprintů: \uv{\textit{Blueprints are approximately the speed of UnrealScript in UE3, and our rule of thumb there was about 10x slower than C++.}},~\citep{ue_performance}). V~praxi tak dochází k~tomu, že vývojář (i neprogramátor) může za pomocí Blueprintů rychle prototypovat funkcionalitu, kterou pak kodér přepíše do metod v~\CPP{}, správně tyto metody označí makry tak, aby \UE{} tyto metody v~kódu našel (což se provádí za pomocí reflexe v~\UBT{}\footnote{\UBT{} je zkratka pro \textit{Unreal Build Tool}, což je \CS{} nástroj, který slouží pro potřeby kompilace projektů napsaných v~\UEu{} a~navíc umí třeba vygenerovat projekt pro Visual Studio pouze z~adresářové struktury zdrojových kódů (oficiální prezentace Epic Games o~ automatizaci kompilace~\citep{ue_ubt}).} a~použitím příslušných \CPP{} maker) a~upraví Blueprint tak, aby původní kód tyto metody volal.
  
 Rádi bychom využili kombinace obou přístupů. Díky Blueprintům můžeme rychle prototypovat vyvíjenou funkcionalitu a~následně ji přenést do výkonnějšího \CPP{} kódu. Dále očekáváme, že ne veškerá funkcionalita bude muset být přístupná z~Blueprintu. Zároveň přitom budeme chtít, abychom mohli určité části hry (kupříkladu bloky) snadno spravovat z~Editoru a~nemuseli jsme tak často kompilovat upravený kód. Budeme tedy muset najít vhodný kompromis mezi oběma přístupy.
