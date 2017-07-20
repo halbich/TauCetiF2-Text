@@ -2,7 +2,7 @@
 
 \section{Počasí}
 
-Abychom mohli popsat koncept počasí ve hře, musíme mít definovaný \textit{typ} počasí. Typ popisuje vlastnosti počasí (například \uv{je částečně zataženo}, \uv{hustě prší}) na základě nějakých parametrů. Základní koncept počasí ve hře pak můžeme popsat dvěma stavy -- typ počasí zůstává \textit{stejný}, nebo se \textit{mění}. Ve vlastnostech typu pak můžeme mít definováno, jak dlouho zůstává počasí v~daném typu a~jak dlouho probíhá změna na jiný typ (tyto konstanty mohou být dány intervalem, ze kterého se zvolí náhodné číslo a~tím dostaneme jistý stupeň \textit{proměnlivosti} počasí.
+Abychom mohli popsat koncept počasí ve hře, musíme mít definovaný \textit{typ} počasí. Typ popisuje vlastnosti počasí (například \uv{je částečně zataženo}, \uv{hustě prší}) na základě nějakých parametrů. Základní koncept počasí ve hře pak můžeme popsat dvěma stavy -- typ počasí zůstává \textit{stejný}, nebo se \textit{mění}. Ve vlastnostech typu pak můžeme mít definováno, jak dlouho zůstává počasí v~daném typu a~jak dlouho probíhá změna na jiný typ (tyto konstanty mohou být dány intervalem, ze kterého se zvolí náhodné číslo a~tím dostaneme jistý stupeň \textit{proměnlivosti} počasí).
 
 Přístupů, jak implementovat systém počasí, je opět více. Jednou možností je vytvořit herní objekt, který bude dědit z~třídy \TT{UActor}. V~aktualizační smyčce tohoto herního objektu pak můžeme mít implementovanou logiku, která bude aktualizovat počasí ve hře. Další možností je použít jednoduchý \textit{Behavior tree}, tedy strom chování. Použitím \textit{Behavior tree} získáváme možnost, jak měnit chování počasí v~Editoru bez nutnosti zásahů do zdrojových kódů hry. 
 
@@ -10,6 +10,6 @@ My jsme se rozhodli, že systém počasí implementujeme jako herní entitu s~um
 
 \textit{Typy} počasí pak budeme definovat v~Editoru, přičemž stejně jako u~definic bloků vytvoříme definiční třídu s~odpovídající strukturou v~\CPP{}. Tento přístup vyžadujeme z~toho důvodu, že budeme chtít ukládat stav počasí do souboru uložené hry a~pak tento stav při nahrávání opět obnovit. 
 
-Dále požadujeme následující vlastnosti typu počasí: zda je daný typ \textit{bouřkový}, \textit{délku trvání}, \textit{čas změny} na jiný typ, koeficient \textit{rychlosti mraků} a~\textit{zataženosti oblohy}. Nechceme se zabývat grafickými detaily, takže jediným způsobem, jak můžeme hráči počasí vizualizovat, je zobrazením mraků. Podle koeficientu zataženosti pak budeme chtít měnit i~intenzitu osvětlení od Slunce. Protože je naše počasí velice jednoduché, budeme chtít, všechny vlastnosti byly zadány intervalem (vyjma informaci o~tom, zda jde typ bouřkový).
+Dále požadujeme následující vlastnosti typu počasí: zda je daný typ \textit{bouřkový}, \textit{délku trvání}, \textit{čas změny} na jiný typ, koeficient \textit{rychlosti mraků} a~\textit{zataženosti oblohy}. Nechceme se zabývat grafickými detaily, takže jediným způsobem, jak můžeme hráči počasí vizualizovat, je zobrazením mraků. Podle koeficientu zataženosti pak budeme chtít měnit i~intenzitu osvětlení od Slunce. Protože je naše počasí velice jednoduché, budeme chtít, aby všechny vlastnosti byly zadány intervalem (vyjma informaci o~tom, zda jde typ bouřkový).
 
 Bouřkový typ počasí budeme chápat speciální způsobem. V~průběhu tohoto typu počasí budeme poškozovat bloky a~tím tak budeme simulovat bouři kyselých dešťů. 

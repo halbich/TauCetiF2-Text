@@ -83,53 +83,64 @@ Algoritmus bude mít přidělené nějaké maximální kvantum času, řekněme 
 \section{Bloky v~herním světě}
 \label{sec:blocksWorld}
 
-Způsobů, jak reprezentovat bloky ve světě, je více, takže bychom měli jednotlivé varianty porovnat a~vyhodnotit. V~této chvíli si také musíme určit, jak velký chceme náš herní svět mít. Na základě tohoto důležitého požadavku budeme posuzovat vhodnost jednotlivých implementací. My jsme se rozhodli, že hráči nabídneme rozsáhlý svět čtvercového půdorysu o~rozloze $100\,\ km^2$ a~výšky $5\,\ km$. (TODO upravit větu 2000) Teď trochu předběhneme a~prozradíme, že nás k~tomuto rozhodnutí vedla snaha, aby datové struktury nebyly úplně triviální (třeba dvourozměrné pole). Zároveň s~tím si ale uvědomujeme, že správně by hra měla řešit takto velký svět tak, aby i~velké množství bloků hru nezpomalovalo či dokonce neshodilo celou hru (třeba z~nedostatku paměti RAM). Nicméně jak jsme zmínili v~kapitole (TODO ref), budeme v~této práci očekávat takové množství bloků, jejichž počet hra bez problémů zvládne.
+Způsobů, jak reprezentovat bloky ve světě, je více, takže bychom měli jednotlivé varianty porovnat a~vyhodnotit. V~této chvíli si také musíme určit, jak velký chceme náš herní svět mít. Na základě tohoto důležitého požadavku budeme posuzovat vhodnost jednotlivých implementací. My jsme se rozhodli, že hráči nabídneme rozsáhlý svět čtvercového půdorysu o~rozloze $100\,\ km^2$ a~výšky $5\,\ km$. V~takto rozsáhlém herním světě bude mít hráč dostatek prostoru pro stavbu svých budov, a~to i~v~případě, že se v~budoucnu rozhodneme rozšiřovat hru o~nové bloky a~herní vlastnosti. Zároveň s~tím si ale uvědomujeme, že správně by hra měla řešit takto velký svět tak, aby i~velké množství bloků hru nezpomalovalo či dokonce neshodilo celou hru (třeba z~nedostatku paměti RAM). Nicméně jak jsme zmínili v~kapitole \ref{subsec:bloky}, budeme v~této práci očekávat takové množství bloků, jejichž počet hra bez problémů zvládne.
 
 Námi definované hranice herního světa se u~bloků projeví tak, že v~rámci herního světa můžeme mít až $50~000 * 50~000 * 25~000$ bloků jednotkové velikosti, což je opravdu mnoho. Nejprve se tedy zaměříme na to, jak vůbec můžeme bloky reprezentovat a~zároveň s~tím budeme řešit, jak se vypořádat s~různými rozměry bloků.
 
 \subsection{Použití dvourozměrného pole}
 
-Představme si, že bychom herní svět reprezentovali polem. Pak bychom potřebovali 62~500~\textit{miliard} ukazatelů, z~nichž by naprostá většina byla prázdných (\textit{NULL}ových). Pro jednoduchost počítejme, že jeden ukazatel má velikost 4B a~že 1 kB je roven 1000 B. Pak dostáváme, že bychom potřebovali alokovat 250 TB dat. Možná, že za několik let to nebude problém, ale v~současné době nám to tak trochu vadí, takže se zkusme zaměřit na efektivnější datové struktury.
+Představme si, že bychom herní svět reprezentovali polem. Pak bychom potřebovali 62~500~\textit{miliard} ukazatelů, z~nichž by naprostá většina byla prázdných (\textit{NULL}ových). Pro jednoduchost počítejme, že jeden ukazatel má velikost 4B a~že 1 kB je roven 1000 B. Pak dostáváme, že bychom potřebovali alokovat 250~TB dat. To vidíme jako problém, takže se zkusme zaměřit na efektivnější datové struktury.
 
 \subsection{Stromové struktury}
 \label{subsec:trees}
 
-Jako rozumný nápad se jeví použití stromových struktur, které nám budou reprezentovat svět podle skutečně zabraných pozic v~herním světě. Kdybychom povolili volnou počáteční rotaci, zřejmě bychom museli přistoupit k~nějaké variantě \textit{clusterů}, tedy shluků bloků ve stejné ortogonální mřížce. Protože tuto vlastnost nepovolujeme, můžeme se zabývat jinými datovými strukturami, například:
-
+Jako rozumný nápad se jeví použití stromových struktur, které nám budou reprezentovat svět podle skutečně zabraných pozic v~herním světě. Kdybychom povolili volnou počáteční rotaci, zřejmě bychom museli přistoupit k~nějaké variantě \textit{clusterů}, tedy shluků bloků ve stejné ortogonální mřížce. Protože tuto vlastnost nepovolujeme, můžeme se zabývat jinými datovými strukturami. Běžně používané datové struktury ve hrách jsou například:
+\pagebreak
 \begin{itemize}
-	\item Použití Octree
-	\item Použití některé varianty AABB stromů
+	\item Octree
+	\item K-D stromy
 \end{itemize}
 
-Pojďme si tedy tyto možnosti rozebrat.
+Pojďme si tedy tyto možnosti rozebrat a~zhodnotit v~kontextu naší hry.
 
 \subsubsection{Octree}
 Octree je stromová datová struktura, ve které vrchol reprezentuje nějaký objem a~jeho 8 potomků tento objem rovnoměrně dělí na menší části. Obvykle vrcholy této struktury reprezentují krychle v~nějakém prostoru. Pokud se zamyslíme, jak by náš svět byl v~této struktuře reprezentován, dojdeme k~tomu, že kořenový vrchol této struktury by měl 4 potomky vždy prázdné. Ačkoliv to není nijak zásadní nevýhoda, podívejme se na alternativní řešení.
 
-\subsubsection{K-D tree}
+\subsubsection{K-D strom}
 K-D strom je datová struktura, která je velmi podobná Octree, ale na rozdíl od ní má pouze 2 potomky. Vrchol, který se nachází v~nějaké hladině, totiž svůj objem rozdělí do dvou polovin v~závislosti na dané hladině. Takto je možné reprezentovat vícedimenziální prostory, kdy jednotlivé hladiny reprezentují dělení pro jednotlivé souřadnice. Každá následující hladina této struktury pak představuje dělení podle následující souřadnice v~daném prostoru. Pro n-dimenzionální prostor pak (n+1) hladina (počítáno od jedné) opět dělí prostor podle první souřadnice.
 
-Tato datová struktura se nám zamlouvá více, protože při správné implementaci můžeme \uv{beztrestně} změnit rozměry herního světa (pokud to bude potřeba) a~nebudeme muset měnit implementaci reprezentace bloků v~herním světě. Navíc budeme chtít, aby byla hloubka stromu co nejmenší, takže navrhujeme optimalizaci, kdy blok ve stromě může být v~daném vrcholu uložen jako \uv{jedináček}. (TODO více níže)
+\subsubsection{Vlastní rozšíření K-D stromu}
+K-D strom je pro naši situaci vhodnější, protože při správné implementaci této struktury můžeme změnit rozměry herního světa (pokud to bude potřeba) a~nebudeme muset měnit implementaci reprezentace bloků v~herním světě. V~rámci našeho rozšíření navrhujeme, aby si jednotlivé vrcholy uchovávaly informaci o~reprezentované části herního světa v~podobě Min-Max boxu\footnote{Jako Min-Max box budeme chápat strukturu, která je popsána dvěma vektory, které představují minimální a~maximální hranice. Ve 2D prostředí by to byl obdélník s~udáním levého dolního rohu a~pravého horního rohu.}. Tuto vlastnost pak využijeme pro rychlé dotazování nad tímto stromem (například při kontrole, zda je možné nějaký blok umístit na nějakou pozici v~herním světě). Navíc budeme chtít, aby byla hloubka stromu co nejmenší, takže navrhujeme optimalizaci, kdy blok ve stromě může být v~daném vrcholu uložen jako \uv{jedináček}. Tento blok může být umístěn kdekoliv v~prostoru, který daný vrchol reprezentuje. 
 
 \subsection{Reprezentace bloku}
 
-Abychom si usnadnili indexování bloků, budeme uvažovat, že bloky jsou indexovány v~rozsahu [-25~000, 25~000] ve všech souřadnicích a~jednotkový blok na herních souřadnicích [0, 0, 0] bude v~\UEu{} reprezentován na pozici [0, 0, 0]. Z~toho nám vyplývá, že můžeme snadno \UEu{} říci, kam má daný blok umístit -- stačí nám naše herní souřadnice vynásobit konstantou velikosti hrany základního bloku. Dále budeme uvažovat, že v~ose Z~(tedy vertikální ose) budeme mít bloky na pozicích v~intervalu [0, 25~000]. Z~toho nám vyplývá, že rovina, která bude reprezentovat povrch planety, bude mít Z-kovou souřadnici rovnu $-10$ a~všechny bloky budou umístěny nad ní.
+Abychom si usnadnili indexování bloků, budeme uvažovat, že bloky jsou\linebreak v~osách X a~Y indexovány v~intervalu <-25~000, 25~000>. V~ose Z~(tedy vertikální ose) budeme bloky indexovat v~intervalu <0, 25~000> a~indexy ve všech osách budou celočíselné. Dále určíme fakt, že jednotkový blok na herních souřadnicích [0, 0, 0] bude v~\UEu{} reprezentován na pozici [0, 0, 0]. 
 
-Vyřešili jsme, jak přistupovat k~jednotkovým blokům, ale ještě musíme vyřešit případ škálovaného bloku. Využijeme toho, že \UE{} nám nabízí škálování herních objektů. Protože následující text je koncepčně velmi složitý, prozradíme pravidla fakta pro krychli o~rozměrech [2, 2, 2] v~bodech.
+\subsubsection{Střed bloku a~škálování}
+Pro potřeby porozumění následujícího textu se přesuneme z~3D prostoru, ve kterém v~\UEu{} pracujeme, do 1D prostoru. Jednotkovou úsečkou budeme rozumět úsečku o~délce $20\,\ cm$. Tuto jednotkovou úsečku umístíme na osu tak, že střed úsečky je přesně ve středu osy. Tudíž kraje jednotkové úsečky jsou v~bodech [-10], [10].
 
-\begin{itemize}
-	\item Vizuální reprezentace krychle je centrovaná, takže pokud ji umístíme na souřadnice [0, 0, 0] v~souřadnicovém systému \UEu{}, fyzické hranice bloku budou $\{ [-20, 20], [-20, 20], [-20, 20]\}$ v~osách $\{X, Y, Z\}$.
-	\item Z~toho důvodu, že máme povrch planety umístěn v~ose $Z = -10$, nejbližší validní umístění tohoto bloku je na pozici [0, 0, 10] v~souřadnicovém systému \UEu{}.
-	\item Blok bude mít naši herní souřadnici podle umístění svého středu. Pokud střed neodpovídá přesné pozici jednotkového bloku v~herním světě, \textit{virtuálně} se posouvá na nejbližší nižší pozici ve všech osách se zarovnáním do herní mřížky. Takže herní souřadnice našeho bloku zůstanou [0, 0, 0]. 
-	\item Pokud bychom měli výšku krychle 3, herní souřadnice by pak byla [0, 0, 1] (střed bloku odpovídá konkrétní pozici jednotkové krychle v~rámci herního světa) a~blok by byl na pozici [0, 0, 20] v~souřadnicovém systému \UEu{}.
-	\item Rotace bloku jsou vůči chápanému středu bloku v~rámci našeho souřadnicového systému. Z~toho vyplývá, že námi uvažovaná krychle bude při rotaci kolem vertikální osy měnit i~svoji pozici v~rámci souřadnicového systému \UEu{}.
-\end{itemize}
+Nyní potřebujeme určit body osy, ke kterým budeme střed jednotkové úsečky přichytávat. To budou přesně $k$-násobky délky jednotkové úsečky pro libovolné celočíselné $k$. Nyní můžeme říci, že pokud budeme chtít umístit jednotkovou úsečku na $n$-tý index osy, střed této jednotkové úsečky bude v~bodě $n * 20$ a~kraje jednotkové úsečky budou v~bodech $[(n * 20) -- 10]$ a~$[(n * 20) + 10]$. Vidíme, že kraje jednotkové úsečky jsou správně zarovnané a~pro $n = 0$ odpovídají umístění jednotkové úsečky.
+
+Nyní si představme situaci, že chceme na osu umístit jednotkovou úsečku zvětšenou na \textit{dvojnásobek} (označme ji \textbf{D}). Zvětšování je symetrické dle středu a~po umístění \textbf{D} na \textit{nultý} index osy dostáváme, že kraje \textbf{D} jsou v~bodech [-20], [20]. Nyní vidíme, že kraje \textbf{D} nejsou správně zarovnané, protože prochází námi definovanými body pro přichytávání. Kdybychom teď chtěli na index 1 umístit jednotkovou úsečku, obě úsečky se nám protínají a~to je špatně -- chceme dosáhnout toho, aby i~po libovolném zvětšení jednotkové úsečky byla tato úsečka správně zarovnaná.
+
+Je důležité si uvědomit, že problém z~předchozího odstavce vzniká (díky symetrii zvětšování) pouze při škálování \textit{sudým} číslem. Pro tato čísla musíme udělat to, že střed bloku si \uv{virtuálně} posuneme tak, abychom celou škálovanou úsečku správně zarovnali do námi definovaných hranic (tento virtuální střed budeme správně přichytávat k~ose). Při určování virtuálního středu se budeme řídit pravidlem \uv{nejbližšího nižšího} možného středu. 
+
+Demonstrujme posouvání virtuálního středu následujícím příkladem.\linebreak Vezměme si čtyřnásobně zvětšenou jednotkovou úsečku, označme si ji jako \textbf{Č}. Budeme ji chtít umístit na \textit{nultý} index osy. Bez posouvání středu bychom řekli, že hranice úsečky jsou v~bodech [-40], [40]. Představme si \textbf{Č} rozloženou na jednotkové úsečky, zleva indexované od 0. Nyní máme střed na indexu [$1,5$], tedy \textit{mezi} jednotkovými úsečkami 1 a~2. Pravidlem \uv{nejbližšího nižšího} virtuálně posuneme střed \textbf{Č} na index [1]. Když pak jednotkou úsečku na indexu [1] správně přichytíme k~ose, hranice se nám posunou o~$10\,\ cm$ doprava, kraje \textbf{Č} budou v~bodech [-30], [50] a~tím dosáhneme správného zarovnání.
+
+Posledním krokem je rozšíření výše uvedených myšlenek všechny tři souřadnice 3D prostoru. Nyní už víme, jaký způsobem budeme řešit zarovnání bloku o~nějaké škále na daných \textit{herních} souřadnicích. Zároveň z~toho můžeme vidět, jakým způsobem budeme postupovat při převodu z~našeho souřadnicového systému do systému souřadnic v~rámci \UEu{}.
+ 
+\subsubsection{Důsledky škálování}
 
 Z výše uvedených faktů je vidět, že ve hře budou muset existovat pravidla pro výpočty mezi souřadnicovým systémem naší hry a~souřadnicovým systémem \UEu{}. Dále z~toho vyplývá, že pokud má blok netriviální škálování, dle výše uvedených pravidel může inherentně \uv{zabrat} některé pozice v~našem souřadnicovém systému a~jiné bloky pak tento prostor nemohou obývat. To je skvělý výsledek, protože tím máme vyřešené konkrétní pozice a~nemohou nám nastat konflikty umístění bloků.
 
-Další výhodou, kterou nám tato pravidla přináší, je snadný výpočet hranic bloku. Toho můžeme úspěšně využít při práci s~naším K-D tree, kdy si pro dva bloky z~jejich umístění v~našem souřadnicovém systému, velikosti a~rotace můžeme spočítat hranice bloku, třeba jako Min-Max box\footnote{Jako Min-Max box budeme chápat strukturu, která je popsána dvěma vektory, které představují minimální a~maximální hranice. Ve 2D prostředí by to byl obdélník s~udáním levého dolního rohu a~pravého horního rohu.}. Jednoduchým a~rychlým výpočtem pak můžeme analyzovat, jestli mají nějaký netriviální průnik, jestli se dotýkají apod.
+Dalším důležitým důsledkem je způsob rotací škálovaných bloků. Budeme chtít, aby blok rotoval vzhledem k \textit{virtuálnímu} středu. 
 
-Abychom to celé uzavřeli, tak budeme chtít, aby jednotlivé vrcholy našeho K-D stromu znaly svoji reprezentaci v~podobě Min-Max boxu. Tím získáme výhodu rychlého vyhodnocení, zda je možné umístit nový blok na souřadnice udané hráčem. Dále, budeme chtít, aby bloky měly vazbu na náš K-D strom. Cílem je dosáhnout toho, aby blok mohl vyhledávat své sousedy \uv{odspodu} a~hledání tak bylo velmi rychlé.
+Dále máme usnadněné výpočty hranic bloku vůči globální souřadnicovému systému \UEu{}. K tomu nám stačí umístění v~našem souřadnicovém systému, velikosti a~rotaci bloku. Výsledkem pak může být Min-Max box, který můžeme použít pro dotazy nad naším K-D stromem. Jednoduchým a~rychlým výpočtem pak můžeme analyzovat, jestli mají nějaké dva bloky nějaký netriviální průnik, jestli se dotýkají apod.
+
+
+\subsubsection{Důsledky reprezentace bloků na herní svět}
+
+Budeme chtít, aby jednotlivé vrcholy našeho K-D stromu znaly svoji reprezentaci v~podobě Min-Max boxu. Tím získáme výhodu rychlého vyhodnocení dotazů (kupříkladu zda je možné umístit nový blok na nějaké souřadnice udané hráčem). Dále, budeme chtít, aby bloky měly vazbu na náš K-D strom. Cílem je dosáhnout toho, aby blok mohl vyhledávat své sousedy \uv{odspodu} a~jejich hledání tak bylo velmi rychlé.
 
 
 \subsection{Zapojení do rozpoznávání tvarů}
