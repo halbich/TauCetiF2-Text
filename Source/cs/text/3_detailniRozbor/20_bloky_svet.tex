@@ -21,17 +21,17 @@ Volba stavů je zřejmá a~vychází z~principů algoritmu vlny. Navíc tím mů
 
 \subsection{Princip aktualizace sítě}
 
-V předchozí části jsme zjistili, že nám může v jednom okamžiku vzniknout velké množství sítí, jež je třeba aktualizovat. Navíc platí, že sítě mohou být rozsáhlé. Abychom co nejméně zasahovali do funkcionality aktualizovaných sítí, musíme nějakým způsobem zajistit, aby byla aktualizace sítí férová pro všechny sítě k aktualizaci. Vzhledem k tomu, že při nově vzniklém požadavku na aktualizaci sítě nevíme vůbec nic o tom, které bloky nakonec v dané síti budou, nemá smysl se zabývat myšlenkou upřednostňování aktualizace nějaké sítě vůči jiné, protože nemáme žádné faktické podklady pro to, jakou síť bychom měli upřednostnit.
+V předchozí části jsme zjistili, že nám může v~jednom okamžiku vzniknout velké množství sítí, jež je třeba aktualizovat. Navíc platí, že sítě mohou být rozsáhlé. Abychom co nejméně zasahovali do funkcionality aktualizovaných sítí, musíme nějakým způsobem zajistit, aby byla aktualizace sítí férová pro všechny sítě k~aktualizaci. Vzhledem k~tomu, že při nově vzniklém požadavku na aktualizaci sítě nevíme vůbec nic o~tom, které bloky nakonec v~dané síti budou, nemá smysl se zabývat myšlenkou upřednostňování aktualizace nějaké sítě vůči jiné, protože nemáme žádné faktické podklady pro to, jakou síť bychom měli upřednostnit.
 
-Musíme tedy mít k dispozici \textit{frontu sítí k aktualizaci}. Každá síť z této fronty si pak bude muset držet \textit{vlastní} frontu \textit{bloků k aktualizaci}. V algoritmu budeme postupně z fronty vybírat sítě, provedeme u nich krok algoritmu vlny a případně je opět zařadíme do fronty. Tím zajistíme férovou aktualizaci pro všechny zúčastněné sítě.
+Musíme tedy mít k~dispozici \textit{frontu sítí k~aktualizaci}. Každá síť z~této fronty si pak bude muset držet \textit{vlastní} frontu \textit{bloků k~aktualizaci}. V~algoritmu budeme postupně z~fronty vybírat sítě, provedeme u~nich krok algoritmu vlny a~případně je opět zařadíme do fronty. Tím zajistíme férovou aktualizaci pro všechny zúčastněné sítě.
 
 Dále popíšeme, jak vypadá jeden krok algoritmu vlny. Jako sousedy budeme chápat bloky dostupné skrze vodivé spojení. Krok bude následující:
 
 \begin{enumerate}
-	\item Vyber blok \textbf{B} z fronty bloků k aktualizaci.
-	\item Zkontroluj, že je \textbf{B} stále validní (zatímco \textbf{B} čekal ve frontě, mohl být mezi tím zničen bouří kyselého deště). Pokud není validní, skonči.
+	\item Vyber blok \textbf{B} z~fronty bloků k~aktualizaci.
+	\item Zkontroluj, že je \textbf{B} stále validní (zatímco \textbf{B} čekal ve frontě, mohl být mezitím zničen bouří kyselého deště). Pokud není validní, skonči.
 	\item \textbf{B} označ jako \textit{Validní}.
-	\item Pro všechny sousedy \textbf{S} bloku \textbf{B} se podívej na jejich síť a stav bloku a vykonej akci dle tabulky \ref{table:networkAlg}.
+	\item Pro všechny sousedy \textbf{S} bloku \textbf{B} se podívej na jejich síť a~stav bloku a~vykonej akci dle tabulky \ref{table:networkAlg}.
 \end{enumerate}
 
 
@@ -39,9 +39,9 @@ Dále popíšeme, jak vypadá jeden krok algoritmu vlny. Jako sousedy budeme ch�
 \centering
 \begin{tabular}{| l | l | l | l |}
 	\hline
-	Sít  \textbf{S}~~~$\backslash$~~ Stav \textbf{S}	& Nevalidní			& Ve výpočtu	& Validní 			\\ \hline
+	Síť  \textbf{S}~~~$\backslash$~~ Stav \textbf{S}	& Nevalidní			& Ve výpočtu	& Validní 			\\ \hline
 	Stejná jako \textbf{B}					& Naplánuj 	 		& Nic 			& Nic 	     			\\ \hline
-	Jiná než \textbf{B} 						& \uv{Ukradni} a naplánuj & Nic 			& Spoj sítě do jedné   	\\ \hline
+	Jiná než \textbf{B} 						& \uv{Ukradni} a~naplánuj & Nic 			& Spoj sítě do jedné   	\\ \hline
 \end{tabular}
 \caption{Požadované bloky a~jejich základní vlastnosti}
 \label{table:networkAlg}
@@ -49,21 +49,21 @@ Dále popíšeme, jak vypadá jeden krok algoritmu vlny. Jako sousedy budeme ch�
 
 \FloatBarrier
 
-Abychom dobře pochopili význam akcí v tabulce \ref{table:networkAlg}, měli bychom jednotlivé akce podrobněji popsat. Začněme situací, kdy je \textbf{S} ve stejné síti jako \textbf{B}.
+Abychom dobře pochopili význam akcí v~tabulce \ref{table:networkAlg}, měli bychom jednotlivé akce podrobněji popsat. Začněme situací, kdy je \textbf{S} ve stejné síti jako \textbf{B}.
 
-Pokud je stav \textbf{S} \textit{Nevalidní}, pak musíme tento nalezený blok přidat do fronty bloků k aktualizaci. Pokud je ve stavu \textit{Ve výpočtu}, pak je již naplánován, ale ještě nebyl zpracován (jinak by byl označen jako \textit{Validní}). Pokud je označen jako \textit{Validní}, byl již zpracován. Tyto kroky odpovídají standardnímu výpočtu algoritmu vlny. Pojďme se nyní podívat na situace, kdy jsou sítě \textbf{S} a \textbf{B} \textit{odlišné}.
+Pokud je stav \textbf{S} \textit{Nevalidní}, pak musíme tento nalezený blok přidat do fronty bloků k~aktualizaci. Pokud je ve stavu \textit{Ve výpočtu}, pak je již naplánován, ale ještě nebyl zpracován (jinak by byl označen jako \textit{Validní}). Pokud je označen jako \textit{Validní}, byl již zpracován. Tyto kroky odpovídají standardnímu výpočtu algoritmu vlny. Pojďme se nyní podívat na situace, kdy jsou sítě \textbf{S} a~\textbf{B} \textit{odlišné}.
 
-Pokud je stav \textbf{S} \textit{Nevalidní}, pak můžeme tento blok přiřadit do sítě \textbf{B} a naplánovat ho ke zpracování. Určitě platí, že blok není v žádné frontě ke zpracování (jinak by měl jiný stav). Pokud bychom ho \uv{neukradli}, zbytečně bychom tím ztratili cyklus kroku algoritmu. Navíc, jak je zmíněno v části \ref{subsec:reac}, při odebírání je původní síť ponechána netknutá a bloky jsou zneplatněny. Bez této vlastnosti bychom neuměli \uv{rozebrat} původní síť. Pokud je \textbf{S} ve stavu \textit{Ve výpočtu}, pak je již naplánován a nemusíme dělat nic. Zde je důležitý fakt, že \textbf{S} bude někdy v budoucnu vykonávat 4. krok algoritmu vlny a tudíž nutně narazí na \textbf{B}, jakožto svého souseda s jinou sítí. Ale protože \textbf{B} bude v té době ve stavu \textit{Validní}, případ se tím převede na zbývající možnost. Když je \textbf{S} označen jako \textit{Validní}, pak musíme obě sítě spojit do jedné, protože všechny \textit{Validní} bloky z obou sítí jsou propojeny skrze vodivé spojení \textbf{B} a \textbf{S} a tudíž musí mít i stejnou síť.
+Pokud je stav \textbf{S} \textit{Nevalidní}, pak můžeme tento blok přiřadit do sítě \textbf{B} a~naplánovat ho ke zpracování. Určitě platí, že blok není v~žádné frontě ke zpracování (jinak by měl jiný stav). Pokud bychom ho \uv{neukradli}, zbytečně bychom tím ztratili cyklus kroku algoritmu. Navíc, jak je zmíněno v~části \ref{subsec:reac}, při odebírání je původní síť ponechána netknutá a~bloky jsou zneplatněny. Bez této vlastnosti bychom neuměli \uv{rozebrat} původní síť. Pokud je \textbf{S} ve stavu \textit{Ve výpočtu}, pak je již naplánován a~nemusíme dělat nic. Zde je důležitý fakt, že \textbf{S} bude někdy v~budoucnu vykonávat 4. krok algoritmu vlny a~tudíž nutně narazí na \textbf{B}, jakožto svého souseda s~jinou sítí. Ale protože \textbf{B} bude v~té době ve stavu \textit{Validní}, případ se tím převede na zbývající možnost. Když je \textbf{S} označen jako \textit{Validní}, pak musíme obě sítě spojit do jedné, protože všechny \textit{Validní} bloky z~obou sítí jsou propojeny skrze vodivé spojení \textbf{B} a~\textbf{S} a~tudíž musí mít i~stejnou síť.
 
 
 
-\subsection{Reakce na přidání a odebrání bloku}
+\subsection{Reakce na přidání a~odebrání bloku}
 \label{subsec:reac}
 \subsubsection{Přidávání bloku}
-Přidání bloku do systému elektrických sítí je jednoduché. Platí, že každý blok přidaný do herního světa si při přidávání vytvoří svoji vlastní elektrickou síť. Ta je pak přidána mezi všechny elektrické sítě v herním světě a je naplánovaná její \textit{aktualizace}. 
+Přidání bloku do systému elektrických sítí je jednoduché. Platí, že každý blok přidaný do herního světa si při přidávání vytvoří svoji vlastní elektrickou síť. Ta je pak přidána mezi všechny elektrické sítě v~herním světě a~je naplánovaná její \textit{aktualizace}. 
 
 \subsubsection{Odebírání bloku}
-Každý odebíraný blok z~herního světa vždy zneplatní celou síť, ke které je připojen (takže všechny bloky jsou v nevalidním stavu), a~pro všechny jeho sousedy vytvoří nové sítě, které následně naplánuje k \textit{aktualizaci}. Po dokončení všech aktualizačních výpočtů všech elektrických sítí je pak původní elektrická síť odstraněna. Dříve tak nesmíme učinit, protože bychom přišli o vazby na bloky. Zde je také vidět, proč musíme umět \uv{krást} bloky.
+Každý odebíraný blok z~herního světa vždy zneplatní celou síť, ke které je připojen (takže všechny bloky jsou v~nevalidním stavu), a~pro všechny jeho sousedy vytvoří nové sítě, které následně naplánuje k~\textit{aktualizaci}. Po dokončení všech aktualizačních výpočtů všech elektrických sítí je pak původní elektrická síť odstraněna. Dříve tak nesmíme učinit, protože bychom přišli o~vazby na bloky. Zde je také vidět, proč musíme umět \uv{krást} bloky.
 
 \subsection{Optimalizace algoritmu}
 
@@ -71,7 +71,7 @@ Jak je vidět z~předchozí kapitoly, výpočtů v~aktualizaci může být velmi
 
 Jedním z~možných řešení je spuštění výpočtů na samostatném výpočetním vlákně. Zde bohužel narážíme na problém, že výpočty ve vláknech v~\UEu{} nemohou přímo přistupovat k~herním objektům a~tudíž je nutné používat pomocných datových struktur a~výsledky poté zpětně propagovat. Kromě toho také narážíme na problém, kdy v~případě velmi silné bouře kyselých dešťů bude nejspíše často nutné výpočet předčasně ukončit a~spustit znovu.
 
-Algoritmus bude mít přidělené nějaké maximální kvantum času, řekněme tolik, aby při jeho výpočtech hra dosahovala alespoň 30 snímků za sekundu. Pokud toto kvantum vyčerpá, nebude začínat další výpočty a naplánovanou práci nechá do dalšího cyklu herní smyčky. Tím vcelku jednoduchým a~elegantním způsobem zajistíme aktualizace i~pro velice rozsáhlé sítě bez negativního vlivu na plynulost hry.
+Algoritmus bude mít přidělené nějaké maximální kvantum času, řekněme tolik, aby při jeho výpočtech hra dosahovala alespoň 30 snímků za sekundu. Pokud toto kvantum vyčerpá, nebude začínat další výpočty a~naplánovanou práci nechá do dalšího cyklu herní smyčky. Tím vcelku jednoduchým a~elegantním způsobem zajistíme aktualizace i~pro velice rozsáhlé sítě bez negativního vlivu na plynulost hry.
 
 
 
