@@ -1,5 +1,53 @@
 %!TEX root = ../../prace.tex
 
+
+\section{Elektrická síť}
+\label{sec:energyNet}
+
+Spojování bloků do elektrické sítě nevyžaduje žádnou speciální logiku. V~rámci přidávání bloku do herního světa budeme potřebovat vědět o~sousedních blocích (TODO stromy). Pokud bude vazba se sousedním blokem vyhodnocena jako validní vodivý spoj, může se nově připojený blok připojit ke stávající síti, v~níž je i~daný sousední blok.
+
+Pokud budeme vycházet z~premisy, že každý blok je zapojen právě v~jedné elektrické síti a~všechny bloky v~rámci jedné elektrické sítě jsou mezi sebou vodivě spojeny, tak nutně musíme dojít k~závěru, že při manipulaci s~blokem budeme muset elektrické sítě aktualizovat. Přidáním bloku jsme bychom mohli vodivě propojit dvě či více sítí, při odebírání se nám daná elektrická síť může rozpadnout na více samostatných komponent. Těchto elektrických sítí může vznikat a~zanikat velké množství. Stačí si uvědomit, že k~bloku \nameref{blocks:A1} o~maximální možné velikosti můžeme připojit až 600 bloků, které budou patřit do stejné sítě (pro každou stěnu máme 100 bloků stejného typu a~minimální velikosti, uspořádaných do šachovnicového vzoru). Pokud pak odebereme centrální blok, může nám vzniknout právě až 600 nových elektrických sítí. Navíc, díky počasí se může stát, že bloky budou odebírány ze světa zcela neuspořádaně (na základě náhodně udělovaného poškození). Musíme tedy vymyslet algoritmus, jak pro všechny bloky v~herním světě udržovat správné informace o~jejich síti.
+
+Protože nemůžeme nic předpokládat o~tom, jak se budou bloky v~elektrické síti chovat, musíme při změně (přidání či odebrání) nějakého bloku v~síti provést přepočítání. Nejjednodušší bude varianta na \textit{algoritmus vlny}. Jednotlivé sítě budeme podle potřeby odstraňovat či slévat. Popišme si nyní pravidla, která budeme muset ve hře mít. Jako sousedy budeme chápat bloky dostupné skrze vodivé spojení.
+
+\subsubsection{Přidávání bloku}
+Platí, že každý blok přidaný do herního světa si vytvoří svoji vlastní elektrickou síť.
+(TODO kontrola enums níže)
+\begin{enumerate}
+	\item Pokud blok nemá žádné sousedy, nemusí dělat nic (svoji síť už má)
+	\item Pokud mají všichni sousedé stejnou síť, blok se k~ní připojí
+	\item Pokud mezi sousedy existují alespoň dvě různé elektrické sítě, blok si vytvoří novou elektrickou síť, propojí ji s~ostatními sítěmi a~vyvolá přepočet sítí
+\end{enumerate}
+
+\subsubsection{Odebírání bloku}
+Platí, že každý odebíraný blok z~herního světa vždy odstraní síť, ve které je připojen, a~pro všechny jeho sousedy jsou vytvořeny nové sítě.
+
+\begin{enumerate}
+	\item Pokud blok nemá žádné sousedy, svoji síť ze hry odstraní a~dále nedělá nic
+	\item Pokud má blok právě jednoho souseda, odpojí od se od dané sítě
+	\item Pokud má alespoň dva sousedy, pro každého vytvoří novou síť a~vyvolá přepočet sítí
+\end{enumerate}
+
+\subsection{Udržování konzistence elektrických sítí}
+
+Jak je vidět z~předchozí kapitoly, objektů k~aktualizaci může být velmi mnoho. Nesmíme však dopustit, aby se nám při přepočítávání začala hra zpomalovat či přímo zasekávat\footnote{Tato situace může snadno nastat, protože herní a~renderovací smyčky se na konci svých cyklů synchronizují, aby pro výpočet dalšího framu začínaly stejně.}. Opět máme více možností řešení, jak se k~tomuto problému postavit. 
+
+Jedním z~možných řešení je spuštění výpočtů na samostatném výpočetním vlákně. Zde bohužel narážíme na problém, že výpočty ve vláknech v~\UEu{} nemohou přímo přistupovat k~herním objektům a~tudíž je nutné používat pomocných datových struktur a~výsledky poté zpětně propagovat. Kromě toho také narážíme na problém, kdy v~případě velmi silné bouře kyselých dešťů bude nejspíše často nutné výpočet předčasně ukončit a~spustit znovu.
+
+My navrhujeme následující algoritmus, využívající front požadavků ke zpracování a~omezení výpočetního času. Ještě musíme zmínit, že také využívá toho, že jak elektrická síť, tak každý blok v~ní si nese informaci o~stavu. Ty jsou tři:
+\begin{itemize}
+	\item Nevalidní
+	\item Ve výpočtu
+	\item Validní
+\end{itemize}
+Volba stavů je zřejmá a~vychází z~principů algoritmu vlny. Dalším netriviálním faktem je, že v~algoritmu existuje fronta sítí k~přepočítání, přičemž každá taková má svoji frontu bloků v~síti k~přepočítání. Hlavním krokem algoritmu je pak výběr sítě k~přepočítání a~provedení jednoho kroku přepočtu. Následně, pokud má tato síť stále nějaké bloky k~přepočtu, je zařazena na konec přepočítávací fronty a~tam čeká, dokud nebude opět vyzvednuta. Může se však stát, že jistou posloupností kroků při mazání bude tato síť označena jako nevalidní a~dále se přepočítávat nebude.
+
+Algoritmus bude mít přidělené nějaké maximální kvantum času, řekněme tak, aby při jeho výpočtech hra dosahovala alespoň 30 snímků za sekundu. Tím vcelku jednoduchým a~elegantním způsobem zajistíme přepočty i~pro velice rozsáhlé sítě. Samozřejmě je nutné, aby hra počítala s~tím, že elektrická síť a~bloky v~ní mohou být ve stavu \textit{ve výpočtu} a~tomu přizpůsobovat další funkcionalitu (například nevyužívat zdrojů takovéto sítě, dokud blok není \textit{validní} -- pak je možné využívat pouze dalších validních bloků, tedy těch, které již byly zpracovány algoritmem).
+
+TODO tabulka případů, říct, že tohle bude komponenta
+
+
+
 \section{Bloky v~herním světě}
 \label{sec:blocksWorld}
 
@@ -12,6 +60,7 @@ Námi definované hranice herního světa se u~bloků projeví tak, že v~rámci
 Představme si, že bychom herní svět reprezentovali polem. Pak bychom potřebovali 62~500~\textit{miliard} ukazatelů, z~nichž by naprostá většina byla prázdných (\textit{NULL}ových). Pro jednoduchost počítejme, že jeden ukazatel má velikost 4B a~že 1 kB je roven 1000 B. Pak dostáváme, že bychom potřebovali alokovat 250 TB dat. Možná, že za několik let to nebude problém, ale v~současné době nám to tak trochu vadí, takže se zkusme zaměřit na efektivnější datové struktury.
 
 \subsection{Stromové struktury}
+\label{subsec:trees}
 
 Jako rozumný nápad se jeví použití stromových struktur, které nám budou reprezentovat svět podle skutečně zabraných pozic v~herním světě. Kdybychom povolili volnou počáteční rotaci, zřejmě bychom museli přistoupit k~nějaké variantě \textit{clusterů}, tedy shluků bloků ve stejné ortogonální mřížce. Protože tuto vlastnost nepovolujeme, můžeme se zabývat jinými datovými strukturami, například:
 

@@ -68,15 +68,15 @@ Kde a~jak definované, obrázek, jak se to definuje konstanty
 
 \subsection{GameElectricityPawn}
 
-Herní objekt GameElectricityPawn má přiřazenou komponentu\linebreak \TT{UGameElectricityComponent}, která spravuje všechny elektrické sítě v herním světě. \textit{World Controller} si během události \textit{BeginPlay} tento herní objekt najde a uloží si referenci na komponentu správy elektrických sítí. Díky tomu poté může bloky přidávat či odebírat ze sítě voláním příslušných metod v elektrické komponentě.
+Herní objekt GameElectricityPawn má přiřazenou komponentu\linebreak \TT{UGameElectricityComponent}, která spravuje všechny elektrické sítě v~herním světě. \textit{World Controller} si během události \textit{BeginPlay} tento herní objekt najde a~uloží si referenci na komponentu správy elektrických sítí. Díky tomu poté může bloky přidávat či odebírat ze sítě voláním příslušných metod v~elektrické komponentě.
 
 
 \subsection{GameWeatherPawn}
-GameWeatherPawn funguje jako správce počasí. Je ovládán \textit{AI kontrolérem}, který je možné nalézt v \TT{/Content/Blueprints/World/Weather}. V té samé složce je možné nalézt všechny assety, které s počasím souvisí. Mimo jiné je zde možné nalézt ovládací Behavior Tree. Podoba ovládacího behaviorálního stromu je vidět na obrázku \ref{fig:weatherBP}. Strom se v zásadě nijak neliší od uvažovaného automatu z kapitoly (TODO ref!). 
+GameWeatherPawn funguje jako správce počasí. Je ovládán \textit{AI kontrolérem}, který je možné nalézt v~\TT{/Content/Blueprints/World/Weather}. V~té samé složce je možné nalézt všechny assety, které s~počasím souvisí. Mimo jiné je zde možné nalézt ovládací Behavior Tree. Podoba ovládacího behaviorálního stromu je vidět na obrázku \ref{fig:weatherBP}. Strom se v~zásadě nijak neliší od uvažovaného automatu z~kapitoly (TODO ref!). 
 
-Služba aktualizace času (na obrázku zeleně) neustále aktualizuje uplynulý herní čas a řídí se přitom hodnotou z (todo ref) herního objektu oblohy. Dále máme ve stromě tři funkce, které se starají o kontrolu stavu počasí a případnou aktualizaci navázaných herních objektů -- oblohy. 
+Služba aktualizace času (na obrázku zeleně) neustále aktualizuje uplynulý herní čas a~řídí se přitom hodnotou z~(todo ref) herního objektu oblohy. Dále máme ve stromě tři funkce, které se starají o~kontrolu stavu počasí a~případnou aktualizaci navázaných herních objektů -- oblohy. 
 
-Oproti automatu jsme zde přidali drobnou optimalizaci -- pokud jsme ve fázi stabilního počasí a neměníme žádné parametry, vyhodnocování stromu přejde do nejpravější větve, kde bude čekat po nějaký spočítaný čas. Spolu s vhodným nastavením aktualizační služby jsme tak dosáhli toho, během této doby jsou aktualizace méně časté (protože je stejně k ničemu nepotřebujeme a ušetříme tak výpočetní čas), ale jakmile se mění počasí, aktualizace uplynulého času je častější.
+Oproti automatu jsme zde přidali drobnou optimalizaci -- pokud jsme ve fázi stabilního počasí a~neměníme žádné parametry, vyhodnocování stromu přejde do nejpravější větve, kde bude čekat po nějaký spočítaný čas. Spolu s~vhodným nastavením aktualizační služby jsme tak dosáhli toho, během této doby jsou aktualizace méně časté (protože je stejně k~ničemu nepotřebujeme a~ušetříme tak výpočetní čas), ale jakmile se mění počasí, aktualizace uplynulého času je častější.
 
 
 \begin{figure}[!ht]\centering
@@ -90,7 +90,7 @@ Oproti automatu jsme zde přidali drobnou optimalizaci -- pokud jsme ve fázi st
 
 \subsection{SkyBP}
 
-Tento herní objekt je kompletně implementován v Blueprintu a vychází ze základního assetu oblohy, který je v \UEu{} dostupný. Navíc jsme upravili jeho chování tak, aby na herní instanci vyvolával globální událost \textit{Daytime Changed}, díky které pak mohou fungovat automatizované přepínače. Parametry jsou řízeny křivkami na základě aktuálního herního času. Tyto křivky se nacházejí v \TT{/Content/Blueprints/World/SkyCurves}.
+Tento herní objekt je kompletně implementován v~Blueprintu a~vychází ze základního assetu oblohy, který je v~\UEu{} dostupný. Navíc jsme upravili jeho chování tak, aby na herní instanci vyvolával globální událost \textit{Daytime Changed}, díky které pak mohou fungovat automatizované přepínače. Parametry jsou řízeny křivkami na základě aktuálního herního času. Tyto křivky se nacházejí v~\TT{/Content/Blueprints/World/SkyCurves}.
 
 
 

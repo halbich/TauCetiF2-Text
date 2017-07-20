@@ -46,26 +46,22 @@ Díky algoritmu \ref{eq:alg} tak může herní designér snadno nastavovat zákl
 
 \section{Definice bloků TODO}
 
-Jak bylo řečeno v~analýze (TODO ref), potřebujeme u~bloků definovat mj.~následující vlastnosti: \textit{minimální} a~\textit{maximální} velikost, \textit{typ} bloku dle (TODO ref), možnost \textit{rotace} bloku dle daných os apod. Dále budeme u~bloků potřebovat zaznamenat, že blok má \textit{elektrickou} či \textit{kyslíkovou} komponentu a~definovat omezující vlastnosti této komponenty. Z~předchozí části (TODO ref) víme, že budeme chtít mít takovou strukturu, abychom mohli v~\UEu{} snadno modifikovat hodnoty těchto vlastností. Takže nepřipadá v~úvahu, abychom měli tyto konstanty uložené ve zdrojovém kódu. Pak je ale budeme muset načítat z~nějakého souboru, nebo budou muset být uložené v~nějakém definičním objektu, editovatelným z~Editoru.
+Jak bylo řečeno v~analýze v~části \ref{sec:chceme}, potřebujeme u~bloků definovat mj.~následující vlastnosti: \textit{minimální} a~\textit{maximální} velikost, \textit{typ} bloku, možnost \textit{rotace} bloku dle daných os apod. Dále budeme u~bloků potřebovat zaznamenat, že blok má \textit{elektrickou} či \textit{kyslíkovou} komponentu a~definovat omezující vlastnosti této komponenty. Dále požadujeme, abychom mohli snadno modifikovat hodnoty těchto vlastností. Tento požadavek vznášíme z~toho důvodu, aby herní designér mohl rychle a~jednoduše ladit nastavení těchto konstant a~vyvažovat tak celkovou obtížnost hry. Takže nepřipadá v~úvahu, abychom měli tyto konstanty uložené ve zdrojovém kódu, protože jakákoliv úprava by znamenala opětovnou kompilaci hry a~to u~herních projektů často zabere netriviální čas. Pak je ale budeme muset načítat z~nějakého souboru, nebo budou muset být uložené v~nějakém definičním objektu, editovatelným z~Editoru.
 
-(TODO) textové či binární soubory
 
 \subsection{Textové soubory}
-Při načítání ze souboru máme více možností -- můžeme popisovat bloky a~jejich chování například v~XML souborech. Obdobné řešení používá hra \ME{}. Tyto soubory jsou pak zpracovány herním enginem během načítání hry. 
-
-V této části se zamyslíme nad použitím definic v~textovém souboru. Může se jednat o~množinu samostatných souborů, přičemž budeme uvažovat pouze XML soubory, nebo můžeme použít třeba popis bloků v~nějakém tabulkovém formátu, třeba csv.
+Při načítání definic z~textového souboru máme na výběr z~více možností. V~následujících odstavcích si jednotlivé možnosti popíšeme a~zamyslíme se nad výhodami a~nevýhodami daných přístupů. Jednu výhodu však mají všechny textové přístupy společnou -- snadnou čitelnost i~pro běžného člověka.
 
 \subsubsection{Popis tabulkou}
-Pokud bychom měli velice málo vlastností bloků, tento přístup by mohl být použitelný. Nicméně s~každým dalším nově přidaným blokem se do množiny všech vlastností mohou zanášet nové vlastnosti.  To by znamenalo, že popis ostatních bloků, které danou vlastnost nemají, by musel nutně v~tomto tabulkovém zápisu uvažovat nějakou (byť prázdnou) hodnotu. Zbytečně by nám tak rostl definiční soubor. Další nevýhodou je absence typové bezpečnosti. 
+Uvažme popis bloků v~nějakém tabulkovém formátu, třeba CSV. Pokud\linebreak bychom měli velice málo vlastností bloků, tento přístup by mohl být použitelný. Nicméně s~každým dalším nově přidaným blokem se do množiny všech vlastností mohou zanášet nové vlastnosti. To by znamenalo, že popis ostatních bloků, které danou vlastnost nemají, by musel nutně v~tomto tabulkovém zápisu uvažovat nějakou (byť prázdnou) hodnotu. Zbytečně by nám tak rostl definiční soubor. Další nevýhodou je absence typové a~bezpečnosti pro uložené hodnoty. 
 
 \subsubsection{Popis samostatným souborem -- XML}
-Běžné soubory textového formátu není potřeba brát v~potaz. Výsledek je stejný jako při použití XML, ale nemůžeme zde použít definiční soubory pro automatickou kontrolu platnosti hodnot. Navíc bychom museli psát vlastní parser takového textového souboru, přičemž již hotové parsery XML jsou volně k~dispozici. 
+Běžné soubory textového formátu (TXT) není potřeba brát v~potaz. Výsledek je stejný jako při použití XML, ale nemůžeme zde použít definiční soubory pro automatickou kontrolu platnosti hodnot. Navíc bychom museli psát vlastní parser takového textového souboru, přičemž již hotové parsery XML jsou volně k~dispozici a~mohli bychom je snadno použít. Definici herních bloků v~XML využívá i~hra \ME{}. Tyto soubory jsou pak zpracovány herním enginem během načítání hry. Výhodou tohoto přístupu je, kromě snadného vytváření módu do hry, také snadná budoucí rozšiřovatelnost o~nové bloky.
 
-Výhodou tohoto přístupu je také budoucí rozšiřovatelnost o~nové bloky
+\subsection{Binární zápis}
+Binární zápis již není pro běžného člověka tak snadno čitelný, ale to nám nemusí vadit, pokud budeme mít k~dispozici příslušné editační rozhraní. My si totiž můžeme v~\UEu{} připravit třídu, jejíž vlastnosti jsou z~Editoru editovatelné pouze v~rámci nastavování výchozích hodnot. To znamená, že si na straně \CPP{} můžeme vhodným způsobem vytvořit strukturu definičních tříd, které následně použijeme v~Editoru. Na straně \UEu{} pak vytvoříme Blueprint, který bude dědit z~naší hlavní definiční třídy. Posléze můžeme této třídě upravovat výchozí hodnoty a~tímto způsobem tak definovat vlastnosti bloků.
 
-\subsubsection{Binární zápis}
-(TODO) zde popsat ideu přístupu k~UObjectu, editovatelnost z~editoru, absence kompilace, typová bezpečnost
-
+Kromě toho, že tímto přístupem splňujeme požadavek na editovatelnost z~Editoru, získáváme také navíc typovou bezpečnost uložených hodnot. Dále máme možnost (v případě nějakých definičních specialit) vytvořit vlastní editační panely pro dané netriviální vlastnosti definičního souboru. 
 
 
 
