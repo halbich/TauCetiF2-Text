@@ -23,7 +23,7 @@ V naší hře máme 4 mapy a~to:
 
 Hlavní struktura objektů v~rámci herní mapy je vidět na obrázku \ref{fig:ue_mainMap}. Nás budou nejvíce zajímat objekty \textit{WorldController}, \textit{SkyBP}, \textit{GameElectricityPawn},\linebreak a~\textit{GameWeatherPawn}. Těm se budeme věnovat podrobněji v~následující části práce.
 
-U zbývajících stojí za zmínku pouze \textit{Landscape6}, který na sobě má Tag, díky kterému tento herní objekt nebudeme ignorovat v~rámci výpočtů míření hráče na bloky. Kdyby to bylo možné, přiřadili bychom objektu terénu komponentu cíle zaměřování (stejně jako u~bloků), nicméně v~současné době \UE{} tuto funkcionalitu nenabízí.
+U zbývajících stojí za zmínku pouze \textit{Landscape6}, který na sobě má Tag, díky kterému tento herní objekt nebudeme ignorovat v~rámci výpočtů míření hráče na bloky. Kdyby to bylo možné, přiřadili bychom objektu terénu komponentu cíle zaměřování (stejně jako u~bloků), nicméně v~současné době \UE{} tuto funkcionalitu nenabízí. Tento problém jsme popisovali v~kapitole \ref{subsec:interaction}.
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=100mm]{../img/program/mainMap}
@@ -35,9 +35,9 @@ U zbývajících stojí za zmínku pouze \textit{Landscape6}, který na sobě m�
 
 \subsubsection{Průběh nahrávání hlavní herní mapy}
 
-Jakmile je vyvolána událost \textit{BeginPlay}, hra se podívá do hlavní herní instance\footnote{Herní instance je jediná třída v~\UEu{}, která je stejná po celou dobu života hry. V~zásadě tak kopíruje koncept návrhového vzoru \textit{Singleton} a~my ji můžeme využít pro předávání informací při přechodu mezi mapami.}, jaký level je požadován na nahrání. Tato informace je do herní instance uložena během výběru nové hry, či v~případě hlavního menu z~hlavního Blueprintu mapy. Protože nemáme zajištěné pořadí vykonávání události \textit{BeginPlay}, musíme počkat, než nám některé objekty (jako třeba WorldController) dají najevo, že byly úspěšně inicializovány.
+Jakmile je vyvolána událost \textit{BeginPlay}, hra se podívá do hlavní herní instance\footnote{Herní instance je jediná třída v~\UEu{}, která je stejná po celou dobu života hry. V~zásadě tak kopíruje koncept návrhového vzoru \textit{Singleton} a~my ji můžeme využít pro předávání informací při přechodu mezi mapami.}, jaký level je požadován na nahrání. Tato informace je do herní instance uložena během výběru nové hry, či v~případě hlavního menu z~hlavního Blueprintu mapy. Protože nemáme zajištěné pořadí vykonávání události \textit{BeginPlay}, musíme počkat, než nám některé objekty (jako třeba \textit{WorldController}) dají najevo, že byly úspěšně inicializovány.
 
-Další logika je snadná -- proběhne pokus o~kompletní načtení dat do instance objektu uložené hry a~postupně u~všech herních objektů s~podporou ukládání her voláme načítání dat z~objektu uložené hry. Po ukončení této fáze se hra pokusí zobrazit případné chyby vzniklé během načítání (což nejčastěji bude spíše validační hláška) a~vyvolá se odtemnění skrze \textit{Remote Event}. Na tuto událost pak reaguje mapa LoadingScreen (jež načítání MainMap vždy vyvolá) a~proběhne animace, kdy se nahrávací obrazovka postupně zprůhlední, až nakonec není vidět.
+Další logika je snadná -- proběhne pokus o~kompletní načtení dat do instance objektu uložené hry a~postupně u~všech herních objektů s~podporou ukládání her (viz kapitola \ref{subsec:gsi}) voláme načítání dat z~objektu uložené hry. Po ukončení této fáze se hra pokusí zobrazit případné chyby vzniklé během načítání (což nejčastěji bude spíše validační hláška) a~vyvolá se odtemnění skrze \textit{Remote Event}. Na tuto událost pak reaguje mapa LoadingScreen (jež načítání MainMap vždy vyvolá) a~proběhne animace, kdy se nahrávací obrazovka postupně zprůhlední, až nakonec není vidět.
 
 
 \subsection{World Controller}
@@ -49,9 +49,20 @@ Tento herní objekt si udržuje seznam všech herních bloků v~herním světě.
 Další důležitou vlastností tohoto objektu je držení reference na kořen stromové struktury reprezentující umístění bloků v~herním světě. Této vlastnosti pak mohou využívat ostatní objekty hry a~kupříkladu se mohou dotazovat na volné místo.
 
 
-\subsection{bloky}
+\subsection{Herní bloky}
 
-Kde a~jak definované, obrázek, jak se to definuje konstanty
+Veškerá funkcionalita spojená s~bloky je v~Editoru dostupná ve složce\linebreak \TT{/Content/Blocks}. Tato složka obsahuje mj.~ podsložky \TT{BaseShapes}\linebreak a~\TT{CustomShapes}, jejichž struktura kopíruje systém, který je popsán v~části \ref{subsec:blImp}. 
+
+Dále složka s~bloky obsahuje podsložku \TT{Definitions}, kde je možné nalézt všechny definice bloků. Ukázku definice bloku \RB{B2} je možné vidět na obrázku \ref{fig:ue_defW}.
+
+
+\begin{figure}[!ht]\centering
+\includegraphics[ width=100mm]{../img/program/def}
+\caption{Ukázka nastavování vlastností bloku}
+\label{fig:ue_defW}
+\end{figure}
+\FloatBarrier
+
 
 
 \subsection{GameElectricityPawn}
@@ -60,15 +71,15 @@ Herní objekt GameElectricityPawn má přiřazenou komponentu\linebreak \TT{UGam
 
 
 \subsection{GameWeatherPawn}
-GameWeatherPawn funguje jako správce počasí. Je ovládán \textit{AI kontrolérem}, který je možné nalézt v~\TT{/Content/Blueprints/World/Weather}. V~té samé složce je možné nalézt všechny assety, které s~počasím souvisí. Mimo jiné je zde možné nalézt ovládací Behavior Tree. Podoba ovládacího behaviorálního stromu je vidět na obrázku \ref{fig:weatherBP}. Strom se v~zásadě nijak neliší od uvažovaného automatu z~kapitoly (TODO ref!). 
+GameWeatherPawn funguje jako správce počasí. Je ovládán \textit{AI kontrolérem}, který je možné nalézt v~\TT{/Content/Blueprints/World/Weather}. V~té samé složce je možné nalézt všechny assety, které s~počasím souvisí. Mimo jiné je zde možné nalézt ovládací Behavior Tree. Podoba ovládacího behaviorálního stromu je vidět na obrázku \ref{fig:ue_weatherBP}. Strom se v~zásadě nijak neliší od uvažované funkcionality z~kapitoly \ref{sec:poc}.
 
-Služba aktualizace času (na obrázku zeleně) neustále aktualizuje uplynulý herní čas a~řídí se přitom hodnotou z~(todo ref) herního objektu oblohy. Dále máme ve stromě tři funkce, které se starají o~kontrolu stavu počasí a~případnou aktualizaci navázaných herních objektů -- oblohy. 
+Služba aktualizace času (na obrázku zeleně) neustále aktualizuje uplynulý herní čas a~řídí se přitom hodnotou z~herního objektu oblohy (viz kapitola \ref{subsec:skbp}). Dále máme ve stromě tři funkce, které se starají o~kontrolu stavu počasí a~případnou aktualizaci navázaných herních objektů -- oblohy. 
 
-Oproti automatu jsme zde přidali drobnou optimalizaci -- pokud jsme ve fázi stabilního počasí a~neměníme žádné parametry, vyhodnocování stromu přejde do nejpravější větve, kde bude čekat po nějaký spočítaný čas. Spolu s~vhodným nastavením aktualizační služby jsme tak dosáhli toho, že během této doby jsou aktualizace méně časté (protože je stejně k~ničemu nepotřebujeme a~ušetříme tak výpočetní čas), ale jakmile se mění počasí, aktualizace uplynulého času je častější.
+Oproti uvažované funkcionalitě jsme zde přidali optimalizaci -- pokud jsme ve fázi stabilního počasí a~neměníme žádné parametry, vyhodnocování stromu přejde do nejpravější větve, kde bude čekat po nějaký spočítaný čas. Spolu s~vhodným nastavením aktualizační služby jsme tak dosáhli toho, že během této doby jsou aktualizace méně časté (stejně je k~ničemu nepotřebujeme a~ušetříme tak výpočetní čas), ale jakmile se mění počasí, aktualizace uplynulého času je častější.
 
 
 \begin{figure}[!ht]\centering
-\includegraphics[ width=140mm]{../img/program/weatherBT}
+\includegraphics[ width=120mm]{../img/program/weatherBT}
 \caption{Behavior Tree pro ovládání počasí}
 \label{fig:ue_weatherBP}
 \end{figure}
@@ -77,6 +88,7 @@ Oproti automatu jsme zde přidali drobnou optimalizaci -- pokud jsme ve fázi st
 
 
 \subsection{SkyBP}
+\label{subsec:skbp}
 
 Tento herní objekt je kompletně implementován v~Blueprintu a~vychází ze základního assetu oblohy, který je v~\UEu{} dostupný. Navíc jsme upravili jeho chování tak, aby na herní instanci vyvolával globální událost \textit{Daytime Changed}, díky které pak mohou fungovat automatizované přepínače. Parametry jsou řízeny křivkami na základě aktuálního herního času. Tyto křivky se nacházejí v~\TT{/Content/Blueprints/World/SkyCurves}.
 

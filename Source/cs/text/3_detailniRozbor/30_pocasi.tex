@@ -1,6 +1,7 @@
 %!TEX root = ../../prace.tex
 
 \section{Počasí}
+\label{sec:poc}
 
 Abychom mohli popsat koncept počasí ve hře, musíme mít definovaný \textit{typ} počasí. Typ popisuje vlastnosti počasí (například \uv{je částečně zataženo}, \uv{hustě prší}) na základě nějakých parametrů. Základní koncept počasí ve hře pak můžeme popsat dvěma stavy -- typ počasí zůstává \textit{stejný}, nebo se \textit{mění}. Ve vlastnostech typu pak můžeme mít definováno, jak dlouho zůstává počasí v~daném typu a~jak dlouho probíhá změna na jiný typ (tyto konstanty mohou být dány intervalem, ze kterého se zvolí náhodné číslo a~tím dostaneme jistý stupeň \textit{proměnlivosti} počasí).
 
