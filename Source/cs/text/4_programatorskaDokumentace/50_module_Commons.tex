@@ -26,13 +26,13 @@ Dalším důležitou vlastností této třídy je to, že tato třída drží re
 
 
 
- Parametr \TT{Transient} u~makra \TT{UPROPERTY} znamená, že daná proměnná bude vždy nastavena na svoji výchozí hodnotu. V~tomto případě je to použito spíše z~důvodu zachování konzistence napříč projektu, ale zjednodušeně bychom důsledky mohli popsat následovně -- u Blueprintu, který dědí z~nějaké \CPP{} třídy, může vývojář nastavit výchozí hodnoty vlastností. Tyto hodnoty jsou pak serializovány do \CDO{}, cože je \textit{Class Default Object} (otázka na Answers Unreal Engine~\citep{ue_cdo}). Během procesu vytváření nové instance objektu, který vychází z~daného Blueprintu pak budou tyto hodnoty naplněny během fáze \textit{inicializace vlstností} (popis životního cyklu actorů~\citep{ue_actor_life}). V~konečném důsledku by pak byla tato hodnota nějakým způsobem naplněna. Pokud chceme vynutit, aby tato vlastnost nebyla serializována do \CDO{}, tak ji označíme jako \TT{Transient}.
+ Parametr \TT{Transient} u~makra \TT{UPROPERTY} znamená, že daná proměnná bude vždy nastavena na svoji výchozí hodnotu. V~tomto případě je to použito spíše z~důvodu zachování konzistence napříč projektu, ale zjednodušeně bychom důsledky mohli popsat následovně -- u~Blueprintu, který dědí z~nějaké \CPP{} třídy, může vývojář nastavit výchozí hodnoty vlastností. Tyto hodnoty jsou pak serializovány do \CDO{}, cože je \textit{Class Default Object} (otázka na Answers Unreal Engine~\citep{ue_cdo}). Během procesu vytváření nové instance objektu, který vychází z~daného Blueprintu pak budou tyto hodnoty naplněny během fáze \textit{inicializace vlstností} (popis životního cyklu actorů~\citep{ue_actor_life}). V~konečném důsledku by pak byla tato hodnota nějakým způsobem naplněna. Pokud chceme vynutit, aby tato vlastnost nebyla serializována do \CDO{}, tak ji označíme jako \TT{Transient}.
 
 V průběhu hry pak jednou naplníme tuto vlastnost pomocí metody\\ \TT{SetHolderInstance}, do které předáme referenci na korektně inicializovanou instanci třídy \TT{BlockHolder} z~modulu \textit{Blocks}. Pak si můžeme odkudkoliv získat aktuální herní instanci, přetypovat ji nana \TT{TCF2GameInstance} a~získat si (přetypovanou) referenci na \TT{BlockHolder}. Z~této třídy pak již můžeme získávat informace o~všech dostupných blocích.
 
 \subsection{Výčtové typy}
 
-Výčtové typy (neboli enumerátory) jsou definované v souboru \TT{Enums.h}. Tento soubor slouží jako jednotné umístění pro všechny enumerátory, které se používají napříč celým projektem. Neznamená to, že nutně obsahuje všechny -- některé třídy mohou využívat své specifické enumerátory, které ale nemusí být umístěny v~tomto globálně dostupném modulu.
+Výčtové typy (neboli enumerátory) jsou definované v~souboru \TT{Enums.h}. Tento soubor slouží jako jednotné umístění pro všechny enumerátory, které se používají napříč celým projektem. Neznamená to, že nutně obsahuje všechny -- některé třídy mohou využívat své specifické enumerátory, které ale nemusí být umístěny v~tomto globálně dostupném modulu.
 
 
 \subsection{Helpery}

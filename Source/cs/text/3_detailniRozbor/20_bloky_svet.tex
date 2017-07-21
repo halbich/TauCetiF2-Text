@@ -9,7 +9,7 @@ Pokud budeme vycházet z~premisy, že každý blok je zapojen právě v~jedné e
 
 Protože nemůžeme nic předpokládat o~tom, jak se budou bloky v~elektrické síti chovat, musíme při změně (přidání či odebrání) nějakého bloku v~síti provést přepočítání a~to i~u~sítě, která již může být přepočítávána. Nejjednodušší bude varianta na \textit{algoritmus vlny}. Jednotlivé sítě budeme podle potřeby odstraňovat či slévat. 
 
-\pagebreak
+
 Aby algoritmus vlny fungoval, je zapotřebí u~elektrické sítě a~každého bloku v~ní udržovat informaci o~stavu. Ty jsou tři:
 \begin{itemize}
 	\item Nevalidní
@@ -95,7 +95,8 @@ Představme si, že bychom herní svět reprezentovali polem. Pak bychom potřeb
 \label{subsec:trees}
 
 Jako rozumný nápad se jeví použití stromových struktur, které nám budou reprezentovat svět podle skutečně zabraných pozic v~herním světě. Kdybychom povolili volnou počáteční rotaci, zřejmě bychom museli přistoupit k~nějaké variantě \textit{clusterů}, tedy shluků bloků ve stejné ortogonální mřížce. Protože tuto vlastnost nepovolujeme, můžeme se zabývat jinými datovými strukturami. Ve hrách jsou běžně používané například:
-\pagebreak
+
+
 \begin{itemize}
 	\item Octree
 	\item K-D stromy

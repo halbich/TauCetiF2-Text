@@ -4,7 +4,7 @@
 
 
 
-\subsection{Převádění kyslíku a energie TODO}
+\subsection{Převádění kyslíku a~energie TODO}
 Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme zajistit konzistenci dat při převodech kyslíku či energie. Můžeme pro to využít primitiva pro zamykání \TT{FCriticalSection}. Kritickou sekci pak budeme korektně zamykat a~odemykat (stejně jako u~klasického vícevláknového programování). Algoritmy pro vkládání a~získání kyslíku budou mít následující signaturu (pro energii bude signatura stejná):
 
 \begin{code}

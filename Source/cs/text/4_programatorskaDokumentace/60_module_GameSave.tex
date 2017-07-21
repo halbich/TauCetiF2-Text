@@ -13,7 +13,7 @@ Zamysleme se nad tím, co by se stalo, kdybychom se snažili načíst save jiné
 
 \subsection{GameSaveInterface}
 
-Rozhraní pro ukládání a načítání hry \TT{UGameSaveInterface.h} je možné implementovat a~používat v~Blueprintech (struktura vychází z~tutoriálu na Unreal Engine Wiki~\citep{ue_interfaces_tut}). Rozhraní definuje dvě veřejné metody, které musí actoři v~UE při implementaci tohoto rozhraní implementovat:
+Rozhraní pro ukládání a~načítání hry \TT{UGameSaveInterface.h} je možné implementovat a~používat v~Blueprintech (struktura vychází z~tutoriálu na Unreal Engine Wiki~\citep{ue_interfaces_tut}). Rozhraní definuje dvě veřejné metody, které musí actoři v~UE při implementaci tohoto rozhraní implementovat:
 
 \begin{code}
 UFUNCTION(BlueprintNativeEvent, BlueprintCallable, ... )
@@ -23,17 +23,17 @@ UFUNCTION(BlueprintNativeEvent, BlueprintCallable, ... )
 	bool LoadGame();
 \end{code}
 
-Během načítání hry (TODO link) pak hlavní Blueprint hlavní mapy určité herní objekty přetypuje na toto rozhraní a~v tomto duchu s nimi dále pracuje.
+Během načítání hry (TODO link) pak hlavní Blueprint hlavní mapy určité herní objekty přetypuje na toto rozhraní a~v tomto duchu s~nimi dále pracuje.
 
 \subsection{FFileVisitor}
 \label{subsec:ffv}
-Pro získání všech herních savů z~nějaké zadané složky potřebujeme implementaci návrhového vzoru \textit{Visitor}, která je definovaná v souboru \TT{FFileVisitor.h}. Implementace vychází z~internetové diskuse na téma procházení adresářů~\citep{ue_iterate_dir}.
+Pro získání všech herních savů z~nějaké zadané složky potřebujeme implementaci návrhového vzoru \textit{Visitor}, která je definovaná v~souboru \TT{FFileVisitor.h}. Implementace vychází z~internetové diskuse na téma procházení adresářů~\citep{ue_iterate_dir}.
 
 \subsection{Helpers}
-Smysl helperu \TT{SaveHelpers.h} je v získání seznamu všech uložených her\linebreak (k~tomu využívá implementaci \textit{FileVisitoru}, kterou jsme zmínili v předchozí části \ref{subsec:ffv}.
+Smysl helperu \TT{SaveHelpers.h} je v~získání seznamu všech uložených her\linebreak (k~tomu využívá implementaci \textit{FileVisitoru}, kterou jsme zmínili v~předchozí části \ref{subsec:ffv}.
 
 \subsection{Kontejner s~uloženou hrou}
-Třída \TT{USaveGameCarrier} je v~zásadě přepravkou pro data s~možností ukládání a~načítání dat do binárního formátu. Navíc umožňuje během ukládání (při běhu v Editoru) vypsat vlastnosti právě ukládané hry do konzole tak, abychom je mohli snadno zkopírovat a~tím snadno vytvořit pevně implementované hry. Tyto pevně implementované hry pak nebudou data vracet po přečtení nějakého binárního souboru, ale budou vracet pevně nastavená data. 
+Třída \TT{USaveGameCarrier} je v~zásadě přepravkou pro data s~možností ukládání a~načítání dat do binárního formátu. Navíc umožňuje během ukládání (při běhu v~Editoru) vypsat vlastnosti právě ukládané hry do konzole tak, abychom je mohli snadno zkopírovat a~tím snadno vytvořit pevně implementované hry. Tyto pevně implementované hry pak nebudou data vracet po přečtení nějakého binárního souboru, ale budou vracet pevně nastavená data. 
 
 Přepravka obsahuje pouze holá data, takže se nevytvářejí žádné nové instance herních objektů. To je z~toho důvodu, že nemůžeme použít následující kód:
 
@@ -69,7 +69,7 @@ void USaveGameCarrier::SaveLoadData(
 }
 \end{code}
 
-Třídu \TT{UBlockInfo} jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul \textit{Blocks} si při načítání hry těmito daty naplní své vlastní objekty, které následně využívá i během hry. A~naopak, před samotným uložením se postará o~to, aby bylo toto pole korektně naplněno všemi daty určenými k~uložení. O~samotnou serializaci a~deserializaci dat do a~z~přepravky se stará pouze modul \textit{GameSave}. 
+Třídu \TT{UBlockInfo} jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul \textit{Blocks} si při načítání hry těmito daty naplní své vlastní objekty, které následně využívá i~během hry. A~naopak, před samotným uložením se postará o~to, aby bylo toto pole korektně naplněno všemi daty určenými k~uložení. O~samotnou serializaci a~deserializaci dat do a~z~přepravky se stará pouze modul \textit{GameSave}. 
 
 Tento systém je použit pro všechny rozšířené části uložené hry -- \textit{Bloky}, \textit{Inventář}, \textit{Počasí} -- a~všechny používají podobný způsob práce. Jedná se o~definici struktur, tedy samotných kontejnerů a~dále pak jeden soubor pojmenovaný \TT{*ArchiveHelpers.h}, kde je popsána vlastní struktura daných kontejnerů v~Archivu. Hvězdičku v~tomto případě bereme opravdu jako zástupný symbol. Navíc, některé objekty mohou řídit archivaci dle nějakých podmínek nastavených shora. Příkladem budiž definice serializace elektrické komponenty:
 
@@ -105,7 +105,7 @@ Z~kódu můžeme vidět, že se celý kód chová korektně jak při serializaci
 
 \subsection{NewGameSaveHolder}
 
-Třída \TT{NewGameSaveHolder} je hlavní třídou, se kterou hra v rámci nahrávání her pracuje. Definuje seznam napevno zabudovaných map a~také obsahuje jejich implementaci.
+Třída \TT{NewGameSaveHolder} je hlavní třídou, se kterou hra v~rámci nahrávání her pracuje. Definuje seznam napevno zabudovaných map a~také obsahuje jejich implementaci.
 
 
 
