@@ -4,27 +4,7 @@
 
 \section{Modul Inventory (C++)}
 
-Modul inventáře byl vyčleněn do samostatné části. Je to hlavně jako ukázka možného členění do modulů. Navíc časem by se mohl tento modul rozšířovat jak by rostla kompelxicita správy inventáře.
-
-Nejdůležitější inventory component
-
-
-\subsection{Tag group}
-nejnižší úroveň, odpovídá 'nebo'
-
-\subsection{Inventory tag group}
-
-celá skupina, odpovídá 'A zároveň'
-
-\subsection{Inventory tags}
-
-sdružuje všechny banky
 
 \subsection{Inventory component}
 
-celá komponenta, která je pak navázaná na hráčův charakter
-
-definuje delegáty notifikující o~změnách v~akivní skupině, po filtrování apod.
-
-na této úrovni se řeší aktualizace cache buildable i~inventorybuildable při změnách, zároveň poskytuje možnost clear cache pro volání shora (BP)
-
+Jak jsme popisovali v části \ref{sec:inv}, tato komponenta je v \UEu{} přidána k postavě hráče. Zajímavou funkcionalitou je možnost vyvolání události \textit{změny aktuálních inventárních prvků}, čehož využívá hlavní herní \HUD{}. Ten v obsluze této události překreslí inventární sloty. Tato událost může vzniknout třeba když hráč mění aktuálně zvolenou \textit{inventární} skupinu. Zároveň se pro inventární skupiny vyfiltrované položky ukládají do \textit{cache}, takže není potřeba opakovaně vyhodnocovat filtry inventární skupiny.
