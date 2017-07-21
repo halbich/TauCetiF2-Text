@@ -15,7 +15,7 @@ Pokud je cílem spustit projekt hry ze zdrojových kódů, je potřeba si stáhn
 
 \FloatBarrier
 
-Pokud není vidět \UE{} dané verze v~seznamu verzí, je potřeba jej přidat kliknutím na tlačítko \textit{Add Versions} a~případném následném výběru správné verze. Na obrázku \ref{fig:ueLauncher} je vidět \UE{} verze \TT{4.16.2}, který je připravený ke stažení. Posledním krokem je samotná instalace stisknutím tlačítka \textit{Install}. Použití novější verze \UEu{} je možné, ale běžnému uživateli to nedoporučujeme. Mezi verzemi se mohou projevit nekompatibility v~kódu, které je mnohdy nutné řešit zásahy přímo do zdrojových kódů hry.
+Pokud není vidět \UE{} dané verze v~seznamu verzí, je potřeba jej přidat kliknutím na tlačítko \textit{Add Versions} a~případném následném výběru správné verze. Přidaná verze se zobrazí stejným způsobem, jako je na obrázku \ref{fig:ueLauncher} zobrazen \UE{} verze \TT{4.16.2}. Posledním krokem je samotná instalace stisknutím tlačítka \textit{Install}. Použití novější verze \UEu{} je možné, ale běžnému uživateli to nedoporučujeme. Mezi verzemi se mohou projevit nekompatibility v~kódu, které je mnohdy nutné řešit zásahy přímo do zdrojových kódů hry.
 
 Dále je potřeba mít k~dispozici zdrojové kódy ať už z~přiloženého DVD, nebo z~tohoto release na GitHubu (odkaz~\citep{gh_finalRelease}). Na DVD se soubory nachází ve složce \textit{Source}. Ve složce zdrojových kódů hry se nachází soubor \TT{TauCetiF2.uproject}, což je soubor projektu v~\UEu{}. Další postup závisí na tom, zda je cílem otevřít hru v~Editoru \UEu{}, nebo vytvořit projekt pro Visual Studio, z~něhož je pak možné Editor spustit. Oba přístupy jsou záměnné, protože vytvoření projektu pro Visual Studio po spuštění Editoru je také validní postup. Pro úspěšnou kompilaci a~spuštění hry je zapotřebí mít Visual Studio 2015 alespoň ve verzi \textit{Community} a~mít u~něj zapnutou podporu jazyka \CPP{} (to se řeší během instalace Visual Studia).
  
@@ -33,7 +33,7 @@ Projekt pro Visual Studio je možné vytvořit kliknutím pravým tlačítkem my
 
 Tento postup je v~praxi běžně používaný. Celý projekt je totiž vytvořen na základě informací ze složky \textit{Source}. Mimo jiné má tento přístup tu výhodu, že při použití systému správy verzí (jako například GITu) se tyto vygenerované soubory nemusí verzovat -- každý vývojář si je vytvoří na svém počítači.
 
-Pokud v~kontextové nabídce chybí možnosti pro \UE{}, je potřeba provést asociaci s~\TT{uproject} soubory. Tato asociace by měla být provedena automaticky, nejpozději po vytvoření libovolného \CPP{} projektu z~kterékoliv šablony. Ze zkušenosti autora -- toto se mnohdy nemusí podařit. Pokud se nepodaří vygenerovat projekt hry, může pomoci druhý přístup otevření projektu, který je popsán v~následující části.
+Pokud v~kontextové nabídce chybí možnosti pro \UE{}, je potřeba provést asociaci s~\TT{uproject} soubory. Tato asociace by měla být provedena automaticky, nejpozději po vytvoření libovolného \CPP{} projektu z~kterékoliv šablony. Ze zkušenosti autora se to mnohdy nemusí podařit. Pokud se nepodaří vygenerovat projekt hry, může pomoci druhý přístup otevření projektu, který je popsán v~následující části.
 
 Předposledním krokem je v~případě úspěšného vytvoření projektu hry jeho otevření ve \textit{Visual Studiu}, nastavení \textit{TauCetiF2} jako hlavní spustitelnou část projektu (viz obrázek \ref{fig:vs}) a~následné spuštění editoru hry.
 

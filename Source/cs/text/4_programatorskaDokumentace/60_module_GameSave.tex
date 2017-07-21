@@ -33,6 +33,7 @@ Pro získání všech herních savů z~nějaké zadané složky potřebujeme imp
 Smysl helperu \TT{SaveHelpers.h} je v~získání seznamu všech uložených her\linebreak (k~tomu využívá implementaci \textit{FileVisitoru}, kterou jsme zmínili v~předchozí části \ref{subsec:ffv}.
 
 \subsection{Kontejner s~uloženou hrou}
+\label{subsec:uloz}
 Třída \TT{USaveGameCarrier} je v~zásadě přepravkou pro data s~možností ukládání a~načítání dat do binárního formátu. Navíc umožňuje během ukládání (při běhu v~Editoru) vypsat vlastnosti právě ukládané hry do konzole tak, abychom je mohli snadno zkopírovat a~tím snadno vytvořit pevně implementované hry. Tyto pevně implementované hry pak nebudou data vracet po přečtení nějakého binárního souboru, ale budou vracet pevně nastavená data. 
 
 Přepravka obsahuje pouze holá data, takže se nevytvářejí žádné nové instance herních objektů. To je z~toho důvodu, že nemůžeme použít následující kód:
@@ -102,6 +103,9 @@ FORCEINLINE FArchive& operator<<(
 \end{code}
 
 Z~kódu můžeme vidět, že se celý kód chová korektně jak při serializaci, tak i~při deserializaci. 
+
+
+TODO popis v~příloze \ref{sec:saveGame}
 
 \subsection{NewGameSaveHolder}
 

@@ -24,7 +24,7 @@ Níže je možné se podívat na grafy zpracované stránkou Google Forms. U~slo
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=110mm]{../img/survey/q1}
-\caption{Vůbec hry nehraji -- Hraji každý den}
+\caption{1 = Vůbec hry nehraji, 10 = Hraji každý den}
 \label{fig:q1}
 \end{figure}
 \FloatBarrier
@@ -32,7 +32,7 @@ Níže je možné se podívat na grafy zpracované stránkou Google Forms. U~slo
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=110mm]{../img/survey/q2}
-\caption{Vůbec to neznám -- Znám je velice dobře}
+\caption{1 = Vůbec to neznám, 10 = Znám je velice dobře}
 \label{fig:q2}
 \end{figure}
 \FloatBarrier
@@ -40,7 +40,7 @@ Níže je možné se podívat na grafy zpracované stránkou Google Forms. U~slo
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=110mm]{../img/survey/q3}
-\caption{Velice málo (max. 1 hodinu) -- Hodně (100 a~více hodin)}
+\caption{1 = Velice málo (max. 1 hodinu), 10 = Hodně (100 a~více hodin)}
 \label{fig:q3}
 \end{figure}
 \FloatBarrier
@@ -56,7 +56,7 @@ Níže je možné se podívat na grafy zpracované stránkou Google Forms. U~slo
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=110mm]{../img/survey/q5}
-\caption{Příliš malé -- Dostatečně velké}
+\caption{1 = Příliš malé, 10 = Dostatečně velké}
 \label{fig:q5}
 \end{figure}
 \FloatBarrier
@@ -64,7 +64,7 @@ Níže je možné se podívat na grafy zpracované stránkou Google Forms. U~slo
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=110mm]{../img/survey/q6}
-\caption{Stavění bylo oproti jiným hrám nepříjemné -- Stavění mě oproti jiným hrám opravdu bavilo}
+\caption{1 = Stavění bylo oproti jiným hrám nepříjemné, 10 = Stavění mě oproti jiným hrám opravdu bavilo}
 \label{fig:q6}
 \end{figure}
 \FloatBarrier
@@ -72,7 +72,7 @@ Níže je možné se podívat na grafy zpracované stránkou Google Forms. U~slo
 
 \begin{figure}[!ht]\centering
 \includegraphics[ width=110mm]{../img/survey/q7}
-\caption{Velice nepovedená, nikdy se k~ní nevrátím -- Zdařilá, rád/a bych si v~budoucnu dokončenou hru zahrál/a}
+\caption{1 = Velice nepovedená, nikdy se k~ní nevrátím, 10 = Zdařilá, rád/a bych si v~budoucnu dokončenou hru zahrál/a}
 \label{fig:q7}
 \end{figure}
 \FloatBarrier
@@ -83,10 +83,22 @@ Níže je možné se podívat na grafy zpracované stránkou Google Forms. U~slo
 \section{Struktura souboru uložené hry}
 \label{sec:saveGame}
 
-TODO
+Princip ukládání do binárního souboru je popsán v~části \ref{subsec:uloz}. Datové typy odpovídající datovým typům \UEu{} jsou do výsledného souboru zapisovány standardně definovaným streamovým operátorem $<<$, vlastní definované struktury implementují přetížení operátoru $<<$ a~jejich datová struktura odpovídá tabulkám níže. Posloupnost vlastností popisujeme následujícím způsobem:
 
-Základní struktura binárního souboru uložené hry je níže. Datové typy odpovídají datovým typům \UEu{} a~vlastním definovaným typům. Ty popíšeme v~následujících tabulkách. Vzhledem k~použití dědičnosti u~některých vlastních datových typů musíme přistoupit k~zápisu \TT{[název datového typu předka]} bez uvedení názvu vlastnosti. Tím dáváme najevo fakt, že daná struktura navíc obsahuje na dané pozici všechny datové položky daného předka. Dále u~některých vlastností využíváme podmínek. Pokud taková podmínka není splněna, data se v~binárním souboru vůbec neobjeví.
 
+\begin{code}
+[název_bázové_třídy]      // na tomto místě jsou zapsány všechny
+                          // vlastnosti z~bázové třídy
+datový_typ                                  název_vlastnosti
+if (podmínka)             // zápis je pouze v~případě splnění podmínky
+    datový_typ                              název_vlastnosti
+\end{code}
+
+Vzhledem k~použití dědičnosti u~některých vlastních datových typů musíme přistoupit k~zápisu \TT{[název bázové třídy]} bez uvedení názvu vlastnosti. Tím dáváme najevo fakt, že daná struktura navíc obsahuje na dané pozici všechny datové položky daného předka. Dále u~některých vlastností využíváme podmínek. Pokud taková podmínka není splněna, data se v~binárním souboru vůbec neobjeví. Důležitou vlastností je, že na pořadí zápisu vlastností záleží. Pořadí odpovídá jednotlivým řádkům.
+
+Níže uvádíme formát pro všechny použité datové typy. V~záhlaví je vždy uveden název datového typu.
+
+\subsubsection{USaveGameCarrier}
 \begin{code}
 FString                                     SaveName
 FDateTime                                   SavedDate
@@ -111,6 +123,7 @@ FWeatherState                               weatherState
 \end{code}
 
 
+\newpage
 
 \subsubsection{FBlockInfo}
 
@@ -125,7 +138,7 @@ if (HasRelationshipData)
     FBlockWithRelationshipInfo              RelationshipInfo
 \end{code}
 
-\newpage
+
 
 
 \subsubsection{FBlockWithRelationshipInfo}
