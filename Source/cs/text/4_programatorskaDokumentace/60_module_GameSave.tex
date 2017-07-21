@@ -2,7 +2,7 @@
 
 \section{Modul Game Save (C++)}
 
-Modul GameSave slouží k~ukládání a~načítání informací o~probíhající hře do binárního formátu. (TODO ref)  K~tomu používáme streamové operátory $<<$, které jsou v~tomto případě implementovány tak, že je možné je použít jak pro ukládání, tak pro načítání. // TODO link na tutorial
+Modul GameSave slouží k~ukládání a~načítání informací o~probíhající hře do binárního formátu. (TODO ref) K~tomu používáme streamové operátory $<<$, které jsou v~tomto případě implementovány tak, že je možné je použít jak pro ukládání, tak pro načítání. // TODO link na tutorial
 
 Díky tomuto přístupu tak můžeme definovat celou strukturu výsledného binárního souboru na jednom místě a~tedy rozšiřování uložené hry je triviální. Co si ovšem musíme pohlídat je to, abychom si drželi informaci o~verzi uloženého souboru. V~našem případě, pokud se bude lišit verze načteného souboru a~uložená konstanta v~programu, save prostě odmítneme (a dokonce smažeme). V~produkčním prostředí bychom si mazání nemohli dovolit, ale museli bychom save ignorovat a~uživateli zobrazit nějakou hlášku o~tom, že verze souboru není podporovaná. My jsme se však v~tomto případě rozhodli save mazat, protože jsme očekávali, že během vývoje hry se bude binární struktura savu často rozšiřovat. Po každé iteraci jsme si savy prostě vytvořili nové.
 

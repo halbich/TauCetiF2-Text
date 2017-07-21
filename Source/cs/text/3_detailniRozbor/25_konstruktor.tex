@@ -4,9 +4,17 @@
 \label{sec:konstruktor}
 
 
-V předcházející kapitole (TODO ref) jsme zjistili, že problém rozpoznávání tvarů je v~našem prostředí velmi komplexní problém. V~tuto chvíli nevidíme důvod, abychom vyžadovali takto komplexní funkcionalitu, takže využijeme některých myšlenek z~předchozího textu a~převedeme je do realizovatelnější podoby.
+V části \ref{subsec:adrt} jsme zjistili, že rozpoznávání tvarů je v~našem prostředí velice komplexní problém. Rádi bychom však využili některých myšlenek a~převedli je do realizovatelnější podoby.
 
-Jediný tvar, který budeme chtít umět rozpoznat, bude tvar objektu \textit{Konstruktoru objektů}. Abychom měli jednoznačný vstup do výpočetního stromu tvaru (TODO strom musí být dříve zmíněn), řekneme, že konstruktor musí obsahovat speciální blok \RB{B7}. Ten se bude vázat k~ostatním blokům stejného typu. Chceme, aby konstruktor objektů vypadal následovně:
+Jediný tvar, který budeme chtít umět rozpoznat, bude tvar objektu \textit{Konstruktoru objektů}. Abychom měli snazší začátek ověřování splňujícího tvaru, řekneme, že konstruktor musí obsahovat speciální blok \RB{B7}. Chceme, aby konstruktor objektů vypadal následovně:
 
-TODO specifikace
+\begin{enumerate}
+	\item Bloky \RB{B7} tvoří homogenní kvádr. Tento kvádr má čtvercovou podstavu, jejíž hrana je délky nejvýše $20$-ti násobku jednotkové krychle. Pro účely dalšího textu si označme délku hrany jako \textit{A}.
+	\item Nad bloky \RB{B7} je volný prostor až do výše \textit{A}. Tento volný prostor bude reprezentovat místo pro vytváření bloků až do velikosti \textit{A}, a~proto musí být celý volný. Tento prostor označme jako \textbf{VP}.
+	\item Okolo \textbf{VP} jsou těsně umístěny bloky \RB{A3}. Tyto bloky musí mít navíc netriviální dotyk s~boky bloků \RB{B7}. Vzhledem k~výšce bloku \textit{B7} můžeme ekvivalentně říct, že horní polovina boční stěny musí být \uv{překryta} bloky \RB{A3}. Cílem tohoto pravidla je snaha o~\uv{uzavření} konstruktoru průhlednými bloky.
+\end{enumerate}
+
+Celkové rozměry \textit{Konstruktoru objektů} jsou minimálně\linebreak $[(A+2), (A+2), (A+3)]$. Dále budeme požadovat, aby bylo možné používat \textit{Konstruktor objektů} skrze UI rozhraní bloku \RB{B1}.
+
+Všechny tyto požadavky můžeme splnit tak, že budeme blok \RB{B7} v~rámci herního světa sdružovat do skupin, přičemž ve skupině spolu musí bloky Generátoru přímo sousedit. Ověřování validity bodů 2 a~3 může začít až v~momentě, kdy skupina bude splňovat bod 1 našich požadavků. Pokud jsou všechny body splněny, blok \RB{B1} může začít tento objekt zobrazovat v~rámci UI rozhraní.
 
