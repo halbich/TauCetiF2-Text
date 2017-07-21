@@ -1,13 +1,5 @@
-%!TEX root = ../prace.tex
+%!TEX root = ../../prace.tex
 
 \section{Modul TauCetiF2 (C++)}
-- primární modul
-
-popsat co všechno obsahuje (widgety, gamemodes, weather apod)
-
-- popsat synchronize widget ( // TODO link na důvod, proč to tam mám), popsat object widget, napsat důvody
-
-- popsat to stackování 
-
-- popsat komponenty
-(weather, game electricity)
+Primární herní modul \textit{TauCetiF2} obsahuje mimo jiné implementaci herního objektu \textit{WorldController}, který jsme popisovali v~části \ref{subs:wc}. Dále obsahuje bázové třídy pro většinu UI oken hry. Zde bychom rádi zmínili \TT{SynchronizeWidget}, který dědí z~\TT{UUserWidget}, tedy základního uživatelského widgetu (UI prvku, který je možné zobrazit). Tato třída pak implementuje metodu \TT{SynchronizeProperties}, díky níž získávají potomci této třídy možnost okamžité aktualizace po změně libovolné vlastnosti v~Editoru widgetů. Tato vlastnost běžně dostupná není, ale tímto \uv{trikem} lze snadno získat možnost ihned vidět změny v~rámci daného editovaného UI prvku.
+ 
