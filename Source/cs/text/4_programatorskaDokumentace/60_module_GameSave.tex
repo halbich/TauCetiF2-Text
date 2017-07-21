@@ -2,13 +2,9 @@
 
 \section{Modul Game Save (C++)}
 
-Modul GameSave slouží k~ukládání a~načítání informací o~probíhající hře do binárního formátu. (TODO ref) K~tomu používáme streamové operátory $<<$, které jsou v~tomto případě implementovány tak, že je možné je použít jak pro ukládání, tak pro načítání. // TODO link na tutorial
+Modul GameSave slouží k~ukládání a~načítání informací o~probíhající hře do binárního formátu. Jak jsme popisovali v~kapitole \ref{sec:ukl}, používáme k~tomu streamové operátory $<<$, které jsou v~tomto případě implementovány tak, že je možné je použít jak pro ukládání, tak pro načítání.
 
-Díky tomuto přístupu tak můžeme definovat celou strukturu výsledného binárního souboru na jednom místě a~tedy rozšiřování uložené hry je triviální. Co si ovšem musíme pohlídat je to, abychom si drželi informaci o~verzi uloženého souboru. V~našem případě, pokud se bude lišit verze načteného souboru a~uložená konstanta v~programu, save prostě odmítneme (a dokonce smažeme). V~produkčním prostředí bychom si mazání nemohli dovolit, ale museli bychom save ignorovat a~uživateli zobrazit nějakou hlášku o~tom, že verze souboru není podporovaná. My jsme se však v~tomto případě rozhodli save mazat, protože jsme očekávali, že během vývoje hry se bude binární struktura savu často rozšiřovat. Po každé iteraci jsme si savy prostě vytvořili nové.
-
-Zamysleme se nad tím, co by se stalo, kdybychom se snažili načíst save jiné verze. Celá hra by nejspíše byla ukončena s~chybou, protože by se pokoušela číst neplatná data a/nebo by očekávala nějaká data tam, kde žádná nejsou. Tím bychom četli z~neplatné lokace.
-
-
+Díky tomuto přístupu tak můžeme definovat celou strukturu výsledného binárního souboru na jednom místě a~tedy rozšiřování uložené hry je triviální. Co si ovšem musíme pohlídat je to, abychom si drželi informaci o~verzi uloženého souboru. V~našem případě, pokud se bude lišit verze načteného souboru a~uložená konstanta v~programu, soubor prostě odmítneme (a dokonce smažeme). V~produkčním prostředí bychom si mazání nemohli dovolit, ale museli bychom soubor ignorovat a~uživateli zobrazit nějakou hlášku o~tom, že verze souboru není podporovaná. My jsme se však v~tomto případě rozhodli, že neplatné soubory budeme mazat, protože jsme očekávali, že během vývoje hry se bude binární struktura souboru často měnit a~rozšiřovat. Po každé iteraci úpravy formátu jsme si jednoduše vytvořili nové soubory uložené hry .
 
 
 \subsection{GameSaveInterface}
@@ -23,7 +19,7 @@ UFUNCTION(BlueprintNativeEvent, BlueprintCallable, ... )
 	bool LoadGame();
 \end{code}
 
-Během načítání hry (TODO link) pak hlavní Blueprint hlavní mapy určité herní objekty přetypuje na toto rozhraní a~v tomto duchu s~nimi dále pracuje.
+Jak jsme již popisovali v~části \ref{subsubsec:nac}, během načítání hry hlavní Blueprint Hlavní mapy určité herní objekty přetypuje na toto rozhraní a~v tomto duchu s~nimi dále pracuje.
 
 \subsection{FFileVisitor}
 \label{subsec:ffv}
@@ -70,9 +66,9 @@ void USaveGameCarrier::SaveLoadData(
 }
 \end{code}
 
-Třídu \TT{UBlockInfo} jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul \textit{Blocks} si při načítání hry těmito daty naplní své vlastní objekty, které následně využívá i~během hry. A~naopak, před samotným uložením se postará o~to, aby bylo toto pole korektně naplněno všemi daty určenými k~uložení. O~samotnou serializaci a~deserializaci dat do a~z~přepravky se stará pouze modul \textit{GameSave}. 
+Třídu \TT{UBlockInfo} jsme nahradili strukturou \TT{FBlockInfo}, která sama slouží pouze jako přepravka na data. Vyšší vrstva, tedy modul \textit{Blocks} si při načítání hry těmito daty naplní své vlastní objekty, které následně využívá i~během hry. A~naopak, před samotným uložením se postará o~to, aby bylo toto pole korektně naplněno všemi daty určenými k~uložení. O~samotnou serializaci a~deserializaci dat do a~z~přepravky se stará pouze modul \textit{GameSave}. Kompletní popis formátu uložené hry je možné nalézt v~příloze \ref{sec:saveGame}.
 
-Tento systém je použit pro všechny rozšířené části uložené hry -- \textit{Bloky}, \textit{Inventář}, \textit{Počasí} -- a~všechny používají podobný způsob práce. Jedná se o~definici struktur, tedy samotných kontejnerů a~dále pak jeden soubor pojmenovaný \TT{*ArchiveHelpers.h}, kde je popsána vlastní struktura daných kontejnerů v~Archivu. Hvězdičku v~tomto případě bereme opravdu jako zástupný symbol. Navíc, některé objekty mohou řídit archivaci dle nějakých podmínek nastavených shora. Příkladem budiž definice serializace elektrické komponenty:
+Tento systém je použit pro všechny rozšířené části uložené hry -- \textit{Bloky}, \textit{Inventář}, \textit{Počasí} -- a~všechny používají podobný způsob práce. Jedná se o~definici struktur, tedy samotných kontejnerů a~dále pak jeden soubor pojmenovaný \TT{*ArchiveHelpers.h}, kde je popsána vlastní struktura daných kontejnerů v~Archivu. Hvězdičku v~tomto případě bereme opravdu jako zástupný symbol. Navíc, některé objekty mohou řídit archivaci dle nějakých podmínek nastavených shora. Příkladem budiž definice serializace elektrické komponenty:\pagebreak
 
 \begin{code}
 // přetížení, které se nevolá vždy
@@ -105,7 +101,6 @@ FORCEINLINE FArchive& operator<<(
 Z~kódu můžeme vidět, že se celý kód chová korektně jak při serializaci, tak i~při deserializaci. 
 
 
-TODO popis v~příloze \ref{sec:saveGame}
 
 \subsection{NewGameSaveHolder}
 
