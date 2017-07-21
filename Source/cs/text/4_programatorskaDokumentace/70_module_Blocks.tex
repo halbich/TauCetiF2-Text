@@ -4,8 +4,8 @@
 
 
 
-\subsubsection{Převádění kyslíku}
-Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme zajistit konzistenci dat při převodech kyslíku. Můžeme pro to využít primitiva pro zamykání \TT{FCriticalSection}. Kritickou sekci pak budeme korektně zamykat a~odemykat (stejně jako u~klasického vícevláknového programování). Algoritmy pro vkládání a~získání kyslíku budou mít následující signaturu:
+\subsection{Převádění kyslíku a energie TODO}
+Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme zajistit konzistenci dat při převodech kyslíku či energie. Můžeme pro to využít primitiva pro zamykání \TT{FCriticalSection}. Kritickou sekci pak budeme korektně zamykat a~odemykat (stejně jako u~klasického vícevláknového programování). Algoritmy pro vkládání a~získání kyslíku budou mít následující signaturu (pro energii bude signatura stejná):
 
 \begin{code}
     // dodej kyslík komponentě
@@ -18,12 +18,11 @@ Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme
                                         bool requireExact)
 \end{code}
 
-TODO přesunout do programátoské, nechat jen obecný kecy co a~jak
 
 Princip je prostý -- metody vrací \TT{bool} jakožto hodnotu, zda bylo možné operaci korektně provést. Parametry předávané \textit{referencí} pak v~případě úspěchu obsahují hodnotu skutečně vloženého či získaného kyslíku. Poslední parametr u~metody pro získání kyslíku značí, zda je vyžadované přesné množství. Pokud kyslíková komponenta obsahuje méně kyslíku, než je požadované množství a~je požadované přesně zadané množství, převod nebude úspěšný a~metoda vrátí \TT{false}. Pokud nebude požadované přesně dané množství, skutečně získané množství může být menší a~je na volajícím, aby se tomuto faktu přizpůsobil.
 
 
-
+\subsection{TODO msain}
 
 Modul bloků obsahuje podstatné informace o~tom, jak hra pracuje s~bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty apod. Také je v~tomto modulu možné nalézt specifické implementace jednotlivých bloků.
 
@@ -41,31 +40,12 @@ V dalším textu se budeme odkazovat na složky. Odkazujeme se tím do složek \
  
 
 \subsection{Definice bloků}
-V této složce se nachází všechny definiční soubory bloků. Definiční soubor obsahuje pouze popis datové struktury a~nějakou minimální funkcionalitu (kupříkladu získání korektního vektoru velikosti v~závislosti na tom, zda má definice daného bloku nastavenou vlastní velikost). Jednotlivé konkrétní instance s~daty jsou pak definovány na straně editoru. Konstanty (například minimální a~maximální škálování) je pak možné měnit v~editoru a~není vyžadována rekompilace projektu hry. 
+V této složce se nachází všechny definiční soubory bloků. Definiční soubor obsahuje pouze popis datové struktury a~nějakou minimální funkcionalitu (kupříkladu získání korektního vektoru velikosti v~závislosti na tom, zda má definice daného bloku nastavenou vlastní velikost). Jednotlivé konkrétní instance s~daty jsou pak definovány na straně editoru. (TODO link do práce) Konstanty (například minimální a~maximální škálování) je pak možné měnit v~editoru a~není vyžadována rekompilace projektu hry. 
 
-Definiční soubor se skládá následujícím způsobem:
-
-\begin{itemize}
-	\item UBlockDefinition (\TT{BlockDefinition.h})
-		\subitem -- FUsableBlockDefinition (\TT{UsableBlockDefinition.h})
-		\subitem -- FBlockMeshStructureDefinition (\TT{BlockMeshStructureDefinition.h})
-			\subsubitem -- FBlockMaterialDefinition (\TT{BlockMaterialDefinition.h})
-		\subitem -- FBlockAdditionalFlags (\TT{BlockAdditionalFlags.h})
-			\subsubitem -- FBlockFlagValue (\TT{BlockFlagValue.h})	
-		\subitem -- FOxygenComponentDefinition (\TT{OxygenComponentDefinition.h})
-		\subitem -- FElectricityComponentDefinition (\TT{ElectricityComponentDefinition.h})
-			\subsubitem -- FElectricityBindableAreas (\TT{ElectricityBindableAreas.h})	
-				
-		
-
-\end{itemize}
 
 \subsection{Třídy s~popisem bloků}
 Tyto třídy popisují už konkrétní instance bloků v~rámci hry. Jejich hodnoty jsou pak v~mezích definovaných v~definičních třídách. Tyto třídy jsou pak předmětem ukládání a~načítání. Dalším důležitým prvkem je BlockHolder, který slouží pro nalezení bloků. 
 
-\subsection{Ukládání a~načítání bloků}
-
-- ukládání -- máme něco jako block saving helpers
 
 
 \subsection{Interfaces}
