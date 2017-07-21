@@ -1,13 +1,11 @@
 %!TEX root = ../../prace.tex
 
-\section{Ukládání hry TODO}
+\section{Ukládání hry}
 
+Možností, jak implementovat systém ukládání hry, je opět více. Stejně jako u~definic bloků v~kapitole \ref{sec:db} můžeme volit mezi textovým a~binárním formátem. Očekáváme, že soubor uložené hry bude obsahovat velké množství dat, a~proto bychom chtěli minimalizovat výslednou velikost uloženého souboru. Z~tohoto požadavku vyplývá, že nebudeme chtít ukládat hry v~textovém formátu.
 
+Při rešerši možného řešení jsme objevili zajímavý tutoriál (wiki stránka tutoriálu~\citep{ue_save_system}) na ukládání hry v~binárním formátu. Pojďme se podívat, co nám dané řešení nabízí.
 
--specifikace binárního formátu v~příloze 
+Výše zmíněný systém ukládání je postaven na faktu, že v~C++ je možné přetěžovat operátory, mimo jiné i~streamové operátory $<<$. Této vlastnosti je využito tak šikovně, že v~závislosti na volání funkce buď zapisuje do archivu (souboru uložené hry), nebo z~něj čte. Pořád se však jedná o~jediný zápis jedné funkce. To je výhodné, protože to předchází chybám, které by mohly vzniknout při použití 2 metod (jedné čtecí, jedné zapisovací). Také tím předcházíme chybám typu \textit{přehození} pořadí datových \textit{typů} (což by v~případě typů různých velikostí znamenalo následné špatné pochopení binárních dat, nebo rovnou pád aplikace), nebo kupříkladu prohození dvou vlastností stejného typu, což by vytvářelo těžko odhalitelné situace změn hodnot ve hře. Dále nám tento systém nabízí možnost \textit{komprese} dat. Pokud bychom měli ukládané soubory příliš velké, tuto vlastnost bychom mohli využít a~hráči tak šetřit místo na disku.
 
-tady zmínit systém save, binární vs textový, zmínit tutoriál, ze kterého jsem to udělali, zmínit možnost komprese
-
-
-
-Celý systém vychází z~tutoriálu~\citep{ue_save_system} je postaven na tom, že v~C++ je možné přetěžovat operátory, mimo jiné i~$<<$. Této vlastnosti je využito tak šikovně, že v~závislosti na volání funkce buď zapisuje do archivu, nebo z~něj čte, ale pořád se jedná o~jediný zápis jedné funkce. To je výhodné, protože to předchází chybám, které by mohly vzniknout při použití 2 metod -- jedné čtecí, jedné zapisovací. Chybám typu přehození dvou datových typů (což by v~případě typů různých velikostí znamenalo následné špatné pochopení binárních dat), nebo kupříkladu prohození dvou vlastností stejného typu, což by vytvářelo těžko odhalitelné situace změn hodnot ve hře.
+Shledali jsme, že je pro nás přínosné využít tento způsob ukládání dat.

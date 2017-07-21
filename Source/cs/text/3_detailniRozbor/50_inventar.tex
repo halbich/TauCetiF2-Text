@@ -14,15 +14,10 @@ V momentě, kdy budeme chtít hráči nabídnout bloky k~postavení či umístě
 
 \subsection{Inventární skupiny}
 
-Protože má každý blok své definované \textit{tagy}, musíme vymyslet takový systém, abychom snadno filtrovali podle těchto tagů. Nejsnazší způsob je takový, kdy každá inventární skupina definuje, jaké tagy musí blok mít, aby byl přiřazen. Takže pro blok, který má být zobrazen v~rámci inventární skupiny, platí, že blok definuje všechny tagy v~rámci dané inventární skupiny. Nicméně se může stát, že hráč bude chtít mít v~dané skupině takové bloky, které nemusí splňovat všechny tagy, ale splňují alespoň jeden z~definované skupiny. Z~této myšlenky se dostáváme k~jednoznačnému zápisu algoritmu filtrování tagů -- \CNF{}. \CNF{} je označení pro \textit{konjunktivně normální formu}, užívané ve výrokové logice.
-
-Formálně bychom tuto myšlenku zapsali jako:
-\begin{equation}\label{eq:cnf}
-	( A_1 \lor A_2 \lor ... \lor A_n ) \land ( B_1 \lor B_2 \lor ... \lor B_n ) \land ... \land ( X_1 \lor X_2 \lor ... \lor X_n )
-\end{equation}
+Protože má každý blok své definované \textit{tagy}, musíme vymyslet takový systém, abychom snadno filtrovali podle těchto tagů. Nejsnazší způsob je takový, kdy každá inventární skupina definuje, jaké tagy musí blok mít, aby byl přiřazen. Takže pro blok, který má být zobrazen v~rámci inventární skupiny, platí, že blok definuje všechny tagy v~rámci dané inventární skupiny. Nicméně se může stát, že hráč bude chtít mít v~dané skupině takové bloky, které nemusí splňovat všechny tagy, ale splňují alespoň jeden z~definované skupiny. Z~této myšlenky se dostáváme k~jednoznačnému způsobu filtrování tagů, který je ekvivalentní s~\textit{konjunktivně normální formou} (\CNF{}).
 
 
-Při pohledu na formuli \ref{eq:cnf} vidíme, že můžeme implementovat takový systém, kdy \textit{inventární skupina} definuje \textit{inventární skupiny tagů} (konjunktivní vyhodnocení), přičemž \textit{inventární skupiny tagů} definují \textit{skupiny tagů} (disjunktivní vyhodnocení). Při vyhodnocování, zda blok patří do dané \textit{inventární skupiny}, tedy budeme sledovat to, zda daný blok splňuje všechny tyto \textit{inventární skupiny tagů} a~pro každou z~nich budeme zjišťovat, zda blok definuje alespoň jeden tag ze \textit{skupiny tagů}. 
+Chceme tedy implementovat takový systém, kdy \textit{inventární skupina} definuje \textit{inventární skupiny tagů} (konjunktivní vyhodnocení), přičemž \textit{inventární skupiny tagů} definují \textit{skupiny tagů} (disjunktivní vyhodnocení). Při vyhodnocování \textit{inventární skupiny} budeme sledovat, zda blok splňuje všechny její \textit{inventární skupiny tagů}, přičemž pro každou z~nich budeme zjišťovat, zda blok definuje alespoň jeden tag ze \textit{skupiny tagů}. 
 
 Abychom hráči ještě více zpříjemnili práci s~inventářem, nebudeme požadovat přesnou shodu tagů definovaných blokem a~\textit{skupinou tagů}. Bude nám totiž stačit pouze podmínka podřetězce, tedy podmínka, aby tag bloku obsahoval jako podřetězec tag ze \textit{skupiny tagů}. Tím dosáhneme toho, že hráč nebude muset v~inventáři vypisovat celé řetězce z~tagů, které si nadefinoval u~svých bloků. 
 
