@@ -4,7 +4,34 @@
 
 
 
-\subsection{Převádění kyslíku a~energie TODO}
+Modul bloků obsahuje podstatné informace o~tom, jak hra pracuje s~bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty apod. Také je v~tomto modulu možné nalézt specifické implementace jednotlivých bloků.
+
+V dalším textu se budeme odkazovat na složky. Odkazujeme se tím do složek \TT{/Source/Blocks/Public} a~jejich \TT{Private} implementací. Strukturu bychom mohli shrnout následovně:
+
+\begin{enumerate}
+	\item Definice bloků (složka \TT{Definitions})
+	\item Třídy s~popisem bloků (složka \TT{Info})
+	\item Systém ukládání a~načítání bloků (složka \TT{Helpers})
+	\item Rozhraní, které mohou bloky implementovat (složka \TT{Interfaces})
+	\item Komponenty, kterými bloky rozšiřují svoji základní funkcionalitu (složka \TT{Components})
+	\item Implementace jednotlivých bloků (složky \TT{BaseShapes}, \TT{Special})
+	\item Stromové struktury herního světa (složka \TT{Tree})
+\end{enumerate}
+ 
+
+\subsection{Definice bloků}
+V této složce se nachází všechny definiční soubory bloků. Definiční soubor obsahuje pouze popis datové struktury a~nějakou minimální funkcionalitu (kupříkladu získání korektního vektoru velikosti v~závislosti na tom, zda má definice daného bloku nastavenou vlastní velikost). Jednotlivé konkrétní instance s~daty jsou pak definovány na straně editoru (tuto funkcionalitu jsme již zmínili v~kapitole \ref{subsec:hb}). Konstanty (například minimální a~maximální škálování) je pak možné měnit v~editoru a~není vyžadována rekompilace projektu hry. 
+
+
+\subsection{Třídy s~popisem bloků}
+Tyto třídy popisují už konkrétní instance bloků v~rámci hry. Jejich hodnoty jsou pak v~mezích definovaných v~definičních třídách. Tyto třídy jsou pak předmětem ukládání a~načítání. Dalším důležitým prvkem je BlockHolder, který slouží pro nalezení bloků. 
+
+
+\subsection{Komponenty bloků}
+Komponenty bloků vycházejí z~poznatků v~části \ref{sec:komponents}. Rádi bychom zde zmínili zajímavou část převodů kyslíku a~energie.
+
+
+\subsubsection{Převádění kyslíku a~energie}
 Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme zajistit konzistenci dat při převodech kyslíku či energie. Můžeme pro to využít primitiva pro zamykání \TT{FCriticalSection}. Kritickou sekci pak budeme korektně zamykat a~odemykat (stejně jako u~klasického vícevláknového programování). Algoritmy pro vkládání a~získání kyslíku budou mít následující signaturu (pro energii bude signatura stejná):
 
 \begin{code}
@@ -22,85 +49,8 @@ Protože \UE{} umožňuje hrám pracovat s~více výpočetními vlákny, musíme
 Princip je prostý -- metody vrací \TT{bool} jakožto hodnotu, zda bylo možné operaci korektně provést. Parametry předávané \textit{referencí} pak v~případě úspěchu obsahují hodnotu skutečně vloženého či získaného kyslíku. Poslední parametr u~metody pro získání kyslíku značí, zda je vyžadované přesné množství. Pokud kyslíková komponenta obsahuje méně kyslíku, než je požadované množství a~je požadované přesně zadané množství, převod nebude úspěšný a~metoda vrátí \TT{false}. Pokud nebude požadované přesně dané množství, skutečně získané množství může být menší a~je na volajícím, aby se tomuto faktu přizpůsobil.
 
 
-\subsection{TODO msain}
-
-Modul bloků obsahuje podstatné informace o~tom, jak hra pracuje s~bloky, jak se tyto bloky skládají do herního světa, jaké jsou jejich komponenty apod. Také je v~tomto modulu možné nalézt specifické implementace jednotlivých bloků.
-
-V dalším textu se budeme odkazovat na složky. Odkazujeme se tím do složek \TT{/Source/Blocks/Public} a~jejich \TT{Private} implementací. Strukturu bychom mohli shrnout následovně:
-
-\begin{enumerate}
-	\item Definice bloků (složka \TT{Definitions})
-	\item Třídy s~popisem bloků (složka \TT{Info})
-	\item Systém ukládání a~načítání bloků (složka \TT{Helpers})
-	\item Rozhraní, které mohou bloky implementovat (složka \TT{Interfaces})
-	\item Komponenty, kterými bloky rozšiřují svoji základní funkcionalitu (složka \TT{Components})
-	\item Implementace jednotlivých bloků (složky \TT{BaseShapes}, \TT{Special})
-	\item Stromové struktury herního světa (složka \TT{Tree})
-\end{enumerate}
- 
-
-\subsection{Definice bloků}
-V této složce se nachází všechny definiční soubory bloků. Definiční soubor obsahuje pouze popis datové struktury a~nějakou minimální funkcionalitu (kupříkladu získání korektního vektoru velikosti v~závislosti na tom, zda má definice daného bloku nastavenou vlastní velikost). Jednotlivé konkrétní instance s~daty jsou pak definovány na straně editoru. (TODO link do práce) Konstanty (například minimální a~maximální škálování) je pak možné měnit v~editoru a~není vyžadována rekompilace projektu hry. 
-
-
-\subsection{Třídy s~popisem bloků}
-Tyto třídy popisují už konkrétní instance bloků v~rámci hry. Jejich hodnoty jsou pak v~mezích definovaných v~definičních třídách. Tyto třídy jsou pak předmětem ukládání a~načítání. Dalším důležitým prvkem je BlockHolder, který slouží pro nalezení bloků. 
-
-
-
-\subsection{Interfaces}
-poskytují nástroje pro volání metod na instaních interfacu
-
-popsat ideu za Implementation, Execute (BlueprintNativeEvent, BlueprintImplementableEvent)
-
-\subsection{Komponenty bloků}
-- pak máme komponenty bloků a~nějaké interfaces
-
-\subsubsection{Elektrická komponenta}
-
-
-\subsubsection{Elektrická síť}
-
-
-\subsubsection{Kyslíková komponenta}
-
-
-\subsubsection{Select target}
-
-
-\subsubsection{World object}
-
-
-
-
-
-
 \subsection{Implementace bloků}
 \label{subsec:blImp}
- todo mám zmíněné složky, potřebuju popsat
 
- -- základ Block.h, zbytek v~jendotlivých podkategoriích (BaseShapes / Special
- 
- TODO jak moc podrobné? vypsat všechny bloky a~co všechno implementují, nebo to stačí stručně zmínit? -- co implementují by si čtenář mohl uvědomit z~předchozího textu a~navíc je to jen nudný popis, jehož výžpovědní hodnota je ve zdrojácích a~není asi nutné to tu duplikovat
+Všechny herní bloky dědí ze základní třídy \TT{ABlock}. Dále jsme zavedli dělení na \TT{BaseShapes} a~\TT{Special}, přečemž jak struktura zdrojových kódů, tak struktura v~rámci \UEu{} tuto strukturu dodržuje. Toto dělení jsme již definovali v~části \ref{subsubsec:vlastnosti}.
 
-- popsat speciální bloky + nějaké speciality co umějí (showableWidget)
-
-
-\subsection{Stromové struktury}
-popsat stromové struktury, které tam mám
-
-
-\subsubsection{MinMaxBox}
-
-prapředek všeho
-
-
-
-\subsubsection{KDTree}
-
-dědí z~MMB, základ ve světě
-
-
-\subsubsection{WeatherTargetsKDTree}
-
-dědí z~MMB, slouží pro potřeby počasí
