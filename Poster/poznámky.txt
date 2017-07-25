@@ -1,0 +1,67 @@
+Celková koncepce:
+
+B1 na šířku,
+
+// TODO konzultovat s VK
+pozadí vycházející ze hry (dolní část planina, ve střední části kopce, nahoře světlá obloha)
+
+Jednotlivé části v blocích, stejný vzhled jako ve hře (fialové obdélníky, tmavé částečně průhledné pozadí, světlé písmo)
+
+Úplně nahoře:
+-název práce
+-Pavel Halbich
+-Vedoucí práce
+
+Vlevo nahoře logo školy, vpravo nahoře logo TCF2
+
+bloky:
+
+	(vlevo, možná to budou 2 bloky)
+	úvod
+		- stejně jako v BP, kratší
+		- Jsou oblíbené hry jako MC
+		- My jsme přišli se zlepšovákem
+		- provedli jsme dotazník
+		- fungovalo to.
+		
+	Současný stav
+		- věci jako v analýze - ve stručnosti kdo co umí
+		
+	Čeho jse dosáhli
+		- popsat dynamicky škálovatelné bloky
+		- popsat způsob formulování filtrů (odkazy na obrázky)
+		- konstruktor objektů
+	
+	Použité nástroje
+		- Použili jsme UE
+		- to nám umožnilo se věnovat myšlenkám a neřešit třeba zobrazování
+	
+	-------------------------------
+	
+	střední blok s obrázky ze hry a popisky
+		- do tabulky?
+	
+	-------------------------
+	
+	(pravý)
+	Výsledek
+		- máme hru
+		- výsledky dotazníku
+		- zmínit malou velikost bloků
+		
+	Závěr
+		- má cenu na tom makat dále
+		
+	Možné rozšíření
+		- vyjmenovat jak v BC
+		
+	Poděkování
+		- jak v BC
+		
+	Kontakt
+		- github repo
+		- mail
+		
+		
+
+Zdroje mají být? jaké?
