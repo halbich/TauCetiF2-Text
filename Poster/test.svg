@@ -10,9 +10,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="707mm"
+   height="1000mm"
+   viewBox="0 0 707 1000"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.1 r15371"
@@ -32,17 +32,22 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="525.55843"
-     inkscape:cy="630.73957"
+     inkscape:zoom="0.175"
+     inkscape:cx="243.08773"
+     inkscape:cy="1835.642"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
-     showgrid="false"
+     showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1017"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     height="999mm">
+    <inkscape:grid
+       type="xygrid"
+       id="grid20" />
+  </sodipodi:namedview>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -51,7 +56,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -59,7 +64,8 @@
      inkscape:label="Vrstva 1"
      inkscape:groupmode="layer"
      id="layer1"
-     sodipodi:insensitive="true">
+     sodipodi:insensitive="true"
+     transform="translate(0,703)">
     <rect
        id="rect10"
        width="139.09525"
@@ -71,7 +77,8 @@
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Vrstva 2">
+     inkscape:label="Vrstva 2"
+     transform="translate(0,703)">
     <path
        sodipodi:type="inkscape:offset"
        inkscape:radius="-10.15625"
@@ -80,7 +87,7 @@
        style="fill:#808080;stroke:#a02c2c;stroke-width:0.26458332"
        id="path22"
        inkscape:href="#rect18"
-       d="m 21.404297,24.941406 v 64.09961 H 132.00781 v -64.09961 z"
+       d="M 21.386719,24.925781 V 89.058594 H 105.29883 V 24.925781 Z"
        transform="translate(-1.0690779,-0.53453924)" />
     <rect
        style="fill:#808080;stroke:#a02c2c;stroke-width:0.27644774"
@@ -101,13 +108,15 @@
            id="use28"
            width="100%"
            height="100%" /></flowRegion><flowPara
-         id="flowPara30">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed convallis magna eu sem. Vivamus luctus egestas leo. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent dapibus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Quisque porta. Maecenas aliquet accumsan leo. Phasellus rhoncus. Nulla est. </flowPara></flowRoot>  </g>
+         id="flowPara30">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed convallis magna eu sem. Vivamus luctus egestas leo. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Praesent dapibus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Quisque porta. Maecenas aliquet accumsan leo. Phasellus rhoncus. Nulla est. </flowPara></flowRoot>
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Vrstva 3"
      style="opacity:1"
-     sodipodi:insensitive="true">
+     sodipodi:insensitive="true"
+     transform="translate(0,703)">
     <path
        style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 37.610934,213.86558 c 4.535715,1.51191 74.461316,0.75596 74.461316,0.75596 l -3.40179,4.91369 -69.169644,-0.75596 z"

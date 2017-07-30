@@ -1,6 +1,6 @@
 Celková koncepce:
 
-B1 na šířku,
+B1 na výšku,
 
 // TODO konzultovat s VK
 pozadí vycházející ze hry (dolní část planina, ve střední části kopce, nahoře světlá obloha)
