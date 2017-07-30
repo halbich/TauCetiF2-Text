@@ -19,3 +19,4 @@ Source/cs/prace.pdf
 Poster/PosterCreator/PosterCreator/PosterCreator/bin/*
 Poster/PosterCreator/PosterCreator/PosterCreator/obj/*
 .vs/*
+*.suo
