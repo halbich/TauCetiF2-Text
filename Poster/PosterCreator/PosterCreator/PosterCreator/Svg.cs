@@ -1,28 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Schema;
+using PosterCreator.Elements;
+using PosterCreator.PosterStructure;
 
 namespace PosterCreator
 {
-    class Svg
+    internal class Svg
     {
+        public static XNamespace ns = "http://www.w3.org/2000/svg";
+
+        internal void FinalizeDoc()
+        {
+            foreach (var item in Layers)
+            {
+                doc.Root.Add(item.GetNode());
+            }
+        }
+
+        public static XNamespace sp = "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd";
+        public static XNamespace ink = "http://www.inkscape.org/namespaces/inkscape";
+
+        public static XNamespace dc = "http://purl.org/dc/elements/1.1/";
+        public static XNamespace cc = "http://creativecommons.org/ns#";
+        public static XNamespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+        public static XNamespace xlink = "http://www.w3.org/1999/xlink";
+
         public XDocument doc { get; set; }
+
         public Svg()
         {
-            XNamespace ns = "http://www.w3.org/2000/svg";
-            XNamespace sp = "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd";
-            XNamespace ink = "http://www.inkscape.org/namespaces/inkscape";
-
-            XNamespace dc = "http://purl.org/dc/elements/1.1/";
-            XNamespace cc = "http://creativecommons.org/ns#";
-            XNamespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-            XNamespace xlink = "http://www.w3.org/1999/xlink";
-
             doc = new XDocument(
                 new XElement(ns + "svg",
                     new XAttribute("xmlns", ns.NamespaceName),
@@ -48,7 +55,6 @@ namespace PosterCreator
                     new XAttribute("id", "path-effect3688"),
                     new XAttribute("is_visible", "true"),
                     new XAttribute("linkedpaths", "")));
-
 
             doc.Root.Add(defs);
 
@@ -78,7 +84,6 @@ namespace PosterCreator
 
             doc.Root.Add(nw);
 
-
             var md = new XElement(ns + "metadata", new XAttribute("id", "metadata"));
 
             var _r = new XElement(rdf + "RDF");
@@ -92,24 +97,24 @@ namespace PosterCreator
 
             doc.Root.Add(md);
 
-            //          XElement.Parse(@" <metadata id="metadata5\">
-            //  < rdf:RDF >
-            //    < cc:Work
-            //       rdf: about = "" >
-            //      < dc:format > image / svg + xml </ dc:format >
-            //      < dc:type
-            //         rdf: resource = "http://purl.org/dc/dcmitype/StillImage" />
-            //      < dc:title ></ dc:title >
-            //    </ cc:Work >
-            //  </ rdf:RDF >
-            //</ metadata >
+            Layers = new List<Layer>
+            {
+            new Layer("Background", LayerType.Background),
+            new Layer("BorderBackground", LayerType.BorderBackground),
+            new Layer("Border", LayerType.Border),
+            new Layer("Text", LayerType.Text),
+            };
 
-
-
-            //var metadata = doc.CreateElement(string.Empty, "metadata", string.Empty);
-            //svg.AppendChild(metadata);
-
+            Poster = new MainStructure();
         }
 
+        public List<Layer> Layers { get; set; }
+
+        public MainStructure Poster { get; set; }
+
+        public Layer GL(LayerType t)
+        {
+            return Layers.First(e => e.Type == t);
+        }
     }
 }
