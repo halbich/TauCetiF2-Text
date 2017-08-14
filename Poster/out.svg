@@ -15,7 +15,20 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g inkscape:groupmode="layer" id="layer1" inkscape:label="Test">
-    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 10,10 697,990 " id="layer1" inkscape:connector-curvature="0" />
+  <g inkscape:groupmode="layer" id="layer1" inkscape:label="Background" />
+  <g inkscape:groupmode="layer" id="layer2" inkscape:label="BorderBackground" />
+  <g inkscape:groupmode="layer" id="layer3" inkscape:label="Border">
+    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 30,30 677,30 677,970 30,970 Z" id="layer9" inkscape:connector-curvature="0" />
+  </g>
+  <g inkscape:groupmode="layer" id="layer4" inkscape:label="Text" />
+  <g inkscape:groupmode="layer" id="layer5" inkscape:label="Other">
+    <path style="fill:none;stroke:#000000;stroke-width:0.2px;stroke-opacity:1" d="M 13,20 27,20 " id="layer1" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.2px;stroke-opacity:1" d="M 20,13 20,27 " id="layer2" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.2px;stroke-opacity:1" d="M 680,20 694,20 " id="layer3" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.2px;stroke-opacity:1" d="M 687,13 687,27 " id="layer4" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.2px;stroke-opacity:1" d="M 13,980 27,980 " id="layer5" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.2px;stroke-opacity:1" d="M 20,973 20,987 " id="layer6" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.2px;stroke-opacity:1" d="M 680,980 694,980 " id="layer7" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:0.2px;stroke-opacity:1" d="M 687,973 687,987 " id="layer8" inkscape:connector-curvature="0" />
   </g>
 </svg>

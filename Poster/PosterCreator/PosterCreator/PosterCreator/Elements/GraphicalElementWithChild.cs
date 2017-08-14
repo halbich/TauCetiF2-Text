@@ -1,4 +1,5 @@
-﻿using PosterCreator.Attributes;
+﻿using System;
+using PosterCreator.Attributes;
 
 namespace PosterCreator.Elements
 {
@@ -6,8 +7,11 @@ namespace PosterCreator.Elements
     {
         public GraphicalElement Child { get; private set; }
 
-        public void AddChild(GraphicalElement elem)
+        public T AddChild<T>(T elem) where T : GraphicalElement
         {
+            if (Child != null)
+                throw new InvalidOperationException();
+
             var myXY = Location;
             var mySize = Size;
 
@@ -25,6 +29,8 @@ namespace PosterCreator.Elements
             elem.Location = newXY;
             elem.Size = newSize;
             Child = elem;
+
+            return elem;
         }
 
         public override void Render(Svg svg)

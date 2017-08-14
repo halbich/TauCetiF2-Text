@@ -7,20 +7,10 @@ namespace PosterCreator.Elements
     {
         public override void Render(Svg svg)
         {
-            var p = new Path("Border")
-            {
-                Points = new List<Attributes.V2D>
-                {
-                    Location,
-                    new Attributes.V2D
-                    {
-                        X = Location.X + Size.X,
-                        Y = Location.Y + Size.Y
-                    }
-                }
-            };
+            var p = new Path("Border", Location, Location.MoveX(Size.X), Location.MoveXY(Size.X, Size.Y), Location.MoveY(Size.Y));
+            p.Closed = true;
 
-            svg.Layers.Last().Nodes.Add(p);
+            svg.GL(LayerType.Border).Add(p);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using PosterCreator.Attributes;
@@ -17,19 +18,29 @@ namespace PosterCreator.Elements
         {
             Label = label;
             ID = $"layer{++pathID}";
+            Points = new List<V2D>();
+            Fill = "none";
+            Stroke = Color.Black;
+            StrokeWidth = 1;
+            StrokeOpacity = 1;
+        }
+
+        public Path(string label, params V2D[] points) : this(label)
+        {
+            Points.AddRange(points);
         }
 
         public List<V2D> Points { get; set; }
 
         public bool Closed { get; set; }
 
-        public string Fill => "none";
+        public string Fill { get; set; }
 
-        public Color Stroke => Color.Black;
+        public Color Stroke { get; set; }
 
-        public float StrokeWidth => 1;
+        public float StrokeWidth { get; set; }
 
-        public float StrokeOpacity => 1;
+        public float StrokeOpacity { get; set; }
 
         public override XElement GetNode()
         {
@@ -37,8 +48,8 @@ namespace PosterCreator.Elements
 
             if (Closed)
                 path += "Z";
-
-            var style = $"fill:{Fill};stroke:{Stroke.ToHex()};stroke-width:{StrokeWidth}px;stroke-opacity:{StrokeOpacity}";
+            var cult = new CultureInfo("en-US");
+            var style = $"fill:{Fill};stroke:{Stroke.ToHex()};stroke-width:{StrokeWidth.ToString(cult)}px;stroke-opacity:{StrokeOpacity.ToString(cult)}";
 
             var g = new XElement(Svg.ns + "path",
                 new XAttribute("style", style),

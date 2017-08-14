@@ -103,12 +103,13 @@ namespace PosterCreator
             new Layer("BorderBackground", LayerType.BorderBackground),
             new Layer("Border", LayerType.Border),
             new Layer("Text", LayerType.Text),
+            new Layer("Other", LayerType.Other),
             };
 
             Poster = new MainStructure();
         }
 
-        public List<Layer> Layers { get; set; }
+        private List<Layer> Layers { get; set; }
 
         public MainStructure Poster { get; set; }
 

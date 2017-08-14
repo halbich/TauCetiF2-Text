@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace PosterCreator.Elements
@@ -22,7 +23,13 @@ namespace PosterCreator.Elements
             Type = type;
         }
 
-        public List<RenderableNode> Nodes { get; set; }
+        internal RenderableNode Add(RenderableNode p)
+        {
+            Nodes.Add(p);
+            return p;
+        }
+
+        private List<RenderableNode> Nodes { get; set; }
 
         public override XElement GetNode()
         {

@@ -21,7 +21,10 @@ namespace PosterCreator
         private static void prepareContent(MainStructure poster)
         {
             poster.Padding = new Attributes.Offset(10);
-            poster.AddChild(new Border() { });
+            var m = poster.AddChild(new PrintMarker());
+
+
+            m.AddChild(new Border());
         }
     }
 }
