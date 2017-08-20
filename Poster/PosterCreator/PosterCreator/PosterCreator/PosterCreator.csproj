@@ -50,6 +50,8 @@
     <Compile Include="Elements\GraphicalElement.cs" />
     <Compile Include="Elements\GraphicalElementWithChild.cs" />
     <Compile Include="Elements\Helpers.cs" />
+    <Compile Include="Elements\VerticalSplitter.cs" />
+    <Compile Include="Elements\HorizontalSplitter.cs" />
     <Compile Include="Elements\Layer.cs" />
     <Compile Include="Elements\Path.cs" />
     <Compile Include="Elements\PrintMarker.cs" />

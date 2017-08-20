@@ -18,7 +18,12 @@
   <g inkscape:groupmode="layer" id="layer1" inkscape:label="Background" />
   <g inkscape:groupmode="layer" id="layer2" inkscape:label="BorderBackground" />
   <g inkscape:groupmode="layer" id="layer3" inkscape:label="Border">
-    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 30,30 677,30 677,970 30,970 Z" id="layer9" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 30,40 40,30 667,30 677,40 677,120 667,130 40,130 30,120 Z" id="layer9" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 35,44 44,35 663,35 672,44 672,116 663,125 44,125 35,116 Z" id="layer10" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 40,48 48,40 659,40 667,48 667,112 659,120 48,120 40,112 Z" id="layer11" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 30,150 40,140 667,140 677,150 677,970 667,980 40,980 30,970 Z" id="layer12" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 35,154 44,145 663,145 672,154 672,966 663,975 44,975 35,966 Z" id="layer13" inkscape:connector-curvature="0" />
+    <path style="fill:none;stroke:#000000;stroke-width:1px;stroke-opacity:1" d="M 40,158 48,150 659,150 667,158 667,962 659,970 48,970 40,962 Z" id="layer14" inkscape:connector-curvature="0" />
   </g>
   <g inkscape:groupmode="layer" id="layer4" inkscape:label="Text" />
   <g inkscape:groupmode="layer" id="layer5" inkscape:label="Other">

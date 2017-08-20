@@ -23,8 +23,15 @@ namespace PosterCreator
             poster.Padding = new Attributes.Offset(10);
             var m = poster.AddChild(new PrintMarker());
 
+            var vs = m.AddChild(new VerticalSplitter());
 
-            m.AddChild(new Border());
+            var top = new Border();
+            top.Margin = new Attributes.Offset(0, 0, 10, 0);
+
+            var bottom = new Border();
+
+            vs.AddChild(new Border[] { top, bottom }, 100);
+
         }
     }
 }
