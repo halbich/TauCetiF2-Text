@@ -23,14 +23,14 @@ namespace PosterCreator.Elements
             if (rh.Count < elem.Length)
             {
                 var totalRequired = rh.Sum(e => e);
-                var totalRem = Math.Max(Size.Y - Padding.Top - Padding.Bottom - totalRequired, 0);
-                var rm = totalRem / (elem.Length - rh.Count);
+                var totalRem = Math.Max(Size.X - Padding.Left - Padding.Right - totalRequired, 0);
+                var rm = (int)(totalRem / (elem.Length - rh.Count));
 
                 while (rh.Count != elem.Length)
                     rh.Add(rm);
             }
 
-            rh[rh.Count - 1] = Math.Max(rh[rh.Count - 1] - Padding.Bottom, 0);
+            rh[rh.Count - 1] = Math.Max(rh[rh.Count - 1] - Padding.Right, 0);
 
             var myXY = Location;
             var mySize = Size;
@@ -52,9 +52,10 @@ namespace PosterCreator.Elements
                 var rhi = rh[i];
 
                 e.Location = newXY.MoveXY(e.Margin.Left, e.Margin.Top);
-                e.Size = newSize.MoveY(-newSize.Y + rhi - Padding.Bottom);
+                e.Size = newSize.MoveX(-newSize.X + rhi - Padding.Right);
 
-                newXY = newXY.MoveY(rhi + e.Margin.Bottom);
+                newXY = newXY.MoveX(rhi + e.Margin.Right);
+                newSize = newSize.MoveX(-e.Margin.Right);
             }
             Child = elem;
             return elem;
