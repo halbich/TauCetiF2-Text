@@ -5,6 +5,8 @@ namespace PosterCreator
 {
     internal class Program
     {
+        #region Private Methods
+
         private static void Main(string[] args)
         {
             var svg = new Svg();
@@ -31,7 +33,8 @@ namespace PosterCreator
             var bottom = new Border();
 
             vs.AddChild(new Border[] { top, bottom }, 100);
-
         }
+
+        #endregion Private Methods
     }
 }

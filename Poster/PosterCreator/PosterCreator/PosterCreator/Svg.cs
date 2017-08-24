@@ -1,32 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using PosterCreator.Elements;
+using PosterCreator.PosterStructure;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using PosterCreator.Elements;
-using PosterCreator.PosterStructure;
 
 namespace PosterCreator
 {
     internal class Svg
     {
+        #region Public Fields
+
         public static XNamespace ns = "http://www.w3.org/2000/svg";
 
-        internal void FinalizeDoc()
-        {
-            foreach (var item in Layers)
-            {
-                doc.Root.Add(item.GetNode());
-            }
-        }
-
         public static XNamespace sp = "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd";
+
         public static XNamespace ink = "http://www.inkscape.org/namespaces/inkscape";
 
         public static XNamespace dc = "http://purl.org/dc/elements/1.1/";
+
         public static XNamespace cc = "http://creativecommons.org/ns#";
+
         public static XNamespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+
         public static XNamespace xlink = "http://www.w3.org/1999/xlink";
 
-        public XDocument doc { get; set; }
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public Svg()
         {
@@ -109,13 +109,41 @@ namespace PosterCreator
             Poster = new MainStructure();
         }
 
-        private List<Layer> Layers { get; set; }
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public XDocument doc { get; set; }
 
         public MainStructure Poster { get; set; }
+
+        #endregion Public Properties
+
+        #region Private Properties
+
+        private List<Layer> Layers { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
 
         public Layer GL(LayerType t)
         {
             return Layers.First(e => e.Type == t);
         }
+
+        #endregion Public Methods
+
+        #region Internal Methods
+
+        internal void FinalizeDoc()
+        {
+            foreach (var item in Layers)
+            {
+                doc.Root.Add(item.GetNode());
+            }
+        }
+
+        #endregion Internal Methods
     }
 }

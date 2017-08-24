@@ -1,18 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using PosterCreator.Attributes;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
-using PosterCreator.Attributes;
 
 namespace PosterCreator.Elements
 {
     internal class Path : RenderableNode
     {
+        #region Private Fields
+
         private static int pathID;
 
-        public string ID { get; set; }
-        public string Label { get; set; }
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Path(string label)
         {
@@ -30,6 +33,12 @@ namespace PosterCreator.Elements
             Points.AddRange(points);
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public string ID { get; set; }
+        public string Label { get; set; }
         public List<V2D> Points { get; set; }
 
         public bool Closed { get; set; }
@@ -41,6 +50,10 @@ namespace PosterCreator.Elements
         public float StrokeWidth { get; set; }
 
         public float StrokeOpacity { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override XElement GetNode()
         {
@@ -59,5 +72,7 @@ namespace PosterCreator.Elements
 
             return g;
         }
+
+        #endregion Public Methods
     }
 }

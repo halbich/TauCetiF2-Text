@@ -1,15 +1,18 @@
 ﻿using PosterCreator.Attributes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PosterCreator.Elements
 {
-    class VerticalSplitter : GraphicalElement
+    internal class VerticalSplitter : GraphicalElement
     {
+        #region Public Properties
+
         public GraphicalElement[] Child { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public T[] AddChild<T>(T[] elem, params float[] requiredHeights) where T : GraphicalElement
         {
@@ -26,7 +29,6 @@ namespace PosterCreator.Elements
                 while (rh.Count != elem.Length)
                     rh.Add(rm);
             }
-
 
             rh[rh.Count - 1] = Math.Max(rh[rh.Count - 1] - Padding.Bottom, 0);
 
@@ -50,7 +52,7 @@ namespace PosterCreator.Elements
                 var rhi = rh[i];
 
                 e.Location = newXY.MoveXY(e.Margin.Left, e.Margin.Top);
-                e.Size = newSize.MoveY(-newSize.Y + rhi- Padding.Bottom);
+                e.Size = newSize.MoveY(-newSize.Y + rhi - Padding.Bottom);
 
                 newXY = newXY.MoveY(rhi + e.Margin.Bottom);
             }
@@ -64,5 +66,7 @@ namespace PosterCreator.Elements
                 foreach (var item in Child)
                     item.Render(svg);
         }
+
+        #endregion Public Methods
     }
 }

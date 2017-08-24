@@ -1,11 +1,17 @@
-﻿using System;
-using PosterCreator.Attributes;
+﻿using PosterCreator.Attributes;
+using System;
 
 namespace PosterCreator.Elements
 {
     internal class GraphicalElementWithChild : GraphicalElement
     {
+        #region Public Properties
+
         public GraphicalElement Child { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public T AddChild<T>(T elem) where T : GraphicalElement
         {
@@ -38,5 +44,7 @@ namespace PosterCreator.Elements
             if (Child != null)
                 Child.Render(svg);
         }
+
+        #endregion Public Methods
     }
 }

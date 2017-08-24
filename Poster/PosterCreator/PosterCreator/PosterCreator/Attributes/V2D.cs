@@ -2,9 +2,15 @@
 {
     internal struct V2D
     {
+        #region Public Properties
+
         public float X { get; set; }
 
         public float Y { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override string ToString()
         {
@@ -24,7 +30,7 @@
         {
             return new V2D
             {
-                X = X ,
+                X = X,
                 Y = Y + y
             };
         }
@@ -37,5 +43,7 @@
                 Y = Y + y
             };
         }
+
+        #endregion Public Methods
     }
 }

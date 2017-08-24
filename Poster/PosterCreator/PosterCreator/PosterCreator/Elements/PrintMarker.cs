@@ -1,18 +1,29 @@
-﻿using System.Collections.Generic;
-using PosterCreator.Attributes;
+﻿using PosterCreator.Attributes;
+using System.Collections.Generic;
 
 namespace PosterCreator.Elements
 {
     internal class PrintMarker : GraphicalElementWithChild
     {
+        #region Private Fields
+
+        private const float MarkerSize = 7;
+
+        private const float StrokeWidth = 0.2f;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public PrintMarker()
         {
             Margin = new Offset(10);
             Padding = new Offset(10);
         }
 
-        private const float MarkerSize = 7;
-        private const float StrokeWidth = 0.2f;
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Render(Svg svg)
         {
@@ -28,12 +39,15 @@ namespace PosterCreator.Elements
 
             ps.AddRange(getCrossFor(Location.MoveXY(Size.X, Size.Y)));
 
-
             foreach (var item in ps)
                 layer.Add(item);
 
             base.Render(svg);
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private static List<Path> getCrossFor(V2D point)
         {
@@ -44,5 +58,7 @@ namespace PosterCreator.Elements
 
             return res;
         }
+
+        #endregion Private Methods
     }
 }

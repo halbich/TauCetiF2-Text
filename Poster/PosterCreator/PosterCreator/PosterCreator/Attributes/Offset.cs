@@ -2,13 +2,7 @@
 {
     internal struct Offset
     {
-        public float Top { get; set; }
-
-        public float Right { get; set; }
-
-        public float Bottom { get; set; }
-
-        public float Left { get; set; }
+        #region Public Constructors
 
         public Offset(float all) : this(all, all, all, all)
         {
@@ -26,9 +20,27 @@
             Left = left;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public float Top { get; set; }
+
+        public float Right { get; set; }
+
+        public float Bottom { get; set; }
+
+        public float Left { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
         public override string ToString()
         {
             return $"T: {Top},R: {Right}, B: {Bottom},L: {Left}";
         }
+
+        #endregion Public Methods
     }
 }

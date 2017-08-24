@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace PosterCreator.Elements
@@ -9,11 +8,13 @@ namespace PosterCreator.Elements
 
     internal class Layer : RenderableNode
     {
+        #region Private Fields
+
         private static int layerID;
 
-        public string ID { get; set; }
-        public string Label { get; set; }
-        public LayerType Type { get; private set; }
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Layer(string label, LayerType type)
         {
@@ -23,13 +24,23 @@ namespace PosterCreator.Elements
             Type = type;
         }
 
-        internal RenderableNode Add(RenderableNode p)
-        {
-            Nodes.Add(p);
-            return p;
-        }
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public string ID { get; set; }
+        public string Label { get; set; }
+        public LayerType Type { get; private set; }
+
+        #endregion Public Properties
+
+        #region Private Properties
 
         private List<RenderableNode> Nodes { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
 
         public override XElement GetNode()
         {
@@ -43,5 +54,17 @@ namespace PosterCreator.Elements
 
             return g;
         }
+
+        #endregion Public Methods
+
+        #region Internal Methods
+
+        internal RenderableNode Add(RenderableNode p)
+        {
+            Nodes.Add(p);
+            return p;
+        }
+
+        #endregion Internal Methods
     }
 }

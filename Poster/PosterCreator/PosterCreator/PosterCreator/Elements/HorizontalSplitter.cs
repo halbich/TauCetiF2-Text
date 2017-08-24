@@ -1,15 +1,17 @@
 ﻿using PosterCreator.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PosterCreator.Elements
 {
-    class HorizontalSplitter : GraphicalElement
+    internal class HorizontalSplitter : GraphicalElement
     {
+        #region Public Properties
+
         public GraphicalElement Child { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public T AddChild<T>(T elem) where T : GraphicalElement
         {
@@ -42,5 +44,7 @@ namespace PosterCreator.Elements
             if (Child != null)
                 Child.Render(svg);
         }
+
+        #endregion Public Methods
     }
 }
