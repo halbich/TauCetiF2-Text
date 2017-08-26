@@ -1,9 +1,9 @@
 ﻿using System;
 using PosterCreator.Attributes;
 
-namespace PosterCreator.Elements
+namespace PosterCreator.BaseClasses
 {
-    internal class GraphicalElementWithChild : GraphicalElement
+    internal abstract class GraphicalElementWithChild : GraphicalElement
     {
         #region Public Properties
 
@@ -18,25 +18,35 @@ namespace PosterCreator.Elements
             if (Child != null)
                 throw new InvalidOperationException();
 
+            Child = elem;
+            return elem;
+        }
+
+        public override void AfterInit()
+        {
+            base.AfterInit();
+
+            if (Child == null)
+                return;
+
             var myXY = Location;
             var mySize = Size;
 
             var newXY = new V2D
             {
-                X = myXY.X + Padding.Left + elem.Margin.Left,
-                Y = myXY.Y + Padding.Top + elem.Margin.Top
+                X = myXY.X + Padding.Left + Child.Margin.Left,
+                Y = myXY.Y + Padding.Top + Child.Margin.Top
             };
             var newSize = new V2D
             {
-                X = mySize.X - Padding.Left - Padding.Right - elem.Margin.Left - elem.Margin.Right,
-                Y = mySize.Y - Padding.Top - Padding.Bottom - elem.Margin.Top - elem.Margin.Bottom
+                X = mySize.X - Padding.Left - Padding.Right - Child.Margin.Left - Child.Margin.Right,
+                Y = mySize.Y - Padding.Top - Padding.Bottom - Child.Margin.Top - Child.Margin.Bottom
             };
 
-            elem.Location = newXY;
-            elem.Size = newSize;
-            Child = elem;
+            Child.Location = newXY;
+            Child.Size = newSize;
 
-            return elem;
+            Child.AfterInit();
         }
 
         public override void Render(Svg svg)

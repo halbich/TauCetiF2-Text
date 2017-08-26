@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using PosterCreator.Attributes;
+using PosterCreator.BaseClasses;
+using PosterCreator.Elements;
 
-namespace PosterCreator.Elements
+namespace PosterCreator.PosterStructure
 {
     internal class PrintMarker : GraphicalElementWithChild
     {

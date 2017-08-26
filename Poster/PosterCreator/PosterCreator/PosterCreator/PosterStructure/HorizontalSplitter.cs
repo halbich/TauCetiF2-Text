@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Linq;
 using PosterCreator.Attributes;
+using PosterCreator.BaseClasses;
 
-namespace PosterCreator.Elements
+namespace PosterCreator.PosterStructure
 {
     internal class HorizontalSplitter : GraphicalElement
     {
+        #region Private Fields
+
+        private float[] requiredHeights;
+
+        #endregion Private Fields
+
         #region Public Properties
 
         public GraphicalElement[] Child { get; private set; }
@@ -19,14 +26,26 @@ namespace PosterCreator.Elements
             if (Child != null)
                 throw new InvalidOperationException();
 
+            this.requiredHeights = requiredHeights.ToArray();
+            Child = elem;
+            return elem;
+        }
+
+        public override void AfterInit()
+        {
+            base.AfterInit();
+
+            if (Child == null)
+                return;
+
             var rh = requiredHeights.ToList();
-            if (rh.Count < elem.Length)
+            if (rh.Count < Child.Length)
             {
                 var totalRequired = rh.Sum(e => e);
                 var totalRem = Math.Max(Size.Y - Padding.Top - Padding.Bottom - totalRequired, 0);
-                var rm = totalRem / (elem.Length - rh.Count);
+                var rm = totalRem / (Child.Length - rh.Count);
 
-                while (rh.Count != elem.Length)
+                while (rh.Count != Child.Length)
                     rh.Add(rm);
             }
 
@@ -46,9 +65,9 @@ namespace PosterCreator.Elements
                 Y = mySize.Y - Padding.Top - Padding.Bottom
             };
 
-            for (int i = 0; i < elem.Length; i++)
+            for (int i = 0; i < Child.Length; i++)
             {
-                var e = elem[i];
+                var e = Child[i];
                 var rhi = rh[i];
 
                 e.Location = newXY.MoveXY(e.Margin.Left, e.Margin.Top);
@@ -57,8 +76,9 @@ namespace PosterCreator.Elements
                 newXY = newXY.MoveY(rhi + e.Margin.Bottom);
                 newSize = newSize.MoveY(-e.Margin.Bottom);
             }
-            Child = elem;
-            return elem;
+
+            foreach (var item in Child)
+                item.AfterInit();
         }
 
         public override void Render(Svg svg)

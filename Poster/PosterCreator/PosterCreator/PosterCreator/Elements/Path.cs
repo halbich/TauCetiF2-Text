@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using PosterCreator.Attributes;
+using PosterCreator.Interfaces;
 
 namespace PosterCreator.Elements
 {

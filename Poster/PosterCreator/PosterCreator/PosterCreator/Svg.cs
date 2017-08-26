@@ -1,8 +1,8 @@
-﻿using PosterCreator.Elements;
-using PosterCreator.PosterStructure;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using PosterCreator.Elements;
+using PosterCreator.PosterStructure;
 
 namespace PosterCreator
 {
@@ -10,18 +10,13 @@ namespace PosterCreator
     {
         #region Public Fields
 
+        public static XNamespace cc = "http://creativecommons.org/ns#";
+        public static XNamespace dc = "http://purl.org/dc/elements/1.1/";
+        public static XNamespace ink = "http://www.inkscape.org/namespaces/inkscape";
         public static XNamespace ns = "http://www.w3.org/2000/svg";
 
-        public static XNamespace sp = "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd";
-
-        public static XNamespace ink = "http://www.inkscape.org/namespaces/inkscape";
-
-        public static XNamespace dc = "http://purl.org/dc/elements/1.1/";
-
-        public static XNamespace cc = "http://creativecommons.org/ns#";
-
         public static XNamespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-
+        public static XNamespace sp = "http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd";
         public static XNamespace xlink = "http://www.w3.org/1999/xlink";
 
         #endregion Public Fields
@@ -57,7 +52,7 @@ namespace PosterCreator
                     new XAttribute("linkedpaths", "")));
 
             var style = new XElement(ns + "style",
-                    new XAttribute("type","text/css")
+                    new XAttribute("type", "text/css")
                 );
             style.SetValue(
                 @"@font-face {

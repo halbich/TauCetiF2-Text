@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Linq;
 using PosterCreator.Attributes;
+using PosterCreator.Interfaces;
 
 namespace PosterCreator.Elements
 {

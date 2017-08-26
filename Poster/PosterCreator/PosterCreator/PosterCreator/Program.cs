@@ -1,6 +1,5 @@
-﻿using System;
-using PosterCreator.Attributes;
-using PosterCreator.Elements;
+﻿using PosterCreator.Attributes;
+using PosterCreator.BaseClasses;
 using PosterCreator.PosterStructure;
 
 namespace PosterCreator
@@ -8,6 +7,19 @@ namespace PosterCreator
     internal class Program
     {
         #region Private Methods
+
+        private static Border getTopBorder()
+        {
+            var b = new Border().SetMargin(new Offset(0, 0, 10, 0));
+
+            var vs = new VerticalSplitter();
+
+            var Text = new Text();
+
+            b.AddChild(Text);
+
+            return b;
+        }
 
         private static void Main(string[] args)
         {
@@ -48,9 +60,6 @@ namespace PosterCreator
 
             leftContent.AddChild(new Border[] { beginning, b2, b3 }, 100, 100);
 
-
-
-
             var b4 = new Border().SetMargin(new Offset(0, 0, 10, 0));
 
             var b5 = new Border().SetMargin(new Offset(0, 0, 10, 0));
@@ -59,19 +68,7 @@ namespace PosterCreator
 
             rightContent.AddChild(new Border[] { b4, b5, b6 }, 200, 200);
 
-
-
-
-        }
-
-        private static Border getTopBorder()
-        {
-            var b = new Border().SetMargin(new Offset(0, 0, 10, 0));
-
-            var vs = new VerticalSplitter();
-            //b.
-
-            return b;
+            poster.AfterInit();
         }
 
         #endregion Private Methods

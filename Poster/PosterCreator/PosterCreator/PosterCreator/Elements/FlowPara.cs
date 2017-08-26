@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using PosterCreator.Interfaces;
 
 namespace PosterCreator.Elements
 {

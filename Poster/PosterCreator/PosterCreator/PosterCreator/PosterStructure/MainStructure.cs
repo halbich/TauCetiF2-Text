@@ -1,4 +1,5 @@
 ﻿using PosterCreator.Attributes;
+using PosterCreator.BaseClasses;
 using PosterCreator.Elements;
 
 namespace PosterCreator.PosterStructure
@@ -12,9 +13,12 @@ namespace PosterCreator.PosterStructure
             Size = new V2D { X = 707, Y = 1000 };
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public override void Render(Svg svg)
         {
-
             var img = new Image("BackgroundImage");
             img.Dimensions = new V2D(793.04443f, 1016);
             img.XY = new V2D(-2.8222258f, -4.7111111f);
@@ -25,6 +29,6 @@ namespace PosterCreator.PosterStructure
             base.Render(svg);
         }
 
-        #endregion Public Constructors
+        #endregion Public Methods
     }
 }
