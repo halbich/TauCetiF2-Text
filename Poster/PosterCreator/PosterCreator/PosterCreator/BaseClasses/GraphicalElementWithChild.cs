@@ -29,6 +29,23 @@ namespace PosterCreator.BaseClasses
             if (Child == null)
                 return;
 
+            setChildProps();
+
+            Child.AfterInit();
+        }
+
+        public override void Render(Svg svg)
+        {
+            if (Child != null)
+                Child.Render(svg);
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void setChildProps()
+        {
             var myXY = Location;
             var mySize = Size;
 
@@ -45,16 +62,8 @@ namespace PosterCreator.BaseClasses
 
             Child.Location = newXY;
             Child.Size = newSize;
-
-            Child.AfterInit();
         }
 
-        public override void Render(Svg svg)
-        {
-            if (Child != null)
-                Child.Render(svg);
-        }
-
-        #endregion Public Methods
+        #endregion Private Methods
     }
 }

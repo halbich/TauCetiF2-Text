@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
@@ -41,11 +43,33 @@ namespace PosterCreator.PosterStructure
                 var rm = (int)(totalRem / (Child.Length - rh.Count));
 
                 while (rh.Count != Child.Length)
+                {
                     rh.Add(rm);
+                    Debug.WriteLine("VS: " + rm);
+                }
             }
 
             rh[rh.Count - 1] = Math.Max(rh[rh.Count - 1] - Padding.Right, 0);
 
+            setChildProps(rh);
+
+            foreach (var item in Child)
+                item.AfterInit();
+        }
+
+        public override void Render(Svg svg)
+        {
+            if (Child != null)
+                foreach (var item in Child)
+                    item.Render(svg);
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void setChildProps(List<float> rh)
+        {
             var myXY = Location;
             var mySize = Size;
 
@@ -71,18 +95,8 @@ namespace PosterCreator.PosterStructure
                 newXY = newXY.MoveX(rhi + e.Margin.Right);
                 newSize = newSize.MoveX(-e.Margin.Right);
             }
-
-            foreach (var item in Child)
-                item.AfterInit();
         }
 
-        public override void Render(Svg svg)
-        {
-            if (Child != null)
-                foreach (var item in Child)
-                    item.Render(svg);
-        }
-
-        #endregion Public Methods
+        #endregion Private Methods
     }
 }

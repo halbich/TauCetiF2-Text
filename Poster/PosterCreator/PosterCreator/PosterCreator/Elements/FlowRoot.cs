@@ -20,7 +20,7 @@ namespace PosterCreator.Elements
 
         #region Public Constructors
 
-        public FlowRoot()
+        public FlowRoot(Rectangle href)
         {
             RootID = $"flowRoot{++flowRootID}";
             RegionID = $"flowRegion{++flowRegID}";
@@ -31,11 +31,14 @@ namespace PosterCreator.Elements
 
             FontStyle = "normal";
             FontWeight = "normal";
-            FontSize = 40;
+            FontSize = 12;
             FontFamily = "sans-serif";
 
-            Fill = Color.Black;
+            Fill = Color.White;
             FillOpacity = 1;
+
+            HrefRectangle = href;
+            Paragraphs = new List<FlowPara>();
         }
 
         #endregion Public Constructors
@@ -82,11 +85,13 @@ namespace PosterCreator.Elements
             var use = new XElement(Svg.ns + "use",
                 new XAttribute("x", 0),
                 new XAttribute("y", 0),
-                new XAttribute("width", "100%"),
-                new XAttribute("height", "100%"),
+                //new XAttribute("width", "100%"),
+                //new XAttribute("height", "100%"),
                 new XAttribute("id", UseID),
                 new XAttribute(Svg.xlink + "href", $"#{HrefRectangle.ID}")
                 );
+
+            flowRegion.Add(use);
 
             flowRoot.Add(flowRegion);
 

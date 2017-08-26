@@ -54,6 +54,7 @@
     <Compile Include="Helpers.cs" />
     <Compile Include="Elements\Image.cs" />
     <Compile Include="Elements\Rectangle.cs" />
+    <Compile Include="PosterStructure\ImageHolder.cs" />
     <Compile Include="PosterStructure\Text.cs" />
     <Compile Include="PosterStructure\VerticalSplitter.cs" />
     <Compile Include="PosterStructure\HorizontalSplitter.cs" />

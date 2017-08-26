@@ -8,15 +8,61 @@ namespace PosterCreator
     {
         #region Private Methods
 
+        private static VerticalSplitter getBodyContent()
+        {
+            var contentAll = new VerticalSplitter().SetMargin(new Offset(0, 0, 10, 0));
+            var leftContent = getLeftContent();
+
+            var rightContent = getRightContent();
+            contentAll.AddChild(new GraphicalElement[] { leftContent, rightContent }, 200, 437);
+            return contentAll;
+        }
+
+        private static HorizontalSplitter getLeftContent()
+        {
+            var leftContent = new HorizontalSplitter().SetMargin(new Offset(0, 10, 0, 0));
+            var beginning = new Border().SetMargin(new Offset(0, 0, 10, 0));
+
+            var b2 = new Border().SetMargin(new Offset(0, 0, 10, 0));
+
+            var b3 = new Border().SetMargin(new Offset(0, 0, 10, 0));
+
+            leftContent.AddChild(new Border[] { beginning, b2, b3 }, 100, 100, 610);
+            return leftContent;
+        }
+
+        private static HorizontalSplitter getRightContent()
+        {
+            var rightContent = new HorizontalSplitter();
+            var b4 = new Border().SetMargin(new Offset(0, 0, 10, 0));
+
+            var b5 = new Border().SetMargin(new Offset(0, 0, 10, 0));
+
+            var b6 = new Border();
+
+            rightContent.AddChild(new Border[] { b4, b5, b6 }, 200, 200);
+            return rightContent;
+        }
+
         private static Border getTopBorder()
         {
             var b = new Border().SetMargin(new Offset(0, 0, 10, 0));
 
-            var vs = new VerticalSplitter();
+            var vs = b.AddChild(new VerticalSplitter());
 
-            var Text = new Text();
+            var schoolLogo = new ImageHolder();
+            var centerText = new HorizontalSplitter();
 
-            b.AddChild(Text);
+            var c =centerText.AddChild(new[] { new Text() , new Text() }, 20, 50);
+
+            c[0].AppendText("TauCetiF2");
+
+            var tcfLogo = new ImageHolder();
+            var unrealLogo = new ImageHolder();
+
+            vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 150,150,150, 167);
+
+
 
             return b;
         }
@@ -37,36 +83,12 @@ namespace PosterCreator
         private static void prepareContent(MainStructure poster)
         {
             poster.Padding = new Offset(10);
-            var m = poster.AddChild(new PrintMarker());
-
-            var mainHS = m.AddChild(new HorizontalSplitter());
 
             var top = getTopBorder();
 
-            var contentAll = new VerticalSplitter().SetMargin(new Offset(0, 0, 10, 0));
+            var contentAll = getBodyContent();
 
-            mainHS.AddChild(new GraphicalElement[] { top, contentAll }, 100, 810);
-
-            var leftContent = new HorizontalSplitter().SetMargin(new Offset(0, 10, 0, 0));
-
-            var rightContent = new HorizontalSplitter();
-            contentAll.AddChild(new GraphicalElement[] { leftContent, rightContent }, 200, 437);
-
-            var beginning = new Border().SetMargin(new Offset(0, 0, 10, 0));
-
-            var b2 = new Border().SetMargin(new Offset(0, 0, 10, 0));
-
-            var b3 = new Border().SetMargin(new Offset(0, 0, 10, 0));
-
-            leftContent.AddChild(new Border[] { beginning, b2, b3 }, 100, 100);
-
-            var b4 = new Border().SetMargin(new Offset(0, 0, 10, 0));
-
-            var b5 = new Border().SetMargin(new Offset(0, 0, 10, 0));
-
-            var b6 = new Border();
-
-            rightContent.AddChild(new Border[] { b4, b5, b6 }, 200, 200);
+            poster.AddChild(new PrintMarker()).AddChild(new HorizontalSplitter()).AddChild(new GraphicalElement[] { top, contentAll }, 100, 810);
 
             poster.AfterInit();
         }

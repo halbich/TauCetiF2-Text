@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Xml.Linq;
 using PosterCreator.Attributes;
+using PosterCreator.BaseClasses;
 using PosterCreator.Interfaces;
 
 namespace PosterCreator.Elements
@@ -22,6 +23,16 @@ namespace PosterCreator.Elements
             StrokeWidth = 0.01f;
             StrokeOpacity = 1;
             FillOpacity = 1;
+
+        }
+
+        public Rectangle(GraphicalElement elem) : this()
+        {
+            XY = elem.Location;
+            Dimensions = elem.Size;
+
+            Stroke = Color.Red;
+            StrokeWidth = 1;
         }
 
         #endregion Public Constructors

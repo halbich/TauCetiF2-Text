@@ -16,6 +16,7 @@ namespace PosterCreator.Elements
         public FlowPara(string text)
         {
             ID = $"flowPara{++flowParaID}";
+            Text = text;
         }
 
         #endregion Public Constructors

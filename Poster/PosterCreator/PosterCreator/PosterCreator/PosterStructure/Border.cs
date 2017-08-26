@@ -10,10 +10,11 @@ namespace PosterCreator.PosterStructure
     {
         #region Public Constructors
 
-        public Border()
+        public Border() : base()
         {
             Radius = 10;
             BorderSize = 5;
+            Padding = new Offset(15);
         }
 
         #endregion Public Constructors
