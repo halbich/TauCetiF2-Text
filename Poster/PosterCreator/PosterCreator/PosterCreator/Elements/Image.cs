@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Linq;
 using PosterCreator.Attributes;
+using PosterCreator.BaseClasses;
 using PosterCreator.Interfaces;
 
 namespace PosterCreator.Elements
@@ -16,10 +17,17 @@ namespace PosterCreator.Elements
 
         #region Public Constructors
 
+        public Image(GraphicalElement elem, string path) : this(path)
+        {
+            XY = elem.Location;
+            Dimensions = elem.Size;
+        }
+
         public Image(string path)
         {
             Path = path;
             ID = $"image{++imgID}";
+            PreserveAspectRatio = true;
         }
 
         #endregion Public Constructors
@@ -32,6 +40,8 @@ namespace PosterCreator.Elements
 
         public V2D XY { get; set; }
 
+        public bool? PreserveAspectRatio { get; set; }
+
         #endregion Public Properties
 
         #region Public Methods
@@ -40,7 +50,7 @@ namespace PosterCreator.Elements
         {
             var cult = new CultureInfo("en-US");
 
-            var t = File.ReadAllText(Path + ".txt");
+            var t = File.ReadAllText("images/" + Path + ".txt");
 
             var g = new XElement(Svg.ns + "image",
               new XAttribute("x", XY.X.ToString(cult)),
@@ -48,7 +58,7 @@ namespace PosterCreator.Elements
               new XAttribute("id", ID),
               new XAttribute(Svg.xlink + "href", t),
               new XAttribute("style", "image-rendering:optimizeQuality"),
-              new XAttribute("preserveAspectRatio", "none"),
+              new XAttribute("preserveAspectRatio", PreserveAspectRatio.HasValue ? (PreserveAspectRatio.Value ? "1" : "0") : "none"),
               new XAttribute("height", Dimensions.Y.ToString(cult)),
               new XAttribute("width", Dimensions.X.ToString(cult)));
 

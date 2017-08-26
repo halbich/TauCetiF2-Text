@@ -38,7 +38,7 @@ namespace PosterCreator
                     new XAttribute("width", "707mm"),
                     new XAttribute("height", "1000mm"),
                     new XAttribute("viewBox", "0 0 707 1000"),
-                    new XAttribute("version", "1.1"),
+                    new XAttribute("version", "1.2"),
                     new XAttribute("id", "svg8"),
                     new XAttribute(ink + "version", "0.92.1 r15371"),
                     new XAttribute(sp + "docname", "out.svg")

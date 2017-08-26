@@ -22,9 +22,9 @@ namespace PosterCreator.PosterStructure
             var img = new Image("BackgroundImage");
             img.Dimensions = new V2D(793.04443f, 1016);
             img.XY = new V2D(-2.8222258f, -4.7111111f);
-
+            img.PreserveAspectRatio = default(bool?);
             // TODO !
-            //svg.GL(LayerType.Background).Add(img);
+            svg.GL(LayerType.Background).Add(img);
 
             base.Render(svg);
         }
