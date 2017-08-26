@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PosterCreator.BaseClasses;
 using PosterCreator.Elements;
 
@@ -6,6 +7,7 @@ namespace PosterCreator.PosterStructure
 {
     internal class Text : GraphicalElement
     {
+        private bool isBold;
         #region Public Constructors
 
         public Text()
@@ -36,6 +38,9 @@ namespace PosterCreator.PosterStructure
         public override void Render(Svg svg)
         {
 
+            if (isBold)
+                Root.SetBold();
+
             var t = svg.GL(LayerType.Text);
             t.Add(Rectangle);
 
@@ -49,9 +54,15 @@ namespace PosterCreator.PosterStructure
 
         #region Internal Methods
 
-        internal void AppendText(string v)
+        internal Text AppendText(string v)
         {
             Paragraphs.Add(v);
+            return this;
+        }
+
+        internal void SetBold()
+        {
+            isBold = true;
         }
 
         #endregion Internal Methods

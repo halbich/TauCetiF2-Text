@@ -31,7 +31,9 @@ namespace PosterCreator.Elements
             XY = elem.Location;
             Dimensions = elem.Size;
 
+#if DEBUG
             Stroke = Color.Red;
+#endif
             StrokeWidth = 1;
         }
 

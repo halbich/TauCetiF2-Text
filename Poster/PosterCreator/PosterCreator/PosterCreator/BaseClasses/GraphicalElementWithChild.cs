@@ -13,7 +13,7 @@ namespace PosterCreator.BaseClasses
 
         #region Public Methods
 
-        public T AddChild<T>(T elem) where T : GraphicalElement
+        public virtual T AddChild<T>(T elem) where T : GraphicalElement
         {
             if (Child != null)
                 throw new InvalidOperationException();

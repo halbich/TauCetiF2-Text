@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Xml.Linq;
@@ -32,13 +33,18 @@ namespace PosterCreator.Elements
             FontStyle = "normal";
             FontWeight = "normal";
             FontSize = 12;
-            FontFamily = "sans-serif";
+            FontFamily = "Roboto";
 
             Fill = Color.White;
             FillOpacity = 1;
 
             HrefRectangle = href;
             Paragraphs = new List<FlowPara>();
+        }
+
+        internal void SetBold()
+        {
+            FontWeight = "bold";
         }
 
         #endregion Public Constructors

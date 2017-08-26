@@ -1,4 +1,6 @@
-﻿using PosterCreator.Attributes;
+﻿using System;
+using System.Diagnostics;
+using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
 using PosterCreator.PosterStructure;
 
@@ -14,14 +16,15 @@ namespace PosterCreator
             var leftContent = getLeftContent();
 
             var rightContent = getRightContent();
-            contentAll.AddChild(new GraphicalElement[] { leftContent, rightContent }, 200, 437);
+            contentAll.AddChild(new GraphicalElement[] { leftContent, rightContent }, 230, 407);
             return contentAll;
         }
 
         private static HorizontalSplitter getLeftContent()
         {
             var leftContent = new HorizontalSplitter().SetMargin(new Offset(0, 10, 0, 0));
-            var beginning = new Border().SetMargin(new Offset(0, 0, 10, 0));
+            var beginning = new BorderWithTitle("Úvod").SetMargin(new Offset(0, 0, 10, 0));
+            beginning.AddChild(TextSource.GetSourceFor(SourceType.Úvod));
 
             var b2 = new Border().SetMargin(new Offset(0, 0, 10, 0));
 
@@ -50,19 +53,18 @@ namespace PosterCreator
 
             var vs = b.AddChild(new VerticalSplitter());
 
-            var schoolLogo = new ImageHolder("MffLogo") { IsSquare = true};
+            var schoolLogo = new ImageHolder("MffLogo") { IsSquare = true };
             var centerText = new HorizontalSplitter();
 
-            var c =centerText.AddChild(new[] { new Text() , new Text() }, 20, 50);
+            var c = centerText.AddChild(new[] { new Text(), new Text() }, 20, 50);
 
-            c[0].AppendText("TauCetiF2");
+            c[0].AppendText("TauCetiF2").SetBold();
+            c[1].AppendText("Udělal");
 
             var tcfLogo = new ImageHolder("TCF2Logo");
             var unrealLogo = new ImageHolder("UELogo") { IsSquare = true };
 
-            vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 150,150,150 + 97, 70);
-
-
+            vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 150, 150, 150 + 97, 70);
 
             return b;
         }
@@ -78,6 +80,12 @@ namespace PosterCreator
             svg.FinalizeDoc();
 
             svg.doc.Save("../../../../../out.svg", System.Xml.Linq.SaveOptions.None);
+
+            var ink = System.IO.Path.Combine(Environment.ExpandEnvironmentVariables("%ProgramW6432%"), "Inkscape", "inkscape.exe");
+            var source = System.IO.Path.GetFullPath("../../../../../out.svg");
+            var targetDir = System.IO.Path.GetFullPath("../../../../../out.png");
+
+            Process.Start(ink, source + " -e " + targetDir);
         }
 
         private static void prepareContent(MainStructure poster)
