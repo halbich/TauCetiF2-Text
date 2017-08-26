@@ -54,8 +54,8 @@ namespace PosterCreator.PosterStructure
         private static List<Path> getCrossFor(V2D point)
         {
             List<Path> res = new List<Path> {
-                new Path("CrossLine", point.MoveX(-MarkerSize), point.MoveX(MarkerSize)) { StrokeWidth = StrokeWidth},
-                new Path("CrossLine", point.MoveY(-MarkerSize), point.MoveY(MarkerSize)) { StrokeWidth = StrokeWidth}
+                new Path("CrossLine", point.MoveX(-MarkerSize), point.MoveX(MarkerSize)),
+                new Path("CrossLine", point.MoveY(-MarkerSize), point.MoveY(MarkerSize))
             };
 
             return res;

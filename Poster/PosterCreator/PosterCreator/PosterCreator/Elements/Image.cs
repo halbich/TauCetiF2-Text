@@ -19,8 +19,8 @@ namespace PosterCreator.Elements
 
         public Image(GraphicalElement elem, string path) : this(path)
         {
-            XY = elem.Location;
-            Dimensions = elem.Size;
+            XY = elem.Location.MoveXY(elem.Padding.Left, elem.Padding.Top);
+            Dimensions = elem.Size.MoveXY(-elem.Padding.Left - elem.Padding.Right, -elem.Padding.Top - elem.Padding.Bottom);
         }
 
         public Image(string path)
@@ -38,9 +38,8 @@ namespace PosterCreator.Elements
         public string ID { get; set; }
         public string Path { get; set; }
 
-        public V2D XY { get; set; }
-
         public bool? PreserveAspectRatio { get; set; }
+        public V2D XY { get; set; }
 
         #endregion Public Properties
 

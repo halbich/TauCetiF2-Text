@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using PosterCreator.BaseClasses;
 using PosterCreator.Elements;
 
@@ -7,7 +6,12 @@ namespace PosterCreator.PosterStructure
 {
     internal class Text : GraphicalElement
     {
+        #region Private Fields
+
         private bool isBold;
+
+        #endregion Private Fields
+
         #region Public Constructors
 
         public Text()
@@ -37,7 +41,6 @@ namespace PosterCreator.PosterStructure
 
         public override void Render(Svg svg)
         {
-
             if (isBold)
                 Root.SetBold();
 

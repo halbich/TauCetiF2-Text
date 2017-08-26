@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PosterCreator.BaseClasses;
+﻿using PosterCreator.BaseClasses;
 
 namespace PosterCreator.PosterStructure
 {
     internal class BorderWithTitle : Border
     {
-        public Text Title { get; set; }
+        #region Private Fields
 
         private HorizontalSplitter Vs;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public BorderWithTitle(string title)
         {
@@ -20,6 +19,16 @@ namespace PosterCreator.PosterStructure
             Vs = new HorizontalSplitter();
             base.AddChild(Vs);
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public Text Title { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override T AddChild<T>(T elem)
         {
@@ -30,10 +39,12 @@ namespace PosterCreator.PosterStructure
 
         public override void AfterInit()
         {
-            if(Vs.Child == null)
+            if (Vs.Child == null)
                 Vs.AddChild(new GraphicalElement[] { Title }, 30);
 
             base.AfterInit();
         }
+
+        #endregion Public Methods
     }
 }

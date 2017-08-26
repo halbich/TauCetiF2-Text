@@ -45,7 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\Offset.cs" />
+    <Compile Include="Attributes\TextParams.cs" />
     <Compile Include="Attributes\V2D.cs" />
+    <Compile Include="Attributes\RenderingParams.cs" />
     <Compile Include="PosterStructure\Border.cs" />
     <Compile Include="Elements\FlowPara.cs" />
     <Compile Include="Elements\FlowRoot.cs" />

@@ -51,21 +51,7 @@ namespace PosterCreator
         {
             var b = new Border().SetMargin(new Offset(0, 0, 10, 0));
 
-            var vs = b.AddChild(new VerticalSplitter());
-
-            var schoolLogo = new ImageHolder("MffLogo") { IsSquare = true };
-            var centerText = new HorizontalSplitter();
-
-            var c = centerText.AddChild(new[] { new Text(), new Text() }, 20, 50);
-
-            c[0].AppendText("TauCetiF2").SetBold();
-            c[1].AppendText("Udělal");
-
-            var tcfLogo = new ImageHolder("TCF2Logo");
-            var unrealLogo = new ImageHolder("UELogo") { IsSquare = true };
-
-            vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 150, 150, 150 + 97, 70);
-
+            b.AddChild(TextSource.GetSourceFor(SourceType.Top));
             return b;
         }
 

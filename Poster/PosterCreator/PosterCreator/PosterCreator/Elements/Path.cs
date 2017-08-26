@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using PosterCreator.Attributes;
@@ -23,10 +22,11 @@ namespace PosterCreator.Elements
             Label = label;
             ID = $"path{++pathID}";
             Points = new List<V2D>();
-            Stroke = Color.Black;
-            StrokeWidth = 0.01f;
-            StrokeOpacity = 1;
-            FillOpacity = 1;
+            RenderParams = new RenderingParams
+            {
+                Stroke = Color.Black,
+                StrokeWidth = 0.01f
+            };
         }
 
         public Path(string label, params V2D[] points) : this(label)
@@ -39,15 +39,11 @@ namespace PosterCreator.Elements
         #region Public Properties
 
         public bool Closed { get; set; }
-        public Color? Fill { get; set; }
-        public float FillOpacity { get; set; }
+
         public string ID { get; set; }
         public string Label { get; set; }
         public List<V2D> Points { get; set; }
-        public Color Stroke { get; set; }
-
-        public float StrokeOpacity { get; set; }
-        public float StrokeWidth { get; set; }
+        public RenderingParams RenderParams { get; set; }
 
         #endregion Public Properties
 
@@ -59,11 +55,9 @@ namespace PosterCreator.Elements
 
             if (Closed)
                 path += "Z";
-            var cult = new CultureInfo("en-US");
-            var style = $"fill:{Fill.ToHex()};fill-opacity:{FillOpacity.ToString(cult)};stroke:{Stroke.ToHex()};stroke-width:{StrokeWidth.ToString(cult)}px;stroke-opacity:{StrokeOpacity.ToString(cult)}";
 
             var g = new XElement(Svg.ns + "path",
-                new XAttribute("style", style),
+                new XAttribute("style", RenderParams.GetStyle(TextSource.UsedCulture)),
                 new XAttribute("d", path),
                 new XAttribute("id", ID),
                 new XAttribute(Svg.ink + "connector-curvature", 0));
@@ -73,8 +67,7 @@ namespace PosterCreator.Elements
 
         public Path SetFillStroke(Color c)
         {
-            Fill = c;
-            Stroke = c;
+            RenderParams.SetFillStroke(c);
             return this;
         }
 

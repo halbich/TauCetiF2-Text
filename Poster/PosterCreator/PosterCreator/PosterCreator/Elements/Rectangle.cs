@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Globalization;
 using System.Xml.Linq;
 using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
@@ -20,10 +19,8 @@ namespace PosterCreator.Elements
         public Rectangle()
         {
             ID = $"rect{++rectID}";
-            StrokeWidth = 0.01f;
-            StrokeOpacity = 1;
-            FillOpacity = 1;
 
+            RenderParams = new RenderingParams();
         }
 
         public Rectangle(GraphicalElement elem) : this()
@@ -32,9 +29,9 @@ namespace PosterCreator.Elements
             Dimensions = elem.Size;
 
 #if DEBUG
-            Stroke = Color.Red;
+            RenderParams.Stroke = Color.Red;
+            RenderParams.StrokeWidth = 1;
 #endif
-            StrokeWidth = 1;
         }
 
         #endregion Public Constructors
@@ -42,13 +39,9 @@ namespace PosterCreator.Elements
         #region Public Properties
 
         public V2D Dimensions { get; set; }
-        public Color? Fill { get; set; }
-        public float FillOpacity { get; set; }
-        public string ID { get; set; }
-        public Color? Stroke { get; set; }
 
-        public float StrokeOpacity { get; set; }
-        public float StrokeWidth { get; set; }
+        public string ID { get; set; }
+        public RenderingParams RenderParams { get; set; }
         public V2D XY { get; set; }
 
         #endregion Public Properties
@@ -57,9 +50,7 @@ namespace PosterCreator.Elements
 
         public XElement GetNode()
         {
-            var cult = new CultureInfo("en-US");
-
-            var style = $"fill:{Fill.ToHex()};fill-opacity:{FillOpacity.ToString(cult)};stroke:{Stroke.ToHex()};stroke-width:{StrokeWidth.ToString(cult)}px;stroke-opacity:{StrokeOpacity.ToString(cult)}";
+            var cult = TextSource.UsedCulture;
 
             var r = new XElement(Svg.ns + "rect",
               new XAttribute("id", ID),
@@ -67,7 +58,7 @@ namespace PosterCreator.Elements
               new XAttribute("height", Dimensions.Y.ToString(cult)),
               new XAttribute("x", XY.X.ToString(cult)),
               new XAttribute("y", XY.Y.ToString(cult)),
-              new XAttribute("style", style)
+              new XAttribute("style", RenderParams.GetStyle(cult))
               );
 
             return r;

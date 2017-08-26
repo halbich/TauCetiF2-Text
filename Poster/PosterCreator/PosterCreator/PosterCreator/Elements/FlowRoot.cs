@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.Xml.Linq;
+using PosterCreator.Attributes;
 using PosterCreator.Interfaces;
 
 namespace PosterCreator.Elements
@@ -27,43 +26,41 @@ namespace PosterCreator.Elements
             RegionID = $"flowRegion{++flowRegID}";
             UseID = $"use{++useID}";
 
-            StrokeWidth = 1f;
-            StrokeOpacity = 1;
-
             FontStyle = "normal";
             FontWeight = "normal";
             FontSize = 12;
             FontFamily = "Roboto";
 
-            Fill = Color.White;
-            FillOpacity = 1;
-
             HrefRectangle = href;
             Paragraphs = new List<FlowPara>();
-        }
-
-        internal void SetBold()
-        {
-            FontWeight = "bold";
+            RenderParams = new RenderingParams
+            {
+                Fill = Color.White
+            };
         }
 
         #endregion Public Constructors
 
         #region Public Properties
 
-        public Color Fill { get; set; }
-        public float FillOpacity { get; set; }
         public string FontFamily { get; set; }
+
         public int FontSize { get; private set; }
+
         public string FontStyle { get; set; }
+
         public string FontWeight { get; private set; }
+
         public Rectangle HrefRectangle { get; set; }
+
         public List<FlowPara> Paragraphs { get; set; }
+
         public string RegionID { get; set; }
+
+        public RenderingParams RenderParams { get; set; }
+
         public string RootID { get; set; }
-        public Color? Stroke { get; set; }
-        public float StrokeOpacity { get; set; }
-        public float StrokeWidth { get; set; }
+
         public string UseID { get; set; }
 
         #endregion Public Properties
@@ -72,11 +69,11 @@ namespace PosterCreator.Elements
 
         public XElement GetNode()
         {
-            var cult = new CultureInfo("en-US");
+            var cult = TextSource.UsedCulture;
 
             var style = $"font-style:{FontStyle};font-weight:{FontWeight};font-size:{FontSize}px;line-height:125%;font-family:{FontFamily};letter-spacing:0px;" +
-                        $"word-spacing:0px;fill:{Fill.ToHex()};fill-opacity:{FillOpacity.ToString(cult)};stroke:{Stroke.ToHex()};stroke-width:{StrokeWidth.ToString(cult)}px;" +
-                        $"stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:{StrokeOpacity.ToString(cult)}";
+                        $"word-spacing:0px;" + RenderParams.GetStyle(cult) +
+                        $"stroke-linecap:butt;stroke-linejoin:miter;";
 
             var flowRoot = new XElement(Svg.ns + "flowRoot",
                 new XAttribute(XNamespace.Xml + "space", "preserve"),
@@ -108,5 +105,14 @@ namespace PosterCreator.Elements
         }
 
         #endregion Public Methods
+
+        #region Internal Methods
+
+        internal void SetBold()
+        {
+            FontWeight = "bold";
+        }
+
+        #endregion Internal Methods
     }
 }
