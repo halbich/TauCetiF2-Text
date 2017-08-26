@@ -26,41 +26,25 @@ namespace PosterCreator.Elements
             RegionID = $"flowRegion{++flowRegID}";
             UseID = $"use{++useID}";
 
-            FontStyle = "normal";
-            FontWeight = "normal";
-            FontSize = 12;
-            FontFamily = "Roboto";
-
             HrefRectangle = href;
             Paragraphs = new List<FlowPara>();
             RenderParams = new RenderingParams
             {
                 Fill = Color.White
             };
+            TextParams = new TextParams();
         }
 
         #endregion Public Constructors
 
         #region Public Properties
 
-        public string FontFamily { get; set; }
-
-        public int FontSize { get; private set; }
-
-        public string FontStyle { get; set; }
-
-        public string FontWeight { get; private set; }
-
         public Rectangle HrefRectangle { get; set; }
-
         public List<FlowPara> Paragraphs { get; set; }
-
         public string RegionID { get; set; }
-
         public RenderingParams RenderParams { get; set; }
-
         public string RootID { get; set; }
-
+        public TextParams TextParams { get; internal set; }
         public string UseID { get; set; }
 
         #endregion Public Properties
@@ -71,9 +55,7 @@ namespace PosterCreator.Elements
         {
             var cult = TextSource.UsedCulture;
 
-            var style = $"font-style:{FontStyle};font-weight:{FontWeight};font-size:{FontSize}px;line-height:125%;font-family:{FontFamily};letter-spacing:0px;" +
-                        $"word-spacing:0px;" + RenderParams.GetStyle(cult) +
-                        $"stroke-linecap:butt;stroke-linejoin:miter;";
+            var style = "letter-spacing:0px;" + TextParams.GetStyle() + "word-spacing:0px;" + RenderParams.GetStyle(cult) + "stroke-linecap:butt;stroke-linejoin:miter;";
 
             var flowRoot = new XElement(Svg.ns + "flowRoot",
                 new XAttribute(XNamespace.Xml + "space", "preserve"),
@@ -88,8 +70,6 @@ namespace PosterCreator.Elements
             var use = new XElement(Svg.ns + "use",
                 new XAttribute("x", 0),
                 new XAttribute("y", 0),
-                //new XAttribute("width", "100%"),
-                //new XAttribute("height", "100%"),
                 new XAttribute("id", UseID),
                 new XAttribute(Svg.xlink + "href", $"#{HrefRectangle.ID}")
                 );
@@ -105,14 +85,5 @@ namespace PosterCreator.Elements
         }
 
         #endregion Public Methods
-
-        #region Internal Methods
-
-        internal void SetBold()
-        {
-            FontWeight = "bold";
-        }
-
-        #endregion Internal Methods
     }
 }

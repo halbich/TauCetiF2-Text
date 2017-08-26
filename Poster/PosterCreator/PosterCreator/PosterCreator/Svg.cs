@@ -58,7 +58,7 @@ namespace PosterCreator
                 @"@font-face {
                       font-family: Roboto;
                       font-style: normal;
-                      src: url('C:\Users\Halbich\Documents\GitHub\TauCetiF2-Text\Poster\fonts\Roboto-Regular.ttf');
+                      src: url('C:\Users\Halbich\Documents\GitHub\TauCetiF2-Text\Poster\fonts\Roboto-Bold.ttf');
                   }
 
                   @font-face {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
 using PosterCreator.Elements;
 
@@ -8,7 +9,6 @@ namespace PosterCreator.PosterStructure
     {
         #region Private Fields
 
-        private bool isBold;
 
         #endregion Private Fields
 
@@ -17,6 +17,7 @@ namespace PosterCreator.PosterStructure
         public Text()
         {
             Paragraphs = new List<string>();
+            TextParams = new TextParams();
         }
 
         #endregion Public Constructors
@@ -28,6 +29,8 @@ namespace PosterCreator.PosterStructure
 
         public FlowRoot Root { get; set; }
 
+        public TextParams TextParams { get; set; }
+
         #endregion Public Properties
 
         #region Public Methods
@@ -37,12 +40,11 @@ namespace PosterCreator.PosterStructure
             base.AfterInit();
             Rectangle = new Rectangle(this);
             Root = new FlowRoot(Rectangle);
+            Root.TextParams = TextParams;
         }
 
         public override void Render(Svg svg)
         {
-            if (isBold)
-                Root.SetBold();
 
             var t = svg.GL(LayerType.Text);
             t.Add(Rectangle);
@@ -63,10 +65,6 @@ namespace PosterCreator.PosterStructure
             return this;
         }
 
-        internal void SetBold()
-        {
-            isBold = true;
-        }
 
         #endregion Internal Methods
     }

@@ -16,6 +16,8 @@ namespace PosterCreator.PosterStructure
         {
             Title = new Text();
             Title.AppendText(title);
+            Title.TextParams.SetH2();
+            Title.SetPadding(new Attributes.Offset(1, 2));
             Vs = new HorizontalSplitter();
             base.AddChild(Vs);
         }
@@ -32,7 +34,7 @@ namespace PosterCreator.PosterStructure
 
         public override T AddChild<T>(T elem)
         {
-            Vs.AddChild(new GraphicalElement[] { Title, elem }, 30);
+            Vs.AddChild(new GraphicalElement[] { Title, elem }, 18);
 
             return elem;
         }
