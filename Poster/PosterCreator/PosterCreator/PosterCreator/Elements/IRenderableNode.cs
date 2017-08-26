@@ -2,11 +2,11 @@
 
 namespace PosterCreator.Elements
 {
-    internal abstract class RenderableNode
+    internal interface IRenderableNode
     {
         #region Public Methods
 
-        public abstract XElement GetNode();
+        XElement GetNode();
 
         #endregion Public Methods
     }

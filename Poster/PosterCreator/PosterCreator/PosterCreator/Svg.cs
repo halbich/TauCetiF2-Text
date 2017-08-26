@@ -56,6 +56,25 @@ namespace PosterCreator
                     new XAttribute("is_visible", "true"),
                     new XAttribute("linkedpaths", "")));
 
+            var style = new XElement(ns + "style",
+                    new XAttribute("type","text/css")
+                );
+            style.SetValue(
+                @"@font-face {
+                      font-family: Roboto;
+                      font-style: normal;
+                      src: url('C:\Users\Halbich\Documents\GitHub\TauCetiF2-Text\Poster\fonts\Roboto-Regular.ttf');
+                  }
+
+                  @font-face {
+                      font-family: Roboto;
+                      font-style: bold;
+                      src: url('C:\Users\Halbich\Documents\GitHub\TauCetiF2-Text\Poster\fonts\Roboto-Bold.ttf');
+                  }
+");
+
+            defs.Add(style);
+
             doc.Root.Add(defs);
 
             var nw = new XElement(sp + "namedview",

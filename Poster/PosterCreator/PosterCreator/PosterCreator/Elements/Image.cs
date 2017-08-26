@@ -5,7 +5,7 @@ using PosterCreator.Attributes;
 
 namespace PosterCreator.Elements
 {
-    internal class Image : RenderableNode
+    internal class Image : IRenderableNode
     {
         #region Private Fields
 
@@ -13,13 +13,7 @@ namespace PosterCreator.Elements
 
         #endregion Private Fields
 
-        public string Path { get; set; }
-
-        public V2D XY { get; set; }
-
-        public V2D Dimensions { get; set; }
-
-        public string ID { get; set; }
+        #region Public Constructors
 
         public Image(string path)
         {
@@ -27,7 +21,21 @@ namespace PosterCreator.Elements
             ID = $"image{++imgID}";
         }
 
-        public override XElement GetNode()
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public V2D Dimensions { get; set; }
+        public string ID { get; set; }
+        public string Path { get; set; }
+
+        public V2D XY { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public XElement GetNode()
         {
             var cult = new CultureInfo("en-US");
 
@@ -45,5 +53,7 @@ namespace PosterCreator.Elements
 
             return g;
         }
+
+        #endregion Public Methods
     }
 }

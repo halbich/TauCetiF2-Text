@@ -6,7 +6,7 @@ namespace PosterCreator.Elements
     internal enum LayerType
     { Background, BorderBackground, Border, Text, Other }
 
-    internal class Layer : RenderableNode
+    internal class Layer : IRenderableNode
     {
         #region Private Fields
 
@@ -20,7 +20,7 @@ namespace PosterCreator.Elements
         {
             Label = label;
             ID = $"layer{++layerID}";
-            Nodes = new List<RenderableNode>();
+            Nodes = new List<IRenderableNode>();
             Type = type;
         }
 
@@ -36,13 +36,13 @@ namespace PosterCreator.Elements
 
         #region Private Properties
 
-        private List<RenderableNode> Nodes { get; set; }
+        private List<IRenderableNode> Nodes { get; set; }
 
         #endregion Private Properties
 
         #region Public Methods
 
-        public override XElement GetNode()
+        public XElement GetNode()
         {
             var g = new XElement(Svg.ns + "g",
                 new XAttribute(Svg.ink + "groupmode", "layer"),
@@ -59,7 +59,7 @@ namespace PosterCreator.Elements
 
         #region Internal Methods
 
-        internal RenderableNode Add(RenderableNode p)
+        internal IRenderableNode Add(IRenderableNode p)
         {
             Nodes.Add(p);
             return p;

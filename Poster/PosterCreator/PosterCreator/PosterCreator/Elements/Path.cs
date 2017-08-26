@@ -7,7 +7,7 @@ using PosterCreator.Attributes;
 
 namespace PosterCreator.Elements
 {
-    internal class Path : RenderableNode
+    internal class Path : IRenderableNode
     {
         #region Private Fields
 
@@ -37,26 +37,22 @@ namespace PosterCreator.Elements
 
         #region Public Properties
 
+        public bool Closed { get; set; }
+        public Color? Fill { get; set; }
+        public float FillOpacity { get; set; }
         public string ID { get; set; }
         public string Label { get; set; }
         public List<V2D> Points { get; set; }
-
-        public bool Closed { get; set; }
-
-        public Color? Fill { get; set; }
-        public float FillOpacity { get; set; }
-
         public Color Stroke { get; set; }
 
-        public float StrokeWidth { get; set; }
-
         public float StrokeOpacity { get; set; }
+        public float StrokeWidth { get; set; }
 
         #endregion Public Properties
 
         #region Public Methods
 
-        public override XElement GetNode()
+        public XElement GetNode()
         {
             var path = Points.Aggregate("M ", (a, c) => a += c.ToString() + " ");
 

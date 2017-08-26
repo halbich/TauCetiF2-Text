@@ -38,7 +38,7 @@ namespace PosterCreator.Elements
         #endregion Internal Methods
     }
 
-    internal class Border : GraphicalElement
+    internal class Border : GraphicalElementWithChild
     {
         #region Public Constructors
 
@@ -52,9 +52,8 @@ namespace PosterCreator.Elements
 
         #region Public Properties
 
-        public float Radius { get; set; }
-
         public float BorderSize { get; set; }
+        public float Radius { get; set; }
 
         #endregion Public Properties
 

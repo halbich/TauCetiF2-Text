@@ -20,7 +20,7 @@ namespace PosterCreator.PosterStructure
             img.XY = new V2D(-2.8222258f, -4.7111111f);
 
             // TODO !
-            svg.GL(LayerType.Background).Add(img);
+            //svg.GL(LayerType.Background).Add(img);
 
             base.Render(svg);
         }

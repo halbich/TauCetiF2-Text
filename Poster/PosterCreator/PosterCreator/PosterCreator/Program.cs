@@ -66,7 +66,12 @@ namespace PosterCreator
 
         private static Border getTopBorder()
         {
-            return new Border().SetMargin(new Offset(0, 0, 10, 0));
+            var b = new Border().SetMargin(new Offset(0, 0, 10, 0));
+
+            var vs = new VerticalSplitter();
+            //b.
+
+            return b;
         }
 
         #endregion Private Methods
