@@ -1,9 +1,9 @@
-﻿using PosterCreator.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
+using PosterCreator.Attributes;
 
 namespace PosterCreator.Elements
 {
@@ -20,12 +20,12 @@ namespace PosterCreator.Elements
         public Path(string label)
         {
             Label = label;
-            ID = $"layer{++pathID}";
+            ID = $"path{++pathID}";
             Points = new List<V2D>();
-            Fill = "none";
             Stroke = Color.Black;
-            StrokeWidth = 1;
+            StrokeWidth = 0.01f;
             StrokeOpacity = 1;
+            FillOpacity = 1;
         }
 
         public Path(string label, params V2D[] points) : this(label)
@@ -43,7 +43,8 @@ namespace PosterCreator.Elements
 
         public bool Closed { get; set; }
 
-        public string Fill { get; set; }
+        public Color? Fill { get; set; }
+        public float FillOpacity { get; set; }
 
         public Color Stroke { get; set; }
 
@@ -62,7 +63,7 @@ namespace PosterCreator.Elements
             if (Closed)
                 path += "Z";
             var cult = new CultureInfo("en-US");
-            var style = $"fill:{Fill};stroke:{Stroke.ToHex()};stroke-width:{StrokeWidth.ToString(cult)}px;stroke-opacity:{StrokeOpacity.ToString(cult)}";
+            var style = $"fill:{Fill.ToHex()};fill-opacity:{FillOpacity.ToString(cult)};stroke:{Stroke.ToHex()};stroke-width:{StrokeWidth.ToString(cult)}px;stroke-opacity:{StrokeOpacity.ToString(cult)}";
 
             var g = new XElement(Svg.ns + "path",
                 new XAttribute("style", style),
@@ -71,6 +72,13 @@ namespace PosterCreator.Elements
                 new XAttribute(Svg.ink + "connector-curvature", 0));
 
             return g;
+        }
+
+        public Path SetFillStroke(Color c)
+        {
+            Fill = c;
+            Stroke = c;
+            return this;
         }
 
         #endregion Public Methods

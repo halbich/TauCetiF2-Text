@@ -10,6 +10,12 @@
 
         #endregion Public Properties
 
+        public V2D(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+
         #region Public Methods
 
         public override string ToString()

@@ -1,6 +1,6 @@
-﻿using PosterCreator.Attributes;
-using System;
+﻿using System;
 using System.Linq;
+using PosterCreator.Attributes;
 
 namespace PosterCreator.Elements
 {

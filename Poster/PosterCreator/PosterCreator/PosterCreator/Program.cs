@@ -33,7 +33,7 @@ namespace PosterCreator
 
             var contentAll = new VerticalSplitter().SetMargin(new Offset(0, 0, 10, 0));
 
-            mainHS.AddChild(new GraphicalElement[] { top, contentAll }, 100, 830);
+            mainHS.AddChild(new GraphicalElement[] { top, contentAll }, 100, 810);
 
             var leftContent = new HorizontalSplitter().SetMargin(new Offset(0, 10, 0, 0));
 

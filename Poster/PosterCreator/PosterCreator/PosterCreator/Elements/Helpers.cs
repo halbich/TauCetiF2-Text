@@ -1,5 +1,5 @@
-﻿using PosterCreator.Attributes;
-using System.Drawing;
+﻿using System.Drawing;
+using PosterCreator.Attributes;
 
 namespace PosterCreator.Elements
 {
@@ -11,6 +11,11 @@ namespace PosterCreator.Elements
         public static string ToHex(this Color c)
         {
             return "#" + c.R.ToString("X2") + c.G.ToString("X2") + c.B.ToString("X2");
+        }
+
+        public static string ToHex(this Color? c)
+        {
+            return c.HasValue ? c.Value.ToHex() : "none";
         }
 
         internal static T SetMargin<T>(this T elem, Offset margin) where T : GraphicalElement

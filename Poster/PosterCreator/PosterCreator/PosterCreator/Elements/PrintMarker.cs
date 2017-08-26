@@ -1,5 +1,5 @@
-﻿using PosterCreator.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PosterCreator.Attributes;
 
 namespace PosterCreator.Elements
 {

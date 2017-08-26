@@ -50,6 +50,7 @@
     <Compile Include="Elements\GraphicalElement.cs" />
     <Compile Include="Elements\GraphicalElementWithChild.cs" />
     <Compile Include="Elements\Helpers.cs" />
+    <Compile Include="Elements\Image.cs" />
     <Compile Include="Elements\VerticalSplitter.cs" />
     <Compile Include="Elements\HorizontalSplitter.cs" />
     <Compile Include="Elements\Layer.cs" />
@@ -63,6 +64,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BackgroundImage.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
