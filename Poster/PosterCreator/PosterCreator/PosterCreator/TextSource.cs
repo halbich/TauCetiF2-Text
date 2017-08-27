@@ -9,7 +9,12 @@ namespace PosterCreator
     internal enum SourceType
     {
         Top,
-        Úvod
+        Úvod,
+        AktStav,
+        Cíle,
+        Architektura,
+        Obrázky,
+        Závěr
     }
 
     internal static class TextSource
@@ -43,11 +48,11 @@ namespace PosterCreator
                         p.SetMiddle();
 
                         var tcfLogo = new ImageHolder("TCF2Logo");
-                        tcfLogo.SetPadding(new Offset(10,5));
+                        tcfLogo.SetPadding(new Offset(20,5));
                         var unrealLogo = new ImageHolder("UELogo") { IsSquare = true };
-                        unrealLogo.SetPadding(new Offset(25, 10, 25, 0));
+                        unrealLogo.SetPadding(new Offset(25, 5));
 
-                        vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 60, 457, 75, 30);
+                        vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 80, 457, 50, 30);
 
                         return vs;
                     }
@@ -56,6 +61,42 @@ namespace PosterCreator
                     {
                         var ut = new Text();
                         ut.AppendText("Lorem ipsum");
+                        ut.AppendText("uvod");
+                        return ut;
+                    }
+                case SourceType.AktStav:
+                    {
+                        var ut = new Text();
+                        ut.AppendText("Lorem ipsum");
+                        ut.AppendText("stav");
+                        return ut;
+                    }
+                case SourceType.Cíle:
+                    {
+                        var ut = new Text();
+                        ut.AppendText("Lorem ipsum");
+                        ut.AppendText("cile");
+                        return ut;
+                    }
+                case SourceType.Architektura:
+                    {
+                        var ut = new Text();
+                        ut.AppendText("Lorem ipsum");
+                        ut.AppendText("arch");
+                        return ut;
+                    }
+                case SourceType.Obrázky:
+                    {
+                        var ut = new Text();
+                        ut.AppendText("Lorem ipsum");
+                        ut.AppendText("obrazky");
+                        return ut;
+                    }
+                case SourceType.Závěr:
+                    {
+                        var ut = new Text();
+                        ut.AppendText("Lorem ipsum");
+                        ut.AppendText("zaver");
                         return ut;
                     }
 

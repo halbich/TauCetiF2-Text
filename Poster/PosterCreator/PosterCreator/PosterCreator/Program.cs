@@ -26,24 +26,37 @@ namespace PosterCreator
             var beginning = new BorderWithTitle("Úvod").SetMargin(new Offset(0, 0, 10, 0));
             beginning.AddChild(TextSource.GetSourceFor(SourceType.Úvod));
 
-            var b2 = new Border().SetMargin(new Offset(0, 0, 10, 0));
+            var current = new BorderWithTitle("Současný stav").SetMargin(new Offset(0, 0, 10, 0));
+            current.AddChild(TextSource.GetSourceFor(SourceType.AktStav));
 
-            var b3 = new Border().SetMargin(new Offset(0, 0, 10, 0));
+            var targets = new BorderWithTitle("Cíle").SetMargin(new Offset(0, 0, 10, 0));
+            targets.AddChild(TextSource.GetSourceFor(SourceType.Cíle));
 
-            leftContent.AddChild(new Border[] { beginning, b2, b3 }, 100, 100, 610);
+
+            leftContent.AddChild(new Border[] { beginning, current, targets }, 300, 300, 210);
             return leftContent;
         }
 
         private static HorizontalSplitter getRightContent()
         {
             var rightContent = new HorizontalSplitter();
-            var b4 = new Border().SetMargin(new Offset(0, 0, 10, 0));
+            var arch = new BorderWithTitle("Architektura").SetMargin(new Offset(0, 0, 10, 0));
+            arch.AddChild(TextSource.GetSourceFor(SourceType.Architektura));
 
-            var b5 = new Border().SetMargin(new Offset(0, 0, 10, 0));
+            var archc = new VerticalSplitter().SetMargin(new Offset(0,0,10,0));
 
-            var b6 = new Border();
+            var code = new BorderWithTitle("C++").SetMargin(new Offset(0, 5, 0, 0));
+            var bl = new BorderWithTitle("Blueprint").SetMargin(new Offset(0, 0, 0, 5));
 
-            rightContent.AddChild(new Border[] { b4, b5, b6 }, 200, 200);
+            archc.AddChild(new[] { code, bl }, 198, 198);
+
+            var obraz = new BorderWithTitle("Obrázky ze hry").SetMargin(new Offset(0, 0, 10, 0));
+            obraz.AddChild(TextSource.GetSourceFor(SourceType.Obrázky));
+
+            var zaver = new BorderWithTitle("Závěr");
+            zaver.AddChild(TextSource.GetSourceFor(SourceType.Závěr));
+
+            rightContent.AddChild(new GraphicalElement[] { arch, archc, obraz, zaver }, 160, 360, 200, 80);
             return rightContent;
         }
 

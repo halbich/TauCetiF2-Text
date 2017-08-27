@@ -7,7 +7,7 @@
         public TextParams()
         {
             FontStyle = "normal";
-            FontWeight = "normal";
+            FontWeight = "500";
             FontSize = 6;
             FontFamily = "Roboto";
         }
