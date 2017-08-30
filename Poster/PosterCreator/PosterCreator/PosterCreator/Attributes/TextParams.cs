@@ -10,6 +10,8 @@
             FontWeight = "500";
             FontSize = 6;
             FontFamily = "Roboto";
+            LineHeight = 150;
+            Justify = true;
         }
 
         #endregion Public Constructors
@@ -26,6 +28,10 @@
 
         public string TextAnchor { get; set; }
 
+        public int LineHeight { get; set; }
+
+        public bool Justify { get; set; }
+
         #endregion Public Properties
 
         #region Public Methods
@@ -40,12 +46,16 @@
             FontSize = 20;
             SetBold();
             SetMiddle();
+            LineHeight = 125;
+            Justify = false;
         }
 
         public void SetH2()
         {
             FontSize = 12;
             SetBold();
+            LineHeight = 125;
+            Justify = false;
         }
 
         public void SetMiddle()
@@ -59,9 +69,12 @@
 
         internal string GetStyle()
         {
-            var r = $"font-style:{FontStyle};font-weight:{FontWeight};font-size:{FontSize}px;line-height:125%;font-family:{FontFamily};";
+            var r = $"font-style:{FontStyle};font-weight:{FontWeight};font-size:{FontSize}px;line-height:{LineHeight}%;font-family:{FontFamily};";
             if (TextAnchor != null)
                 r += $"text-anchor:{TextAnchor};";
+
+            if (Justify)
+                r += "text-align:justify;";
 
             return r;
         }

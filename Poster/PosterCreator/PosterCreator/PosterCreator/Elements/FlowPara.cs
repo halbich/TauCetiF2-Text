@@ -36,7 +36,16 @@ namespace PosterCreator.Elements
             var fp = new XElement(Svg.ns + "flowPara",
               new XAttribute("id", ID));
 
-            fp.SetValue(Text);
+            var toReplace = new[] { "k", "s", "v", "z", "a" };
+
+            var t = Text;
+
+            foreach (var item in toReplace)
+            {
+                t = t.Replace($" {item} ", $" {item}\u00A0");
+            }
+
+            fp.SetValue(t);
 
             return fp;
         }

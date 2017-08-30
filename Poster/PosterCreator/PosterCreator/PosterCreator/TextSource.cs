@@ -48,7 +48,7 @@ namespace PosterCreator
                         p.SetMiddle();
 
                         var tcfLogo = new ImageHolder("TCF2Logo");
-                        tcfLogo.SetPadding(new Offset(20,5));
+                        tcfLogo.SetPadding(new Offset(20, 5));
                         var unrealLogo = new ImageHolder("UELogo") { IsSquare = true };
                         unrealLogo.SetPadding(new Offset(25, 5));
 
@@ -60,8 +60,27 @@ namespace PosterCreator
                 case SourceType.Úvod:
                     {
                         var ut = new Text();
-                        ut.AppendText("Lorem ipsum");
-                        ut.AppendText("uvod");
+                        ut.AppendText(
+                            @"V době vzniku této práce jsou velice populární hry s otevřeným světem. Lákají
+hráče na obsáhlost světa a možnost nelineárního řešení problémů a herních
+úkolů. Her s otevřeným světem najdeme nepřeberné množství v různých herních
+žánrech. My se zaměříme na podmnožinu her, které kromě otevřeného světa nabízí
+také možnosti budování struktur a vyžadují od hráče netriviální styl hraní,
+který mu umožňuje ve hře přežít. V herním průmyslu se tyto hry často označují
+jako sandboxové, s budováním, s průzkumem prostředí, o přežití. Autor této práce
+má tento typ her v oblibě a rád by touto prací představil svoji vizi dalšího možného
+rozvoje her tohoto žánru. Cílem práce by měla být implementace nového
+herního principu stavění, které současné herní tituly nenabízí."
+                        );
+                        ut.AppendText(
+                            @"V práci se budeme zabývat několika různými hrami, které však mají několik
+společných vlastností. Jedním ze základních konceptů je využívání herních
+bloků. Dalším význačným prvkem je způsob integrace herních bloků do herního
+prostředí. Některé hry jsou celé tvořeny bloky, jiné se snaží dosáhnout vyššího
+stupně realismu ve hře a bloky využívají pouze pro konstrukci různých herních
+objektů. Důležitým tématem této práce tedy bude rozbor systému bloků a práce
+s nimi a popis hráčských problémů způsobených danými koncepty. V další části
+práce pak navrhneme a implementujeme vlastní řešení.");
                         return ut;
                     }
                 case SourceType.AktStav:

@@ -80,11 +80,15 @@ namespace PosterCreator
 
             svg.doc.Save("../../../../../out.svg", System.Xml.Linq.SaveOptions.None);
 
-            var ink = System.IO.Path.Combine(Environment.ExpandEnvironmentVariables("%ProgramW6432%"), "Inkscape", "inkscape.exe");
+            var ink = "\"" + System.IO.Path.Combine(Environment.ExpandEnvironmentVariables("%ProgramW6432%"), "Inkscape", "inkscape.exe") + "\"";
             var source = System.IO.Path.GetFullPath("../../../../../out.svg");
             var targetDir = System.IO.Path.GetFullPath("../../../../../out.png");
 
-            Process.Start(ink, source + " -e " + targetDir);
+            var parameters = source + " -e " + targetDir;
+
+            Debug.WriteLine(ink + " " + parameters);
+
+            Process.Start(ink, parameters);
         }
 
         private static void prepareContent(MainStructure poster)
