@@ -81,8 +81,8 @@ bloků. Dalším význačným prvkem je způsob integrace herních bloků do her
 prostředí. Některé hry jsou celé tvořeny bloky, jiné se snaží dosáhnout vyššího
 stupně realismu ve hře a bloky využívají pouze pro konstrukci různých herních
 objektů. Důležitým tématem této práce tedy bude rozbor systému bloků a práce
-s nimi a popis hráčských problémů způsobených danými koncepty. V další části
-práce pak navrhneme a implementujeme vlastní řešení.");
+s nimi a popis hráčských problémů způsobených <danými koncepty>. V další části
+práce pak navrhneme a implementujeme [vlastní]~<řešení>.");
                         return ut;
                     }
                 case SourceType.AktStav:

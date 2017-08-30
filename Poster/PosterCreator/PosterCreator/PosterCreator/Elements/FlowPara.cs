@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using System.Diagnostics;
+using System.Text;
+using System.Xml.Linq;
 using PosterCreator.Interfaces;
 
 namespace PosterCreator.Elements
@@ -45,7 +47,72 @@ namespace PosterCreator.Elements
                 t = t.Replace($" {item} ", $" {item}\u00A0");
             }
 
-            fp.SetValue(t);
+            t = t.Replace("~", "\u00A0");
+
+            var i = 0;
+            //t = t.Replace("<", "<svg:flowSpan id=\"flowSpan" + (i++) + "\" style=\"font-weight:bold\">").Replace(">", "</svg:flowSpan>");
+
+            FlowSpan currentItalic = null;
+            FlowSpan currentBold = null;
+
+            var sb = new StringBuilder();
+            foreach (var item in t)
+            {
+                switch (item)
+                {
+                    case '<':
+                        {
+                            Debug.Assert(currentItalic == null);
+                            if (sb.Length > 0)
+                            {
+                                fp.Add(sb.ToString());
+                                sb.Clear();
+                            }
+
+                            currentItalic = new FlowSpan();
+                            currentItalic.Params.SetItalic();
+                            break;
+                        }
+                    case '>':
+                        {
+                            Debug.Assert(currentItalic != null);
+                            currentItalic.Text = sb.ToString();
+                            sb.Clear();
+                            fp.Add(currentItalic.GetNode());
+                            currentItalic = null;
+                            break;
+                        }
+
+                    case '[':
+                        {
+                            Debug.Assert(currentBold == null);
+                            if (sb.Length > 0)
+                            {
+                                fp.Add(sb.ToString());
+                                sb.Clear();
+                            }
+
+                            currentBold = new FlowSpan();
+                            currentBold.Params.SetBold();
+                            break;
+                        }
+                    case ']':
+                        {
+                            Debug.Assert(currentBold != null);
+                            currentBold.Text = sb.ToString();
+                            sb.Clear();
+                            fp.Add(currentBold.GetNode());
+                            currentBold = null;
+                            break;
+                        }
+
+                    default:
+                        sb.Append(item);
+                        break;
+                }
+            }
+
+            fp.Add(sb.ToString());
 
             return fp;
         }
