@@ -14,7 +14,7 @@ namespace PosterCreator.PosterStructure
         {
             Radius = 10;
             BorderSize = 5;
-            Padding = new Offset(15);
+            Padding = new Offset(20);
         }
 
         #endregion Public Constructors

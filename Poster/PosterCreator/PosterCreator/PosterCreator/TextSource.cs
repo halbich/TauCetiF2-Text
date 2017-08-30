@@ -14,7 +14,9 @@ namespace PosterCreator
         Cíle,
         Architektura,
         Obrázky,
-        Závěr
+        Závěr,
+        Kod,
+        Blueprint
     }
 
     internal static class TextSource
@@ -50,9 +52,9 @@ namespace PosterCreator
                         var tcfLogo = new ImageHolder("TCF2Logo");
                         tcfLogo.SetPadding(new Offset(20, 5));
                         var unrealLogo = new ImageHolder("UELogo") { IsSquare = true };
-                        unrealLogo.SetPadding(new Offset(25, 5));
+                        unrealLogo.SetPadding(new Offset(20, 5));
 
-                        vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 80, 457, 50, 30);
+                        vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 80, 447, 50, 30);
 
                         return vs;
                     }
@@ -61,7 +63,7 @@ namespace PosterCreator
                     {
                         var ut = new Text();
                         ut.AppendText(
-                            @"V době vzniku této práce jsou velice populární hry s otevřeným světem. Lákají
+                            @"  V době vzniku této práce jsou velice populární hry s otevřeným světem. Lákají
 hráče na obsáhlost světa a možnost nelineárního řešení problémů a herních
 úkolů. Her s otevřeným světem najdeme nepřeberné množství v různých herních
 žánrech. My se zaměříme na podmnožinu her, které kromě otevřeného světa nabízí
@@ -73,7 +75,7 @@ rozvoje her tohoto žánru. Cílem práce by měla být implementace nového
 herního principu stavění, které současné herní tituly nenabízí."
                         );
                         ut.AppendText(
-                            @"V práci se budeme zabývat několika různými hrami, které však mají několik
+                            @"    V práci se budeme zabývat několika různými hrami, které však mají několik
 společných vlastností. Jedním ze základních konceptů je využívání herních
 bloků. Dalším význačným prvkem je způsob integrace herních bloků do herního
 prostředí. Některé hry jsou celé tvořeny bloky, jiné se snaží dosáhnout vyššího
@@ -93,8 +95,32 @@ práce pak navrhneme a implementujeme vlastní řešení.");
                 case SourceType.Cíle:
                     {
                         var ut = new Text();
-                        ut.AppendText("Lorem ipsum");
-                        ut.AppendText("cile");
+                        ut.AppendText("  V rámci práce jsme identifikovali následující cíle práce:");
+                        ut.AppendText("  1.Bloky a herní svět");
+                        ut.AppendText("    • Způsob řešení proměnlivé velikosti bloků");
+                        ut.AppendText("    • Umístění bloků v herním světě");
+                        ut.AppendText("    • Skládání bloků do struktur");
+                        ut.AppendText("    • Komunikace bloků");
+                        ut.AppendText("    • Interakce s bloky");
+                        ut.AppendText("    • Denní cyklus");
+                        ut.AppendText("    • Proměnlivé počasí");
+                        ut.AppendText("    • Použitelné datové struktury vzhledem k ostatním částem hry");
+                        ut.AppendText("  2.Inventář");
+                        ut.AppendText("    • Automatizovaná správa inventáře");
+                        ut.AppendText("    • Stavitelné a umístitelné bloky");
+                        ut.AppendText("  3.Herní postava");
+                        ut.AppendText("    • Inventář herní postavy");
+                        ut.AppendText("    • Vlastnosti postavy jako např. zdraví");
+                        ut.AppendText("  4.Ostatní herní prvky");
+                        ut.AppendText("    • Systém ukládání a načítání hry");
+                        ut.AppendText("    • Kreativní herní mód");
+                        ut.AppendText("    • Herní tutorial");
+                        ut.AppendText("  5.Případné prvky navíc, které se ve hrách běžně vyskytují");
+                        ut.AppendText("    • Lokalizace hry do různých jazyků");
+                        ut.AppendText("    • Hudba ve hře");
+                        ut.AppendText("  6.Zhodnocení práce");
+                        ut.AppendText("    • Získat a zhodnotit zpětnou vazbu (dotazník)");
+
                         return ut;
                     }
                 case SourceType.Architektura:
@@ -103,6 +129,34 @@ práce pak navrhneme a implementujeme vlastní řešení.");
                         ut.AppendText("Lorem ipsum");
                         ut.AppendText("arch");
                         return ut;
+                    }
+                case SourceType.Kod:
+                    {
+                        var hz = new HorizontalSplitter();
+                        var ut = new Text();
+                        ut.AppendText("Lorem ipsum");
+                        ut.AppendText("arch");
+
+                        var ut1 = new OrderedText();
+                        ut1.AppendText("dolor sit");
+                        ut1.AppendText("samet");
+
+                        hz.AddChild(new GraphicalElement[] { ut, ut1 });
+                        return hz;
+                    }
+                case SourceType.Blueprint:
+                    {
+                        var hz = new HorizontalSplitter();
+                        var ut = new Text();
+                        ut.AppendText("Lorem ipsum");
+                        ut.AppendText("bp");
+
+                        var ut1 = new ItemizeText();
+                        ut1.AppendText("dolor sit");
+                        ut1.AppendText("samet");
+
+                        hz.AddChild(new GraphicalElement[] { ut, ut1 });
+                        return hz;
                     }
                 case SourceType.Obrázky:
                     {

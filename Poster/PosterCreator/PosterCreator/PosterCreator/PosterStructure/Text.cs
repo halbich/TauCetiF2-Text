@@ -59,7 +59,7 @@ namespace PosterCreator.PosterStructure
 
         #region Internal Methods
 
-        internal Text AppendText(string v)
+        internal virtual Text AppendText(string v)
         {
             Paragraphs.Add(v);
             return this;

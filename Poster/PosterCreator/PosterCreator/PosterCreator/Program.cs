@@ -33,7 +33,7 @@ namespace PosterCreator
             targets.AddChild(TextSource.GetSourceFor(SourceType.Cíle));
 
 
-            leftContent.AddChild(new Border[] { beginning, current, targets }, 300, 300, 210);
+            leftContent.AddChild(new Border[] { beginning, current, targets }, 300, 200, 310);
             return leftContent;
         }
 
@@ -46,7 +46,9 @@ namespace PosterCreator
             var archc = new VerticalSplitter().SetMargin(new Offset(0,0,10,0));
 
             var code = new BorderWithTitle("C++").SetMargin(new Offset(0, 5, 0, 0));
+            code.AddChild(TextSource.GetSourceFor(SourceType.Kod));
             var bl = new BorderWithTitle("Blueprint").SetMargin(new Offset(0, 0, 0, 5));
+            bl.AddChild(TextSource.GetSourceFor(SourceType.Blueprint));
 
             archc.AddChild(new[] { code, bl }, 198, 198);
 
