@@ -57,6 +57,8 @@ namespace PosterCreator.PosterStructure
                 new Path("CrossLine", point.MoveX(-MarkerSize), point.MoveX(MarkerSize)),
                 new Path("CrossLine", point.MoveY(-MarkerSize), point.MoveY(MarkerSize))
             };
+            res[0].RenderParams.StrokeWidth = StrokeWidth;
+            res[1].RenderParams.StrokeWidth = StrokeWidth;
 
             return res;
         }

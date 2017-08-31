@@ -72,8 +72,8 @@ namespace PosterCreator.PosterStructure
             var back = new Path("BorderBack", borderPathPointsi.ToArray());
             back.Closed = true;
 
-            back.RenderParams.Fill = Color.Black;
-            back.RenderParams.FillOpacity = 0.8f;
+            back.RenderParams.Fill = Color.White;
+            back.RenderParams.FillOpacity = 1f;
 
             svg.GL(LayerType.BorderBackground).Add(back);
 

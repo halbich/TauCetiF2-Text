@@ -61,7 +61,7 @@ namespace PosterCreator
             var zaver = new BorderWithTitle("Závěr");
             zaver.AddChild(TextSource.GetSourceFor(SourceType.Závěr));
 
-            rightContent.AddChild(new GraphicalElement[] { arch, archc, obraz, zaver }, 200, 300, 185, 115);
+            rightContent.AddChild(new GraphicalElement[] { arch, archc, obraz, zaver }, 210, 290, 185, 115);
             return rightContent;
         }
 

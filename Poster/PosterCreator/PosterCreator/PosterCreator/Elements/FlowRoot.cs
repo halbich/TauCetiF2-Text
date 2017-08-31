@@ -30,7 +30,7 @@ namespace PosterCreator.Elements
             Paragraphs = new List<FlowPara>();
             RenderParams = new RenderingParams
             {
-                Fill = Color.White
+                Fill = Color.Black
             };
             TextParams = new TextParams();
         }

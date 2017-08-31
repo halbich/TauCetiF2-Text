@@ -12,5 +12,7 @@ namespace PosterCreator.PosterStructure
         {
             return base.AppendText($"  {Paragraphs.Count + 1}. " + v);
         }
+
+      
     }
 }

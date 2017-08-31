@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
-using PosterCreator.Attributes;
+﻿using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
 using PosterCreator.Elements;
+using System.Collections.Generic;
 
 namespace PosterCreator.PosterStructure
 {
     internal class Text : GraphicalElement
     {
-        #region Private Fields
-
-
-        #endregion Private Fields
-
         #region Public Constructors
 
         public Text()
@@ -45,7 +40,6 @@ namespace PosterCreator.PosterStructure
 
         public override void Render(Svg svg)
         {
-
             var t = svg.GL(LayerType.Text);
             t.Add(Rectangle);
 
@@ -59,12 +53,21 @@ namespace PosterCreator.PosterStructure
 
         #region Internal Methods
 
+        internal Text AppendText(string[] v)
+        {
+            foreach (var item in v)
+            {
+                AppendText(item);
+            }
+
+            return this;
+        }
+
         internal virtual Text AppendText(string v)
         {
             Paragraphs.Add(v);
             return this;
         }
-
 
         #endregion Internal Methods
     }

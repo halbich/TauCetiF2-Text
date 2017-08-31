@@ -84,7 +84,7 @@ rozvoje her tohoto žánru."
                 case SourceType.Cíle:
                     {
                         var ut = new Text();
-                        ut.AppendText("  V rámci práce jsme identifikovali následující cíle práce:");
+                        ut.AppendText("    V rámci práce jsme identifikovali následující cíle práce:");
                         ut.AppendText("  1.Bloky a herní svět");
                         ut.AppendText("    • Způsob řešení proměnlivé velikosti bloků");
                         ut.AppendText("    • Umístění bloků v herním světě");
@@ -115,14 +115,17 @@ rozvoje her tohoto žánru."
                 case SourceType.Architektura:
                     {
                         var ut = new Text();
-                        ut.AppendText(
-                            @"    V naší práci jsme využili obou způsobů vývoje počítačových her, které nám <Unreal Engine> nabízí. To jest možnosti implementace hry klasickým způsobem, tedy v jazyce <C++>, a dále pak možnosti implementace pomocí <Blueprintů>, což je vizuální editor kódu pro <Unreal Engine>. Využili jsme výhod obou přístupů a jejich vhodnou kombinací jsme dosáhli rychlého a efektivního vývoje celé hry.");
+                        ut.AppendText(new[]
+                        {
+                            "    V naší práci jsme využili obou způsobů vývoje počítačových her, které nám <Unreal Engine> nabízí. To jest možnosti implementace hry klasickým způsobem, tedy v jazyce <C++>, a dále pak možnosti implementace pomocí <Blueprintů>, což je vizuální editor kódu pro <Unreal Engine>. Využili jsme výhod obou přístupů a jejich vhodnou kombinací jsme dosáhli rychlého a efektivního vývoje celé hry.",
 
-                        ut.AppendText("    Podařilo se nám dosáhnout plné spolupráce mezi kódem v <C++> a v <Blueprintu>. Jeden způsob byl triviální - <Blueprinty> mohou dědit z <C++> tříd a tudíž mohou volat metody svých předků. Z opačné strany jsme zvolili použití událostí, které byly vyvolávány ze strany <C++> kódu a jejichž obsluha byla definovaná v <Blueprintovém> kódu. Tímto způsobem jsme dosáhli oboustranné komunikace mezi všemi součástmi hry.");
+                            "    Podařilo se nám dosáhnout plné spolupráce mezi kódem v <C++> a v <Blueprintu>. Jeden způsob byl triviální - <Blueprinty> mohou dědit z <C++> tříd a tudíž mohou volat metody svých předků. Z opačné strany jsme zvolili použití událostí, které byly vyvolávány ze strany <C++> kódu a jejichž obsluha byla definovaná v <Blueprintovém> kódu. Tímto způsobem jsme dosáhli oboustranné komunikace mezi všemi součástmi hry.",
 
-                        ut.AppendText("    Dále jsme využili komponentový přístup. Kupříkladu implementací <kyslíkové> či <elektrické> komponenty jsme mohli tyto komponenty přiřadit jak k blokům, tak třeba k hráčově postavě. Tímto způsobem jsme se vyhnuli duplicitnímu kódu a mohli jsme s těmito mechanikami pracovat standardizovaným způsobem.");
+                            "    Dále jsme využili komponentový přístup. Kupříkladu implementací <kyslíkové> či <elektrické> komponenty jsme mohli tyto komponenty přiřadit jak k blokům, tak třeba k hráčově postavě. Tímto způsobem jsme se vyhnuli duplicitnímu kódu a mohli jsme s těmito mechanikami pracovat standardizovaným způsobem.",
 
-                        ut.AppendText("    Dále byl ve hře systém bloků implementován takovým způsobem, že je možné rozšiřovat dostupné bloky pomocí <DLC>, tedy stahovatelného obsahu. Hra tedy nabízí alespoň základní možnosti uživatelkého rozšiřování.");
+                            "    Dále byl ve hře systém bloků implementován takovým způsobem, že je možné rozšiřovat dostupné bloky pomocí <DLC>, tedy stahovatelného obsahu. Hra tedy nabízí alespoň základní možnosti uživatelkého rozšiřování.",
+                            "    Během práce na TCF2 jsme se maximálně snažili využít možností, které nám <Unreal Engine> nabízí. Proto jsme byli kupříkladu schopni poměrně rychle implementovat logiku, která ovládá systém počasí. Ten byl implementován pomocí rozhodovacího stromu, k čemuž jsme využili již existující nástroje, kterými <Unreal Engine> disponuje.",
+                        });
                         return ut;
                     }
                 case SourceType.Kod:
@@ -130,13 +133,22 @@ rozvoje her tohoto žánru."
                         var hz = new HorizontalSplitter();
                         var ut = new Text();
                         ut.AppendText("    Vzhledem k rychlosti, kterou <C++> nabízí, byly tímto způsobem naprogramovány všechny kritické části a komponenty hry. Definovali jsme zde například všechny vlastnosti (omezující konstanty), jejichž konkrétní hodnoty jsme následně mohli měnit v Editoru skrze <Blueprinty>.");
-                        ut.AppendText("arch");
+
+                        var utO = new Text();
+                        utO.AppendText("    Nejvýznamější části:");
 
                         var ut1 = new OrderedText();
-                        ut1.AppendText("dolor sit");
-                        ut1.AppendText("samet");
+                        ut1.AppendText(new string[] {
+                            "Systém bloků a jejich správy",
+                            "Komponenty <kyslíku>, <energie> a další",
+                            "Bázové třídy pro UI elementy a jejich chování",
+                            "Systém počasí",
+                            "Systém ukládání a načítání hry",
+                            "Systém inventáře"
+                        });
 
-                        hz.AddChild(new GraphicalElement[] { ut, ut1 });
+
+                        hz.AddChild(new GraphicalElement[] { ut, utO, ut1 }, 60, 10);
                         return hz;
                     }
                 case SourceType.Blueprint:
@@ -144,13 +156,23 @@ rozvoje her tohoto žánru."
                         var hz = new HorizontalSplitter();
                         var ut = new Text();
                         ut.AppendText("    Hlavním cílem <Blueprintů> bylo prototypování funkcionality (většina z těchto prototypů byla následně implementována do <C++>) a rychlá implementace nekritických částí hry. Dále bylo <Blueprintů> využito jako nástroje, ve kterém byly definovány omezující konstanty, jako například minimální a maximální velikosti bloků, vlastnosti bloků, cena stavby apod. Díky tomu, že jsme tyto konstanty definovali na této úrovni, mohli jsme snadno balancovat jednotlivé parametry bez nutnosti zdlouhavého procesu opětovné kompilace celého projektu. ");
-                        ut.AppendText("bp");
 
-                        var ut1 = new ItemizeText();
-                        ut1.AppendText("dolor sit");
-                        ut1.AppendText("samet");
+                        var utO = new Text();
+                        utO.AppendText("    Nejvýznamější části:");
 
-                        hz.AddChild(new GraphicalElement[] { ut, ut1 });
+                        var ut1 = new OrderedText();
+                        ut1.AppendText(new string[] {
+                            "Definice bloků a jejich omezujících podmínek",
+                            "AI systém pro řízení počasí",
+                            "UI prvky a obrazovky",
+                            "Systém shaderů pro škálovatelné bloky",
+                            "Tutoriály",
+                            "Systém ambientní hudby",
+                            "Překlady pro anglickou jazykovou verzi"
+                        });
+
+
+                        hz.AddChild(new GraphicalElement[] { ut, utO, ut1 }, 110, 10);
                         return hz;
                     }
                 case SourceType.Obrázky:
