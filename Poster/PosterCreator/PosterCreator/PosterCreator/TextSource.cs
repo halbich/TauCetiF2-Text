@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
@@ -36,10 +37,12 @@ namespace PosterCreator
             {
                 case SourceType.Top:
                     {
-                        var vs = new VerticalSplitter();
+                        var vsTop = new VerticalSplitter();
 
+                        var vsLogo = new VerticalSplitter().SetPadding(new Offset(10,5));
                         var schoolLogo = new ImageHolder("MffLogo") { IsSquare = true };
-                        schoolLogo.SetPadding(new Offset(10, 5));
+                        vsLogo.AddChild(new[] { schoolLogo }, 90);
+
                         var centerText = new HorizontalSplitter();
 
                         var c = centerText.AddChild(new[] { new Text(), new Text() }, 55, 15);
@@ -50,14 +53,14 @@ namespace PosterCreator
                         p.FontSize = 8;
                         p.SetMiddle();
 
-                        var tcfLogo = new ImageHolder("TCF2Logo");
-                        tcfLogo.SetPadding(new Offset(20, 5));
-                        var unrealLogo = new ImageHolder("UELogo") { IsSquare = true };
-                        unrealLogo.SetPadding(new Offset(20, 5));
+                        var vsLogos = new VerticalSplitter().SetPadding(new Offset(10,5));
+                        var tcfLogo = new ImageHolder("TCF2Logo").SetPadding(new Offset(0,0));
+                        var unrealLogo = (new ImageHolder("UELogo") { IsSquare = true }).SetPadding(new Offset(15, 0));
+                        vsLogos.AddChild(new[] { tcfLogo, unrealLogo }, 70, 30);
 
-                        vs.AddChild(new GraphicalElement[] { schoolLogo, centerText, tcfLogo, unrealLogo }, 80, 447, 50, 30);
+                        vsTop.AddChild(new GraphicalElement[] { vsLogo, centerText, vsLogos}, 100, 427, 100);
 
-                        return vs;
+                        return vsTop;
                     }
 
                 case SourceType.Úvod:
@@ -130,28 +133,88 @@ rozvoje her tohoto žánru."
 
                         var canvas = new Canvas();
 
-                        var blocks = canvas.Add("Bloky", -120, -70, 25);
-                        var blocksDef = canvas.Add("Definice bloků", -120, -50, 52);
-                        var vizualReprezBlocks = canvas.Add("Vizuální reprezentace\nškálovatelných bloků", -120, -30, 73, 22);
-                        var worldReprez = canvas.Add("Reprezentace\nsvěta a bloků", -120, -10, 50, 22);
+                        var saveColor = Color.LightGray;
+                        var defColor = Color.LightBlue;
 
-                        var aiWeather = canvas.Add("AI počasí", -120, 10, 36);
-                        var logicWeather = canvas.Add("Logika počasí", -120, 30, 49);
-                        var defWeather = canvas.Add("Definice počasí", -120, 50, 54);
+                        var blocks = canvas.Add("Bloky", -70, -10, 25);
+                        blocks.SetBackground(saveColor);
 
-                        var dayNight = canvas.Add("Denní / noční\ncyklus", -120, 70, 48, 22);
+                        var blocksDef = canvas.Add("Definice bloků", -140, -70, 52);
+                        blocksDef.SetBackground(defColor);
 
-                        var ctorObj = canvas.Add("Konstruktor objektů", 120, -70, 68);
-                        var UI = canvas.Add("UI", 120, -50, 15);
+                        var vizualReprezBlocks = canvas.Add("Vizuální reprezentace\nškálovatelných bloků", -70, -70, 73, 22);
+                        var worldReprez = canvas.Add("Reprezentace\nsvěta a bloků", 0, -10, 50, 22);
+                        worldReprez.SetBackground(saveColor);
 
-                        var elComp = canvas.Add("Elektrická\nkomponenta", 120, -30, 47, 22);
-                        var elNet = canvas.Add("Elektrická síť", 120, -10, 47);
-                        var o2Comp = canvas.Add("Kyslíková\nkomponenta", 120, 10, 47, 22);
+                        var aiWeather = canvas.Add("AI počasí", 0, -70, 36);
+                        var logicWeather = canvas.Add("Logika počasí", 60, -30, 49);
+                        logicWeather.SetBackground(saveColor);
+                        var defWeather = canvas.Add("Definice počasí", 50, -70, 54);
+                        defWeather.SetBackground(defColor);
 
-                        var character = canvas.Add("Hráčova\npostava", 50, 30, 33, 22);
-                        var inventory = canvas.Add("Inventář", 120, 46, 34);
-                        var blockLoadSys = canvas.Add("Systém načítání bloků", 120, 70, 75);
-                        var interWorld = canvas.Add("Interakce se světem", 0, 0, 70);
+                        var dayNight = canvas.Add("Denní / noční\ncyklus", 110, -70, 48, 22);
+                        dayNight.SetBackground(saveColor);
+
+                        var ctorObj = canvas.Add("Konstruktor objektů", 80, -10, 68);
+                        var UI = canvas.Add("UI", 160, -70, 15);
+
+                        var elComp = canvas.Add("Elektrická\nkomponenta", 40, 30 , 47, 22);
+                        elComp.SetBackground(saveColor);
+                        var elNet = canvas.Add("Elektrická síť", 110, 30, 47);
+                        var o2Comp = canvas.Add("Kyslíková\nkomponenta", -30, 30, 47, 22);
+                        o2Comp.SetBackground(saveColor);
+
+                        var character = canvas.Add("Hráčova\npostava", -10, 80, 33, 22);
+                        character.SetBackground(saveColor);
+                        var inventory = canvas.Add("Inventář", 160, 80, 34);
+                        inventory.SetBackground(saveColor);
+                        var blockLoadSys = canvas.Add("Systém načítání bloků", -140, -10, 75);
+                        var interWorld = canvas.Add("Interakce se světem", -70, 80, 70);
+
+
+                        canvas.AddR(blocks, blocksDef);
+                        canvas.AddR(blocksDef, vizualReprezBlocks);
+                        canvas.AddR(blockLoadSys, blocksDef);
+                        canvas.AddR(blocks, worldReprez);
+
+                        canvas.AddR(worldReprez, aiWeather);
+                        canvas.AddR(worldReprez, elNet);
+                        canvas.AddR(blocks, interWorld);
+
+                        canvas.AddR(logicWeather, defWeather);
+                        canvas.AddR(logicWeather, aiWeather);
+                        canvas.AddR(logicWeather, dayNight);
+
+
+                        canvas.AddR(UI, inventory);
+                        canvas.AddR(UI, elNet);
+                        canvas.AddR(UI, ctorObj);
+
+                        canvas.AddR(ctorObj, worldReprez);
+
+                        canvas.AddR(character, inventory);
+                        canvas.AddR(character, interWorld);
+                        canvas.AddR(character, elComp);
+                        canvas.AddR(character, o2Comp);
+
+                        canvas.AddR(blocks, o2Comp);
+                        canvas.AddR(blocks, elComp);
+
+                        canvas.AddR(elNet, elComp);
+
+
+                        canvas.AddA("Editor (Blueprinty)", 0, -75, 365, 40);
+
+                        canvas.AddA("C++", 0, 22.5f, 365, 145);
+
+                        var l = canvas.AddA("Legenda", -145f, 57.5f, 70, 70);
+                        l.OverrideOpacity = 1;
+
+                        var legendSec = canvas.Add("Významná část", -145, 45, 60);
+                        var legendDef = canvas.Add("Definice", -145, 62.5f, 60);
+                        legendDef.SetBackground(defColor);
+                        var legendSave = canvas.Add("Ukládání", -145, 80, 60);
+                        legendSave.SetBackground(saveColor);
 
                         hz.AddChild(new GraphicalElement[] { ut, canvas }, 50);
 

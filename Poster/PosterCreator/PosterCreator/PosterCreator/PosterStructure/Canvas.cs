@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Drawing;
+using System.Collections.Generic;
 using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
 using PosterCreator.Elements;
+using Rect = PosterCreator.Elements.Rectangle;
 
 namespace PosterCreator.PosterStructure
 {
@@ -13,11 +16,13 @@ namespace PosterCreator.PosterStructure
 
         public List<CanvasElemRel> Rels;
 
+        public List<AreaElem> Areas;
+
         #endregion Public Fields
 
         #region Private Fields
 
-        private Rectangle baseRectangle;
+        private Rect baseRectangle;
         private V2D center;
 
         #endregion Private Fields
@@ -30,6 +35,8 @@ namespace PosterCreator.PosterStructure
 
             Elems = new List<CanvasElem>();
             Rels = new List<CanvasElemRel>();
+
+            Areas = new List<AreaElem>();
         }
 
         #endregion Public Constructors
@@ -43,10 +50,18 @@ namespace PosterCreator.PosterStructure
             return n;
         }
 
+        public AreaElem AddA(string text, float X, float Y, float Width, float Height = 14)
+        {
+            var n = new AreaElem(new V2D(X, Y), new V2D(Width, Height)) { Text = text };
+            Areas.Add(n);
+            return n;
+        }
+
+
         public override void AfterInit()
         {
-            baseRectangle = new Rectangle(this);
-            baseRectangle.RenderParams.Stroke = System.Drawing.Color.Black;
+            baseRectangle = new Rect(this);
+            baseRectangle.RenderParams.Stroke = Color.Black;
             baseRectangle.RenderParams.StrokeWidth = 1;
 
             center = baseRectangle.XY + new V2D(baseRectangle.Dimensions.X / 2.0f, baseRectangle.Dimensions.Y / 2.0f);
@@ -56,19 +71,48 @@ namespace PosterCreator.PosterStructure
 
         public override void Render(Svg svg)
         {
-            baseRectangle.RenderParams.Stroke = System.Drawing.Color.Black;
+            baseRectangle.RenderParams.Stroke = Color.Black;
             baseRectangle.RenderParams.StrokeWidth = 1;
             var t = svg.GL(LayerType.Other);
             t.Add(baseRectangle);
 
+            var i = 0;
+            var pL = svg.GL(LayerType.Other);
             foreach (var item in Rels)
             {
-                var path = new Path("relation", item.Source.Loc + item.dSource, item.Target.Loc + item.dTarget);
+                var path = new Path("relation" + (++i), center + item.Source.Loc + item.dSource, center + item.Target.Loc + item.dTarget);
+                path.RenderParams.StrokeWidth = 1;
+                path.SetFillStroke(Color.Black);
+                pL.Add(path);
+            }
+
+            foreach (var item in Areas)
+            {
+                var r = new Rect
+                {
+                    XY = center + new V2D(item.Loc.X - item.Scale.X / 2f, item.Loc.Y - item.Scale.Y / 2f),
+                    Dimensions = item.Scale
+                };
+                var text = new Text()
+                {
+                    Location = r.XY,
+                    Size = r.Dimensions,
+                    Padding = new Offset(2, 4)
+                };
+                text.TextParams.SetBold();
+                text.AppendText(item.Text);
+                text.AfterInit();
+                text.OverrideLayer = LayerType.ImgText;
+                text.Render(svg);
+                r.RenderParams.Stroke = Color.Black;
+                r.RenderParams.StrokeWidth = 0.5f;
+                r.RenderParams.StrokeOpacity = item.OverrideOpacity ?? 0.5f;
+                t.Add(r);
             }
 
             foreach (var item in Elems)
             {
-                var r = new Rectangle
+                var r = new Rect
                 {
                     XY = center + new V2D(item.Loc.X - item.Scale.X / 2f, item.Loc.Y - item.Scale.Y / 2f),
                     Dimensions = item.Scale
@@ -84,11 +128,18 @@ namespace PosterCreator.PosterStructure
                 text.AfterInit();
                 text.OverrideLayer = LayerType.ImgText;
                 text.Render(svg);
-                r.RenderParams.Stroke = System.Drawing.Color.Black;
+                r.RenderParams.Stroke = Color.Black;
                 r.RenderParams.StrokeWidth = 0.5f;
-                r.RenderParams.Fill = System.Drawing.Color.White;
+                r.RenderParams.Fill = item.OverideColor ?? Color.White;
                 t.Add(r);
             }
+        }
+
+        public CanvasElemRel AddR(CanvasElem source, CanvasElem target, float dsX = 0, float dsY = 0, float dtX = 0, float dtY = 0)
+        {
+            var r = new CanvasElemRel(source, target, dsX, dsY, dtX, dtY);
+            Rels.Add(r);
+            return r;
         }
 
         #endregion Public Methods
@@ -112,6 +163,13 @@ namespace PosterCreator.PosterStructure
         public V2D Scale { get; set; }
 
         public string Text { get; set; }
+
+        public Color? OverideColor { get; set; }
+
+        internal void SetBackground(Color overrideColor)
+        {
+            OverideColor = overrideColor;
+        }
 
         #endregion Public Properties
     }
@@ -138,5 +196,15 @@ namespace PosterCreator.PosterStructure
         public CanvasElem Target { get; private set; }
 
         #endregion Public Properties
+    }
+
+    internal class AreaElem : CanvasElem
+    {
+        public AreaElem(V2D loc, V2D scale) : base(loc, scale)
+        {
+
+        }
+
+        public float? OverrideOpacity { get; set; }
     }
 }

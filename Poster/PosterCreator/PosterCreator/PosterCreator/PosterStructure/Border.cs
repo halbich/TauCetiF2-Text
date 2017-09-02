@@ -80,7 +80,6 @@ namespace PosterCreator.PosterStructure
             back.Closed = true;
 
             back.RenderParams.Fill = Color.White;
-            back.RenderParams.FillOpacity = 1f;
 
             svg.GL(LayerType.BorderBackground).Add(back);
 

@@ -35,7 +35,7 @@ namespace PosterCreator
             var tools = new BorderWithTitle("Nástroje").SetMargin(new Offset(0, 0, 5, 0));
             tools.AddChild(TextSource.GetSourceFor(SourceType.Nástroje));
 
-            leftContent.AddChild(new Border[] { beginning, current, targets, tools }, 175, 185, 290, 170);
+            leftContent.AddChild(new Border[] { beginning, current, targets, tools }, 175, 185, 290, 180);
             return leftContent;
         }
 
@@ -60,7 +60,7 @@ namespace PosterCreator
             var zaver = new BorderWithTitle("Závěr");
             zaver.AddChild(TextSource.GetSourceFor(SourceType.Závěr));
 
-            rightContent.AddChild(new GraphicalElement[] { arch, archc, obraz, zaver }, 305, 295, 100, 120);
+            rightContent.AddChild(new GraphicalElement[] { arch, archc, obraz, zaver }, 305, 295, 100, 130);
             return rightContent;
         }
 
@@ -103,7 +103,7 @@ namespace PosterCreator
 
             var contentAll = getBodyContent();
 
-            poster.AddChild(new PrintMarker()).AddChild(new HorizontalSplitter()).AddChild(new GraphicalElement[] { top, contentAll }, 100, 840);
+            poster.AddChild(new PrintMarker()).AddChild(new HorizontalSplitter()).AddChild(new GraphicalElement[] { top, contentAll }, 90, 850);
 
             poster.AfterInit();
         }
