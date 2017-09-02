@@ -12,9 +12,9 @@ namespace PosterCreator.PosterStructure
 
         public Border() : base()
         {
-            Radius = 10;
-            BorderSize = 5;
-            Padding = new Offset(20);
+            Radius = 4;
+            BorderSize = 2.5f;
+            Padding = new Offset(10);
         }
 
         #endregion Public Constructors
@@ -30,14 +30,20 @@ namespace PosterCreator.PosterStructure
 
         public override void Render(Svg svg)
         {
-            var bp = new List<V2D> { Location, Location.MoveX(Size.X), Location.MoveXY(Size.X, Size.Y), Location.MoveY(Size.Y) };
+            var bp = new List<V2D> {
+                Location,
+                Location + new V2D(Size.X, 0),
+                Location + new V2D(Size.X, Size.Y),
+                Location + new V2D(0, Size.Y)
+            };
+
             var bpi = this.MakeB(bp);
-            var bpi1 = this.MakeB(bp, 2f);
+            var bpi1 = this.MakeB(bp, 1.5f);
 
             var borderPathPoints = this.MakeP(bp);
 
-            var borderPathPointsi = this.MakeP(bpi, 0.9f);
-            var bppii = this.MakeP(bpi1, 0.8f);
+            var borderPathPointsi = this.MakeP(bpi, 0.75f);
+            var bppii = this.MakeP(bpi1, 0.6f);
 
             var innerBorderColors = new[]
             {
@@ -58,12 +64,13 @@ namespace PosterCreator.PosterStructure
                 var outer = new Path("BOut", new[] { borderPathPoints[i], borderPathPoints[ni], borderPathPointsi[ni], borderPathPointsi[i] });
                 outer.Closed = true;
 
-                outer.SetFillStroke(Color.FromArgb(119, 27, 197));
+                outer.SetFillStroke(Color.FromArgb(37, 55, 139));
 
                 var inner = new Path("BIn", new[] { borderPathPointsi[i], borderPathPointsi[ni], bppii[ni], bppii[i] });
                 inner.Closed = true;
 
-                inner.SetFillStroke(innerBorderColors[i]);
+                //inner.SetFillStroke(innerBorderColors[i]);
+                inner.SetFillStroke(Color.FromArgb(183, 183, 183));
 
                 _B.Add(outer);
                 _B.Add(inner);

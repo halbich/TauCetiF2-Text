@@ -24,14 +24,12 @@
 
         public string FontStyle { get; private set; }
 
+        public object FontVariant { get; private set; }
         public string FontWeight { get; private set; }
 
-        public string TextAnchor { get; set; }
-
-        public int LineHeight { get; set; }
-
         public bool Justify { get; set; }
-        public object FontVariant { get; private set; }
+        public int LineHeight { get; set; }
+        public string TextAnchor { get; set; }
 
         #endregion Public Properties
 
@@ -40,11 +38,6 @@
         public void SetBold()
         {
             FontWeight = "bold";
-        }
-
-        public void SetItalic()
-        {
-            FontStyle = "italic";
         }
 
         public void SetH1()
@@ -64,6 +57,11 @@
             Justify = false;
         }
 
+        public void SetItalic()
+        {
+            FontStyle = "italic";
+        }
+
         public void SetMiddle()
         {
             TextAnchor = "middle";
@@ -73,6 +71,13 @@
 
         #region Internal Methods
 
+        internal string GetSpanStyle()
+        {
+            var r = $"font-style:{FontStyle};font-weight:{FontWeight};";
+
+            return r;
+        }
+
         internal string GetStyle()
         {
             var r = GetSpanStyle() + $"font-size:{FontSize}px;line-height:{LineHeight}%;font-family:{FontFamily};";
@@ -81,13 +86,6 @@
 
             if (Justify)
                 r += "text-align:justify;";
-
-            return r;
-        }
-
-        internal string GetSpanStyle()
-        {
-            var r = $"font-style:{FontStyle};font-weight:{FontWeight};";
 
             return r;
         }

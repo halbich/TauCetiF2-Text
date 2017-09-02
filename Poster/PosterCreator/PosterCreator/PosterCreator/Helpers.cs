@@ -14,7 +14,12 @@ namespace PosterCreator
         {
             var BorderSize = b.BorderSize * coef;
 
-            var bpi = new List<V2D> { bp[0].MoveXY(BorderSize, BorderSize), bp[1].MoveXY(-BorderSize, BorderSize), bp[2].MoveXY(-BorderSize, -BorderSize), bp[3].MoveXY(BorderSize, -BorderSize) };
+            var bpi = new List<V2D> {
+                bp[0] + new V2D(BorderSize, BorderSize),
+                bp[1] + new V2D(-BorderSize, BorderSize),
+                bp[2] + new V2D(-BorderSize, -BorderSize),
+                bp[3]+ new V2D(BorderSize, -BorderSize)
+            };
 
             return bpi;
         }
@@ -24,14 +29,14 @@ namespace PosterCreator
             var Radius = b.Radius * coef;
 
             var borderPathPoints = new List<V2D> {
-                bp[0].MoveY(Radius),
-                bp[0].MoveX(Radius),
-                bp[1].MoveX(-Radius),
-                bp[1].MoveY(Radius),
-                bp[2].MoveY(-Radius),
-                bp[2].MoveX(-Radius),
-                bp[3].MoveX(Radius),
-                bp[3].MoveY(-Radius),
+                bp[0] + new V2D(0,Radius),
+                bp[0] + new V2D(Radius,0),
+                bp[1] + new V2D(-Radius,0),
+                bp[1] + new V2D(0,Radius),
+                bp[2] + new V2D(0,-Radius),
+                bp[2] + new V2D(-Radius,0),
+                bp[3] + new V2D(Radius,0),
+                bp[3] + new V2D(0,-Radius),
             };
 
             return borderPathPoints;

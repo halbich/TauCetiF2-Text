@@ -118,6 +118,7 @@ namespace PosterCreator
             new Layer("Border", LayerType.Border),
             new Layer("Text", LayerType.Text),
             new Layer("Other", LayerType.Other),
+            new Layer("ImgText", LayerType.ImgText),
             };
 
             Poster = new MainStructure();

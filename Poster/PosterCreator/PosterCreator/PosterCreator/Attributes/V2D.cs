@@ -22,21 +22,22 @@
 
         #region Public Methods
 
+        public static V2D operator -(V2D p1, V2D p2)
+        {
+            return new V2D(p1.X - p2.X, p1.Y - p2.Y);
+        }
+
+        public static V2D operator +(V2D p1, V2D p2)
+        {
+            return new V2D(p1.X + p2.X, p1.Y + p2.Y);
+        }
+
         public V2D MoveX(float x)
         {
             return new V2D
             {
                 X = X + x,
                 Y = Y
-            };
-        }
-
-        public V2D MoveXY(float x, float y)
-        {
-            return new V2D
-            {
-                X = X + x,
-                Y = Y + y
             };
         }
 
@@ -51,7 +52,8 @@
 
         public override string ToString()
         {
-            return $"{X},{Y}";
+            var c = TextSource.UsedCulture;
+            return $"{X.ToString(c)},{Y.ToString(c)}";
         }
 
         #endregion Public Methods

@@ -25,8 +25,8 @@ namespace PosterCreator.Elements
 
         public Rectangle(GraphicalElement elem) : this()
         {
-            XY = elem.Location.MoveXY(elem.Padding.Left, elem.Padding.Top);
-            Dimensions = elem.Size.MoveXY(-elem.Padding.Left - elem.Padding.Right, -elem.Padding.Top - elem.Padding.Bottom);
+            XY = elem.Location + elem.Padding.LeftTop;
+            Dimensions = elem.Size - elem.Padding.LeftTop - elem.Padding.RightBottom;
 
 #if DEBUG
             RenderParams.Stroke = Color.Red;

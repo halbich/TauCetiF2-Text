@@ -94,11 +94,11 @@ namespace PosterCreator.PosterStructure
                 var e = Child[i];
                 var rhi = rh[i];
 
-                e.Location = newXY.MoveXY(e.Margin.Left, e.Margin.Top);
-                e.Size = newSize.MoveY(-newSize.Y + rhi - Padding.Bottom);
+                e.Location = newXY + e.Margin.LeftTop;
+                e.Size = newSize + new V2D(0, -newSize.Y + rhi - Padding.Bottom);
 
-                newXY = newXY.MoveY(rhi + e.Margin.Bottom);
-                newSize = newSize.MoveY(-e.Margin.Bottom);
+                newXY = newXY + new V2D(0, rhi + e.Margin.Bottom);
+                newSize = newSize + new V2D(0, -e.Margin.Bottom);
             }
         }
 

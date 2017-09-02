@@ -26,7 +26,19 @@
 
         public float Bottom { get; set; }
         public float Left { get; set; }
+
+        public V2D LeftTop
+        {
+            get { return new V2D(Left, Top); }
+        }
+
         public float Right { get; set; }
+
+        public V2D RightBottom
+        {
+            get { return new V2D(Right, Bottom); }
+        }
+
         public float Top { get; set; }
 
         #endregion Public Properties

@@ -5,7 +5,10 @@ using PosterCreator.Interfaces;
 namespace PosterCreator.Elements
 {
     internal enum LayerType
-    { Background, BorderBackground, Border, Text, Other }
+    {
+        Background, BorderBackground, Border, Text, Other,
+        ImgText
+    }
 
     internal class Layer : IRenderableNode
     {

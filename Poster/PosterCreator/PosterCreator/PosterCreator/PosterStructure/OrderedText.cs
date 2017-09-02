@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PosterCreator.PosterStructure
+﻿namespace PosterCreator.PosterStructure
 {
     internal class OrderedText : Text
     {
+        #region Internal Methods
+
         internal override Text AppendText(string v)
         {
             return base.AppendText($"  {Paragraphs.Count + 1}. " + v);
         }
 
-      
+        #endregion Internal Methods
     }
 }

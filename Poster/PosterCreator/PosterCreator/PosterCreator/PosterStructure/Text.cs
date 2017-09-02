@@ -1,7 +1,7 @@
-﻿using PosterCreator.Attributes;
+﻿using System.Collections.Generic;
+using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
 using PosterCreator.Elements;
-using System.Collections.Generic;
 
 namespace PosterCreator.PosterStructure
 {
@@ -19,6 +19,7 @@ namespace PosterCreator.PosterStructure
 
         #region Public Properties
 
+        public LayerType? OverrideLayer { get; set; }
         public List<string> Paragraphs { get; set; }
         public Rectangle Rectangle { get; set; }
 
@@ -40,7 +41,7 @@ namespace PosterCreator.PosterStructure
 
         public override void Render(Svg svg)
         {
-            var t = svg.GL(LayerType.Text);
+            var t = svg.GL(OverrideLayer ?? LayerType.Text);
             t.Add(Rectangle);
 
             foreach (var item in Paragraphs)

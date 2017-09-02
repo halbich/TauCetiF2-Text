@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using PosterCreator.Attributes;
 using PosterCreator.Interfaces;
-using PosterCreator.PosterStructure;
 
 namespace PosterCreator.Elements
 {
     internal class FlowSpan : IRenderableNode
     {
+        #region Private Fields
 
         private static int flowSpanID;
 
-        public TextParams Params { get; set; }
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public FlowSpan()
         {
@@ -23,9 +20,17 @@ namespace PosterCreator.Elements
             Params = new TextParams();
         }
 
-        public string ID { get; private set; }
+        #endregion Public Constructors
 
+        #region Public Properties
+
+        public string ID { get; private set; }
+        public TextParams Params { get; set; }
         public string Text { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public XElement GetNode()
         {
@@ -36,5 +41,7 @@ namespace PosterCreator.Elements
             fp.SetValue(Text);
             return fp;
         }
+
+        #endregion Public Methods
     }
 }

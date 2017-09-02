@@ -58,6 +58,7 @@
     <Compile Include="Elements\Image.cs" />
     <Compile Include="Elements\Rectangle.cs" />
     <Compile Include="PosterStructure\BorderWithTitle.cs" />
+    <Compile Include="PosterStructure\Canvas.cs" />
     <Compile Include="PosterStructure\ImageHolder.cs" />
     <Compile Include="PosterStructure\ItemizeText.cs" />
     <Compile Include="PosterStructure\OrderedText.cs" />

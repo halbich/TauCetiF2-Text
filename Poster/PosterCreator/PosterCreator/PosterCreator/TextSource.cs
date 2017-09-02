@@ -114,19 +114,48 @@ rozvoje her tohoto žánru."
                     }
                 case SourceType.Architektura:
                     {
+                        var hz = new HorizontalSplitter();
                         var ut = new Text();
                         ut.AppendText(new[]
                         {
                             "    V naší práci jsme využili obou způsobů vývoje počítačových her, které nám <Unreal Engine> nabízí. To jest možnosti implementace hry klasickým způsobem, tedy v jazyce <C++>, a dále pak možnosti implementace pomocí <Blueprintů>, což je vizuální editor kódu pro <Unreal Engine>. Využili jsme výhod obou přístupů a jejich vhodnou kombinací jsme dosáhli rychlého a efektivního vývoje celé hry.",
 
-                            "    Podařilo se nám dosáhnout plné spolupráce mezi kódem v <C++> a v <Blueprintu>. Jeden způsob byl triviální - <Blueprinty> mohou dědit z <C++> tříd a tudíž mohou volat metody svých předků. Z opačné strany jsme zvolili použití událostí, které byly vyvolávány ze strany <C++> kódu a jejichž obsluha byla definovaná v <Blueprintovém> kódu. Tímto způsobem jsme dosáhli oboustranné komunikace mezi všemi součástmi hry.",
+                            //"    Podařilo se nám dosáhnout plné spolupráce mezi kódem v <C++> a v <Blueprintu>. Jeden způsob byl triviální - <Blueprinty> mohou dědit z <C++> tříd a tudíž mohou volat metody svých předků. Z opačné strany jsme zvolili použití událostí, které byly vyvolávány ze strany <C++> kódu a jejichž obsluha byla definovaná v <Blueprintovém> kódu. Tímto způsobem jsme dosáhli oboustranné komunikace mezi všemi součástmi hry.",
 
-                            "    Dále jsme využili komponentový přístup. Kupříkladu implementací <kyslíkové> či <elektrické> komponenty jsme mohli tyto komponenty přiřadit jak k blokům, tak třeba k hráčově postavě. Tímto způsobem jsme se vyhnuli duplicitnímu kódu a mohli jsme s těmito mechanikami pracovat standardizovaným způsobem.",
+                            //"    Dále jsme využili komponentový přístup. Kupříkladu implementací <kyslíkové> či <elektrické> komponenty jsme mohli tyto komponenty přiřadit jak k blokům, tak třeba k hráčově postavě. Tímto způsobem jsme se vyhnuli duplicitnímu kódu a mohli jsme s těmito mechanikami pracovat standardizovaným způsobem.",
 
-                            "    Dále byl ve hře systém bloků implementován takovým způsobem, že je možné rozšiřovat dostupné bloky pomocí <DLC>, tedy stahovatelného obsahu. Hra tedy nabízí alespoň základní možnosti uživatelkého rozšiřování.",
-                            "    Během práce na TCF2 jsme se maximálně snažili využít možností, které nám <Unreal Engine> nabízí. Proto jsme byli kupříkladu schopni poměrně rychle implementovat logiku, která ovládá systém počasí. Ten byl implementován pomocí rozhodovacího stromu, k čemuž jsme využili již existující nástroje, kterými <Unreal Engine> disponuje.",
+                            //"    Dále byl ve hře systém bloků implementován takovým způsobem, že je možné rozšiřovat dostupné bloky pomocí <DLC>, tedy stahovatelného obsahu. Hra tedy nabízí alespoň základní možnosti uživatelkého rozšiřování.",
+                            //"    Během práce na TCF2 jsme se maximálně snažili využít možností, které nám <Unreal Engine> nabízí. Proto jsme byli kupříkladu schopni poměrně rychle implementovat logiku, která ovládá systém počasí. Ten byl implementován pomocí rozhodovacího stromu, k čemuž jsme využili již existující nástroje, kterými <Unreal Engine> disponuje.",
                         });
-                        return ut;
+
+                        var canvas = new Canvas();
+
+                        var blocks = canvas.Add("Bloky", -120, -70, 25);
+                        var blocksDef = canvas.Add("Definice bloků", -120, -50, 52);
+                        var vizualReprezBlocks = canvas.Add("Vizuální reprezentace\nškálovatelných bloků", -120, -30, 73, 22);
+                        var worldReprez = canvas.Add("Reprezentace\nsvěta a bloků", -120, -10, 50, 22);
+
+                        var aiWeather = canvas.Add("AI počasí", -120, 10, 36);
+                        var logicWeather = canvas.Add("Logika počasí", -120, 30, 49);
+                        var defWeather = canvas.Add("Definice počasí", -120, 50, 54);
+
+                        var dayNight = canvas.Add("Denní / noční\ncyklus", -120, 70, 48, 22);
+
+                        var ctorObj = canvas.Add("Konstruktor objektů", 120, -70, 68);
+                        var UI = canvas.Add("UI", 120, -50, 15);
+
+                        var elComp = canvas.Add("Elektrická\nkomponenta", 120, -30, 47, 22);
+                        var elNet = canvas.Add("Elektrická síť", 120, -10, 47);
+                        var o2Comp = canvas.Add("Kyslíková\nkomponenta", 120, 10, 47, 22);
+
+                        var character = canvas.Add("Hráčova\npostava", 50, 30, 33, 22);
+                        var inventory = canvas.Add("Inventář", 120, 46, 34);
+                        var blockLoadSys = canvas.Add("Systém načítání bloků", 120, 70, 75);
+                        var interWorld = canvas.Add("Interakce se světem", 0, 0, 70);
+
+                        hz.AddChild(new GraphicalElement[] { ut, canvas }, 50);
+
+                        return hz;
                     }
                 case SourceType.Kod:
                     {
@@ -146,7 +175,6 @@ rozvoje her tohoto žánru."
                             "Systém ukládání a načítání hry",
                             "Systém inventáře"
                         });
-
 
                         hz.AddChild(new GraphicalElement[] { ut, utO, ut1 }, 60, 10);
                         return hz;
@@ -170,7 +198,6 @@ rozvoje her tohoto žánru."
                             "Systém ambientní hudby",
                             "Překlady pro anglickou jazykovou verzi"
                         });
-
 
                         hz.AddChild(new GraphicalElement[] { ut, utO, ut1 }, 110, 10);
                         return hz;
