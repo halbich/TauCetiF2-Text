@@ -26,16 +26,13 @@ namespace PosterCreator
             var beginning = new BorderWithTitle("Úvod").SetMargin(new Offset(0, 0, 5, 0));
             beginning.AddChild(TextSource.GetSourceFor(SourceType.Úvod));
 
-            var current = new BorderWithTitle("Současný stav").SetMargin(new Offset(0, 0, 5, 0));
-            current.AddChild(TextSource.GetSourceFor(SourceType.AktStav));
-
             var targets = new BorderWithTitle("Cíle").SetMargin(new Offset(0, 0, 5, 0));
             targets.AddChild(TextSource.GetSourceFor(SourceType.Cíle));
 
-            var tools = new BorderWithTitle("Nástroje").SetMargin(new Offset(0, 0, 5, 0));
-            tools.AddChild(TextSource.GetSourceFor(SourceType.Nástroje));
+            var tools = new BorderWithTitle("Dotazník").SetMargin(new Offset(0, 0, 5, 0));
+            tools.AddChild(TextSource.GetSourceFor(SourceType.Dotaznik));
 
-            leftContent.AddChild(new Border[] { beginning, current, targets, tools }, 175, 185, 290, 180);
+            leftContent.AddChild(new Border[] { beginning, targets, tools }, 175, 150, 510);
             return leftContent;
         }
 
@@ -60,7 +57,9 @@ namespace PosterCreator
             var zaver = new BorderWithTitle("Závěr");
             zaver.AddChild(TextSource.GetSourceFor(SourceType.Závěr));
 
-            rightContent.AddChild(new GraphicalElement[] { arch, archc, obraz, zaver }, 305, 295, 100, 130);
+            zaver.SetMargin(new Offset(zaver.Margin.Top, zaver.Margin.Right, zaver.Margin.Bottom, zaver.Margin.Left));
+
+            rightContent.AddChild(new GraphicalElement[] { arch, archc, obraz, zaver }, 305, 115, 315, 95);
             return rightContent;
         }
 

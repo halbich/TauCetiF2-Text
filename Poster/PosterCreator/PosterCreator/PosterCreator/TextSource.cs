@@ -11,14 +11,13 @@ namespace PosterCreator
     {
         Top,
         Úvod,
-        AktStav,
         Cíle,
         Architektura,
         Obrázky,
         Závěr,
         Kod,
         Blueprint,
-        Nástroje
+        Dotaznik
     }
 
     internal static class TextSource
@@ -39,7 +38,7 @@ namespace PosterCreator
                     {
                         var vsTop = new VerticalSplitter();
 
-                        var vsLogo = new VerticalSplitter().SetPadding(new Offset(10,5));
+                        var vsLogo = new VerticalSplitter().SetPadding(new Offset(10, 5));
                         var schoolLogo = new ImageHolder("MffLogo") { IsSquare = true };
                         vsLogo.AddChild(new[] { schoolLogo }, 90);
 
@@ -53,12 +52,12 @@ namespace PosterCreator
                         p.FontSize = 8;
                         p.SetMiddle();
 
-                        var vsLogos = new VerticalSplitter().SetPadding(new Offset(10,5));
-                        var tcfLogo = new ImageHolder("TCF2Logo").SetPadding(new Offset(0,0));
+                        var vsLogos = new VerticalSplitter().SetPadding(new Offset(10, 5));
+                        var tcfLogo = new ImageHolder("TCF2Logo").SetPadding(new Offset(0, 0));
                         var unrealLogo = (new ImageHolder("UELogo") { IsSquare = true }).SetPadding(new Offset(15, 0));
                         vsLogos.AddChild(new[] { tcfLogo, unrealLogo }, 70, 30);
 
-                        vsTop.AddChild(new GraphicalElement[] { vsLogo, centerText, vsLogos}, 100, 427, 100);
+                        vsTop.AddChild(new GraphicalElement[] { vsLogo, centerText, vsLogos }, 100, 427, 100);
 
                         return vsTop;
                     }
@@ -76,42 +75,24 @@ který mu umožňuje ve hře přežít. V herním průmyslu se tyto hry často o
 jako <sandboxové>, <s budováním>, <s průzkumem prostředí>, <o přežití>. V této práci pak představujeme naši vizi dalšího možného
 rozvoje her tohoto žánru."
                         );
-                        return ut;
-                    }
-                case SourceType.AktStav:
-                    {
-                        var ut = new Text();
-                        ut.AppendText("    Provedli jsme obsáhlou rešerši a zjistili jsme, že součesné hry, jako třeba <Minecraft> nebo <Space Engineers>, mají společnou vlastnost - hráč může stavět pouze z bloků pevně dané velikosti. Zde vidíme prostor pro zlepšení. Dále jsme zjistili, že hráčům inventář vyžaduje manuální správu, což je s naší vizí neslučitelné.");
+                        ut.AppendText("    Provedli jsme obsáhlou rešerši a zjistili jsme, že současné hry, jako třeba <Minecraft> nebo <Space Engineers>, mají společnou vlastnost — hráč může stavět pouze z bloků pevně dané velikosti. Zde vidíme prostor pro zlepšení. Dále jsme zjistili, že hráčův inventář vyžaduje manuální správu, což je s naší vizí neslučitelné.");
                         return ut;
                     }
                 case SourceType.Cíle:
                     {
                         var ut = new Text();
-                        ut.AppendText("    V rámci práce jsme identifikovali následující cíle práce:");
-                        ut.AppendText("  1.Bloky a herní svět");
-                        ut.AppendText("    • Způsob řešení proměnlivé velikosti bloků");
-                        ut.AppendText("    • Umístění bloků v herním světě");
-                        ut.AppendText("    • Skládání bloků do struktur");
-                        ut.AppendText("    • Komunikace bloků");
-                        ut.AppendText("    • Interakce hráče s bloky");
-                        ut.AppendText("    • Denní cyklus");
-                        ut.AppendText("    • Proměnlivé počasí");
-                        ut.AppendText("    • Efektivní datové struktury pro bloky a herní svět");
-                        ut.AppendText("  2.Inventář");
+                        ut.AppendText("    Práci můžeme rozdělit na tři zásadní cíle:");
+                        ut.AppendText("  1.Návrh nových herních mechanik");
+                        ut.AppendText("    • Systém dynamicky škálovatelných bloků");
                         ut.AppendText("    • Automatizovaná správa inventáře");
-                        ut.AppendText("    • Stavitelné a umístitelné bloky");
-                        ut.AppendText("  3.Herní postava");
-                        ut.AppendText("    • Inventář herní postavy");
-                        ut.AppendText("    • Vlastnosti postavy jako např. zdraví");
-                        ut.AppendText("  4.Ostatní herní prvky");
-                        ut.AppendText("    • Systém ukládání a načítání hry");
-                        ut.AppendText("    • Kreativní herní mód");
-                        ut.AppendText("    • Herní tutorial");
-                        ut.AppendText("  5.Případné prvky navíc, které se ve hrách běžně vyskytují");
-                        ut.AppendText("    • Lokalizace hry do různých jazyků");
-                        ut.AppendText("    • Hudba ve hře");
-                        ut.AppendText("  6.Zhodnocení práce");
-                        ut.AppendText("    • Získat a zhodnotit zpětnou vazbu (dotazník)");
+                        ut.AppendText("    • Koncepce tvorby škálovatelných bloků");
+                        ut.AppendText("    • Herní mechaniky využívající škálovatelných bloků");
+                        ut.AppendText("  2.Implementace navržených mechanik do nové hry");
+                        ut.AppendText("    • Volba vhodného herního enginu");
+                        ut.AppendText("    • Návrh a implementace vhodných datových struktur");
+                        ut.AppendText("    • Implementace všech nutných herních mechanismů a součástí");
+                        ut.AppendText("  3.Zhodnocení navržených mechanik a jejich implementace");
+                        ut.AppendText("    • Připravit a vyhodnotit dotazník");
 
                         return ut;
                     }
@@ -123,7 +104,7 @@ rozvoje her tohoto žánru."
                         {
                             "    V naší práci jsme využili obou způsobů vývoje počítačových her, které nám <Unreal Engine> nabízí. To jest možnosti implementace hry klasickým způsobem, tedy v jazyce <C++>, a dále pak možnosti implementace pomocí <Blueprintů>, což je vizuální editor kódu pro <Unreal Engine>. Využili jsme výhod obou přístupů a jejich vhodnou kombinací jsme dosáhli rychlého a efektivního vývoje celé hry.",
 
-                            //"    Podařilo se nám dosáhnout plné spolupráce mezi kódem v <C++> a v <Blueprintu>. Jeden způsob byl triviální - <Blueprinty> mohou dědit z <C++> tříd a tudíž mohou volat metody svých předků. Z opačné strany jsme zvolili použití událostí, které byly vyvolávány ze strany <C++> kódu a jejichž obsluha byla definovaná v <Blueprintovém> kódu. Tímto způsobem jsme dosáhli oboustranné komunikace mezi všemi součástmi hry.",
+                            "    Na obrázku níže je možné vidět celkovou koncepci architektury hry. Vybrali jsme nejvýznamější části hry a do grafu jsme zaznamenali jejich vazby na ostatní významné části.",
 
                             //"    Dále jsme využili komponentový přístup. Kupříkladu implementací <kyslíkové> či <elektrické> komponenty jsme mohli tyto komponenty přiřadit jak k blokům, tak třeba k hráčově postavě. Tímto způsobem jsme se vyhnuli duplicitnímu kódu a mohli jsme s těmito mechanikami pracovat standardizovaným způsobem.",
 
@@ -134,7 +115,7 @@ rozvoje her tohoto žánru."
                         var canvas = new Canvas();
 
                         var saveColor = Color.LightGray;
-                        var defColor = Color.LightBlue;
+                        var defColor = Color.FromArgb(68, 101, 255);
 
                         var blocks = canvas.Add("Bloky", -70, -10, 25);
                         blocks.SetBackground(saveColor);
@@ -152,13 +133,13 @@ rozvoje her tohoto žánru."
                         var defWeather = canvas.Add("Definice počasí", 50, -70, 54);
                         defWeather.SetBackground(defColor);
 
-                        var dayNight = canvas.Add("Denní / noční\ncyklus", 110, -70, 48, 22);
+                        var dayNight = canvas.Add("Denní / noční\ncyklus", 110, -70, 50, 22);
                         dayNight.SetBackground(saveColor);
 
-                        var ctorObj = canvas.Add("Konstruktor objektů", 80, -10, 68);
+                        var ctorObj = canvas.Add("Konstruktor objektů", 80, -10, 70);
                         var UI = canvas.Add("UI", 160, -70, 15);
 
-                        var elComp = canvas.Add("Elektrická\nkomponenta", 40, 30 , 47, 22);
+                        var elComp = canvas.Add("Elektrická\nkomponenta", 40, 30, 47, 22);
                         elComp.SetBackground(saveColor);
                         var elNet = canvas.Add("Elektrická síť", 110, 30, 47);
                         var o2Comp = canvas.Add("Kyslíková\nkomponenta", -30, 30, 47, 22);
@@ -209,6 +190,8 @@ rozvoje her tohoto žánru."
 
                         var l = canvas.AddA("Legenda", -145f, 57.5f, 70, 70);
                         l.OverrideOpacity = 1;
+                        var c0 = 245;
+                        l.SetBackground(Color.FromArgb(c0, c0, c0));
 
                         var legendSec = canvas.Add("Významná část", -145, 45, 60);
                         var legendDef = canvas.Add("Definice", -145, 62.5f, 60);
@@ -216,61 +199,47 @@ rozvoje her tohoto žánru."
                         var legendSave = canvas.Add("Ukládání", -145, 80, 60);
                         legendSave.SetBackground(saveColor);
 
-                        hz.AddChild(new GraphicalElement[] { ut, canvas }, 50);
+                        hz.AddChild(new GraphicalElement[] { ut, canvas }, 55, 217);
 
                         return hz;
                     }
                 case SourceType.Kod:
                     {
-                        var hz = new HorizontalSplitter();
                         var ut = new Text();
                         ut.AppendText("    Vzhledem k rychlosti, kterou <C++> nabízí, byly tímto způsobem naprogramovány všechny kritické části a komponenty hry. Definovali jsme zde například všechny vlastnosti (omezující konstanty), jejichž konkrétní hodnoty jsme následně mohli měnit v Editoru skrze <Blueprinty>.");
 
-                        var utO = new Text();
-                        utO.AppendText("    Nejvýznamější části:");
-
-                        var ut1 = new OrderedText();
-                        ut1.AppendText(new string[] {
-                            "Systém bloků a jejich správy",
-                            "Komponenty <kyslíku>, <energie> a další",
-                            "Bázové třídy pro UI elementy a jejich chování",
-                            "Systém počasí",
-                            "Systém ukládání a načítání hry",
-                            "Systém inventáře"
-                        });
-
-                        hz.AddChild(new GraphicalElement[] { ut, utO, ut1 }, 60, 10);
-                        return hz;
+                        return ut;
                     }
                 case SourceType.Blueprint:
                     {
-                        var hz = new HorizontalSplitter();
                         var ut = new Text();
-                        ut.AppendText("    Hlavním cílem <Blueprintů> bylo prototypování funkcionality (většina z těchto prototypů byla následně implementována do <C++>) a rychlá implementace nekritických částí hry. Dále bylo <Blueprintů> využito jako nástroje, ve kterém byly definovány omezující konstanty, jako například minimální a maximální velikosti bloků, vlastnosti bloků, cena stavby apod. Díky tomu, že jsme tyto konstanty definovali na této úrovni, mohli jsme snadno balancovat jednotlivé parametry bez nutnosti zdlouhavého procesu opětovné kompilace celého projektu. ");
+                        ut.AppendText("    Pomocí <Blueprintů> byly rychle implementovány nekritické části hry. Dále bylo <Blueprintů> využito jako nástroje, ve kterém byly definovány hodnoty omezujících konstant, jako například minimální a maximální velikosti bloků, vlastnosti bloků, cena stavby apod. Díky tomu, že jsme tyto konstanty definovali na této úrovni, mohli jsme snadno balancovat jednotlivé parametry bez nutnosti zdlouhavého procesu opětovné kompilace celého projektu. ");
 
-                        var utO = new Text();
-                        utO.AppendText("    Nejvýznamější části:");
-
-                        var ut1 = new OrderedText();
-                        ut1.AppendText(new string[] {
-                            "Definice bloků a jejich omezujících podmínek",
-                            "AI systém pro řízení počasí",
-                            "UI prvky a obrazovky",
-                            "Systém shaderů pro škálovatelné bloky",
-                            "Tutoriály",
-                            "Systém ambientní hudby",
-                            "Překlady pro anglickou jazykovou verzi"
-                        });
-
-                        hz.AddChild(new GraphicalElement[] { ut, utO, ut1 }, 110, 10);
-                        return hz;
+                        return ut;
                     }
                 case SourceType.Obrázky:
                     {
-                        var ut = new Text();
-                        ut.AppendText("Lorem ipsum");
-                        ut.AppendText("obrazky");
-                        return ut;
+                        var vs = new VerticalSplitter().SetMargin(new Offset(5,0,0,0));
+
+                        var hzl = new HorizontalSplitter();
+
+                        var iml0 = new ImageWithTitle("Počáteční budova (lehká obtížnost)", "ImgL0");
+                        var iml1 = new ImageWithTitle("Akumulátory, plnička kyslíku a kyslíkové bomby", "ImgL1");
+                        var iml2 = new ImageWithTitle("Nápadité využití herních bloků", "ImgL2");
+
+                        hzl.AddChild(new[] { iml0, iml1, iml2 });
+
+                        var hzr = new HorizontalSplitter();
+
+                        var imr0 = new ImageWithTitle("Noční pohled na budovy lehké a střední obtížnosti", "ImgR0");
+                        var imr1 = new ImageWithTitle("Hráč může ve hře modelovat i každodenní předměty", "ImgR1");
+                        var imr2 = new ImageWithTitle("Různé varianty konstruktoru objektů", "ImgR2");
+
+                        hzr.AddChild(new[] { imr0, imr1, imr2 });
+
+                        vs.AddChild(new[] { hzl, hzr });
+
+                        return vs;
                     }
                 case SourceType.Závěr:
                     {
@@ -279,12 +248,25 @@ rozvoje her tohoto žánru."
                         ut.AppendText("    Tyto mechaniky jsme nechali posoudit veřejností v rámci připraveného dotazníku. Z jeho zhodnocení vyplývá, že myšlenka dynamicky škálovatelných bloků má svůj potenciál a případná dokončená hra by si našla své publikum. Zároveň jsme však díky dotazníku identifikovali problémy, které jsme mohli před dokončením naší práce vyřešit a tím jsme výrazně zlepšili celkovou kvalitu naší hry.");
                         return ut;
                     }
-                case SourceType.Nástroje:
+                case SourceType.Dotaznik:
                     {
+                        var hz = new HorizontalSplitter();
                         var ut = new Text();
-                        ut.AppendText("    Hlavním nástrojem, který jsme při našem vývoji použili, byl <Unreal Engine>. Díky této volbě jsme se nemuseli navíc zbývat vlastní implementací herního enginu a nemuseli jsme řešit tvorbu standardních mechanik a nástrojů, které jsme v naší práci využili (například nástroj pro tvorbu <stromů chování> pro implementaci umělé inteligence.");
-                        ut.AppendText("    Dalším nástrojem, který jsme využili, byl 3D modelovací nástroj Cinema4D, kde jsme využili možnosti tvorby 3D modelů, které jsme následně importovali do <Unreal Enginu>. V souvislosti s grafikou jsme také využili grafického nástroje Gimp.");
-                        return ut;
+                        ut.AppendText("    Po dokončení implementace všech herních mechanik jsme připravili dotazník pro širokou veřejnost. Ačkoliv jsme získali pouze 24~odpovědí, díky průběžnému vyhodnocování jsme byli schopni výrazně zlepšit celkové vnímání hry.");
+
+                        ut.AppendText("    Na grafu níže je možné vidět, jak dlouho respondenti hráli naši hru před vyplněním dotazníku.");
+
+                        var im = new ImageWithTitle("Graf zobrazující délku hraní před vyplněním dotazníku.", "SurveyPlay");
+                        im.SetMargin(new Offset(0, 0, 10, 0));
+
+                        var res = new Text();
+                        res.AppendText("    Na následujícím obrázku můžeme vidět výsledné hodnocení naší hry. [Medián] všech odpovědí je [7] a to navzdory tomu, že zhruba polovina odpovědí byla zodpovězena před výkonnostními optimalizacemi hry a zhruba tři čtvrtiny pak před implementací [tutoriálu]. Díky chybějícímu tutoriálu hráči nebyli seznámeni se všemi herními mechanikami a jejich frustrace se negativně projevila na výsledném hodnocení (tento závěr plyne ze získaného slovního hodnocení).");
+
+                        var im1 = new ImageWithTitle("Výsledné hodnocení hry", "SurveyResults");
+
+                        hz.AddChild(new GraphicalElement[] { ut, im, res, im1 }, 60, 110, 75, 110);
+
+                        return hz;
                     }
                 default:
                     throw new NotImplementedException();

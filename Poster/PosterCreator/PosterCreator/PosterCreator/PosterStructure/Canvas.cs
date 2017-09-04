@@ -107,6 +107,10 @@ namespace PosterCreator.PosterStructure
                 r.RenderParams.Stroke = Color.Black;
                 r.RenderParams.StrokeWidth = 0.5f;
                 r.RenderParams.StrokeOpacity = item.OverrideOpacity ?? 0.5f;
+
+                if (item.OverideColor.HasValue)
+                    r.RenderParams.Fill = item.OverideColor.Value;
+
                 t.Add(r);
             }
 

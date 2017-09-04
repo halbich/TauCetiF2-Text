@@ -65,6 +65,7 @@
         public void SetMiddle()
         {
             TextAnchor = "middle";
+            Justify = false;
         }
 
         #endregion Public Methods

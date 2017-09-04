@@ -4,6 +4,7 @@ using System.Xml.Linq;
 using PosterCreator.Attributes;
 using PosterCreator.BaseClasses;
 using PosterCreator.Interfaces;
+using System;
 
 namespace PosterCreator.Elements
 {
@@ -49,7 +50,8 @@ namespace PosterCreator.Elements
         {
             var cult = new CultureInfo("en-US");
 
-            var t = File.ReadAllText("images/" + Path + ".txt");
+
+           var t = @"data:image/gif;base64," + Convert.ToBase64String(File.ReadAllBytes("images/" + Path + ".png"));
 
             var g = new XElement(Svg.ns + "image",
               new XAttribute("x", XY.X.ToString(cult)),
@@ -63,6 +65,7 @@ namespace PosterCreator.Elements
 
             return g;
         }
+
 
         #endregion Public Methods
     }
