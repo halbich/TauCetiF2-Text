@@ -79,7 +79,7 @@
             return r;
         }
 
-        internal string GetStyle()
+        internal virtual string GetStyle()
         {
             var r = GetSpanStyle() + $"font-size:{FontSize}px;line-height:{LineHeight}%;font-family:{FontFamily};";
             if (TextAnchor != null)

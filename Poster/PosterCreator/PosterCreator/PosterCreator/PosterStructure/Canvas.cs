@@ -43,7 +43,7 @@ namespace PosterCreator.PosterStructure
 
         #region Public Methods
 
-        public CanvasElem Add(string text, float X, float Y, float Width, float Height = 14)
+        public CanvasElem Add(string text, float X, float Y, float Width, float Height = 11)
         {
             var n = new CanvasElem(new V2D(X, Y), new V2D(Width, Height)) { Text = text };
             Elems.Add(n);
@@ -129,6 +129,10 @@ namespace PosterCreator.PosterStructure
                 };
                 text.TextParams.SetMiddle();
                 text.AppendText(item.Text.Split('\n'));
+
+                if (text.Paragraphs.Count == 1)
+                    text.TextParams.LineHeight = 125;
+
                 text.AfterInit();
                 text.OverrideLayer = LayerType.ImgText;
                 text.Render(svg);

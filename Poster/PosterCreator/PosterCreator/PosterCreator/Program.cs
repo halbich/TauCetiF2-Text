@@ -42,15 +42,6 @@ namespace PosterCreator
             var arch = new BorderWithTitle("Architektura").SetMargin(new Offset(0, 0, 5, 0));
             arch.AddChild(TextSource.GetSourceFor(SourceType.Architektura));
 
-            var archc = new VerticalSplitter().SetMargin(new Offset(0, 0, 5, 0));
-
-            var code = new BorderWithTitle("C++").SetMargin(new Offset(0, 2.5f, 0, 0));
-            code.AddChild(TextSource.GetSourceFor(SourceType.Kod));
-            var bl = new BorderWithTitle("Blueprint").SetMargin(new Offset(0, 0, 0, 2.5f));
-            bl.AddChild(TextSource.GetSourceFor(SourceType.Blueprint));
-
-            archc.AddChild(new[] { code, bl }, 203.5f, 203.5f);
-
             var obraz = new BorderWithTitle("Obrázky ze hry").SetMargin(new Offset(0, 0, 5, 0));
             obraz.AddChild(TextSource.GetSourceFor(SourceType.Obrázky));
 
@@ -59,7 +50,7 @@ namespace PosterCreator
 
             zaver.SetMargin(new Offset(zaver.Margin.Top, zaver.Margin.Right, zaver.Margin.Bottom, zaver.Margin.Left));
 
-            rightContent.AddChild(new GraphicalElement[] { arch, archc, obraz, zaver }, 305, 115, 315, 95);
+            rightContent.AddChild(new GraphicalElement[] { arch, obraz, zaver }, 425, 335, 75);
             return rightContent;
         }
 

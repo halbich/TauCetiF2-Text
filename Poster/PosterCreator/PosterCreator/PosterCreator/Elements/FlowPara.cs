@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text;
 using System.Xml.Linq;
+using PosterCreator.Attributes;
 using PosterCreator.Interfaces;
 
 namespace PosterCreator.Elements
@@ -54,6 +55,7 @@ namespace PosterCreator.Elements
 
             FlowSpan currentItalic = null;
             FlowSpan currentBold = null;
+            FlowSpan currentWhitespace = null;
 
             var sb = new StringBuilder();
             foreach (var item in t)
@@ -103,6 +105,29 @@ namespace PosterCreator.Elements
                             sb.Clear();
                             fp.Add(currentBold.GetNode());
                             currentBold = null;
+                            break;
+                        }
+
+                    case ';':
+                        {
+                            Debug.Assert(currentWhitespace == null);
+                            if (sb.Length > 0)
+                            {
+                                fp.Add(sb.ToString());
+                                sb.Clear();
+                            }
+
+                            currentWhitespace = new FlowSpan();
+                            currentWhitespace.Params = new WhiteSpaceParams();
+                            break;
+                        }
+                    case '@':
+                        {
+                            Debug.Assert(currentWhitespace != null);
+                            currentWhitespace.Text = "----";
+                            sb.Clear();
+                            fp.Add(currentWhitespace.GetNode());
+                            currentWhitespace = null;
                             break;
                         }
 
