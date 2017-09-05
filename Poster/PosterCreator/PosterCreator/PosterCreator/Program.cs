@@ -32,7 +32,7 @@ namespace PosterCreator
             var tools = new BorderWithTitle("Dotazník").SetMargin(new Offset(0, 0, 5, 0));
             tools.AddChild(TextSource.GetSourceFor(SourceType.Dotaznik));
 
-            leftContent.AddChild(new Border[] { beginning, targets, tools }, 175, 150, 510);
+            leftContent.AddChild(new Border[] { beginning, targets, tools }, 182, 148, 505);
             return leftContent;
         }
 
@@ -50,7 +50,7 @@ namespace PosterCreator
 
             zaver.SetMargin(new Offset(zaver.Margin.Top, zaver.Margin.Right, zaver.Margin.Bottom, zaver.Margin.Left));
 
-            rightContent.AddChild(new GraphicalElement[] { arch, obraz, zaver }, 425, 335, 75);
+            rightContent.AddChild(new GraphicalElement[] { arch, obraz, zaver }, 415, 345, 75);
             return rightContent;
         }
 

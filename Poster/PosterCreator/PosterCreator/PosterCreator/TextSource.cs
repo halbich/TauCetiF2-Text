@@ -91,18 +91,20 @@ namespace PosterCreator
                         var hz = new HorizontalSplitter();
                         var ut = new Text();
                         var canvas = new Canvas();
-                        hz.AddChild(new GraphicalElement[] { ut, canvas }, 155, 217);
+                        hz.AddChild(new GraphicalElement[] { ut, canvas }, 165, 217);
 
                         ut.AppendText(new[]
                         {
-                            ";@Pro implementaci naší hry jsme zvolili <Unreal Engine>. Díky tomu jsme mohli plně využít jednoduchost technologie <Blueprintů> a zároveň rychlost a sílu jazyka <C++>. Vhodnou kombinací obou technologií jsme dosáhli rychlého a efektivního vývoje celé hry.",
+                            ";@Pro implementaci naší hry jsme zvolili <Unreal Engine>. Díky tomu jsme mohli plně využít jednoduchost technologie <Blueprintů> a zároveň rychlost a sílu jazyka <C++>. Vhodnou kombinací obou technologií jsme dosáhli rychlého a efektivního vývoje celé hry. Navíc jsme měli k dispozici mnoho užitečných vývojových nástrojů (například editor lokalizace nebo editor AI).",
                             "",
                             "[ C++]",
-                            ";@Vzhledem k rychlosti, kterou <C++> nabízí, byly tímto způsobem naprogramovány všechny kritické části a komponenty hry. Definovali jsme zde například všechny vlastnosti (omezující konstanty), jejichž konkrétní hodnoty jsme následně mohli měnit v Editoru skrze <Blueprinty>.",
+                            ";@V jazyce <C++> byly naprogramovány všechny části a komponenty hry, u nichž byl kladen důraz na výkon. Dále jsme zde definovali všechny definiční vlastnosti (omezující konstanty), jejichž konkrétní hodnoty jsme následně mohli měnit v Editoru skrze <Blueprinty>. A v neposlední řadě jsme zde implementovali některé bázové třídy, z nichž pak mohly <Blueprinty> dědit a mohly tak volat funkcionalitu implementovanou v <C++>.",
                             "",
                             "[ Blueprinty]",
-                            ";@Pomocí <Blueprintů> byly rychle implementovány nekritické části hry. Dále bylo <Blueprintů> využito jako nástroje, ve kterém byly definovány hodnoty omezujících konstant, jako například minimální a maximální velikosti bloků, vlastnosti bloků, cena stavby apod. Díky tomu, že jsme tyto konstanty definovali na této úrovni, mohli jsme snadno balancovat jednotlivé parametry bez nutnosti zdlouhavého procesu opětovné kompilace celého projektu.",
-                            ";@Na obrázku níže je možné vidět celkovou koncepci architektury hry. Vybrali jsme nejvýznamější části hry a do grafu jsme zaznamenali jejich vazby na ostatní významné části.",
+                            ";@Pomocí <Blueprintů> byly rychle implementovány nekritické části hry. Dále bylo <Blueprintů> využito pro snadné balancování jednotlivých hodnot omezujících konstant (např. minimální a maximální velikosti bloků, vlastnosti bloků, cena stavby). Hodnoty jsme mohli měnit bez nutnosti zdlouhavého procesu opětovné kompilace celého projektu.",
+                             "",
+                            "[ Celková koncepce]",
+                            ";@Na obrázku níže je možné vidět celkovou koncepci architektury hry. Vybrali jsme nejvýznamnější funkční celky hry a do grafu jsme zaznamenali jejich vazby. Navíc jsme zdůraznili funkční celky, které ukládají svůj stav během ukládání hry.",
 
                         });
 
@@ -151,7 +153,8 @@ namespace PosterCreator
                         canvas.AddR(blockLoadSys, blocksDef);
                         canvas.AddR(blocks, worldReprez);
 
-                        canvas.AddR(worldReprez, aiWeather);
+                        //canvas.AddR(worldReprez, aiWeather);
+                        canvas.AddR(worldReprez, logicWeather);
                         canvas.AddR(worldReprez, elNet);
                         canvas.AddR(blocks, interWorld);
 
@@ -181,8 +184,9 @@ namespace PosterCreator
 
                         canvas.AddA("C++", 0, 22.5f, 365, 145);
 
-                        var l = canvas.AddA("Legenda", -148.5f, 31.5f, 50); 
+                        var l = canvas.AddA("Legenda", -155f, 31.5f, 50); 
                         l.OverrideOpacity = 0;
+                        l.SetMiddle = true;
                         var c0 = 245;
                         //l.SetBackground(Color.FromArgb(c0, c0, c0));
 
@@ -224,29 +228,32 @@ namespace PosterCreator
                     {
                         var ut = new Text();
                         ut.AppendText(";@Úspěšně se nám podařilo splnit všechny vytyčené cíle. Navrhli jsme a následně implementovali všechny námi požadované herní mechaniky, včetně doplňujících (lokalizace, hudba).");
-                        ut.AppendText(";@TODO navazující práce");
+                        ut.AppendText(";@Poznatky získané z dotazníku a během vývoje bychom rádi zužitkovali pro následující rozvoj této práce. ");
                         return ut;
                     }
                 case SourceType.Dotaznik:
                     {
                         var hz = new HorizontalSplitter();
                         var ut = new Text();
-                        ut.AppendText(";@Po dokončení implementace všech herních mechanik jsme připravili dotazník pro širokou veřejnost. Ačkoliv jsme získali pouze 24~odpovědí, díky průběžnému vyhodnocování jsme byli schopni výrazně zlepšit celkové vnímání hry.");
+                        ut.AppendText(
+                            new[] { ";@Po dokončení implementace všech herních mechanik jsme připravili dotazník pro širokou veřejnost. Díky průběžnému vyhodnocování jsme mohli reagovat na respondenty udávané nedostatky a byli jsme tak schopni výrazně zlepšit celkové vnímání hry.",
+                            ";@Zhruba polovina odpovědí byla zodpovězena před <výkonnostními optimalizacemi> hry a zhruba tři čtvrtiny pak před implementací <tutoriálu>. Tyto nejčastěji zmiňované nedostatky se negativně projevily na výsledném hodnocení (tento závěr plyne ze slovního hodnocení)."
+                                });
 
-                        ut.AppendText(";@Na grafu níže je možné vidět, jak dlouho respondenti hráli naši hru před vyplněním dotazníku.");
+                        ut.AppendText(";@Navzdory faktům uvedeným výše a poměrně malému počtu respondentů ([24]) jsme získali zajímavá data. Na grafu níže je možné vidět, jak dlouho respondenti hráli naši hru. Můžeme vidět, že 42%~respondentů hru hrálo více jak půl hodiny, což chápeme (vzhledem k malému počtu implementovaných bloků) jako skvělý výsledek.");
 
                         var im = new ImageWithTitle("Graf zobrazující délku hraní před vyplněním dotazníku.", "SurveyPlay");
                         im.SetMargin(new Offset(0, 0, 10, 0));
 
                         var res = new Text();
-                        res.AppendText(";@Na následujícím obrázku můžeme vidět výsledné hodnocení naší hry. [Medián] všech odpovědí je [7] a to navzdory tomu, že zhruba polovina odpovědí byla zodpovězena před výkonnostními optimalizacemi hry a zhruba tři čtvrtiny pak před implementací [tutoriálu]. Díky chybějícímu tutoriálu hráči nebyli seznámeni se všemi herními mechanikami a jejich frustrace se negativně projevila na výsledném hodnocení (tento závěr plyne ze získaného slovního hodnocení).");
+                        res.AppendText(";@Na následujícím obrázku můžeme vidět výsledné hodnocení naší hry. [Medián] všech odpovědí je [7]. (Škála: 1 = <Velice nepovedená, nikdy se k ní nevrátím>, 10 = <Zdařilá, rád/a bych si v budoucnu dokončenou hru zahrál/a>)");
 
                         var im1 = new ImageWithTitle("Výsledné hodnocení hry", "SurveyResults");
+                        im1.SetMargin(new Offset(0, 0, 10, 0));
 
                         var result = new Text();
-                        result.AppendText("");
-                        result.AppendText(";@Tyto mechaniky jsme nechali posoudit veřejností v rámci připraveného dotazníku. Z jeho zhodnocení vyplývá, že myšlenka dynamicky škálovatelných bloků má svůj potenciál a případná dokončená hra by si našla své publikum. Zároveň jsme však díky dotazníku identifikovali problémy, které jsme mohli před dokončením naší práce vyřešit a tím jsme výrazně zlepšili celkovou kvalitu naší hry.");
-                        hz.AddChild(new GraphicalElement[] { ut, im, res, im1, result }, 60, 110, 75, 110);
+                        result.AppendText(";@Z celkového zhodnocení dotazníku vyplynulo, že myšlenka dynamicky škálovatelných bloků má svůj potenciál a případná dokončená hra by si našla své publikum.");
+                        hz.AddChild(new GraphicalElement[] { ut, im, res, im1, result }, 150, 110, 40, 110, 30);
 
                         return hz;
                     }

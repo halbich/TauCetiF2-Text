@@ -39,7 +39,7 @@ namespace PosterCreator.Elements
             var fp = new XElement(Svg.ns + "flowPara",
               new XAttribute("id", ID));
 
-            var toReplace = new[] { "k", "s", "v", "z", "a" };
+            var toReplace = new[] { "k", "s", "v", "z", "a", "i" };
 
             var t = Text;
 

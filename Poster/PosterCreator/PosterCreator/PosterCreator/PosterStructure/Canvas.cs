@@ -99,6 +99,10 @@ namespace PosterCreator.PosterStructure
                     Size = r.Dimensions,
                     Padding = new Offset(2, 4)
                 };
+
+                if(item.SetMiddle)
+                    text.TextParams.SetMiddle();
+
                 text.TextParams.SetBold();
                 text.AppendText(item.Text);
                 text.AfterInit();
@@ -214,5 +218,8 @@ namespace PosterCreator.PosterStructure
         }
 
         public float? OverrideOpacity { get; set; }
+
+        public bool SetMiddle { get; set; }
+
     }
 }
