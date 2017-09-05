@@ -95,13 +95,13 @@ namespace PosterCreator
 
                         ut.AppendText(new[]
                         {
-                            ";@Pro implementaci naší hry jsme zvolili <Unreal Engine>. Díky tomu jsme mohli plně využít jednoduchost technologie <Blueprintů> a zároveň rychlost a sílu jazyka <C++>. Vhodnou kombinací obou technologií jsme dosáhli rychlého a efektivního vývoje celé hry. Navíc jsme měli k dispozici mnoho užitečných vývojových nástrojů (například editor lokalizace nebo editor AI).",
+                            ";@Pro implementaci naší hry jsme zvolili <Unreal Engine>. Díky tomu jsme mohli plně využít jednoduchosti technologie <Blueprintů> a zároveň rychlost a sílu jazyka <C++>. Vhodnou kombinací obou technologií jsme dosáhli rychlého a efektivního vývoje celé hry. Navíc jsme měli k dispozici mnoho užitečných vývojových nástrojů (např. editor lokalizace, editor AI).",
                             "",
                             "[ C++]",
                             ";@V jazyce <C++> byly naprogramovány všechny části a komponenty hry, u nichž byl kladen důraz na výkon. Dále jsme zde definovali všechny definiční vlastnosti (omezující konstanty), jejichž konkrétní hodnoty jsme následně mohli měnit v Editoru skrze <Blueprinty>. A v neposlední řadě jsme zde implementovali některé bázové třídy, z nichž pak mohly <Blueprinty> dědit a mohly tak volat funkcionalitu implementovanou v <C++>.",
                             "",
                             "[ Blueprinty]",
-                            ";@Pomocí <Blueprintů> byly rychle implementovány nekritické části hry. Dále bylo <Blueprintů> využito pro snadné balancování jednotlivých hodnot omezujících konstant (např. minimální a maximální velikosti bloků, vlastnosti bloků, cena stavby). Hodnoty jsme mohli měnit bez nutnosti zdlouhavého procesu opětovné kompilace celého projektu.",
+                            ";@Pomocí <Blueprintů> byly rychle implementovány nekritické části hry. Dále bylo <Blueprintů> využito pro snadné balancování jednotlivých hodnot definičních vlastností (např. minimální a maximální velikosti bloků, vlastnosti bloků, cena stavby). Hodnoty jsme mohli měnit bez nutnosti zdlouhavého procesu opětovné kompilace celého projektu.",
                              "",
                             "[ Celková koncepce]",
                             ";@Na obrázku níže je možné vidět celkovou koncepci architektury hry. Vybrali jsme nejvýznamnější funkční celky hry a do grafu jsme zaznamenali jejich vazby. Navíc jsme zdůraznili funkční celky, které ukládají svůj stav během ukládání hry.",
@@ -193,7 +193,7 @@ namespace PosterCreator
                         var legendSec = canvas.Add("Funkční celek", -155f, 42.5f, 50);
                         var legendSave = canvas.Add("Implementuje ukládání", -155f, 60, 50, 20);
                         legendSave.SetBackground(saveColor);
-                        var legendDef = canvas.Add("Definice (gamedesign)", -155f, 82f, 50, 20);
+                        var legendDef = canvas.Add("Definiční vlastnosti", -155f, 82f, 50, 20);
                         legendDef.SetBackground(defColor);
 
 
